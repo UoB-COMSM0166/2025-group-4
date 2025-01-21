@@ -162,3 +162,54 @@
 - Add a “Creator Mode” where players design their own mini-games and share them.
 - Introduce props and costumes that affect gameplay mechanics or scoring.
   
+
+# 7.WeChat Mini-Game Documentation: 跳一跳 (Jump Jump)
+
+## Introduction
+"跳一跳" is a simple and addictive mini-game where players jump between platforms, aiming for the highest score.
+
+---
+
+## Game Details
+
+### Game Type
+- **Genre:** 2D Arcade Platformer
+- **Style:** Minimalist, Endless Gameplay
+
+## Gameplay Overview
+
+### Objective
+- Score points by landing on platforms without falling.
+- Earn bonuses for precise jumps.
+
+### Core Mechanics
+1. **Jumping Controls:** Tap and hold to charge the jump; release to jump.
+2. **Platform Landing:** Land perfectly for bonus points; missing ends the game.
+3. **Dynamic Difficulty:** Platforms vary in size, distance, and movement.
+
+## Shining Points
+- Simple, intuitive controls.
+- Addictive endless gameplay.
+- Social leaderboard integration.
+- Minimalist design with relaxing music.
+
+
+## Creative Twists
+1. **Special Platforms:** Add effects like trampolines or icy surfaces.
+2. **Themed Challenges:** Seasonal themes like "Winter Wonderland."
+3. **Custom Characters:** Unlock avatars and skins.
+4. **Power-Ups:** Collect items like double points or slow motion.
+5. **Multiplayer Mode:** Real-time 1v1 or cooperative gameplay.
+
+## Technical Specifications
+
+### Development Tools
+- **Engine:** Phaser.js or Cocos Creator
+- **Platform:** WeChat Mini-Game SDK
+
+### Key Features
+- **Physics Engine:** Realistic jump physics.
+- **Dynamic Levels:** Procedural platform generation.
+- **Leaderboard Integration:** Social sharing via WeChat.
+
+
