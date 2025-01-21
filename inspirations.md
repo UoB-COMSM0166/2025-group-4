@@ -83,7 +83,7 @@
 
 ---
 
-## 2. Hades
+## 4. Hades
 
 **Type**  
 - Roguelike action RPG  
@@ -108,4 +108,57 @@
 
 **Possible Creative Twists**  
 - Add co-op mode where players work together to escape.  
-- Introduce alternate mythological pantheons (e.g., Norse, Egyptian) with unique mechanics.  
+- Introduce alternate mythological pantheons (e.g., Norse, Egyptian) with unique mechanics.
+
+## 5. Basketball Showdown
+
+**Type**
+- Sports (Team-based)
+
+**Background Story**
+- A fast-paced basketball game that mixes street-style gameplay with professional league rules.
+- Players control a team of dynamic athletes aiming to rise through ranks in a world tournament.
+
+**Core Mechanics**
+- Real-time 3v3 or 5v5 matches with emphasis on teamwork.
+- Skill-based controls for dribbling, shooting, and defense.
+- Special power moves unique to each character.
+- Momentum system: perform flashy plays to boost team morale and stats.
+
+**Winning Goal**
+- Score more points than the opposing team within the time limit.
+
+**Shining Points**
+- High-energy gameplay with exciting animations and sound effects.
+- Customizable players and teams with unlockable skins and abilities.
+- Multiplayer support for global tournaments.
+
+**Possible Creative Twists**
+- Introduce environmental hazards like rain or wind affecting gameplay.
+- Add a “Street Showdown” mode with no rules and dynamic obstacles.
+
+## 6. Musical Mayhem
+
+**Type**
+- Party Game (Rhythm-based)
+
+**Background Story**
+- A wacky competition where players must perform ridiculous dance moves and sing along to chaotic tunes in a colorful party world.
+
+**Core Mechanics**
+- Quick mini-games involving rhythm tapping, dance-offs, and karaoke challenges.
+- Players compete individually or in teams to earn the highest score.
+- Randomized modifiers like speed changes or reversed controls add unpredictability.
+
+**Winning Goal**
+- Be the player or team with the highest score after multiple rounds.
+
+**Shining Points**
+- Vibrant visuals and a soundtrack with diverse genres.
+- Easy-to-learn mechanics suitable for all ages.
+- High replayability due to dynamic mini-games and modifiers.
+
+**Possible Creative Twists**
+- Add a “Creator Mode” where players design their own mini-games and share them.
+- Introduce props and costumes that affect gameplay mechanics or scoring.
+  
