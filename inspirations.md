@@ -212,4 +212,31 @@
 - **Dynamic Levels:** Procedural platform generation.
 - **Leaderboard Integration:** Social sharing via WeChat.
 
+##8Mario Platformer Game
+Type:
+2D platform action-adventure game
+
+Background Story:
+Mario is a plumber living in the Mushroom Kingdom, tasked with rescuing Princess Peach from the villain Bowser while overcoming various obstacles and enemies.
+
+Core Mechanics:  
+
+Level Design: Players explore different levels, collecting coins, power-ups, and enhancements.
+Jumping and Movement: The classic jumping mechanics allow players to hop over enemies and obstacles.
+Power-Up System: Utilize items like Super Mushrooms, Fire Flowers, and Stars to enhance abilities.
+Enemies and Hazards: Various foes (like Koopa Troopas and Piranha Plants) and obstacles (like pits and moving platforms) add challenge to gameplay.
+Winning Goal:
+Collect enough coins and power-ups, defeat enemies, and ultimately reach the end of each level to face Bowser in a final showdown to rescue the princess.
+
+Shining Points:  
+
+Vibrant art style and creative level design.
+Iconic music and sound effects that enhance the gaming experience.
+Diverse gameplay and challenges suitable for players of all ages.
+
+Possible Creative Twists:  
+
+Introducing a co-op mode for multiple players to complete levels together.
+An ecosystem: changes in the game world based on player choices and actions.
+Time challenges: complete levels within a set time limit to increase urgency.
 
