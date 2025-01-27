@@ -11,7 +11,10 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Your Group
 
-Add a group photo here!
+├── README.md
+├── images/
+│   └── group4.jpg
+![Group 4 图片描述](images/group4.jpg)
 
 - Group member 1, name, email, role
 - Group member 2, name, email, role
