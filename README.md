@@ -10,7 +10,7 @@ Your game lives in the [/docs](/docs) folder, and is published using Github page
 Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
 
 ## Your Group
-
+![Group Photo](images/group4-photo.jpg)
 - Group member 1, name, email, role
 - Group member 2, name, email, role
 - Group member 3, name, email, role
