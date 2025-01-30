@@ -11,12 +11,16 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Your Group
 ![Group Photo](images/group4-photo.jpg)
-- Group member 1, name, email, role
-- Group member 2, name, email, role
-- Group member 3, name, email, role
-- Group member 4, name, email, role
-- Group member 5, name, email, role
-- Group member 5, name, email, role
+**The names are listed from left to right in the group photo.**
+
+| Name                  | Email                      |
+|-----------------------|---------------------------|
+| Xirui Wang           | hd24605@bristol.ac.uk      |
+| Suyi Dai            | zq24591@bristol.ac.uk      |
+| Yihan Liu           | rv24637@bristol.ac.uk      |
+| Xingchen Jin        | if24329@bristol.ac.uk      |
+| Amuer               | zd24425@bristol.ac.uk      |
+| Xiaoliang Su        | gp24306@bristol.ac.uk      |
 
 ## Project Report
 
