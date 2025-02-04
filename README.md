@@ -35,6 +35,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 - Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? 
 
 Stakeholders
+
 User Stories & Acceptance Criteria
 
 | User Story                  | Acceptance Criteria                      |
