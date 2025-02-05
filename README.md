@@ -9,6 +9,21 @@ Your game lives in the [/docs](/docs) folder, and is published using Github page
 
 Include a demo video of your game here (you don't have to wait until the end, you can insert a work in progress video)
 
+## Weekly Work Summary
+
+### Week 1
+- Formed the team  
+- Brainstormed game themes  
+
+### Week 2
+- Discussed and came up with two game ideas 
+
+### Week 3
+- Created a paper prototype of the game  
+
+
+
+
 ## Your Group
 ![Group Photo](images/group4-photo.jpg)
 **The names are listed from left to right in the group photo.**
