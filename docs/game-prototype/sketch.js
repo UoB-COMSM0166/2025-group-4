@@ -1,5 +1,6 @@
 /****************************************
   p5.js "Way of the Dodo" - Prototype
+  (Gravity-flip experiment with input buffering)
 ****************************************/
 
 let tileSize = 32; // pixel size of each tile
@@ -7,8 +8,7 @@ let numCols = 20; // visible columns on screen
 let numRows = 15; // visible rows on screen
 let levelIndex = 0; // which level the player is on
 let levels = []; // we store level data here
-let gravity = 0.5; // downward acceleration
-let jumpForce = 10; // how strong a jump is
+let gravity = 0.5; // base gravity magnitude
 let maxSpeedX = 8; // horizontal speed limit
 let player; // reference to the player
 let coins = []; // coin objects
@@ -23,6 +23,22 @@ let lives = 3; // number of lives
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
+
+/****************************************
+  Buffering Settings for Gravity Flip
+****************************************/
+// When false (the default) disallows midair flips but buffers input
+// only for a short period (pre-surface buffering). When true, any flip key
+// pressed in the air is buffered for a longer duration.
+let allowBufferedFlipWhileAir = false;
+
+// Duration for which a flip input is buffered if midair buffering is enabled.
+let airBufferDuration = 300; // in milliseconds
+
+// Duration for which a flip input is buffered if midair buffering is disabled.
+// (This is the “pre-surface” window; if the player lands within this time after
+// pressing the flip key, the buffered flip will execute.)
+let preSurfaceBufferDuration = 150; // in milliseconds
 
 /*********************************************
   Basic tile-based levels
@@ -45,7 +61,7 @@ function setupLevels() {
       "1..................1",
       "1..3...............1", // player start is '3'
       "1..................1",
-      "1..................1",
+      "1..........11111...1",
       "1..................1",
       "1..................1",
       "1111111111111111111",
@@ -94,16 +110,21 @@ class Player {
     this.w = tileSize * 0.6;
     this.h = tileSize * 0.9;
     this.onGround = false;
-    // Store the auto-run direction: -1 (left) or 1 (right)
+    // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = random() < 0.5 ? -1 : 1;
-    this.autoSpeed = 4.0; // Speed for auto-run
+    this.autoSpeed = 4.0;
+    // Gravity direction: 1 = normal (downward), -1 = flipped (upward)
+    this.gravityDirection = 1;
+    // For buffering the flip input:
+    this.flipBufferTimestamp = 0;
+    this.bufferedFlipAvailable = false;
   }
 
   update() {
     // Apply gravity.
-    this.vy += gravity;
+    this.vy += gravity * this.gravityDirection;
 
-    // If on ground, apply friction and if nearly stopped, auto-run.
+    // If on a surface, apply friction and auto-run.
     if (this.onGround) {
       if (abs(this.vx) < 0.05) {
         this.vx = this.autoDirection * this.autoSpeed;
@@ -120,16 +141,36 @@ class Player {
 
     // Move vertically and resolve collisions.
     this.y += this.vy;
+    // Reset onGround before checking vertical collisions.
     this.onGround = false;
     this.checkTileCollisions(false);
 
-    // Check if fallen off the map (loss of life).
-    if (this.y > tileMap.length * tileSize + 200) {
+    // Check for a buffered flip input.
+    if (this.bufferedFlipAvailable) {
+      let bufferDuration = allowBufferedFlipWhileAir
+        ? airBufferDuration
+        : preSurfaceBufferDuration;
+      if (millis() - this.flipBufferTimestamp > bufferDuration) {
+        // Buffer expired.
+        this.bufferedFlipAvailable = false;
+      } else if (this.onGround) {
+        // Player just landed and a buffered flip is available.
+        this.performGravityFlip();
+        this.bufferedFlipAvailable = false;
+      }
+    }
+
+    // Check if the player has fallen off the map.
+    if (
+      (this.gravityDirection === 1 &&
+        this.y > tileMap.length * tileSize + 200) ||
+      (this.gravityDirection === -1 && this.y < -200)
+    ) {
       loseLife();
       return;
     }
 
-    // Check collisions with spike tiles (5).
+    // Check collisions with hazards (spike tiles).
     this.checkHazards();
 
     // Update camera (ensuring it never goes negative).
@@ -137,9 +178,7 @@ class Player {
     if (cameraOffsetX < 0) cameraOffsetX = 0;
   }
 
-  // Collision checking:
-  // When checking horizontal movement, if a collision is detected,
-  // we reverse autoDirection so that the player will try to move the other way.
+  // Collision checking (horizontal and vertical remain unchanged).
   checkTileCollisions(isX) {
     let halfW = this.w * 0.5;
     let halfH = this.h * 0.5;
@@ -173,7 +212,7 @@ class Player {
         }
       }
     } else {
-      // Vertical collision
+      // Vertical collision.
       let leftCol = floor((this.x - halfW) / tileSize);
       let rightCol = floor((this.x + halfW) / tileSize);
       if (this.vy > 0) {
@@ -183,17 +222,22 @@ class Player {
           if (getTile(col, bottomRow) === 1) {
             this.y = bottomRow * tileSize - halfH;
             this.vy = 0;
-            this.onGround = true;
+            if (this.gravityDirection === 1) {
+              this.onGround = true;
+            }
             break;
           }
         }
       } else if (this.vy < 0) {
-        // Moving up: check the top edge.
+        // Rising (when gravity is flipped): check the top edge.
         let topRow = floor((this.y - halfH) / tileSize);
         for (let col = leftCol; col <= rightCol; col++) {
           if (getTile(col, topRow) === 1) {
             this.y = (topRow + 1) * tileSize + halfH;
             this.vy = 0;
+            if (this.gravityDirection === -1) {
+              this.onGround = true;
+            }
             break;
           }
         }
@@ -215,7 +259,7 @@ class Player {
     for (let row = topRow; row <= bottomRow; row++) {
       for (let col = leftCol; col <= rightCol; col++) {
         if (getTile(col, row) === 5) {
-          // Player hit a spike
+          // Player hit a spike.
           loseLife();
           return;
         }
@@ -223,10 +267,22 @@ class Player {
     }
   }
 
-  jump() {
-    // You can optionally require onGround check, but here it's always allowed:
-    // if (this.onGround) { ... }
-    this.vy = -jumpForce;
+  // Called when the flip key is pressed.
+  // If on a surface, the flip executes immediately.
+  // Otherwise, the input is buffered.
+  flipGravity() {
+    if (this.onGround) {
+      this.performGravityFlip();
+    } else {
+      this.bufferedFlipAvailable = true;
+      this.flipBufferTimestamp = millis();
+    }
+  }
+
+  // Immediately flips the gravity.
+  performGravityFlip() {
+    this.gravityDirection *= -1;
+    this.vy = 0;
     this.onGround = false;
   }
 
@@ -250,17 +306,15 @@ class Enemy {
     this.y = py;
     this.w = tileSize * 0.6;
     this.h = tileSize * 0.9;
-    // Patrol movement:
-    // We'll assume each enemy just moves left & right between two boundaries.
-    // You can hardcode or randomize. For demonstration:
+    // Patrol movement boundaries.
     this.minX = px - tileSize * 3;
     this.maxX = px + tileSize * 3;
     this.speed = 2;
-    this.direction = 1; // 1 = move right, -1 = move left
+    this.direction = 1; // 1 = right, -1 = left
   }
 
   update() {
-    // Move horizontally between minX and maxX
+    // Move horizontally between minX and maxX.
     this.x += this.speed * this.direction;
     if (this.x < this.minX) {
       this.x = this.minX;
@@ -270,7 +324,7 @@ class Enemy {
       this.direction = -1;
     }
 
-    // Check collision with player
+    // Check collision with the player.
     this.checkPlayerCollision(player);
   }
 
@@ -278,7 +332,7 @@ class Enemy {
     let overlapX = abs(pl.x - this.x) < pl.w * 0.5 + this.w * 0.5;
     let overlapY = abs(pl.y - this.y) < pl.h * 0.5 + this.h * 0.5;
     if (overlapX && overlapY) {
-      // Player touched enemy
+      // Player touched enemy.
       loseLife();
     }
   }
@@ -307,7 +361,7 @@ class Coin {
 
   checkCollision(pl) {
     if (dist(pl.x, pl.y, this.x, this.y) < this.r + pl.w * 0.3) {
-      // player collects coin
+      // Player collects coin.
       this.collected = true;
       score++;
     }
@@ -335,14 +389,14 @@ class ExitGate {
   }
 
   checkPlayer(pl) {
-    // if player is close enough, trigger next level
+    // If the player is close enough, trigger the next level.
     let dx = abs(pl.x - this.x);
     let dy = abs(pl.y - this.y);
     if (dx < this.w * 0.5 && dy < this.h * 0.5) {
-      // next level
+      // Proceed to the next level.
       levelIndex++;
       if (levelIndex >= levels.length) {
-        // you finished all levels!
+        // All levels completed!
         gameState = "win";
       } else {
         loadLevel(levelIndex);
@@ -364,7 +418,7 @@ class ExitGate {
   p5.js setup and draw
 *********************************************/
 function preload() {
-  // If you have assets, load them here
+  // Load assets here if needed.
 }
 
 function setup() {
@@ -376,34 +430,34 @@ function setup() {
 }
 
 function draw() {
-  // background gradient
+  // Draw background gradient.
   setGradient(backgroundColor, color(50, 100, 200));
 
   if (gameState === "play") {
-    // Update player and enemies
+    // Update player and enemies.
     player.update();
     for (let e of enemies) {
       e.update();
     }
 
-    // Check coins
+    // Check coins.
     for (let c of coins) {
       if (!c.collected) {
         c.checkCollision(player);
       }
     }
 
-    // Check exit
+    // Check exit.
     exitGate.checkPlayer(player);
 
-    // Draw everything
+    // Draw all elements.
     drawTiles();
     for (let c of coins) c.draw();
     exitGate.draw();
     for (let e of enemies) e.draw();
     player.draw();
 
-    // Draw HUD
+    // Draw HUD.
     fill(0, 150);
     noStroke();
     rect(0, 0, width, hudHeight);
@@ -425,14 +479,15 @@ function draw() {
   }
 }
 
-// Single-button input
+// Single-button input.
+// Pressing the spacebar now attempts to flip gravity.
 function keyPressed() {
   if (key === " " && gameState === "play") {
-    player.jump();
+    player.flipGravity();
   }
   if (key === "r" || key === "R") {
     if (gameState !== "play") {
-      // Reset everything
+      // Reset the game.
       levelIndex = 0;
       score = 0;
       lives = 3;
@@ -442,10 +497,10 @@ function keyPressed() {
   }
 }
 
-// So that mobile/touch can also jump
+// Allow touch input to flip gravity.
 function touchStarted() {
   if (gameState === "play") {
-    player.jump();
+    player.flipGravity();
   }
 }
 
@@ -460,12 +515,12 @@ function loadLevel(idx) {
   exitGate = null;
   let foundPlayer = false;
 
-  // Read tile map rows
+  // Read tile map rows.
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
       let ch = tileMap[row].charAt(col);
       if (ch === "3") {
-        // Player start
+        // Player start.
         foundPlayer = true;
         playerSpawnX = col * tileSize + tileSize / 2;
         playerSpawnY = row * tileSize + tileSize / 2;
@@ -473,16 +528,16 @@ function loadLevel(idx) {
     }
   }
 
-  // If no player start found, place them at 2,2 fallback
+  // If no player start is found, place the player at a default location.
   if (!foundPlayer) {
     playerSpawnX = tileSize * 2;
     playerSpawnY = tileSize * 2;
   }
 
-  // Create player at the spawn
+  // Create the player.
   player = new Player(playerSpawnX, playerSpawnY);
 
-  // Now parse again for coins, exit, enemies, etc.
+  // Parse the level for coins, exit gate, enemies, etc.
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
       let ch = tileMap[row].charAt(col);
@@ -506,26 +561,25 @@ function loadLevel(idx) {
     }
   }
 
-  // Fallback if no exit found
+  // Fallback if no exit is found.
   if (!exitGate) {
     exitGate = new ExitGate(tileSize * 8, tileSize * 2);
   }
 }
 
-// Returns tile code (0,1,5 for hazard) from row/col
+// Returns the tile code (1 for solid, 5 for hazard) at the given row/col.
 function getTile(col, row) {
-  if (row < 0 || row >= tileMap.length) return 1; // solid out-of-bounds
+  if (row < 0 || row >= tileMap.length) return 1; // out-of-bounds is solid.
   let rowStr = tileMap[row];
-  if (col < 0 || col >= rowStr.length) return 1; // solid boundary
+  if (col < 0 || col >= rowStr.length) return 1; // out-of-bounds is solid.
 
   let ch = rowStr.charAt(col);
-  // interpret
-  if (ch === "1") return 1; // ground
-  if (ch === "5") return 5; // spike/hazard
-  return 0; // otherwise empty
+  if (ch === "1") return 1; // ground.
+  if (ch === "5") return 5; // spike/hazard.
+  return 0; // otherwise empty.
 }
 
-// Draw the tile map
+// Draw the tile map.
 function drawTiles() {
   let startCol = floor(cameraOffsetX / tileSize);
   let endCol = startCol + ceil(width / tileSize) + 1;
@@ -536,7 +590,7 @@ function drawTiles() {
       if (col < 0 || col >= rowStr.length) continue;
       let ch = rowStr.charAt(col);
       if (ch === "1") {
-        // Ground block
+        // Ground block.
         fill(100, 100, 100);
         noStroke();
         rect(
@@ -546,7 +600,7 @@ function drawTiles() {
           tileSize
         );
       } else if (ch === "5") {
-        // Spike
+        // Spike.
         fill(150, 50, 50);
         noStroke();
         rect(
@@ -560,18 +614,18 @@ function drawTiles() {
   }
 }
 
-// Lose a life, reset or end game
+// Lose a life and either reset the level or end the game.
 function loseLife() {
   lives--;
   if (lives <= 0) {
     gameState = "over";
   } else {
-    // Reload current level, reset player to spawn
+    // Reload the current level and reset the player's position.
     loadLevel(levelIndex);
   }
 }
 
-// Background gradient
+// Draw a vertical background gradient.
 function setGradient(c1, c2) {
   for (let y = 0; y < height; y++) {
     let lerpAmt = y / height;
