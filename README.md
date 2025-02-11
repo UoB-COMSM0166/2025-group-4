@@ -11,7 +11,7 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Weekly Work Summary
 
-### [Week 1 ](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
+ [Week 1 Game Idea & Creativity](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
 
 ### [Week 2  P5.js Painting & Kanban Board](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
 
