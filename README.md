@@ -125,6 +125,8 @@ User Stories & Acceptance Criteria
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
 ##Game Design – Rusty Rover’s Run
+<img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
+
 
 1. Player Units
 • Health & Timer: Limited lives (e.g., 3) and a countdown system.
