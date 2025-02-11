@@ -11,13 +11,13 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Weekly Work Summary
 
-### [Week 1](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
+### [Week 1 ](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
 
-### [Week 2](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
+### [Week 2  P5.js Painting & Kanban Board](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
 
-### [Week 3](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week03) 
+### [Week 3 Paper Prototype & User/Epic Story](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week03) 
 
-### [Week 4](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
+### [Week 4 Stakeholders & Game Demonstration/Feedback](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
 
 
 
