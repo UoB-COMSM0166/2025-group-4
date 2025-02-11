@@ -42,16 +42,78 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Project Report
 
-### Introduction
+## **Introduction**
 
-- 5% ~250 words 
-- Describe your game, what is based on, what makes it novel? 
+### **Game Background**
+- The game is set in a **post-apocalyptic Earth**, where electronic pollution has caused irreversible environmental damage.  
+- Humanity has **migrated to other planets**, leaving behind a **desolate world** filled with toxic air, radiation, and decaying cities.  
+- The protagonist, **007, an AI-driven robotic dog**, is left behind with a **mission to restore the planet** by activating the **Earth’s Ecological Monitoring System**.  
+- 007 must traverse **hazardous wastelands, forgotten jungles, ruined metropolises, and unstable energy zones**, while avoiding **hostile mechanical creatures and environmental hazards**.
 
-### Requirements 
+---
 
-- 15% ~750 words
-- Use case diagrams, user stories. Early stages design. Ideation process. How did you decide as a team what to develop? 
+### **Game Mechanics**
+- The game follows a **roguelike action-adventure structure**, with **procedurally generated levels**, ensuring **high replayability**.  
+- The **gravity replacement system** allows for **dynamic movement and puzzle-solving**, where gravity is manipulated rather than instantly flipped.  
+- Players experience a **continuous loop of exploration, survival, and decision-making**:
+  1. **Start** – Begin a new journey with a procedural map.
+  2. **Explore** – Traverse through various biomes, unlocking hidden areas.
+  3. **Battle** – Face off against corrupted mechanical enemies and extreme environmental threats.
+  4. **Decision-Making** – Choose between purifying the environment or exploiting chaos for short-term advantages.
+  5. **Death/Victory** – Progress or restart with new adaptive strategies.
 
+---
+
+### **Game Innovation**
+#### **1️⃣ Dynamic Gravity System**
+- Unlike traditional platformers, gravity does not simply "flip"; instead, **players adjust gravitational forces dynamically**.
+- Certain zones **alter movement physics**, making **timing and positioning critical**.
+
+#### **2️⃣ Evolving Environmental Conditions**
+- The game world **adapts based on player actions**:
+  - High pollution **spawns more mechanical enemies** and **reduces resource availability**.
+  - Cleaning the environment **grants upgrades and unlocks hidden story elements**.
+
+#### **3️⃣ Strategic Choice-Based Survival**
+- Players must choose:
+  - **Restoring the Earth** – Unlock better technology but face **stronger environmental hazards**.
+  - **Exploiting Pollution** – Gain temporary advantages but increase the difficulty in future levels.
+
+---
+
+### **Level Themes & Biomes**
+#### **🏜️ Radiation Desert**
+- **Challenge:** Electronic storms disrupt movement and visibility.  
+- **Mechanic:** Gravity shifts randomly with storm intensity.  
+
+#### **☣️ Toxic Swamp**
+- **Challenge:** Mutated creatures thrive in polluted areas.  
+- **Mechanic:** Players must collect **plant samples** to neutralize toxins.  
+
+#### **🏙️ Abandoned Metropolis**
+- **Challenge:** Collapsing skyscrapers and rogue AI drones attack intruders.  
+- **Mechanic:** EMP fields **disable movement for short periods**.  
+
+#### **🔬 Sci-Fi Industrial Zone**
+- **Challenge:** Floating platforms and unstable gravity disrupt navigation.  
+- **Mechanic:** Quantum energy fields allow for **low-gravity traversal**.  
+
+#### **🌿 Jungle Restoration Zone**
+- **Challenge:** One of the last green areas, but protected by defense AI.  
+- **Mechanic:** Gravity manipulation puzzles required to navigate terrain.  
+
+#### **🏜️ Wasteland Ruins**
+- **Challenge:** Final battleground where **Earth’s fate is decided**.  
+- **Mechanic:** Radiation levels rise, limiting survival time.  
+
+---
+
+### **Endings**
+- 🏆 **Perfect Ending** – Earth’s restoration is successful, humanity returns, and 007 is honored.  
+- ❌ **Tragic Ending** – Restoration fails, and 007 shuts down forever.  
+- 🔄 **Unresolved Ending** – Partial success, leaving Earth in **an uncertain future**.  
+
+---
 Stakeholders
 
 User Stories & Acceptance Criteria
