@@ -37,6 +37,9 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 | Amuer               | zd24425@bristol.ac.uk      |
 | Xiaoliang Su        | gp24306@bristol.ac.uk      |
 
+## Kanban link
+🚀 [Board-Group4-2025](https://github.com/orgs/UoB-COMSM0166/projects/131)
+
 ## Project Report
 
 ### Introduction
