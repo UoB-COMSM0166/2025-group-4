@@ -124,6 +124,48 @@ User Stories & Acceptance Criteria
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
+##Game Design – Rusty Rover’s Run
+
+1. Player Units
+• Health & Timer: Limited lives (e.g., 3) and a countdown system.
+• Gravity Flip: One-button mechanic to switch between floor and ceiling traversal.
+• Items: Energy Cells (extra time), Checkpoints, Cosmetic Unlocks.
+
+2. Enemy Units
+• Types: Stationary hazards (spikes, lasers), moving enemies (patrol, chase).
+• Interactions: Some enemies can be stomped; others are invulnerable.
+
+3. Neutral & Environmental Elements
+• Interactables: Switches, destructible barriers, dynamic world changes.
+• Level Design: Ruined cityscapes, indestructible terrain, gravity-based platforming.
+
+4. User Interface & Interaction
+• Scoring: Based on completion time, lives remaining, hidden collectibles.
+• Easter Eggs: Subtle nods to classic platformers.
+
+5. Randomization & Procedural Elements
+• Spawn Variability: Minor changes in enemy/hazard positions per playthrough.
+• Adaptive Difficulty: Gradual challenge scaling based on performance.
+
+
+##Summary of Development & Ideation Process
+1. Initial Concept:
+• Inspired by The Way of the Dodo, the game was originally a simple one-button platformer.
+• The team introduced a gravity-flip mechanic to differentiate it from similar games.
+2. Refinement & Evolution:
+• Early iterations felt too linear, leading to deeper level design and interactive environments.
+• A post-apocalyptic setting was chosen to enhance the atmosphere and justify the robotic protagonist.
+3. Gameplay Enhancements:
+• Introduced time pressure and limited lives to balance challenge and accessibility.
+• Designed environmental storytelling to make the short playtime emotionally engaging.
+• Incorporated easter eggs as nods to classic platformers.
+4. Final Adjustments:
+• Optimized difficulty curve, ensuring a fair but rewarding experience.
+• Simplified the UI and controls to maintain a clean, intuitive design.
+• Focused on pixel-art visuals and lightweight assets for smooth performance.
+
+
+
 
 
 ### Design
