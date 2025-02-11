@@ -11,16 +11,13 @@ Include a demo video of your game here (you don't have to wait until the end, yo
 
 ## Weekly Work Summary
 
-### Week 1
-- Formed the team  
-- Brainstormed game themes  
+### [Week 1](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
 
-### Week 2
-- Discussed and came up with two game ideas 
+### [Week 2](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
 
-### Week 3
-- Created a paper prototype of the game  
+### [Week 3](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week03) 
 
+### [Week 4](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
 
 
 
