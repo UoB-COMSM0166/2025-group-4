@@ -19,7 +19,7 @@ let hudHeight = 50; // space at top for HUD
 let score = 0; // player's score
 let backgroundColor; // for background gradient
 let gameState = "play"; // can be "play", "win", or "over"
-let lives = 3; // number of lives
+let lives = 99; // number of lives
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
@@ -96,7 +96,108 @@ function setupLevels() {
       "111111111111111111111",
     ],
   });
+  
+  // New example level with shooter enemy (E):
+  levels.push({
+  map: [
+    "111111111111111111111",
+    "1..................41",
+    "1..5................1",
+    "1..........222......1",
+    "1...................1",
+    "1..3.......E.......51",
+    "1...................1",
+    "1...................1",
+    "1...................1",
+    "111111111111111111111",
+  ],
+}); 
+levels.push({
+  map: [
+    "111111111111111111111",
+    "1....2.............41",
+    "1.111.1111111.11111.1",
+    "1...1....5...1.....E1",
+    "111.1.111.1.111.11111",
+    "1.3.1...1.1.....1...1",
+    "1.1.111.1.11111.1.111",
+    "1.1...1.1.....1.1...1",
+    "1.111.1.11111.1.11111",
+    "1.....1.....1.......1",
+    "111111111111111111111",
+  ],
+});
 }
+
+class ShooterEnemy {
+  constructor(px, py) {
+    this.x = px;
+    this.y = py;
+    this.w = tileSize * 0.8;
+    this.h = tileSize * 0.9;
+    this.shootCooldown = 2000; // 每 2 秒射击一次
+    this.lastShotTime = millis();
+  }
+
+  update() {
+    // 检测是否到达射击时间
+    if (millis() - this.lastShotTime > this.shootCooldown) {
+      this.shoot();
+      this.lastShotTime = millis();
+    }
+  }
+
+  shoot() {
+    let bulletSpeed = 5; // 子弹的速度
+    let direction = player.x > this.x ? 1 : -1; // 确定子弹方向
+    bullets.push(new Bullet(this.x, this.y, bulletSpeed * direction));
+  }
+
+  draw() {
+    push();
+    translate(this.x - cameraOffsetX, this.y);
+    fill(150, 0, 0);
+    rectMode(CENTER);
+    rect(0, 0, this.w, this.h);
+    pop();
+  }
+}
+
+
+class Bullet {
+  constructor(px, py, speed) {
+    this.x = px;
+    this.y = py;
+    this.speed = speed;
+    this.r = tileSize * 0.3; // 子弹半径
+    this.active = true; // 是否还存在
+  }
+
+  update() {
+    this.x += this.speed; // 让子弹向前移动
+
+    // 如果子弹超出屏幕范围，则销毁
+    if (this.x < 0 || this.x > width + tileSize) {
+      this.active = false;
+    }
+
+    // 检测子弹是否碰到玩家
+    if (dist(this.x, this.y, player.x, player.y) < this.r + player.w * 0.5) {
+      this.active = false;
+      loseLife(); // 减少生命值
+    }
+  }
+
+  draw() {
+    if (!this.active) return;
+    push();
+    translate(this.x - cameraOffsetX, this.y);
+    fill(255, 0, 0);
+    ellipse(0, 0, this.r * 2);
+    pop();
+  }
+}
+
 
 /*********************************************
   Class: Player
@@ -430,54 +531,68 @@ function setup() {
 }
 
 function draw() {
-  // Draw background gradient.
   setGradient(backgroundColor, color(50, 100, 200));
 
   if (gameState === "play") {
-    // Update player and enemies.
     player.update();
     for (let e of enemies) {
       e.update();
     }
-
-    // Check coins.
     for (let c of coins) {
       if (!c.collected) {
         c.checkCollision(player);
       }
     }
-
-    // Check exit.
+    for (let b of bullets) {
+      b.update();
+    }
     exitGate.checkPlayer(player);
 
-    // Draw all elements.
     drawTiles();
     for (let c of coins) c.draw();
     exitGate.draw();
     for (let e of enemies) e.draw();
+    for (let b of bullets) b.draw();
     player.draw();
 
-    // Draw HUD.
+    // 🔹 HUD 信息栏，增加 "Level"
     fill(0, 150);
     noStroke();
     rect(0, 0, width, hudHeight);
     fill(255);
     textSize(20);
-    text(`Score: ${score}   Lives: ${lives}`, width * 0.5, hudHeight * 0.5);
+    text(
+      `Level: ${levelIndex + 1}   Score: ${score}   Lives: ${lives}`,
+      width * 0.5,
+      hudHeight * 0.5
+    );
+
   } else if (gameState === "win") {
     fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
     textSize(30);
-    text("YOU WIN!  Press R to restart", width / 2, height / 2);
+    text("YOU WIN! Press R to restart", width / 2, height / 2);
+    
+    // 🔹 添加最终得分显示
+    textSize(20);
+    text(`Final Score: ${score}`, width / 2, height / 2 + 40);
+
   } else if (gameState === "over") {
     fill(0, 150);
     rect(0, 0, width, height);
     fill(255);
     textSize(30);
-    text("GAME OVER!  Press R to restart", width / 2, height / 2);
+    text("GAME OVER! Press R to restart", width / 2, height / 2);
+
+    // 🔹 添加最终得分显示
+    textSize(20);
+    text(`Final Score: ${score}`, width / 2, height / 2 + 40);
   }
 }
+
+
+
 
 // Single-button input.
 // Pressing the spacebar now attempts to flip gravity.
@@ -509,18 +624,24 @@ function touchStarted() {
 *********************************************/
 function loadLevel(idx) {
   if (idx < 0 || idx >= levels.length) return;
+  
+  // 如果通关后 && 得分 >= 10，加载隐藏关卡
+  if (idx === levels.length - 1 && score < 10) {
+    gameState = "win"; // 如果得分不够，则结束游戏
+    return;
+  }
+
   tileMap = levels[idx].map.slice();
   coins = [];
   enemies = [];
+  bullets = [];
   exitGate = null;
   let foundPlayer = false;
 
-  // Read tile map rows.
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
       let ch = tileMap[row].charAt(col);
       if (ch === "3") {
-        // Player start.
         foundPlayer = true;
         playerSpawnX = col * tileSize + tileSize / 2;
         playerSpawnY = row * tileSize + tileSize / 2;
@@ -528,44 +649,40 @@ function loadLevel(idx) {
     }
   }
 
-  // If no player start is found, place the player at a default location.
   if (!foundPlayer) {
     playerSpawnX = tileSize * 2;
     playerSpawnY = tileSize * 2;
   }
-
-  // Create the player.
   player = new Player(playerSpawnX, playerSpawnY);
 
-  // Parse the level for coins, exit gate, enemies, etc.
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
       let ch = tileMap[row].charAt(col);
       if (ch === "2") {
-        coins.push(
-          new Coin(col * tileSize + tileSize / 2, row * tileSize + tileSize / 2)
-        );
+        coins.push(new Coin(col * tileSize + tileSize / 2, row * tileSize + tileSize / 2));
       } else if (ch === "4") {
-        exitGate = new ExitGate(
-          col * tileSize + tileSize / 2,
-          row * tileSize + tileSize / 2
-        );
-      } else if (ch === "E" || ch === "e") {
-        enemies.push(
-          new Enemy(
-            col * tileSize + tileSize / 2,
-            row * tileSize + tileSize / 2
-          )
-        );
+        exitGate = new ExitGate(col * tileSize + tileSize / 2, row * tileSize + tileSize / 2);
+      } else if (ch === "E") {
+        // 在隐藏关卡，部分 `E` 变成射击敌人
+        if (idx === 3 || idx === levels.length - 1) {
+          enemies.push(new ShooterEnemy(col * tileSize + tileSize / 2, row * tileSize + tileSize / 2));
+        } else {
+          enemies.push(new Enemy(col * tileSize + tileSize / 2, row * tileSize + tileSize / 2));
+        }
       }
     }
   }
+}
 
-  // Fallback if no exit is found.
+
+  // 确保 `exitGate` 存在
   if (!exitGate) {
     exitGate = new ExitGate(tileSize * 8, tileSize * 2);
-  }
+  
 }
+
+
+
 
 // Returns the tile code (1 for solid, 5 for hazard) at the given row/col.
 function getTile(col, row) {
