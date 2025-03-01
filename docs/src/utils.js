@@ -27,15 +27,15 @@ export function getTile(col, row, tileMap) {
 /**
  * Draw a vertical background gradient.
  */
-export function setGradient(c1, c2) {
+//export function setGradient(c1, c2) {
   // Top to bottom gradient.
-  for (let y = 0; y < window.height; y++) {
-    let inter = window.map(y, 0, window.height, 0, 1);
-    let c = window.lerpColor(c1, c2, inter);
-    window.stroke(c);
-    window.line(0, y, window.width, y);
-  }
-}
+  // for (let y = 0; y < window.height; y++) {
+  //   let inter = window.map(y, 0, window.height, 0, 1);
+  //   let c = window.lerpColor(c1, c2, inter);
+  //   window.stroke(c);
+  //   window.line(0, y, window.width, y);
+  // }
+//}
 
 /**
  * Draw the tile map.

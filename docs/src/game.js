@@ -7,7 +7,7 @@ import { Player } from './entities/player.js';
 import { Enemy } from './entities/enemy.js';
 import { Coin } from './entities/coin.js';
 import { ExitGate } from './entities/exitGate.js';
-import { getTile, setGradient, drawTiles } from './utils.js';
+import { getTile,drawTiles } from './utils.js';
 
 // Game state variables
 let levelIndex = 0; // which level the player is on
@@ -24,6 +24,8 @@ let lives = 3; // number of lives
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
+let backgroundImage; // different level background
+
 
 /**
  * Lose a life and either reset the level or end the game.
@@ -57,9 +59,8 @@ export function loadLevel(idx) {
   coins = [];
   enemies = [];
 
-  // Generate background color.
-  let bgHue = random(180, 240);
-  backgroundColor = color(bgHue, 70, 60);
+ // different level background
+ backgroundImage = window.backgroundImages[levelIndex];
 
   // Find player start, coins, exit, and enemies.
   for (let row = 0; row < tileMap.length; row++) {
@@ -147,11 +148,18 @@ export function updateGame() {
  * Draw the game
  */
 export function drawGame() {
-  // Clear the screen.
-  background(220);
+// Clear the screen.
+//background(220);
 
-  // Draw background gradient.
-  setGradient(backgroundColor, color(20, 20, 40));
+// Draw background gradient.
+//setGradient(backgroundColor, color(20, 20, 40));
+
+
+ if (backgroundImage) {
+  image(backgroundImage, 0, 0, width, height);
+} else {
+  background(220);
+}
 
   // Apply camera transform.
   push();

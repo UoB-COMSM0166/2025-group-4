@@ -29,19 +29,12 @@ export class Coin {
 
   draw(cameraOffsetX) {
     if (this.collected) return;
-
     window.push();
-    // Draw the coin as a yellow circle.
-    window.fill(255, 220, 0);
-    window.stroke(200, 180, 0);
-    window.strokeWeight(2);
-    window.ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
-    // Draw a $ symbol.
-    window.fill(200, 180, 0);
-    window.noStroke();
-    window.textAlign(CENTER, CENTER);
-    window.textSize(this.r);
-    window.text("$", this.x - cameraOffsetX, this.y);
+    window.imageMode(window.CENTER);
+    // 用 coinImage 绘制硬币，并将其尺寸设置为直径的两倍
+    window.image(window.coinImage, this.x - cameraOffsetX, this.y, this.r * 2, this.r * 2);
     window.pop();
   }
 }
+
+
