@@ -22,6 +22,12 @@ export class Player {
     // For buffering the flip input:
     this.flipBufferTimestamp = 0;
     this.bufferedFlipAvailable = false;
+    
+    // ===== 新增动画属性 =====
+    this.currentFrame = 0;
+    this.frameDelay = 10;   // 每隔10帧切换一次图片（根据需要调整）
+    this.frameCounter = 0;
+    // =========================
   }
 
   update(tileMap, cameraOffsetX) {
@@ -104,10 +110,8 @@ export class Player {
         // Moving right: check the right edge.
         let rightCol = Math.floor((this.x + halfW) / tileSize);
         for (let row = topRow; row <= bottomRow; row++) {
-          // Ensure we're checking within the bounds of the tilemap
           if (row >= 0 && row < tileMap.length && rightCol >= 0 && rightCol < tileMap[row].length) {
             if (getTile(rightCol, row, tileMap) === 1) {
-              // Place the player flush with the tile and reverse direction.
               this.x = rightCol * tileSize - halfW;
               this.vx = 0;
               this.autoDirection = -1;
@@ -119,10 +123,8 @@ export class Player {
         // Moving left: check the left edge.
         let leftCol = Math.floor((this.x - halfW) / tileSize);
         for (let row = topRow; row <= bottomRow; row++) {
-          // Ensure we're checking within the bounds of the tilemap
           if (row >= 0 && row < tileMap.length && leftCol >= 0 && leftCol < tileMap[row].length) {
             if (getTile(leftCol, row, tileMap) === 1) {
-              // Place the player flush with the tile and reverse direction.
               this.x = (leftCol + 1) * tileSize + halfW;
               this.vx = 0;
               this.autoDirection = 1;
@@ -132,20 +134,14 @@ export class Player {
         }
       }
     } else {
-      // Vertical collision.
       let leftCol = Math.floor((this.x - halfW) / tileSize);
       let rightCol = Math.floor((this.x + halfW - 1) / tileSize);
 
-      // Check for vertical collisions based on gravity direction and velocity
       if ((this.vy > 0 && this.gravityDirection > 0) || (this.vy < 0 && this.gravityDirection < 0)) {
-        // Moving in the direction of gravity: check the appropriate edge
         let checkRow = Math.floor((this.gravityDirection > 0 ? this.y + halfH : this.y - halfH) / tileSize);
-        
         for (let col = leftCol; col <= rightCol; col++) {
-          // Ensure we're checking within the bounds of the tilemap
           if (checkRow >= 0 && checkRow < tileMap.length && col >= 0 && col < tileMap[checkRow].length) {
             if (getTile(col, checkRow, tileMap) === 1) {
-              // Place the player flush with the tile and stop movement
               if (this.gravityDirection > 0) {
                 this.y = checkRow * tileSize - halfH;
               } else {
@@ -158,14 +154,10 @@ export class Player {
           }
         }
       } else if ((this.vy < 0 && this.gravityDirection > 0) || (this.vy > 0 && this.gravityDirection < 0)) {
-        // Moving against gravity: check the opposite edge
         let checkRow = Math.floor((this.gravityDirection > 0 ? this.y - halfH : this.y + halfH) / tileSize);
-        
         for (let col = leftCol; col <= rightCol; col++) {
-          // Ensure we're checking within the bounds of the tilemap
           if (checkRow >= 0 && checkRow < tileMap.length && col >= 0 && col < tileMap[checkRow].length) {
             if (getTile(col, checkRow, tileMap) === 1) {
-              // Place the player flush with the tile and stop movement
               if (this.gravityDirection > 0) {
                 this.y = (checkRow + 1) * tileSize + halfH;
               } else {
@@ -182,18 +174,16 @@ export class Player {
 
   // Check for collisions with hazards (spikes).
   checkHazards(tileMap) {
-    let halfW = this.w * 0.4; // Use a smaller hitbox for hazards.
+    let halfW = this.w * 0.4;
     let halfH = this.h * 0.4;
     let leftCol = Math.floor((this.x - halfW) / tileSize);
     let rightCol = Math.floor((this.x + halfW) / tileSize);
     let topRow = Math.floor((this.y - halfH) / tileSize);
     let bottomRow = Math.floor((this.y + halfH) / tileSize);
 
-    // Check all tiles in the player's hitbox.
     for (let col = leftCol; col <= rightCol; col++) {
       for (let row = topRow; row <= bottomRow; row++) {
         if (getTile(col, row, tileMap) === 5) {
-          // Spike collision!
           loseLife();
           return;
         }
@@ -204,10 +194,8 @@ export class Player {
   // Attempt to flip gravity.
   attemptGravityFlip() {
     if (this.onGround) {
-      // Player is on a surface, so flip immediately.
       this.performGravityFlip();
     } else {
-      // Player is in the air, so buffer the input.
       this.flipBufferTimestamp = window.millis();
       this.bufferedFlipAvailable = true;
     }
@@ -216,34 +204,32 @@ export class Player {
   // Actually perform the gravity flip.
   performGravityFlip() {
     this.gravityDirection *= -1;
-    this.vy = 0; // Reset vertical velocity.
-    // Apply a smaller impulse in the new gravity direction
-    // this.vy = this.gravityDirection * -6;
+    this.vy = 0;
     this.onGround = false;
   }
 
+  // ===== 修改后的 draw 方法：使用动画图片 =====
   draw(cameraOffsetX) {
     window.push();
-    // Draw the player as a rectangle.
-    window.fill(255, 200, 0);
-    window.rectMode(CENTER);
-    window.rect(this.x - cameraOffsetX, this.y, this.w, this.h, 4);
 
-    // Draw eyes to indicate which way is up.
-    window.fill(0);
-    let eyeY = this.y - (this.h * 0.2) * this.gravityDirection;
-    window.ellipse(
-      this.x - cameraOffsetX - this.w * 0.2,
-      eyeY,
-      this.w * 0.2,
-      this.w * 0.2
+    // 更新动画帧计数器，并切换当前帧
+    this.frameCounter++;
+    if (this.frameCounter >= this.frameDelay) {
+      this.currentFrame = (this.currentFrame + 1) % playerImages.length;
+      this.frameCounter = 0;
+    }
+    
+    // 绘制当前帧图片，确保图片居中显示
+    window.image(
+      playerImages[this.currentFrame],
+      this.x - cameraOffsetX - this.w * 0.5,
+      this.y - this.h * 0.5,
+      this.w,
+      this.h
     );
-    window.ellipse(
-      this.x - cameraOffsetX + this.w * 0.2,
-      eyeY,
-      this.w * 0.2,
-      this.w * 0.2
-    );
+
     window.pop();
   }
 }
+
+
