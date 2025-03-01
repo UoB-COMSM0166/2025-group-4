@@ -1,8 +1,11 @@
 // preload.js
-let playerImages = [];  // 用于存放主角图片
+let playerImages = [];
 
 function preload() {
-  playerImages.push(loadImage('assets/7.png'));
-  playerImages.push(loadImage('assets/8.png'));
-  playerImages.push(loadImage('assets/9.png'));
+  // 路径是相对于 index.html 的位置
+  playerImages.push(loadImage('arts resources/7.png'));
+  playerImages.push(loadImage('arts resources/8.png'));
+  playerImages.push(loadImage('arts resources/9.png'));
 }
+
+
