@@ -32,6 +32,7 @@ let backgroundImage; // different level background
  */
 export function loseLife() {
   lives--;
+  window.deathSound.play();
   if (lives <= 0) {
     gameState = "over";
   } else {
@@ -134,6 +135,9 @@ export function updateGame() {
 
   // Check exit.
   if (exitGate.checkPlayer(player)) {
+    
+    window.passSound.play();
+
     if (levelIndex < levels.length - 1) {
       // Next level.
       loadLevel(levelIndex + 1);

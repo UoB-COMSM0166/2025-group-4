@@ -206,6 +206,7 @@ export class Player {
     this.gravityDirection *= -1;
     this.vy = 0;
     this.onGround = false;
+    window.regravitySound.play();
   }
 
   // ===== 修改后的 draw 方法：使用动画图片 =====

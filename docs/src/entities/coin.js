@@ -22,6 +22,7 @@ export class Coin {
 
     if (distance < minDist) {
       this.collected = true;
+      window.getCoinSound.play();
       return true;
     }
     return false;
