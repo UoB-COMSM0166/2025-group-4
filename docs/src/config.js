@@ -27,14 +27,14 @@ export const preSurfaceBufferDuration = 150; // in milliseconds
 export function updatePhysicsForDifficulty(difficulty) {
   if (difficulty === "easy") {
     gravity = 0.4; // Lower gravity makes the game easier to control
-    maxSpeedX = 7; // Slower max speed makes the game more forgiving
+    maxSpeedX = 6; // Slower max speed makes the game more forgiving
   } else if (difficulty === "hard") {
     gravity = 0.6; // Higher gravity makes timing more difficult
-    maxSpeedX = 9; // Faster max speed makes the game more challenging
+    maxSpeedX = 18; // Faster max speed makes the game more challenging
   } else {
     // Normal difficulty - default values
     gravity = 0.5;
-    maxSpeedX = 8;
+    maxSpeedX = 12;
   }
 }
 

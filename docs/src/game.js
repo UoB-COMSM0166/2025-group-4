@@ -80,9 +80,9 @@ export function loadLevel(idx) {
         player = new Player(x, y);
         // Apply difficulty settings to player
         if (difficulty === "hard") {
-          player.autoSpeed = player.autoSpeed * 1.25; // 25% faster movement on hard
+          player.autoSpeed = player.autoSpeed * 1.5; // 50% faster movement on hard
         } else if (difficulty === "easy") {
-          player.autoSpeed = player.autoSpeed * 0.8; // 20% slower movement on easy
+          player.autoSpeed = player.autoSpeed * 0.5; // 50% slower movement on easy
         }
         // Replace with empty space.
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);

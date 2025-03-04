@@ -11,8 +11,8 @@ export class Player {
     this.y = py;
     this.vx = 0;
     this.vy = 0;
-    this.w = tileSize * 0.6;
-    this.h = tileSize * 0.9;
+    this.w = tileSize;
+    this.h = tileSize;
     this.onGround = false;
     // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
@@ -212,8 +212,8 @@ export class Player {
   // ===== 修改后的 draw 方法：使用动画图片 =====
   draw(cameraOffsetX) {
     // Update dimensions based on current tile size
-    this.w = tileSize * 0.6;
-    this.h = tileSize * 0.9;
+    this.w = tileSize;
+    this.h = tileSize;
     this.autoSpeed = 4.0 * (tileSize / baseSize);
 
     window.push();
@@ -225,11 +225,27 @@ export class Player {
       this.frameCounter = 0;
     }
     
-    // 绘制当前帧图片，确保图片居中显示
+    // Determine horizontal direction based on movement
+    let facingRight = this.autoDirection > 0;
+    if (Math.abs(this.vx) > 0.1) {
+      facingRight = this.vx > 0;
+    }
+    
+    // Apply transformations based on gravity direction and horizontal movement
+    window.translate(this.x - cameraOffsetX, this.y);
+    
+    // Apply vertical flip if gravity is flipped
+    if (this.gravityDirection < 0) {
+      window.scale(facingRight ? 1 : -1, -1); // Flip vertically and conditionally horizontally
+    } else {
+      window.scale(facingRight ? 1 : -1, 1); // Only flip horizontally if needed
+    }
+    
+    // Draw the image at the origin (after translation)
     window.image(
       playerImages[this.currentFrame],
-      this.x - cameraOffsetX - this.w * 0.5,
-      this.y - this.h * 0.5,
+      -this.w * 0.5,
+      -this.h * 0.5,
       this.w,
       this.h
     );
