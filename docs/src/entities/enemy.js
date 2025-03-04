@@ -2,7 +2,7 @@
  * enemy.js
  * 定义普通敌人、射击敌人和子弹类
  */
-import { tileSize } from '../config.js';
+import { tileSize, baseSize } from '../config.js';
 
 // 普通敌人类
 export class Enemy {
@@ -16,6 +16,12 @@ export class Enemy {
     this.maxX = px + tileSize * 3;
     this.speed = 2;
     this.direction = 1; // 1: 向右, -1: 向左
+    // Patrol movement boundaries.
+    this.range = 3; // Default patrol range in tiles
+    this.minX = px - tileSize * this.range;
+    this.maxX = px + tileSize * this.range;
+    this.speed = 2 * (tileSize / baseSize); // Scale speed with tile size
+    this.direction = 1; // 1 = right, -1 = left
   }
 
   update() {
@@ -28,6 +34,13 @@ export class Enemy {
       this.x = this.minX;
       this.direction = 1;
     }
+  }
+
+  // Updates the patrol range (used when difficulty changes)
+  updateRange() {
+    const centerX = (this.minX + this.maxX) / 2;
+    this.minX = centerX - tileSize * this.range;
+    this.maxX = centerX + tileSize * this.range;
   }
 
   checkPlayerCollision(pl) {
@@ -130,6 +143,15 @@ export class Bullet {
     fill(255, 0, 0);
     ellipse(0, 0, this.r * 2);
     pop();
+    // Update dimensions based on current tile size
+    this.w = tileSize * 0.6;
+    this.h = tileSize * 0.9;
+    this.speed = 2 * (tileSize / baseSize);
+    window.push();
+    window.imageMode(window.CENTER);
+    // 用 enemyImage 绘制敌人
+    window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+    window.pop();
   }
 }
 
