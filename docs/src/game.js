@@ -66,97 +66,72 @@ export function loadLevel(idx) {
   exitGate = null;
   
   let foundPlayer = false;
+  
+  // 遍历地图的每个字符，处理玩家、金币、出口门和敌人
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
-      let ch = tileMap[row].charAt(col);
-      if (ch === "3") {
+      let tile = tileMap[row].charAt(col);
+      let x = col * tileSize + tileSize / 2;
+      let y = row * tileSize + tileSize / 2;
+      
+      if (tile === "3") {
+        // 玩家起始点
         foundPlayer = true;
-        playerSpawnX = col * tileSize + tileSize / 2;
-        playerSpawnY = row * tileSize + tileSize / 2;
-        console.log("找到玩家起始点：", playerSpawnX, playerSpawnY);
+        playerSpawnX = x;
+        playerSpawnY = y;
+        player = new Player(x, y);
+        // 根据难度调整玩家移动速度
+        if (difficulty === "hard") {
+          player.autoSpeed *= 1.5; // 50% faster on hard
+        } else if (difficulty === "easy") {
+          player.autoSpeed *= 0.5; // 50% slower on easy
+        }
+        window.player = player; // 挂载全局变量
+        console.log("找到玩家起始点：", x, y);
+        // 替换为默认空格
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      } else if (tile === "2") {
+        // 金币
+        coins.push(new Coin(x, y));
+        console.log("添加金币在：", x, y);
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      } else if (tile === "4") {
+        // 出口门
+        exitGate = new ExitGate(x, y);
+        console.log("添加出口门在：", x, y);
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      } else if (tile === "E") {
+        // 敌人
+        if (idx === 3 || idx === levels.length - 1) {
+          enemies.push(new ShooterEnemy(x, y));
+          console.log("添加 ShooterEnemy 在：", x, y);
+        } else {
+          const enemy = new Enemy(x, y);
+          // 根据难度调整敌人的速度和射程
+          if (difficulty === "hard") {
+            enemy.speed = enemySpeed * 1.5; // 50% faster
+            enemy.range = enemy.range * 1.3; // 30% more range
+          } else if (difficulty === "easy") {
+            enemy.speed = enemySpeed * 0.7; // 30% slower
+          }
+          enemies.push(enemy);
+          console.log("添加普通 Enemy 在：", x, y);
+        }
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
       }
     }
   }
+  
+  // 若未找到玩家起始点，则使用默认值
   if (!foundPlayer) {
     playerSpawnX = tileSize * 2;
     playerSpawnY = tileSize * 2;
     console.log("未找到玩家起始点，使用默认值：", playerSpawnX, playerSpawnY);
-  }
-  player = new Player(playerSpawnX, playerSpawnY);
-  window.player = player; // 挂载全局变量
-  
-  bullets = [];
-  window.bullets = bullets;
-  
-  for (let row = 0; row < tileMap.length; row++) {
-    for (let col = 0; col < tileMap[row].length; col++) {
-      let tile = tileMap[row][col];
-      let x = col * tileSize + tileSize / 2;
-      let y = row * tileSize + tileSize / 2;
-
-      if (tile === "3") {
-        // Player start.
-        playerSpawnX = x;
-        playerSpawnY = y;
-        player = new Player(x, y);
-        // Apply difficulty settings to player
-        if (difficulty === "hard") {
-          player.autoSpeed = player.autoSpeed * 1.5; // 50% faster movement on hard
-        } else if (difficulty === "easy") {
-          player.autoSpeed = player.autoSpeed * 0.5; // 50% slower movement on easy
-        }
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "2") {
-        // Coin.
-        coins.push(new Coin(x, y));
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "4") {
-        // Exit gate.
-        exitGate = new ExitGate(x, y);
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "E") {
-        // Enemy.
-        const enemy = new Enemy(x, y);
-        
-        // Apply difficulty settings to enemy
-        if (difficulty === "hard") {
-          enemy.speed = enemySpeed * 1.5; // 50% faster enemies on hard
-          enemy.range = enemy.range * 1.3; // 30% more range on hard
-        } else if (difficulty === "easy") {
-          enemy.speed = enemySpeed * 0.7; // 30% slower enemies on easy
-        }
-        
-        enemies.push(enemy);
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      }
-    }
-  }
-      let ch = tileMap[row].charAt(col);
-      let xPos = col * tileSize + tileSize / 2;
-      let yPos = row * tileSize + tileSize / 2;
-      
-      if (ch === "2") {
-        coins.push(new Coin(xPos, yPos));
-        console.log("添加金币在：", xPos, yPos);
-      } else if (ch === "4") {
-        exitGate = new ExitGate(xPos, yPos);
-        console.log("添加出口门在：", xPos, yPos);
-      } else if (ch === "E") {
-        if (idx === 3 || idx === levels.length - 1) {
-          enemies.push(new ShooterEnemy(xPos, yPos));
-          console.log("添加 ShooterEnemy 在：", xPos, yPos);
-        } else {
-          enemies.push(new Enemy(xPos, yPos));
-          console.log("添加普通 Enemy 在：", xPos, yPos);
-        }
-      }
-    }
+    player = new Player(playerSpawnX, playerSpawnY);
+    window.player = player;
   }
   
+  // 若未找到出口门，则使用默认出口位置
   if (!exitGate) {
     exitGate = new ExitGate(tileSize * 8, tileSize * 2);
     console.log("未找到出口门，使用默认出口：", tileSize * 8, tileSize * 2);
@@ -343,6 +318,7 @@ export function updateGame() {
   if (gameState !== "play") return;
   cameraOffsetX = player.update(tileMap, cameraOffsetX);
   
+  // 更新敌人并检测碰撞
   for (let enemy of enemies) {
     enemy.update();
     if (enemy.checkPlayerCollision(player)) {
@@ -352,23 +328,25 @@ export function updateGame() {
     }
   }
   
+  // 更新并检测金币
   for (let coin of coins) {
     if (!coin.collected && coin.checkCollision(player)) {
       console.log("玩家收集金币，位置：", coin.x, coin.y);
-      score += 10;
-    if (coin.checkCollision(player)) {
-      score += coinValue;
+      score += coinValue;  // 使用难度对应的金币分值
+      coin.collected = true;
     }
   }
   
+  // 更新子弹
   for (let b of window.bullets) {
     b.update();
   }
   window.bullets = window.bullets.filter(b => b.active);
 
-
+  // 检测出口
   if (exitGate) {
     console.log("玩家位置：", player.x, player.y, "出口门位置：", exitGate.x, exitGate.y);
+    // 给玩家一点时间（例如1秒）避免刚加载就碰到门
     if (millis() - window.levelLoadTime > 1000 && exitGate.checkPlayer(player)) {
       console.log("检测到出口碰撞，尝试切换关卡");
       window.passSound.play();
@@ -522,7 +500,6 @@ function drawGameScreen() {
   text("Lives: " + lives, 150, hudHeight / 2);
   text("Level: " + (levelIndex + 1) + "/" + levels.length, 250, hudHeight / 2);
   
-  
   // Draw difficulty indicator
   let difficultyColor;
   if (difficulty === "easy") difficultyColor = color(100, 255, 100);
@@ -561,20 +538,19 @@ function drawGameScreen() {
  * Handle key press
  */
 export function handleKeyPressed() {
-  if (keyCode === 32) {
-    if (gameState === "play") {
   if (keyCode === 32) { // Space bar
     if (gameState === "menu") {
-      // Move from main menu to difficulty selection
+      // 从主菜单进入难度选择
       gameState = "difficulty";
     } else if (gameState === "play") {
-      // Attempt to flip gravity
+      // 在游戏中按空格尝试翻转重力
       player.attemptGravityFlip();
-    } else {
-      initGame();
     } else if (gameState === "over" || gameState === "win") {
-      // Return to main menu
+      // 游戏结束或胜利时，按空格回到主菜单
       gameState = "menu";
+    } else {
+      // 其他情况（例如直接从菜单跳过），重新初始化游戏
+      initGame();
     }
   }
 }
