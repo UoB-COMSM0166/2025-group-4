@@ -1,7 +1,7 @@
 /**
  * Enemy class
  */
-import { tileSize } from '../config.js';
+import { tileSize, baseSize } from '../config.js';
 
 export class Enemy {
   constructor(px, py) {
@@ -12,7 +12,7 @@ export class Enemy {
     // Patrol movement boundaries.
     this.minX = px - tileSize * 3;
     this.maxX = px + tileSize * 3;
-    this.speed = 2;
+    this.speed = 2 * (tileSize / baseSize); // Scale speed with tile size
     this.direction = 1; // 1 = right, -1 = left
   }
 
@@ -45,6 +45,10 @@ export class Enemy {
   }
 
   draw(cameraOffsetX) {
+    // Update dimensions based on current tile size
+    this.w = tileSize * 0.6;
+    this.h = tileSize * 0.9;
+    this.speed = 2 * (tileSize / baseSize);
     window.push();
     window.imageMode(window.CENTER);
     // 用 enemyImage 绘制敌人

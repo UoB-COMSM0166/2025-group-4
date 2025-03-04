@@ -109,6 +109,109 @@ export function initGame() {
 }
 
 /**
+ * Reload the current level while preserving game state
+ * Used when the window is resized
+ */
+export function reloadCurrentLevel(oldTileSize) {
+  if (levels.length === 0) {
+    levels = setupLevels();
+  }
+  
+  // Store current state.
+  const currentLevel = levelIndex;
+  const currentScore = score;
+  const currentLives = lives;
+  const currentGameState = gameState;
+  
+  // Convert player's position using the old tile size.
+  let playerTileX = 0;
+  let playerTileY = 0;
+  let playerVelocity = { vx: 0, vy: 0 };
+  let playerGravityDirection = 1;
+  let playerDirection = 1;
+  
+  if (player) {
+    playerTileX = player.x / oldTileSize;
+    playerTileY = player.y / oldTileSize;
+    playerVelocity = { vx: player.vx, vy: player.vy };
+    playerGravityDirection = player.gravityDirection;
+    playerDirection = player.autoDirection;
+  }
+  
+  // Store camera offset relative to the old tile size.
+  const cameraTileOffset = cameraOffsetX / oldTileSize;
+  
+  // Save coins’ state in relative (tile) coordinates.
+  const coinStates = coins.map(coin => ({
+    tileX: coin.x / oldTileSize,
+    tileY: coin.y / oldTileSize,
+    collected: coin.collected
+  }));
+  
+  // Save enemies’ state in relative (tile) coordinates.
+  const enemyStates = enemies.map(enemy => ({
+    tileX: enemy.x / oldTileSize,
+    tileY: enemy.y / oldTileSize,
+    direction: enemy.direction,
+    tileMinX: enemy.minX / oldTileSize,
+    tileMaxX: enemy.maxX / oldTileSize
+  }));
+  
+  // Save exit gate state in relative coordinates.
+  let exitTileX = 0;
+  let exitTileY = 0;
+  
+  if (exitGate) {
+    exitTileX = exitGate.x / oldTileSize;
+    exitTileY = exitGate.y / oldTileSize;
+  }
+  
+  // Reload the level (which resets entities using the new tile size).
+  loadLevel(currentLevel);
+  
+  // Restore game state.
+  score = currentScore;
+  lives = currentLives;
+  gameState = currentGameState;
+  
+  // Restore the player's position using the new tile size.
+  if (player) {
+    player.x = playerTileX * tileSize;
+    player.y = playerTileY * tileSize;
+    player.vx = playerVelocity.vx;
+    player.vy = playerVelocity.vy;
+    player.gravityDirection = playerGravityDirection;
+    player.autoDirection = playerDirection;
+    playerSpawnX = player.x;
+    playerSpawnY = player.y;
+  }
+  
+  // Restore camera position.
+  cameraOffsetX = cameraTileOffset * tileSize;
+  
+  // Recreate coins at the new scale.
+  coins = [];
+  for (const state of coinStates) {
+    const coin = new Coin(state.tileX * tileSize, state.tileY * tileSize);
+    coin.collected = state.collected;
+    coins.push(coin);
+  }
+  
+  // Recreate enemies at the new scale.
+  enemies = [];
+  for (const state of enemyStates) {
+    const enemy = new Enemy(state.tileX * tileSize, state.tileY * tileSize);
+    enemy.direction = state.direction;
+    enemy.minX = state.tileMinX * tileSize;
+    enemy.maxX = state.tileMaxX * tileSize;
+    enemies.push(enemy);
+  }
+  
+  // Recreate exit gate.
+  exitGate = new ExitGate(exitTileX * tileSize, exitTileY * tileSize);
+}
+
+/**
  * Update game state
  */
 export function updateGame() {
@@ -195,7 +298,7 @@ export function drawGame() {
   rect(0, 0, width, hudHeight);
   fill(255);
   textAlign(LEFT, CENTER);
-  textSize(20);
+  textSize(Math.max(16, hudHeight * 0.4)); // Scale text with HUD height
   text("Score: " + score, 20, hudHeight / 2);
   text("Lives: " + lives, 150, hudHeight / 2);
   text("Level: " + (levelIndex + 1) + "/" + levels.length, 250, hudHeight / 2);
@@ -206,9 +309,9 @@ export function drawGame() {
     rect(0, 0, width, height);
     fill(255);
     textAlign(CENTER, CENTER);
-    textSize(40);
+    textSize(Math.max(30, width / 20)); // Scale with viewport
     text("GAME OVER", width / 2, height / 2 - 40);
-    textSize(20);
+    textSize(Math.max(18, width / 35)); // Scale with viewport
     text("Final Score: " + score, width / 2, height / 2 + 20);
     text("Press SPACE to restart", width / 2, height / 2 + 60);
   } else if (gameState === "win") {
@@ -216,9 +319,9 @@ export function drawGame() {
     rect(0, 0, width, height);
     fill(255, 220, 0);
     textAlign(CENTER, CENTER);
-    textSize(40);
+    textSize(Math.max(30, width / 20)); // Scale with viewport
     text("YOU WIN!", width / 2, height / 2 - 40);
-    textSize(20);
+    textSize(Math.max(18, width / 35)); // Scale with viewport
     text("Final Score: " + score, width / 2, height / 2 + 20);
     text("Press SPACE to play again", width / 2, height / 2 + 60);
   }

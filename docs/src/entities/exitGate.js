@@ -1,7 +1,7 @@
 /**
  * ExitGate class
  */
-import { tileSize } from '../config.js';
+import { tileSize, baseSize } from '../config.js';
 
 export class ExitGate {
   constructor(px, py) {
@@ -28,6 +28,10 @@ export class ExitGate {
   }
 
   draw(cameraOffsetX) {
+    // Update dimensions based on current tile size
+    this.w = tileSize;
+    this.h = tileSize * 1.5;
+
     window.push();
     // Draw the exit gate.
     window.fill(0, 200, 255);

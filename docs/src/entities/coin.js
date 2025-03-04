@@ -30,6 +30,8 @@ export class Coin {
 
   draw(cameraOffsetX) {
     if (this.collected) return;
+    // Update radius based on current tile size
+    this.r = tileSize * 0.4;
     window.push();
     window.imageMode(window.CENTER);
     // 用 coinImage 绘制硬币，并将其尺寸设置为直径的两倍

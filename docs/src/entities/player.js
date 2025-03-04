@@ -1,7 +1,7 @@
 /**
  * Player class
  */
-import { tileSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
+import { tileSize, baseSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
 import { getTile } from '../utils.js';
 import { loseLife } from '../game.js';
 
@@ -16,7 +16,7 @@ export class Player {
     this.onGround = false;
     // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
-    this.autoSpeed = 4.0;
+    this.autoSpeed = 4.0 * (tileSize / baseSize); // Scale speed with tile size
     // Gravity direction: 1 = normal (downward), -1 = flipped (upward)
     this.gravityDirection = 1;
     // For buffering the flip input:
@@ -211,6 +211,11 @@ export class Player {
 
   // ===== 修改后的 draw 方法：使用动画图片 =====
   draw(cameraOffsetX) {
+    // Update dimensions based on current tile size
+    this.w = tileSize * 0.6;
+    this.h = tileSize * 0.9;
+    this.autoSpeed = 4.0 * (tileSize / baseSize);
+
     window.push();
 
     // 更新动画帧计数器，并切换当前帧

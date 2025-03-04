@@ -54,13 +54,13 @@ export function drawTiles(tileMap, cameraOffsetX) {
         // Solid ground.
         window.fill(100, 100, 100);
         window.stroke(80, 80, 80);
-        window.strokeWeight(2);
+        window.strokeWeight(Math.max(1, tileSize / 16)); // Scale stroke weight
         window.rect(x, y, tileSize, tileSize);
       } else if (tile === "5") {
         // Spike hazard.
         window.fill(200, 0, 0);
         window.stroke(100, 0, 0);
-        window.strokeWeight(1);
+        window.strokeWeight(Math.max(1, tileSize / 32)); // Scale stroke weight
         // Draw a triangular spike.
         window.triangle(
           x,
