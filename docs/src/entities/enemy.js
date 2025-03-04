@@ -10,8 +10,9 @@ export class Enemy {
     this.w = tileSize * 0.6;
     this.h = tileSize * 0.9;
     // Patrol movement boundaries.
-    this.minX = px - tileSize * 3;
-    this.maxX = px + tileSize * 3;
+    this.range = 3; // Default patrol range in tiles
+    this.minX = px - tileSize * this.range;
+    this.maxX = px + tileSize * this.range;
     this.speed = 2 * (tileSize / baseSize); // Scale speed with tile size
     this.direction = 1; // 1 = right, -1 = left
   }
@@ -26,6 +27,13 @@ export class Enemy {
       this.x = this.minX;
       this.direction = 1;
     }
+  }
+
+  // Updates the patrol range (used when difficulty changes)
+  updateRange() {
+    const centerX = (this.minX + this.maxX) / 2;
+    this.minX = centerX - tileSize * this.range;
+    this.maxX = centerX + tileSize * this.range;
   }
 
   checkPlayerCollision(pl) {

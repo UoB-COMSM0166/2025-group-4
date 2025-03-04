@@ -8,9 +8,9 @@ export const baseSize = 32; // base tile size for reference
 export const numCols = 20; // visible columns on screen
 export const numRows = 15; // visible rows on screen
 
-// Physics configuration
-export const gravity = 0.5; // base gravity magnitude
-export const maxSpeedX = 8; // horizontal speed limit
+// Physics configuration - base values that can be modified by difficulty
+export let gravity = 0.5; // base gravity magnitude
+export let maxSpeedX = 8; // horizontal speed limit
 
 // UI configuration
 export const hudHeight = 50; // space at top for HUD
@@ -19,6 +19,24 @@ export const hudHeight = 50; // space at top for HUD
 export const allowBufferedFlipWhileAir = false; // When false (the default) disallows midair flips but buffers input
 export const airBufferDuration = 300; // in milliseconds
 export const preSurfaceBufferDuration = 150; // in milliseconds
+
+/**
+ * Function to update physics parameters based on difficulty
+ * @param {string} difficulty - "easy", "normal", or "hard"
+ */
+export function updatePhysicsForDifficulty(difficulty) {
+  if (difficulty === "easy") {
+    gravity = 0.4; // Lower gravity makes the game easier to control
+    maxSpeedX = 7; // Slower max speed makes the game more forgiving
+  } else if (difficulty === "hard") {
+    gravity = 0.6; // Higher gravity makes timing more difficult
+    maxSpeedX = 9; // Faster max speed makes the game more challenging
+  } else {
+    // Normal difficulty - default values
+    gravity = 0.5;
+    maxSpeedX = 8;
+  }
+}
 
 // Function to update the tile size based on window dimensions
 export function updateTileSize(windowWidth, windowHeight) {

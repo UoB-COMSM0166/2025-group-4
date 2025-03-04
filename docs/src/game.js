@@ -19,12 +19,15 @@ let tileMap; // holds the current level data
 let cameraOffsetX = 0; // for scrolling horizontally
 let score = 0; // player's score
 let backgroundColor; // for background gradient
-let gameState = "play"; // can be "play", "win", or "over"
+let gameState = "menu"; // can be "menu", "difficulty", "play", "win", or "over"
 let lives = 3; // number of lives
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
 let backgroundImage; // different level background
+let difficulty = "normal"; // can be "easy" or "hard"
+let enemySpeed = 1.5; // base enemy speed - will be modified by difficulty
+let coinValue = 10; // base coin value - will be modified by difficulty
 
 
 /**
@@ -75,6 +78,12 @@ export function loadLevel(idx) {
         playerSpawnX = x;
         playerSpawnY = y;
         player = new Player(x, y);
+        // Apply difficulty settings to player
+        if (difficulty === "hard") {
+          player.autoSpeed = player.autoSpeed * 1.25; // 25% faster movement on hard
+        } else if (difficulty === "easy") {
+          player.autoSpeed = player.autoSpeed * 0.8; // 20% slower movement on easy
+        }
         // Replace with empty space.
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
       } else if (tile === "2") {
@@ -89,7 +98,17 @@ export function loadLevel(idx) {
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
       } else if (tile === "E") {
         // Enemy.
-        enemies.push(new Enemy(x, y));
+        const enemy = new Enemy(x, y);
+        
+        // Apply difficulty settings to enemy
+        if (difficulty === "hard") {
+          enemy.speed = enemySpeed * 1.5; // 50% faster enemies on hard
+          enemy.range = enemy.range * 1.3; // 30% more range on hard
+        } else if (difficulty === "easy") {
+          enemy.speed = enemySpeed * 0.7; // 30% slower enemies on easy
+        }
+        
+        enemies.push(enemy);
         // Replace with empty space.
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
       }
@@ -102,10 +121,53 @@ export function loadLevel(idx) {
  */
 export function initGame() {
   levels = setupLevels();
-  loadLevel(0);
-  gameState = "play";
+  
+  // Start in menu mode instead of play
+  gameState = "menu";
+  
+  // Set default difficulty
+  difficulty = "normal";
+  
+  // Reset score
   score = 0;
-  lives = 3;
+  
+  // These will be set when the game actually starts after difficulty selection
+  // lives = 3;
+  // loadLevel(0);
+}
+
+/**
+ * Set the game difficulty
+ */
+export function setDifficulty(difficultyLevel) {
+  difficulty = difficultyLevel;
+  
+  // Update game parameters based on difficulty
+  if (difficulty === "easy") {
+    lives = 99; // More lives on easy
+    coinValue = 15; // More points per coin
+    enemySpeed = 1.0; // Slower enemies
+  } else if (difficulty === "hard") {
+    lives = 2; // Fewer lives on hard
+    coinValue = 5; // Fewer points per coin
+    enemySpeed = 2.0; // Faster enemies
+  } else {
+    // Normal difficulty
+    lives = 3;
+    coinValue = 10;
+    enemySpeed = 1.5;
+  }
+  
+  // Update physics parameters for the new difficulty
+  import('./config.js').then(config => {
+    config.updatePhysicsForDifficulty(difficulty);
+  });
+  
+  // Start the game with the first level
+  loadLevel(0);
+  
+  // Change game state to play
+  gameState = "play";
 }
 
 /**
@@ -122,6 +184,7 @@ export function reloadCurrentLevel(oldTileSize) {
   const currentScore = score;
   const currentLives = lives;
   const currentGameState = gameState;
+  const currentDifficulty = difficulty;
   
   // Convert player's position using the old tile size.
   let playerTileX = 0;
@@ -141,14 +204,14 @@ export function reloadCurrentLevel(oldTileSize) {
   // Store camera offset relative to the old tile size.
   const cameraTileOffset = cameraOffsetX / oldTileSize;
   
-  // Save coins’ state in relative (tile) coordinates.
+  // Save coins' state in relative (tile) coordinates.
   const coinStates = coins.map(coin => ({
     tileX: coin.x / oldTileSize,
     tileY: coin.y / oldTileSize,
     collected: coin.collected
   }));
   
-  // Save enemies’ state in relative (tile) coordinates.
+  // Save enemies' state in relative (tile) coordinates.
   const enemyStates = enemies.map(enemy => ({
     tileX: enemy.x / oldTileSize,
     tileY: enemy.y / oldTileSize,
@@ -167,6 +230,7 @@ export function reloadCurrentLevel(oldTileSize) {
   }
   
   // Reload the level (which resets entities using the new tile size).
+  difficulty = currentDifficulty;
   loadLevel(currentLevel);
   
   // Restore game state.
@@ -204,6 +268,15 @@ export function reloadCurrentLevel(oldTileSize) {
     enemy.direction = state.direction;
     enemy.minX = state.tileMinX * tileSize;
     enemy.maxX = state.tileMaxX * tileSize;
+    
+    // Apply difficulty settings to enemy
+    if (difficulty === "hard") {
+      enemy.speed = enemySpeed * 1.5;
+      enemy.range = enemy.range * 1.3;
+    } else if (difficulty === "easy") {
+      enemy.speed = enemySpeed * 0.7;
+    }
+    
     enemies.push(enemy);
   }
   
@@ -215,6 +288,7 @@ export function reloadCurrentLevel(oldTileSize) {
  * Update game state
  */
 export function updateGame() {
+  // If not in play state, nothing to update
   if (gameState !== "play") return;
 
   // Update player.
@@ -232,7 +306,7 @@ export function updateGame() {
   // Check coins.
   for (let coin of coins) {
     if (coin.checkCollision(player)) {
-      score += 10;
+      score += coinValue;
     }
   }
 
@@ -255,44 +329,123 @@ export function updateGame() {
  * Draw the game
  */
 export function drawGame() {
-// Clear the screen.
-//background(220);
-
-// Draw background gradient.
-//setGradient(backgroundColor, color(20, 20, 40));
-
-
- if (backgroundImage) {
-  image(backgroundImage, 0, 0, width, height);
-} else {
-  background(220);
+  // Draw based on game state
+  if (gameState === "menu") {
+    drawMainMenu();
+  } else if (gameState === "difficulty") {
+    drawDifficultyMenu();
+  } else if (gameState === "play" || gameState === "over" || gameState === "win") {
+    drawGameScreen();
+  }
 }
 
-  // Apply camera transform.
+/**
+ * Draw the main menu
+ */
+function drawMainMenu() {
+  // Clear the screen with a gradient background
+  background(20, 20, 40);
+  
+  // Draw title
+  fill(255, 220, 0);
+  textAlign(CENTER, CENTER);
+  textSize(Math.max(40, width / 15));
+  text("Rusty Rover’s Run", width / 2, height * 0.3);
+  
+  // Draw play button
+  fill(100, 200, 255);
+  rect(width / 2 - 150, height * 0.55 - 40, 300, 80, 10);
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("PLAY", width / 2, height * 0.55);
+}
+
+/**
+ * Draw the difficulty selection menu
+ */
+function drawDifficultyMenu() {
+  // Clear the screen with a gradient background
+  background(20, 20, 60);
+  
+  // Draw title
+  fill(255, 220, 0);
+  textAlign(CENTER, CENTER);
+  textSize(Math.max(40, width / 15));
+  text("SELECT DIFFICULTY", width / 2, height * 0.2);
+  
+  // Draw difficulty buttons
+  // Easy button
+  fill(100, 255, 100);
+  rect(width / 2 - 150, height * 0.4 - 40, 300, 80, 10);
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("EASY", width / 2, height * 0.4);
+  
+  // Normal button
+  fill(100, 200, 255);
+  rect(width / 2 - 150, height * 0.55 - 40, 300, 80, 10);
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("NORMAL", width / 2, height * 0.55);
+  
+  // Hard button
+  fill(255, 100, 100);
+  rect(width / 2 - 150, height * 0.7 - 40, 300, 80, 10);
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("HARD", width / 2, height * 0.7);
+  
+  // Draw difficulty descriptions
+  textSize(Math.max(16, width / 50));
+  fill(255);
+  if (mouseY > height * 0.4 - 40 && mouseY < height * 0.4 + 40 && 
+      mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+    text("More lives, higher scores, slower enemies", width / 2, height * 0.85);
+  } else if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
+             mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+    text("Standard game experience", width / 2, height * 0.85);
+  } else if (mouseY > height * 0.7 - 40 && mouseY < height * 0.7 + 40 && 
+             mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+    text("Fewer lives, lower scores, faster enemies", width / 2, height * 0.85);
+  }
+}
+
+/**
+ * Draw the game screen (actual gameplay)
+ */
+function drawGameScreen() {
+  // Draw background image or fallback
+  if (backgroundImage) {
+    image(backgroundImage, 0, 0, width, height);
+  } else {
+    background(220);
+  }
+
+  // Apply camera transform for game elements
   push();
 
-  // Draw tiles.
+  // Draw tiles
   drawTiles(tileMap, cameraOffsetX);
 
-  // Draw coins.
+  // Draw coins
   for (let coin of coins) {
     coin.draw(cameraOffsetX);
   }
 
-  // Draw exit gate.
+  // Draw exit gate
   exitGate.draw(cameraOffsetX);
 
-  // Draw enemies.
+  // Draw enemies
   for (let enemy of enemies) {
     enemy.draw(cameraOffsetX);
   }
 
-  // Draw player.
+  // Draw player
   player.draw(cameraOffsetX);
 
   pop();
 
-  // Draw HUD.
+  // Draw HUD
   fill(0, 0, 0, 100);
   noStroke();
   rect(0, 0, width, hudHeight);
@@ -302,8 +455,18 @@ export function drawGame() {
   text("Score: " + score, 20, hudHeight / 2);
   text("Lives: " + lives, 150, hudHeight / 2);
   text("Level: " + (levelIndex + 1) + "/" + levels.length, 250, hudHeight / 2);
+  
+  // Draw difficulty indicator
+  let difficultyColor;
+  if (difficulty === "easy") difficultyColor = color(100, 255, 100);
+  else if (difficulty === "hard") difficultyColor = color(255, 100, 100);
+  else difficultyColor = color(100, 200, 255);
+  
+  fill(difficultyColor);
+  textAlign(RIGHT, CENTER);
+  text(difficulty.toUpperCase(), width - 20, hudHeight / 2);
 
-  // Game over or win screen.
+  // Game over or win screen
   if (gameState === "over") {
     fill(0, 0, 0, 200);
     rect(0, 0, width, height);
@@ -332,12 +495,57 @@ export function drawGame() {
  */
 export function handleKeyPressed() {
   if (keyCode === 32) { // Space bar
-    if (gameState === "play") {
-      // Attempt to flip gravity.
+    if (gameState === "menu") {
+      // Move from main menu to difficulty selection
+      gameState = "difficulty";
+    } else if (gameState === "play") {
+      // Attempt to flip gravity
       player.attemptGravityFlip();
-    } else {
-      // Restart game.
-      initGame();
+    } else if (gameState === "over" || gameState === "win") {
+      // Return to main menu
+      gameState = "menu";
+    }
+  }
+}
+
+/**
+ * Handle mouse clicks
+ */
+export function handleMouseClicked() {
+  // Add a timestamp check to prevent accidental double-clicks across state changes
+  if (!window.lastStateChangeTime) {
+    window.lastStateChangeTime = 0;
+  }
+  
+  // Prevent clicks for 300ms after state changes
+  if (Date.now() - window.lastStateChangeTime < 300) {
+    return;
+  }
+  
+  if (gameState === "menu") {
+    // Check if play button clicked
+    if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
+        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      gameState = "difficulty";
+      window.lastStateChangeTime = Date.now();
+    }
+  } else if (gameState === "difficulty") {
+    // Check which difficulty button was clicked
+    if (mouseY > height * 0.4 - 40 && mouseY < height * 0.4 + 40 && 
+        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      // Easy
+      setDifficulty("easy");
+      window.lastStateChangeTime = Date.now();
+    } else if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
+               mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      // Normal
+      setDifficulty("normal");
+      window.lastStateChangeTime = Date.now();
+    } else if (mouseY > height * 0.7 - 40 && mouseY < height * 0.7 + 40 && 
+               mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      // Hard
+      setDifficulty("hard");
+      window.lastStateChangeTime = Date.now();
     }
   }
 }
@@ -349,9 +557,12 @@ export function handleTouchStarted() {
   if (gameState === "play") {
     // Attempt to flip gravity.
     player.attemptGravityFlip();
+  } else if (gameState === "menu" || gameState === "difficulty") {
+    // Simulate a mouse click for touch events
+    handleMouseClicked();
   } else {
-    // Restart game.
-    initGame();
+    // Over or win state - return to main menu
+    gameState = "menu";
   }
   return false; // Prevent default behavior.
 }

@@ -3,7 +3,7 @@
  * p5.js "Way of the Dodo" - Prototype
  * (Gravity-flip experiment with input buffering)
  */
-import { initGame, updateGame, drawGame, handleKeyPressed, handleTouchStarted, reloadCurrentLevel } from './game.js';
+import { initGame, updateGame, drawGame, handleKeyPressed, handleTouchStarted, handleMouseClicked, reloadCurrentLevel } from './game.js';
 import { numCols, numRows, tileSize, updateTileSize } from './config.js';
 
 // p5.js setup function
@@ -23,6 +23,12 @@ function draw() {
 // p5.js keyPressed function
 function keyPressed() {
   handleKeyPressed();
+  return false; // Prevent default behavior.
+}
+
+// p5.js mouseClicked function
+function mouseClicked() {
+  handleMouseClicked();
   return false; // Prevent default behavior.
 }
 
@@ -48,5 +54,6 @@ function windowResized() {
 window.setup = setup;
 window.draw = draw;
 window.keyPressed = keyPressed;
+window.mouseClicked = mouseClicked;
 window.touchStarted = touchStarted;
 window.windowResized = windowResized;
