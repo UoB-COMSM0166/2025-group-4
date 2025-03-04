@@ -61,8 +61,8 @@ export function loadLevel(idx) {
   tileMap = levels[idx].map.slice();
   coins = [];
   enemies = [];
-  bullets = [];
-  window.bullets = bullets;
+  bullets = []; // Initialize bullets array
+  window.bullets = bullets; // Make bullets available globally
   exitGate = null;
   
   let foundPlayer = false;
@@ -338,10 +338,15 @@ export function updateGame() {
   }
   
   // 更新子弹
-  for (let b of window.bullets) {
-    b.update();
+  if (window.bullets && window.bullets.length > 0) {
+    for (let i = window.bullets.length - 1; i >= 0; i--) {
+      window.bullets[i].update();
+      // 如果子弹不再活跃，从数组中移除
+      if (!window.bullets[i].active) {
+        window.bullets.splice(i, 1);
+      }
+    }
   }
-  window.bullets = window.bullets.filter(b => b.active);
 
   // 检测出口
   if (exitGate) {
@@ -479,9 +484,12 @@ function drawGameScreen() {
   for (let enemy of enemies) {
     enemy.draw(cameraOffsetX);
   }
-  // 新增：绘制子弹
-  for (let b of bullets) {
-    b.draw(cameraOffsetX);
+  
+  // Draw bullets
+  if (window.bullets && window.bullets.length > 0) {
+    for (let bullet of window.bullets) {
+      bullet.draw(cameraOffsetX);
+    }
   }
 
   // Draw player

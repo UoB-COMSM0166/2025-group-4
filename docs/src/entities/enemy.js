@@ -12,11 +12,6 @@ export class Enemy {
     this.y = py;
     this.w = tileSize * 0.6;
     this.h = tileSize * 0.9;
-    // 巡逻边界
-    this.minX = px - tileSize * 3;
-    this.maxX = px + tileSize * 3;
-    this.speed = 2;
-    this.direction = 1; // 1: 向右, -1: 向左
     // Patrol movement boundaries.
     this.range = 3; // Default patrol range in tiles
     this.minX = px - tileSize * this.range;
@@ -73,7 +68,7 @@ export class ShooterEnemy {
     this.w = tileSize * 0.8;
     this.h = tileSize * 0.9;
     this.shootCooldown = 2000; // 每2秒射击一次
-    this.lastShotTime = millis();
+    this.lastShotTime = 0; // 初始化为0，确保首次更新时会射击
   }
 
   update() {
@@ -86,10 +81,20 @@ export class ShooterEnemy {
 
   shoot() {
     let bulletSpeed = 5;
-    // 使用全局变量 window.player
-    let direction = (window.player.x > this.x) ? 1 : -1;
-    // 使用全局变量 window.bullets
-    window.bullets.push(new Bullet(this.x, this.y, bulletSpeed * direction));
+    // 确保全局变量 player 和 bullets 已定义
+    if (window.player) {
+      // 计算射击方向（朝向玩家）
+      let direction = (window.player.x > this.x) ? 1 : -1;
+      
+      // 确保全局 bullets 数组存在
+      if (!window.bullets) {
+        window.bullets = [];
+      }
+      
+      // 添加新子弹到数组
+      window.bullets.push(new Bullet(this.x, this.y, bulletSpeed * direction));
+      console.log("敌人发射子弹，方向：", direction);
+    }
   }
   
   // 为 ShooterEnemy 添加碰撞检测方法
@@ -123,36 +128,37 @@ export class Bullet {
     this.speed = speed;
     this.r = tileSize * 0.3; // 子弹半径
     this.active = true;
+    this.w = tileSize * 0.4; // 子弹宽度（用于绘制）
+    this.h = tileSize * 0.4; // 子弹高度（用于绘制）
   }
 
   update() {
     this.x += this.speed;
+    
+    // 如果子弹离开屏幕，将其标记为非活动
     if (this.x < 0 || this.x > width + tileSize) {
       this.active = false;
+      return;
     }
-    // 使用全局 window.player
-    if (dist(this.x, this.y, window.player.x, window.player.y) < this.r + window.player.w * 0.5) {
-      this.active = false;
-      loseLife();
+    
+    // 检测与玩家的碰撞
+    if (window.player && this.active) {
+      if (dist(this.x, this.y, window.player.x, window.player.y) < this.r + window.player.w * 0.5) {
+        this.active = false;
+        loseLife();
+      }
     }
   }
 
   draw(cameraOffsetX) {
     if (!this.active) return;
+    
     push();
-    translate(this.x - cameraOffsetX, this.y);
     fill(255, 0, 0);
-    ellipse(0, 0, this.r * 2);
+    noStroke();
+    ellipseMode(CENTER);
+    ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
     pop();
-    // Update dimensions based on current tile size
-    this.w = tileSize * 0.6;
-    this.h = tileSize * 0.9;
-    this.speed = 2 * (tileSize / baseSize);
-    window.push();
-    window.imageMode(window.CENTER);
-    // 用 enemyImage 绘制敌人
-    window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
-    window.pop();
   }
 }
 
