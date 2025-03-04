@@ -4,10 +4,10 @@
 import { tileSize, numCols, numRows, hudHeight } from './config.js';
 import { setupLevels } from './levels.js';
 import { Player } from './entities/player.js';
-import { Enemy } from './entities/enemy.js';
+import { Enemy, ShooterEnemy, Bullet } from './entities/enemy.js';
 import { Coin } from './entities/coin.js';
 import { ExitGate } from './entities/exitGate.js';
-import { getTile,drawTiles } from './utils.js';
+import { getTile, drawTiles } from './utils.js';
 
 // Game state variables
 let levelIndex = 0; // which level the player is on
@@ -24,8 +24,8 @@ let lives = 3; // number of lives
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
+let bullets = []; // bullets
 let backgroundImage; // different level background
-
 
 /**
  * Lose a life and either reset the level or end the game.
@@ -49,52 +49,74 @@ export function loseLife() {
  * Load a level by index
  */
 export function loadLevel(idx) {
-  if (idx < 0 || idx >= levels.length) {
-    console.error("Invalid level index:", idx);
+  if (idx < 0 || idx >= levels.length) return;
+  if (idx === levels.length - 1 && score < 100) {
+    console.log("隐藏关卡解锁失败：得分不足100，当前分数：", score);
+    gameState = "win";
     return;
   }
-
-  levelIndex = idx;
-  tileMap = levels[levelIndex].map;
-  cameraOffsetX = 0;
+  tileMap = levels[idx].map.slice();
   coins = [];
   enemies = [];
-
- // different level background
- backgroundImage = window.backgroundImages[levelIndex];
-
-  // Find player start, coins, exit, and enemies.
+  bullets = [];
+  window.bullets = bullets;
+  exitGate = null;
+  
+  let foundPlayer = false;
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
-      let tile = tileMap[row][col];
-      let x = col * tileSize + tileSize / 2;
-      let y = row * tileSize + tileSize / 2;
-
-      if (tile === "3") {
-        // Player start.
-        playerSpawnX = x;
-        playerSpawnY = y;
-        player = new Player(x, y);
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "2") {
-        // Coin.
-        coins.push(new Coin(x, y));
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "4") {
-        // Exit gate.
-        exitGate = new ExitGate(x, y);
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "E") {
-        // Enemy.
-        enemies.push(new Enemy(x, y));
-        // Replace with empty space.
-        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      let ch = tileMap[row].charAt(col);
+      if (ch === "3") {
+        foundPlayer = true;
+        playerSpawnX = col * tileSize + tileSize / 2;
+        playerSpawnY = row * tileSize + tileSize / 2;
+        console.log("找到玩家起始点：", playerSpawnX, playerSpawnY);
       }
     }
   }
+  if (!foundPlayer) {
+    playerSpawnX = tileSize * 2;
+    playerSpawnY = tileSize * 2;
+    console.log("未找到玩家起始点，使用默认值：", playerSpawnX, playerSpawnY);
+  }
+  player = new Player(playerSpawnX, playerSpawnY);
+  window.player = player; // 挂载全局变量
+  
+  bullets = [];
+  window.bullets = bullets;
+  
+  for (let row = 0; row < tileMap.length; row++) {
+    for (let col = 0; col < tileMap[row].length; col++) {
+      let ch = tileMap[row].charAt(col);
+      let xPos = col * tileSize + tileSize / 2;
+      let yPos = row * tileSize + tileSize / 2;
+      
+      if (ch === "2") {
+        coins.push(new Coin(xPos, yPos));
+        console.log("添加金币在：", xPos, yPos);
+      } else if (ch === "4") {
+        exitGate = new ExitGate(xPos, yPos);
+        console.log("添加出口门在：", xPos, yPos);
+      } else if (ch === "E") {
+        if (idx === 3 || idx === levels.length - 1) {
+          enemies.push(new ShooterEnemy(xPos, yPos));
+          console.log("添加 ShooterEnemy 在：", xPos, yPos);
+        } else {
+          enemies.push(new Enemy(xPos, yPos));
+          console.log("添加普通 Enemy 在：", xPos, yPos);
+        }
+      }
+    }
+  }
+  
+  if (!exitGate) {
+    exitGate = new ExitGate(tileSize * 8, tileSize * 2);
+    console.log("未找到出口门，使用默认出口：", tileSize * 8, tileSize * 2);
+  }
+  
+  levelIndex = idx;
+  console.log("加载关卡：", levelIndex);
+  window.levelLoadTime = millis();
 }
 
 /**
@@ -113,37 +135,40 @@ export function initGame() {
  */
 export function updateGame() {
   if (gameState !== "play") return;
-
-  // Update player.
   cameraOffsetX = player.update(tileMap, cameraOffsetX);
-
-  // Update enemies.
+  
   for (let enemy of enemies) {
     enemy.update();
     if (enemy.checkPlayerCollision(player)) {
+      console.log("检测到玩家与敌人碰撞，位置：", enemy.x, enemy.y);
       loseLife();
       return;
     }
   }
-
-  // Check coins.
+  
   for (let coin of coins) {
-    if (coin.checkCollision(player)) {
+    if (!coin.collected && coin.checkCollision(player)) {
+      console.log("玩家收集金币，位置：", coin.x, coin.y);
       score += 10;
     }
   }
+  
+  for (let b of window.bullets) {
+    b.update();
+  }
+  window.bullets = window.bullets.filter(b => b.active);
 
-  // Check exit.
-  if (exitGate.checkPlayer(player)) {
-    
-    window.passSound.play();
 
-    if (levelIndex < levels.length - 1) {
-      // Next level.
-      loadLevel(levelIndex + 1);
-    } else {
-      // Won the game!
-      gameState = "win";
+  if (exitGate) {
+    console.log("玩家位置：", player.x, player.y, "出口门位置：", exitGate.x, exitGate.y);
+    if (millis() - window.levelLoadTime > 1000 && exitGate.checkPlayer(player)) {
+      console.log("检测到出口碰撞，尝试切换关卡");
+      window.passSound.play();
+      if (levelIndex < levels.length - 1) {
+        loadLevel(levelIndex + 1);
+      } else {
+        gameState = "win";
+      }
     }
   }
 }
@@ -152,44 +177,28 @@ export function updateGame() {
  * Draw the game
  */
 export function drawGame() {
-// Clear the screen.
-//background(220);
-
-// Draw background gradient.
-//setGradient(backgroundColor, color(20, 20, 40));
-
-
- if (backgroundImage) {
-  image(backgroundImage, 0, 0, width, height);
-} else {
-  background(220);
-}
-
-  // Apply camera transform.
+  if (backgroundImage) {
+    image(backgroundImage, 0, 0, width, height);
+  } else {
+    background(220);
+  }
+  
   push();
-
-  // Draw tiles.
   drawTiles(tileMap, cameraOffsetX);
-
-  // Draw coins.
   for (let coin of coins) {
     coin.draw(cameraOffsetX);
   }
-
-  // Draw exit gate.
   exitGate.draw(cameraOffsetX);
-
-  // Draw enemies.
   for (let enemy of enemies) {
     enemy.draw(cameraOffsetX);
   }
-
-  // Draw player.
+  // 新增：绘制子弹
+  for (let b of bullets) {
+    b.draw(cameraOffsetX);
+  }
   player.draw(cameraOffsetX);
-
   pop();
-
-  // Draw HUD.
+  
   fill(0, 0, 0, 100);
   noStroke();
   rect(0, 0, width, hudHeight);
@@ -199,8 +208,7 @@ export function drawGame() {
   text("Score: " + score, 20, hudHeight / 2);
   text("Lives: " + lives, 150, hudHeight / 2);
   text("Level: " + (levelIndex + 1) + "/" + levels.length, 250, hudHeight / 2);
-
-  // Game over or win screen.
+  
   if (gameState === "over") {
     fill(0, 0, 0, 200);
     rect(0, 0, width, height);
@@ -228,12 +236,10 @@ export function drawGame() {
  * Handle key press
  */
 export function handleKeyPressed() {
-  if (keyCode === 32) { // Space bar
+  if (keyCode === 32) {
     if (gameState === "play") {
-      // Attempt to flip gravity.
       player.attemptGravityFlip();
     } else {
-      // Restart game.
       initGame();
     }
   }
@@ -244,11 +250,10 @@ export function handleKeyPressed() {
  */
 export function handleTouchStarted() {
   if (gameState === "play") {
-    // Attempt to flip gravity.
     player.attemptGravityFlip();
   } else {
-    // Restart game.
     initGame();
   }
-  return false; // Prevent default behavior.
+  return false;
 }
+

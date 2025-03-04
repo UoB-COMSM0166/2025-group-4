@@ -22,6 +22,7 @@ export class Player {
     // For buffering the flip input:
     this.flipBufferTimestamp = 0;
     this.bufferedFlipAvailable = false;
+    console.log("Player autoDirection:", this.autoDirection);
     
     // ===== 新增动画属性 =====
     this.currentFrame = 0;

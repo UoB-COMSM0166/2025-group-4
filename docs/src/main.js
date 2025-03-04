@@ -5,6 +5,7 @@
  */
 import { initGame, updateGame, drawGame, handleKeyPressed, handleTouchStarted } from './game.js';
 
+
 // p5.js setup function
 function setup() {
   createCanvas(640, 480);
@@ -13,6 +14,7 @@ function setup() {
 
 // p5.js draw function
 function draw() {
+  // 直接调用 game.js 中的更新与绘制函数
   updateGame();
   drawGame();
 }
