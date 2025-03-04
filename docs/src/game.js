@@ -388,21 +388,46 @@ export function drawGame() {
  * Draw the main menu
  */
 function drawMainMenu() {
-  // Clear the screen with a gradient background
-  background(20, 20, 40);
+  // Create a gradient background effect
+  let c1 = color(20, 20, 40);
+  let c2 = color(40, 40, 80);
+  for (let y = 0; y < height; y++) {
+    let inter = map(y, 0, height, 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    line(0, y, width, y);
+  }
   
-  // Draw title
+  // Add animated stars in the background
+  drawStars();
+  
+  // Draw a game logo or icon
   fill(255, 220, 0);
   textAlign(CENTER, CENTER);
   textSize(Math.max(40, width / 15));
-  text("Rusty Rover’s Run", width / 2, height * 0.3);
+  textStyle(BOLD);
+  text("Rusty Rover's Run", width / 2, height * 0.3);
+  textStyle(NORMAL);
   
-  // Draw play button
-  fill(100, 200, 255);
-  rect(width / 2 - 150, height * 0.55 - 40, 300, 80, 10);
+  // Add a subtitle
+  fill(200, 200, 255);
+  textSize(Math.max(16, width / 40));
+  text("A Gravity-Defying Adventure", width / 2, height * 0.38);
+  
+  // Draw play button with a pulsing effect
+  let pulseSize = sin(frameCount * 0.05) * 10;
+  fill(100, 200, 255, 220);
+  rect(width / 2 - 150 - pulseSize/2, height * 0.55 - 40 - pulseSize/2, 
+       300 + pulseSize, 80 + pulseSize, 15);
   fill(0);
   textSize(Math.max(24, width / 30));
   text("PLAY", width / 2, height * 0.55);
+  
+  // Add game description at the bottom
+  fill(255);
+  textSize(Math.max(14, width / 60));
+  text("Collect coins, avoid enemies, and flip gravity to reach the exit!", width / 2, height * 0.8);
+  text("Press SPACE or touch to flip gravity during gameplay", width / 2, height * 0.85);
 }
 
 /**
@@ -410,7 +435,17 @@ function drawMainMenu() {
  */
 function drawDifficultyMenu() {
   // Clear the screen with a gradient background
-  background(20, 20, 60);
+  let c1 = color(20, 20, 60);
+  let c2 = color(40, 40, 100);
+  for (let y = 0; y < height; y++) {
+    let inter = map(y, 0, height, 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    line(0, y, width, y);
+  }
+  
+  // Add some animated elements
+  drawStars();
   
   // Draw title
   fill(255, 220, 0);
@@ -440,18 +475,45 @@ function drawDifficultyMenu() {
   textSize(Math.max(24, width / 30));
   text("HARD", width / 2, height * 0.7);
   
+  // Draw instructions panel
+  fill(0, 0, 0, 150);
+  rect(width / 2 - 400, height * 0.85 - 45, 800, 110, 10);
+  
   // Draw difficulty descriptions
   textSize(Math.max(16, width / 50));
   fill(255);
   if (mouseY > height * 0.4 - 40 && mouseY < height * 0.4 + 40 && 
       mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-    text("More lives, higher scores, slower enemies", width / 2, height * 0.85);
+    text("More lives, higher scores, slower enemies", width / 2, height * 0.85 - 25);
   } else if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
              mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-    text("Standard game experience", width / 2, height * 0.85);
+    text("Standard game experience", width / 2, height * 0.85 - 25);
   } else if (mouseY > height * 0.7 - 40 && mouseY < height * 0.7 + 40 && 
              mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-    text("Fewer lives, lower scores, faster enemies", width / 2, height * 0.85);
+    text("Fewer lives, lower scores, faster enemies", width / 2, height * 0.85 - 25);
+  }
+  
+  // Always show basic instructions
+  textSize(Math.max(14, width / 60));
+  text("Controls: SPACE to flip gravity, avoid enemies, collect coins", width / 2, height * 0.85 + 5);
+  text("Reach the exit gate to complete each level", width / 2, height * 0.85 + 25);
+}
+
+/**
+ * Draw animated stars for menu backgrounds
+ */
+function drawStars() {
+  // Create a twinkling star effect
+  fill(255, 255, 255);
+  noStroke();
+  for (let i = 0; i < 50; i++) {
+    // Use frameCount to create animation
+    let x = (width * (i * 0.02 + 0.5)) % width;
+    let y = (height * (i * 0.03 + 0.7)) % height;
+    let size = 2 + sin((frameCount + i * 10) * 0.05) * 2;
+    let alpha = 100 + sin((frameCount + i * 20) * 0.05) * 155;
+    fill(255, 255, 255, alpha);
+    ellipse(x, y, size, size);
   }
 }
 
