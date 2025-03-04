@@ -3,6 +3,7 @@
  * 定义普通敌人、射击敌人和子弹类
  */
 import { tileSize, baseSize } from '../config.js';
+import { loseLife } from '../game.js';
 
 // 普通敌人类
 export class Enemy {
@@ -132,7 +133,7 @@ export class Bullet {
     // 使用全局 window.player
     if (dist(this.x, this.y, window.player.x, window.player.y) < this.r + window.player.w * 0.5) {
       this.active = false;
-      window.loseLife();
+      loseLife();
     }
   }
 
