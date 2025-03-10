@@ -20,6 +20,13 @@
 
  [Week 4 Stakeholders & Game Demonstration/Feedback](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
 
+ [Week 5 Agile Planning & Object-Oriented Programming](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week05.md)
+
+ [Week 7 Think Aloud & Heuristic Evaluation](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week07.md)
+
+ [Week 8 User Evaluation & Quantitative Analysis](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week08.md)
+ 
+
 
 
 ## Your Group
