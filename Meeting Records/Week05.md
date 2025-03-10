@@ -17,7 +17,7 @@ In our fifth meeting for for the Software Engineer Discipline and Principle cour
 ### Interaction & Event Handling
 - Implement real-time updates like mouse interactions.
 
-## Homework
+## Next Steps
 - Complete all P5.js exercises.
 - Design class and sequence diagrams for a project.
 - Begin implementation with a focus on the **Minimum Viable Product (MVP).**
