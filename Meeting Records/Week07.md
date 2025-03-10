@@ -25,7 +25,7 @@ A **Heuristic Evaluation** was performed by inviting an external observer to rev
 - **User Guidance:** Improve feedback on **hidden level unlock conditions** (players need clearer indications).
 - **Difficulty Balance:** Implement **difficulty selection** with adjustable speed and enemy behavior.
 
-## Next Steps & Homework
+## Next Steps 
 Based on the evaluation, our next steps include:
 - Implementing **two difficulty levels** for player selection.
 - Enhancing **visual feedback**, including **success screens** and **reset prompts** to improve clarity.
