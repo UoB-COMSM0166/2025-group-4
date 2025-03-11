@@ -9,7 +9,7 @@ export const numCols = 20; // visible columns on screen
 export const numRows = 15; // visible rows on screen
 
 // Physics configuration - base values that can be modified by difficulty
-export let gravity = 0.5; // base gravity magnitude
+export let gravity = 4; // base gravity magnitude
 export let maxSpeedX = 8; // horizontal speed limit
 
 // UI configuration
@@ -26,14 +26,14 @@ export const preSurfaceBufferDuration = 150; // in milliseconds
  */
 export function updatePhysicsForDifficulty(difficulty) {
   if (difficulty === "easy") {
-    gravity = 0.4; // Lower gravity makes the game easier to control
+    gravity = 3; // Lower gravity makes the game easier to control
     maxSpeedX = 6; // Slower max speed makes the game more forgiving
   } else if (difficulty === "hard") {
-    gravity = 0.6; // Higher gravity makes timing more difficult
+    gravity = 4; // Higher gravity makes timing more difficult
     maxSpeedX = 18; // Faster max speed makes the game more challenging
   } else {
     // Normal difficulty - default values
-    gravity = 0.5;
+    gravity = 5;
     maxSpeedX = 12;
   }
 }
