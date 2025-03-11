@@ -11,8 +11,8 @@ export class Player {
     this.y = py;
     this.vx = 0;
     this.vy = 0;
-    this.w = tileSize;
-    this.h = tileSize;
+    this.w = tileSize * 0.9;
+    this.h = tileSize * 0.9;
     this.onGround = false;
     // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
@@ -34,7 +34,7 @@ export class Player {
     this.hitWallTimestamp = 0;
     this.acceleration = 0.2; // How quickly we reach target speed
     this.wallBounceForce = 0.5; // Force applied when bouncing off walls
-    this.wallHitSlowdown = 0.7; // Speed multiplier after hitting wall
+    this.wallHitSlowdown = 0.6; // Speed multiplier after hitting wall
     this.lastGroundTimestamp = 0; // When player last touched ground
     
     // Visual feedback
@@ -290,8 +290,8 @@ export class Player {
 
   draw(cameraOffsetX) {
     // Update dimensions based on current tile size
-    this.w = tileSize;
-    this.h = tileSize;
+    this.w = tileSize * 0.9;
+    this.h = tileSize * 0.9;
     this.autoSpeed = 4.0 * (tileSize / baseSize);
 
     window.push();
