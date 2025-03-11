@@ -29,6 +29,8 @@ let backgroundImage; // different level background
 let difficulty = "normal"; // can be "easy" or "hard"
 let enemySpeed = 1.5; // base enemy speed - will be modified by difficulty
 let coinValue = 10; // base coin value - will be modified by difficulty
+let gameStartTime = 0; // 游戏开始时间
+let currentPlayTime = 0; // 当前游戏时间（秒）
 
 /**
  * Lose a life and either reset the level or end the game.
@@ -189,6 +191,10 @@ export function setDifficulty(difficultyLevel) {
     config.updatePhysicsForDifficulty(difficulty);
   });
   
+  // 初始化游戏时间
+  gameStartTime = millis();
+  currentPlayTime = 0;
+  
   // Start the game with the first level
   loadLevel(0);
   
@@ -316,6 +322,10 @@ export function reloadCurrentLevel(oldTileSize) {
 export function updateGame() {
   // If not in play state, nothing to update
   if (gameState !== "play") return;
+  
+  // 更新游戏时间
+  currentPlayTime = (millis() - gameStartTime) / 1000; // 转换为秒
+  
   cameraOffsetX = player.update(tileMap, cameraOffsetX);
   
   // 更新敌人并检测碰撞
@@ -569,6 +579,13 @@ function drawGameScreen() {
   text("Score: " + score, 20, hudHeight / 2);
   text("Lives: " + lives, 150, hudHeight / 2);
   text("Level: " + (levelIndex + 1) + "/" + levels.length, 250, hudHeight / 2);
+  
+  // 添加时间显示
+  let minutes = Math.floor(currentPlayTime / 60);
+  let seconds = Math.floor(currentPlayTime % 60);
+  // 格式化时间，确保秒数始终为两位数
+  let timeDisplay = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+  text("Time: " + timeDisplay, 400, hudHeight / 2);
   
   // Draw difficulty indicator
   let difficultyColor;
