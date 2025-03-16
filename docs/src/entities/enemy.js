@@ -10,7 +10,7 @@ export class Enemy {
   constructor(px, py) {
     this.x = px;
     this.y = py;
-    this.w = tileSize * 0.6;
+    this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
     // Patrol movement boundaries.
     this.range = 3; // Default patrol range in tiles
@@ -70,7 +70,7 @@ export class ShooterEnemy {
   constructor(px, py) {
     this.x = px;
     this.y = py;
-    this.w = tileSize * 0.8;
+    this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
     this.shootCooldown = 2000; // 每2秒射击一次
     this.lastShotTime = 0; // 初始化为0，确保首次更新时会射击

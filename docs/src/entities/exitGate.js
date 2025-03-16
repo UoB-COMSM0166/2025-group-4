@@ -8,7 +8,7 @@ export class ExitGate {
     this.x = px;
     this.y = py;
     this.w = tileSize;
-    this.h = tileSize * 1.5;
+    this.h = tileSize;
   }
 
   checkPlayer(pl) {
@@ -30,7 +30,7 @@ export class ExitGate {
   draw(cameraOffsetX) {
     // Update dimensions based on current tile size
     this.w = tileSize;
-    this.h = tileSize * 1.5;
+    this.h = tileSize;
 
     window.push();
     // Draw the exit gate.

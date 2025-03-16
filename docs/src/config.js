@@ -3,8 +3,8 @@
  */
 
 // Tile and level configuration
-export let tileSize = 32; // pixel size of each tile (will be dynamically calculated)
-export const baseSize = 32; // base tile size for reference
+export let tileSize = 24; // pixel size of each tile (will be dynamically calculated)
+export const baseSize = 24; // base tile size for reference
 export const numCols = 20; // visible columns on screen
 export const numRows = 15; // visible rows on screen
 
@@ -48,7 +48,7 @@ export function updateTileSize(windowWidth, windowHeight) {
   tileSize = Math.floor(Math.min(widthBasedSize, heightBasedSize));
   
   // Ensure minimum size
-  tileSize = Math.max(tileSize, 16);
+  tileSize = Math.max(tileSize, 12); // Reduced minimum size from 16 to 12
   
   return tileSize;
 }

@@ -19,6 +19,7 @@ export class Player {
     this.onGround = false;
     // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
+    this.cameraPositionRatio = this.autoDirection > 0 ? 0.4 : 0.6;
     this.autoSpeed = 4.0 * (tileSize / baseSize); // Scale speed with tile size
     this.targetSpeed = this.autoSpeed; // Target speed for smooth acceleration
     // Gravity direction: 1 = normal (downward), -1 = flipped (upward)
@@ -178,11 +179,38 @@ export class Player {
     // Check collisions with hazards (spike tiles)
     this.checkHazards(tileMap);
 
-    // Update camera (ensuring it never goes negative)
-    let newCameraOffsetX = this.x - window.width * 0.3;
-    if (newCameraOffsetX < 0) newCameraOffsetX = 0;
+    // Improved camera positioning with better centering:
     
-    return newCameraOffsetX;
+    // Calculate map dimensions
+    const mapWidth = tileMap[0].length * tileSize;
+    
+    // Check if the entire map can fit within the viewport
+    if (mapWidth <= window.width) {
+      // If the map is smaller than the viewport, center it horizontally
+      let newCameraOffsetX = (mapWidth - window.width) / 2;
+      // Ensure we don't go negative (which would happen if map is smaller than viewport)
+      newCameraOffsetX = Math.max(0, newCameraOffsetX);
+      return newCameraOffsetX;
+    } else {
+    // Map is larger than viewport, follow player with improved positioning
+    // Smoothly adjust camera position based on player's direction to avoid abrupt changes
+    const targetRatio = this.autoDirection > 0 ? 0.4 : 0.6;
+    // Ensure cameraPositionRatio is initialized
+    if (this.cameraPositionRatio === undefined) {
+        this.cameraPositionRatio = targetRatio;
+    }
+    // Smoothly update the camera ratio (adjust the smoothing factor as needed)
+    this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * 0.02;
+    let newCameraOffsetX = this.x - window.width * this.cameraPositionRatio;
+      
+      // Ensure camera doesn't go negative
+      newCameraOffsetX = Math.max(0, newCameraOffsetX);
+      
+      // Ensure camera doesn't go beyond the right edge of the level
+      const maxCameraX = mapWidth - window.width;
+      newCameraOffsetX = Math.min(newCameraOffsetX, maxCameraX);
+      return newCameraOffsetX;
+    }
   }
 
   // Trigger hit visual effect
