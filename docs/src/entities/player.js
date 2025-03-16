@@ -157,6 +157,14 @@ export class Player {
       }
     }
 
+    if (window.strictVerticalBoundaries) {
+      // 对于严格的半开放地图，一旦玩家的 y 坐标超出地图范围立即判输
+      if (this.y < 0 || this.y > tileMap.length * tileSize) {
+        this.triggerHitEffect();
+        loseLife();
+        return;
+      }
+    } else {
     // Check if the player has fallen off the map or gone beyond the boundaries
     const mapHeight = tileMap.length * tileSize;
     
@@ -175,7 +183,7 @@ export class Player {
         return;
       }
     }
-
+  }
     // Check collisions with hazards (spike tiles)
     this.checkHazards(tileMap);
 
