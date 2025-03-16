@@ -40,6 +40,11 @@ export class Enemy {
   }
 
   checkPlayerCollision(pl) {
+    // Check for player invincibility first
+    if (window.invincibilityActive) {
+      return false;
+    }
+    
     // 简单的 AABB 碰撞检测
     let halfW = this.w * 0.5;
     let halfH = this.h * 0.5;
@@ -143,8 +148,17 @@ export class Bullet {
     
     // 检测与玩家的碰撞
     if (window.player && this.active) {
+      // Skip collision if player is invincible
+      if (window.invincibilityActive) {
+        return;
+      }
+      
       if (dist(this.x, this.y, window.player.x, window.player.y) < this.r + window.player.w * 0.5) {
         this.active = false;
+        // Trigger hit effect on player if possible
+        if (window.player.triggerHitEffect) {
+          window.player.triggerHitEffect();
+        }
         loseLife();
       }
     }

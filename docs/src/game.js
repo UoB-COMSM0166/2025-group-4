@@ -21,6 +21,25 @@ let score = 0; // player's score
 let backgroundColor; // for background gradient
 let gameState = "menu"; // can be "menu", "difficulty", "play", "win", or "over"
 let lives = 3; // number of lives
+
+// Hitstop and invincibility variables
+let hitstopActive = false; // whether hitstop is active
+let hitstopDuration = 15; // frames of hitstop when hit
+let hitstopFramesLeft = 0; // how many frames of hitstop are left
+let invincibilityActive = false; // whether player is invincible
+let invincibilityDuration = 90; // frames of invincibility after getting hit
+let invincibilityFramesLeft = 0; // how many frames of invincibility are left
+let hitScreenShakeAmount = 8; // amount of screen shake when hit
+let screenShakeX = 0; // current screen shake X offset
+let screenShakeY = 0; // current screen shake Y offset
+// Enhanced screen shake variables
+let screenShakeDecay = 0.85; // how quickly screen shake decays
+let screenShakeTrauma = 0; // current trauma level (0-1)
+let screenShakeNoiseOffsetX = 0; // noise offset for X shake
+let screenShakeNoiseOffsetY = 100; // noise offset for Y shake
+let screenShakeNoiseOffsetAngle = 200; // noise offset for rotation shake
+let screenShakeRotation = 0; // current rotation shake amount
+
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
@@ -32,21 +51,70 @@ let coinValue = 10; // base coin value - will be modified by difficulty
 let gameStartTime = 0; // 游戏开始时间
 let currentPlayTime = 0; // 当前游戏时间（秒）
 
+// Export game state to window for access in other modules
+function updateWindowGameState() {
+  window.invincibilityActive = invincibilityActive;
+  window.hitstopActive = hitstopActive;
+  window.frameCount = window.frameCount || 0; // Ensure frameCount exists
+}
+
 /**
  * Lose a life and either reset the level or end the game.
  */
 export function loseLife() {
+  // If player is invincible, don't take damage
+  if (invincibilityActive) {
+    return;
+  }
+  
   lives--;
   window.deathSound.play();
+  
   if (lives <= 0) {
+    // Game over
     gameState = "over";
   } else {
-    // Reset player position.
+    // Trigger hitstop effect
+    hitstopActive = true;
+    hitstopFramesLeft = hitstopDuration;
+    
+    // Apply enhanced screen shake - set trauma to max
+    screenShakeTrauma = 1.0;
+    
+    // Start invincibility period
+    invincibilityActive = true;
+    invincibilityFramesLeft = invincibilityDuration;
+    
+    // We don't reset player position immediately during hitstop
+    // It will be reset when hitstop ends
+  }
+}
+
+// Add a new function to handle the end of hitstop
+function endHitstop() {
+  hitstopActive = false;
+  
+  // Only reset player position if outside map boundaries
+  const mapWidth = tileMap[0].length * tileSize;
+  const mapHeight = tileMap.length * tileSize;
+  
+  const isOutsideMap = 
+    player.x < 0 || 
+    player.x > mapWidth || 
+    player.y < -200 || // Allow some space above for flipped gravity
+    player.y > mapHeight + 200; // Allow some space below
+  
+  if (isOutsideMap) {
+    // Reset player position
     player.x = playerSpawnX;
     player.y = playerSpawnY;
     player.vx = 0;
     player.vy = 0;
     player.gravityDirection = 1; // Reset gravity to normal.
+  } else {
+    // Just reduce velocity to give player a chance to recover
+    player.vx *= 0.5;
+    player.vy *= 0.5;
   }
 }
 
@@ -326,6 +394,39 @@ export function updateGame() {
   // 更新游戏时间
   currentPlayTime = (millis() - gameStartTime) / 1000; // 转换为秒
   
+  // Update hitstop and invincibility timers
+  if (hitstopActive) {
+    hitstopFramesLeft--;
+    
+    // Update screen shake using trauma-based system
+    updateScreenShake();
+    
+    if (hitstopFramesLeft <= 0) {
+      endHitstop();
+    }
+    
+    // Update window game state
+    updateWindowGameState();
+    
+    // Don't update game logic during hitstop
+    return;
+  } else {
+    // Continue to update screen shake even after hitstop ends
+    // for a smoother transition
+    updateScreenShake();
+  }
+  
+  // Update invincibility
+  if (invincibilityActive) {
+    invincibilityFramesLeft--;
+    if (invincibilityFramesLeft <= 0) {
+      invincibilityActive = false;
+    }
+  }
+  
+  // Update window game state
+  updateWindowGameState();
+  
   cameraOffsetX = player.update(tileMap, cameraOffsetX);
   
   // 更新敌人并检测碰撞
@@ -374,10 +475,56 @@ export function updateGame() {
   }
 }
 
+// New function to update screen shake using a trauma-based system
+function updateScreenShake() {
+  // Reduce trauma over time
+  screenShakeTrauma *= screenShakeDecay;
+  
+  // If trauma is very small, reset it to zero
+  if (screenShakeTrauma < 0.01) {
+    screenShakeTrauma = 0;
+    screenShakeX = 0;
+    screenShakeY = 0;
+    screenShakeRotation = 0;
+    return;
+  }
+  
+  // Use noise to create more natural-looking shake
+  // Increment noise offsets for continuous variation
+  screenShakeNoiseOffsetX += 0.1;
+  screenShakeNoiseOffsetY += 0.1;
+  screenShakeNoiseOffsetAngle += 0.1;
+  
+  // Calculate shake amount based on trauma (squared for more dramatic effect)
+  const traumaSquared = screenShakeTrauma * screenShakeTrauma;
+  
+  // Use noise or random for shake direction
+  if (window.noise) {
+    // If p5.js noise function is available
+    screenShakeX = hitScreenShakeAmount * traumaSquared * (window.noise(screenShakeNoiseOffsetX) * 2 - 1);
+    screenShakeY = hitScreenShakeAmount * traumaSquared * (window.noise(screenShakeNoiseOffsetY) * 2 - 1);
+    screenShakeRotation = 0.05 * traumaSquared * (window.noise(screenShakeNoiseOffsetAngle) * 2 - 1);
+  } else {
+    // Fallback to random if noise isn't available
+    screenShakeX = hitScreenShakeAmount * traumaSquared * (Math.random() * 2 - 1);
+    screenShakeY = hitScreenShakeAmount * traumaSquared * (Math.random() * 2 - 1);
+    screenShakeRotation = 0.05 * traumaSquared * (Math.random() * 2 - 1);
+  }
+}
+
 /**
  * Draw the game
  */
 export function drawGame() {
+  push(); // Save the current transformation state
+  
+  // Apply screen shake if active
+  if (screenShakeTrauma > 0) {
+    translate(width/2 + screenShakeX, height/2 + screenShakeY);
+    rotate(screenShakeRotation);
+    translate(-width/2, -height/2);
+  }
+  
   if (backgroundImage) {
     image(backgroundImage, 0, 0, width, height);
   } else {
@@ -392,6 +539,8 @@ export function drawGame() {
   } else if (gameState === "play" || gameState === "over" || gameState === "win") {
     drawGameScreen();
   }
+  
+  pop(); // Restore the transformation state
 }
 
 /**
@@ -564,8 +713,16 @@ function drawGameScreen() {
     }
   }
 
-  // Draw player
-  player.draw(cameraOffsetX);
+  // Draw player with invincibility effect
+  if (invincibilityActive && !hitstopActive) {
+    // Flash the player during invincibility (show only every other 4 frames)
+    if (frameCount % 8 < 4) {
+      player.draw(cameraOffsetX);
+    }
+  } else {
+    player.draw(cameraOffsetX);
+  }
+  
   pop();
   
 

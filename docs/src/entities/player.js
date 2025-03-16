@@ -5,6 +5,9 @@ import { tileSize, baseSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airB
 import { getTile } from '../utils.js';
 import { loseLife } from '../game.js';
 
+// Get reference to global game state
+let invincibilityActive = false;
+
 export class Player {
   constructor(px, py) {
     this.x = px;
@@ -41,15 +44,36 @@ export class Player {
     this.squashFactor = 1.0; // For squash and stretch animation
     this.stretchFactor = 1.0;
     this.recoveryRate = 0.1; // How quickly squash/stretch returns to normal
+    
+    // Hit flash effect
+    this.hitFlashActive = false;
+    this.hitFlashIntensity = 0;
   }
 
   update(tileMap, cameraOffsetX) {
+    // Get current invincibility state from window
+    invincibilityActive = window.invincibilityActive;
+    
+    // Update hit flash effect
+    if (this.hitFlashActive) {
+      this.hitFlashIntensity -= 0.1;
+      if (this.hitFlashIntensity <= 0) {
+        this.hitFlashIntensity = 0;
+        this.hitFlashActive = false;
+      }
+    }
+    
     // Store previous position for collision detection
     const prevX = this.x;
     const prevY = this.y;
     
     // Apply gravity
     this.vy += gravity * this.gravityDirection;
+
+    // Limit maximum vertical speed to prevent falling through tiles
+    const maxVerticalSpeed = 12 * (tileSize / baseSize); // Scale with tile size
+    if (this.vy > maxVerticalSpeed) this.vy = maxVerticalSpeed;
+    if (this.vy < -maxVerticalSpeed) this.vy = -maxVerticalSpeed;
 
     // Smooth acceleration to target speed when on ground
     if (this.onGround) {
@@ -71,16 +95,35 @@ export class Player {
     if (this.vx > maxSpeedX) this.vx = maxSpeedX;
     if (this.vx < -maxSpeedX) this.vx = -maxSpeedX;
 
+    // For high vertical speeds, do multiple collision checks to prevent tunneling
+    const steps = Math.max(1, Math.ceil(Math.abs(this.vy) / 5));
+    
     // Move horizontally and resolve collisions
     this.x += this.vx;
     const hadHorizontalCollision = this.checkTileCollisions(true, tileMap, prevX, prevY);
     
-    // Move vertically and resolve collisions
-    this.y += this.vy;
-    // Reset onGround before checking vertical collisions
+    // Store onGround state before vertical movement
     const wasOnGround = this.onGround;
-    this.onGround = false;
-    const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
+    
+    // Move vertically in steps for high speeds
+    if (steps > 1) {
+      const stepVy = this.vy / steps;
+      for (let i = 0; i < steps; i++) {
+        this.y += stepVy;
+        // Reset onGround before checking vertical collisions
+        if (i === 0) {
+          this.onGround = false;
+        }
+        const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
+        if (hadVerticalCollision) break;
+      }
+    } else {
+      // Normal vertical movement for low speeds
+      this.y += this.vy;
+      // Reset onGround before checking vertical collisions
+      this.onGround = false;
+      const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
+    }
     
     // Add squash/stretch effects based on collisions and velocity
     if (!wasOnGround && this.onGround) {
@@ -119,12 +162,14 @@ export class Player {
     if (this.gravityDirection === 1) {
       // Normal gravity - check if fallen off the bottom
       if (this.y > mapHeight + 200) {
+        this.triggerHitEffect();
         loseLife();
         return;
       }
     } else {
       // Flipped gravity - check if gone beyond the top
       if (this.y < -200) {
+        this.triggerHitEffect();
         loseLife();
         return;
       }
@@ -140,6 +185,16 @@ export class Player {
     return newCameraOffsetX;
   }
 
+  // Trigger hit visual effect
+  triggerHitEffect() {
+    this.hitFlashActive = true;
+    this.hitFlashIntensity = 1.0;
+    
+    // Add extra squash for impact feel
+    this.squashFactor = 0.5;
+    this.stretchFactor = 1.5;
+  }
+
   // Enhanced collision checking with wall bounce effects
   checkTileCollisions(isX, tileMap, prevX, prevY) {
     let halfW = this.w * 0.5;
@@ -148,8 +203,9 @@ export class Player {
     
     if (isX) {
       let epsilon = 1;
-      let topRow = Math.floor((this.y - halfH) / tileSize);
-      let bottomRow = Math.floor((this.y + halfH - epsilon) / tileSize);
+      // Use a slightly smaller height for horizontal collision checks to prevent getting stuck
+      let topRow = Math.floor((this.y - halfH + 2) / tileSize);
+      let bottomRow = Math.floor((this.y + halfH - 2 - epsilon) / tileSize);
 
       if (this.vx > 0) {
         // Moving right: check the right edge
@@ -181,44 +237,84 @@ export class Player {
         }
       }
     } else {
-      let leftCol = Math.floor((this.x - halfW) / tileSize);
-      let rightCol = Math.floor((this.x + halfW - 1) / tileSize);
+      // Use a slightly smaller width for vertical collision checks to prevent getting stuck
+      let leftCol = Math.floor((this.x - halfW + 2) / tileSize);
+      let rightCol = Math.floor((this.x + halfW - 2) / tileSize);
 
       if ((this.vy > 0 && this.gravityDirection > 0) || (this.vy < 0 && this.gravityDirection < 0)) {
+        // Moving down with normal gravity or up with flipped gravity
         let checkRow = Math.floor((this.gravityDirection > 0 ? this.y + halfH : this.y - halfH) / tileSize);
+        
+        // Check for collision with floor/ceiling
+        let foundSolidTile = false;
         for (let col = leftCol; col <= rightCol; col++) {
           if (checkRow >= 0 && checkRow < tileMap.length && col >= 0 && col < tileMap[checkRow].length) {
             if (getTile(col, checkRow, tileMap) === 1) {
-              if (this.gravityDirection > 0) {
-                this.y = checkRow * tileSize - halfH;
-              } else {
-                this.y = (checkRow + 1) * tileSize + halfH;
-              }
-              // Apply squash effect when landing
-              if (Math.abs(this.vy) > 2) {
-                this.squashFactor = Math.max(0.7, 1 - Math.abs(this.vy) * 0.02);
-                this.stretchFactor = Math.min(1.3, 1 + Math.abs(this.vy) * 0.02);
-              }
-              this.vy = 0;
-              this.onGround = true;
-              hadCollision = true;
+              foundSolidTile = true;
               break;
             }
           }
         }
+        
+        // If we found a solid tile, adjust position and set onGround
+        if (foundSolidTile) {
+          if (this.gravityDirection > 0) {
+            this.y = checkRow * tileSize - halfH;
+          } else {
+            this.y = (checkRow + 1) * tileSize + halfH;
+          }
+          
+          // Apply squash effect when landing
+          if (Math.abs(this.vy) > 2) {
+            this.squashFactor = Math.max(0.7, 1 - Math.abs(this.vy) * 0.02);
+            this.stretchFactor = Math.min(1.3, 1 + Math.abs(this.vy) * 0.02);
+          }
+          
+          this.vy = 0;
+          this.onGround = true;
+          hadCollision = true;
+        }
       } else if ((this.vy < 0 && this.gravityDirection > 0) || (this.vy > 0 && this.gravityDirection < 0)) {
+        // Moving up with normal gravity or down with flipped gravity
         let checkRow = Math.floor((this.gravityDirection > 0 ? this.y - halfH : this.y + halfH) / tileSize);
+        
+        // Check for collision with ceiling/floor
+        let foundSolidTile = false;
+        let collidedCol = -1;
+        
         for (let col = leftCol; col <= rightCol; col++) {
           if (checkRow >= 0 && checkRow < tileMap.length && col >= 0 && col < tileMap[checkRow].length) {
             if (getTile(col, checkRow, tileMap) === 1) {
-              if (this.gravityDirection > 0) {
-                this.y = (checkRow + 1) * tileSize + halfH;
-              } else {
-                this.y = checkRow * tileSize - halfH;
-              }
-              this.vy = 0;
-              hadCollision = true;
+              foundSolidTile = true;
+              collidedCol = col;
               break;
+            }
+          }
+        }
+        
+        // If we found a solid tile, adjust position
+        if (foundSolidTile) {
+          if (this.gravityDirection > 0) {
+            this.y = (checkRow + 1) * tileSize + halfH;
+          } else {
+            this.y = checkRow * tileSize - halfH;
+          }
+          
+          this.vy = 0;
+          hadCollision = true;
+          
+          // If we're hitting a ceiling and moving horizontally, check if we need to adjust horizontal position
+          // to prevent getting stuck in corners
+          if (Math.abs(this.vx) > 0) {
+            // Check if there's a wall next to us that might cause us to get stuck
+            const nextCol = this.vx > 0 ? collidedCol + 1 : collidedCol - 1;
+            const nextRow = checkRow + (this.gravityDirection > 0 ? 1 : -1);
+            
+            if (nextRow >= 0 && nextRow < tileMap.length && nextCol >= 0 && nextCol < tileMap[nextRow].length) {
+              if (getTile(nextCol, nextRow, tileMap) === 1) {
+                // There's a potential corner - adjust horizontal position slightly
+                this.x += this.vx > 0 ? -1 : 1;
+              }
             }
           }
         }
@@ -249,15 +345,24 @@ export class Player {
     let rightCol = Math.floor((this.x + halfW) / tileSize);
     let topRow = Math.floor((this.y - halfH) / tileSize);
     let bottomRow = Math.floor((this.y + halfH) / tileSize);
-
-    for (let col = leftCol; col <= rightCol; col++) {
-      for (let row = topRow; row <= bottomRow; row++) {
-        if (getTile(col, row, tileMap) === 5) {
-          loseLife();
-          return;
+    
+    // Check each tile in the player's bounding box
+    for (let row = topRow; row <= bottomRow; row++) {
+      for (let col = leftCol; col <= rightCol; col++) {
+        if (row >= 0 && row < tileMap.length && col >= 0 && col < tileMap[row].length) {
+          // Spikes are represented by the tile '5' in our map
+          if (getTile(col, row, tileMap) === 5) {
+            // Only take damage if not invincible
+            if (!invincibilityActive) {
+              this.triggerHitEffect();
+              loseLife();
+              return true;
+            }
+          }
         }
       }
     }
+    return false;
   }
 
   // Enhanced gravity flip with more feedback
@@ -295,6 +400,26 @@ export class Player {
     this.autoSpeed = 4.0 * (tileSize / baseSize);
 
     window.push();
+    window.translate(this.x - cameraOffsetX, this.y);
+    
+    // Apply squash and stretch for more dynamic feel
+    window.scale(this.stretchFactor, this.squashFactor);
+    
+    // Draw character shadow - position depends on gravity direction
+    window.fill(0, 0, 0, 60);
+    window.noStroke();
+    // Shadow above when gravity is flipped, below when normal
+    const shadowOffsetY = tileSize * 0.45 * this.gravityDirection;
+    if (this.onGround) {
+      window.ellipse(0, shadowOffsetY, this.w * 0.6, this.h * 0.2);
+    }
+    
+    // Draw hit flash effect if active
+    if (this.hitFlashActive) {
+      window.fill(255, 255, 255, this.hitFlashIntensity * 200);
+      window.noStroke();
+      window.rect(-this.w/2, -this.h/2, this.w, this.h);
+    }
 
     // Update animation frame counter, and switch current frame
     this.frameCounter++;
@@ -303,40 +428,41 @@ export class Player {
       const speed = Math.abs(this.vx);
       this.currentFrame = (this.currentFrame + 1) % window.playerImages.length;
       this.frameCounter = 0;
+    }
+    
+    // Draw the player sprite
+    if (window.playerImages && window.playerImages.length > 0) {
+      // If facing left, flip the image horizontally
+      // If gravity is flipped, flip the image vertically
+      window.push();
       
-      // Adjust frameDelay based on movement speed (faster movement = faster animation)
-      this.frameDelay = Math.max(5, 10 - Math.abs(this.vx) * 2);
+      // Apply horizontal flip if moving left
+      const horizontalFlip = this.autoDirection < 0 ? -1 : 1;
+      
+      // Apply vertical flip if gravity is flipped
+      const verticalFlip = this.gravityDirection < 0 ? -1 : 1;
+      
+      // Apply both flips
+      window.scale(horizontalFlip, verticalFlip);
+      
+      // Use tinted version if invincible but not during hit flash
+      if (invincibilityActive && !this.hitFlashActive) {
+        // Apply a pulsing effect during invincibility
+        const pulseAmount = 0.5 + Math.sin(window.frameCount * 0.2) * 0.3;
+        window.tint(255, 255, 255, 150 + pulseAmount * 105); // Semi-transparent when invincible
+      }
+      
+      window.imageMode(window.CENTER);
+      window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+      window.pop();
+    } else {
+      // Simple rectangle representation if no image is available
+      window.fill(255, 0, 0);
+      window.stroke(0);
+      window.strokeWeight(2);
+      window.rect(-this.w/2, -this.h/2, this.w, this.h);
     }
     
-    // Determine horizontal direction based on movement
-    let facingRight = this.autoDirection > 0;
-    if (Math.abs(this.vx) > 0.1) {
-      facingRight = this.vx > 0;
-    }
-    
-    // Apply transformations based on gravity direction and horizontal movement
-    window.translate(this.x - cameraOffsetX, this.y);
-    
-    // Apply squash and stretch effects
-    let scaleX = (facingRight ? 1 : -1) * this.stretchFactor; 
-    let scaleY = this.gravityDirection < 0 ? -this.squashFactor : this.squashFactor;
-    
-    // Apply vertical flip if gravity is flipped
-    window.scale(scaleX, scaleY);
-    
-    // Add a slight tilt based on velocity for more dynamic movement feel
-    // const tiltAngle = this.vx * 0.05;
-    // window.rotate(tiltAngle);
-    
-    // Draw the image at the origin (after translation)
-    window.image(
-      window.playerImages[this.currentFrame],
-      -this.w * 0.5,
-      -this.h * 0.5,
-      this.w,
-      this.h
-    );
-
     window.pop();
   }
 }
