@@ -50,6 +50,11 @@ export function drawTiles(tileMap, cameraOffsetX) {
       // Skip drawing if off-screen.
       if (x < -tileSize || x > window.width) continue;
 
+      // 如果是动态平台的标记，不在这里绘制，由 floatingPlatform 处理
+      if (tile === "6" || tile === "7") {
+        continue;
+      }
+
       if (tile === "1") {
         // Solid ground with enhanced visuals
         // Base platform color

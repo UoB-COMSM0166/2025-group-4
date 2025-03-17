@@ -8,6 +8,8 @@ import { Enemy, ShooterEnemy, Bullet } from './entities/enemy.js';
 import { Coin } from './entities/coin.js';
 import { ExitGate } from './entities/exitGate.js';
 import { getTile, drawTiles } from './utils.js';
+import { FloatingPlatform } from './floatingPlatform.js';
+
 
 // Game state variables
 let levelIndex = 0; // which level the player is on
@@ -50,6 +52,8 @@ let enemySpeed = 1.5; // base enemy speed - will be modified by difficulty
 let coinValue = 10; // base coin value - will be modified by difficulty
 let gameStartTime = 0; // 游戏开始时间
 let currentPlayTime = 0; // 当前游戏时间（秒）
+let floatingPlatforms = [];//动态悬浮平台对象
+
 
 // Export game state to window for access in other modules
 function updateWindowGameState() {
@@ -128,6 +132,12 @@ export function loadLevel(idx) {
     gameState = "win";
     return;
   }
+
+
+  // 清空旧的动态悬浮平台
+  floatingPlatforms = [];
+
+  
   tileMap = levels[idx].map.slice();
   coins = [];
   enemies = [];
@@ -188,10 +198,16 @@ export function loadLevel(idx) {
           console.log("添加普通 Enemy 在：", x, y);
         }
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      }
+      } else if (tile === "6" || tile === "7") {
+        // 动态悬浮平台
+        // 6：上下移动的平台，7：左右移动的平台
+        // 创建平台对象后将该位置替换为空白，避免后续静态绘制
+        floatingPlatforms.push(new FloatingPlatform(x, y, tile));
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+
     }
   }
-  
+}
   // 若未找到玩家起始点，则使用默认值
   if (!foundPlayer) {
     playerSpawnX = tileSize * 2;
@@ -210,6 +226,7 @@ export function loadLevel(idx) {
   levelIndex = idx;
   console.log("加载关卡：", levelIndex);
   window.levelLoadTime = millis();
+  window.floatingPlatforms = floatingPlatforms;
 }
 
 
@@ -476,6 +493,12 @@ export function updateGame() {
       }
     }
   }
+
+
+    // 更新动态悬浮平台
+    for (let platform of floatingPlatforms) {
+      platform.update();
+    }  
 }
 
 // New function to update screen shake using a trauma-based system
@@ -715,6 +738,14 @@ function drawGameScreen() {
       bullet.draw(cameraOffsetX);
     }
   }
+
+
+  // 在绘制玩家之前添加动态平台绘制
+for (let platform of floatingPlatforms) {
+  platform.draw(cameraOffsetX);
+}
+
+
 
   // Draw player with invincibility effect
   if (invincibilityActive && !hitstopActive) {

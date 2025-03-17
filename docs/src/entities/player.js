@@ -187,6 +187,8 @@ export class Player {
     // Check collisions with hazards (spike tiles)
     this.checkHazards(tileMap);
 
+
+    this.checkFloatingPlatformCollisions(window.floatingPlatforms);
     // Improved camera positioning with better centering:
     
     // Calculate map dimensions
@@ -219,6 +221,8 @@ export class Player {
       newCameraOffsetX = Math.min(newCameraOffsetX, maxCameraX);
       return newCameraOffsetX;
     }
+    // 静态碰撞检测之后，加入动态平台检测
+
   }
 
   // Trigger hit visual effect
@@ -501,6 +505,41 @@ export class Player {
     
     window.pop();
   }
+
+
+  checkFloatingPlatformCollisions(platforms) {
+    const tolerance = 4;
+    const halfPlayerW = this.w * 0.5;
+    const halfPlayerH = this.h * 0.5;
+    
+    for (let platform of platforms) {
+      const halfPlatformW = platform.width * 0.5;
+      const halfPlatformH = platform.height * 0.5;
+      
+      if (this.gravityDirection > 0) {
+        // 正常重力：检测玩家底部是否接触到平台顶部
+        if (this.y + halfPlayerH >= platform.y - halfPlatformH - tolerance &&
+            this.y + halfPlayerH <= platform.y - halfPlatformH + tolerance &&
+            Math.abs(this.x - platform.x) < halfPlayerW + halfPlatformW) {
+          this.y = platform.y - halfPlatformH - halfPlayerH;
+          this.vy = 0;
+          this.onGround = true;
+        }
+      } else {
+        // 重力翻转：检测玩家顶部是否接触到平台底部
+        if (this.y - halfPlayerH <= platform.y + halfPlatformH + tolerance &&
+            this.y - halfPlayerH >= platform.y + halfPlatformH - tolerance &&
+            Math.abs(this.x - platform.x) < halfPlayerW + halfPlatformW) {
+          this.y = platform.y + halfPlatformH + halfPlayerH;
+          this.vy = 0;
+          this.onGround = true;
+        }
+      }
+    }
+  }
+  
+
+  
 }
 
 
