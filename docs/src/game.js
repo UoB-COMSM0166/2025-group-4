@@ -24,6 +24,10 @@ let backgroundColor; // for background gradient
 let gameState = "menu"; // can be "menu", "difficulty", "play", "win", or "over"
 let lives = 3; // number of lives
 
+// Fixed timestep physics variables
+let physicsClock = 0; // Tracks physics simulation time
+const DEFAULT_DELTA_TIME = 1/60; // Default delta time if not provided
+
 // Hitstop and invincibility variables
 let hitstopActive = false; // whether hitstop is active
 let hitstopDuration = 15; // frames of hitstop when hit
@@ -60,6 +64,7 @@ function updateWindowGameState() {
   window.invincibilityActive = invincibilityActive;
   window.hitstopActive = hitstopActive;
   window.frameCount = window.frameCount || 0; // Ensure frameCount exists
+  window.physicsClock = physicsClock; // Expose physics clock to window
 }
 
 /**
@@ -406,20 +411,27 @@ export function reloadCurrentLevel(oldTileSize) {
 
 /**
  * Update game state
+ * @param {number} deltaTime - Time in seconds since the last update (for fixed timestep)
  */
-export function updateGame() {
+export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
   // If not in play state, nothing to update
   if (gameState !== "play") return;
+  
+  // Update physics clock
+  physicsClock += deltaTime;
+  
+  // Convert deltaTime to seconds if needed
+  const dt = deltaTime;
   
   // 更新游戏时间
   currentPlayTime = (millis() - gameStartTime) / 1000; // 转换为秒
   
-  // Update hitstop and invincibility timers
+  // Update hitstop and invincibility timers - convert frame-based to time-based
   if (hitstopActive) {
-    hitstopFramesLeft--;
+    hitstopFramesLeft -= 1;
     
     // Update screen shake using trauma-based system
-    updateScreenShake();
+    updateScreenShake(dt);
     
     if (hitstopFramesLeft <= 0) {
       endHitstop();
@@ -433,12 +445,12 @@ export function updateGame() {
   } else {
     // Continue to update screen shake even after hitstop ends
     // for a smoother transition
-    updateScreenShake();
+    updateScreenShake(dt);
   }
   
-  // Update invincibility
+  // Update invincibility - convert frame-based to time-based
   if (invincibilityActive) {
-    invincibilityFramesLeft--;
+    invincibilityFramesLeft -= 1;
     if (invincibilityFramesLeft <= 0) {
       invincibilityActive = false;
     }
@@ -447,11 +459,12 @@ export function updateGame() {
   // Update window game state
   updateWindowGameState();
   
-  cameraOffsetX = player.update(tileMap, cameraOffsetX);
+  // Update player with deltaTime
+  cameraOffsetX = player.update(tileMap, cameraOffsetX, dt);
   
   // 更新敌人并检测碰撞
   for (let enemy of enemies) {
-    enemy.update();
+    enemy.update(dt);
     if (enemy.checkPlayerCollision(player)) {
       console.log("检测到玩家与敌人碰撞，位置：", enemy.x, enemy.y);
       loseLife();
@@ -471,7 +484,7 @@ export function updateGame() {
   // 更新子弹
   if (window.bullets && window.bullets.length > 0) {
     for (let i = window.bullets.length - 1; i >= 0; i--) {
-      window.bullets[i].update();
+      window.bullets[i].update(dt);
       // 如果子弹不再活跃，从数组中移除
       if (!window.bullets[i].active) {
         window.bullets.splice(i, 1);
@@ -497,14 +510,14 @@ export function updateGame() {
 
     // 更新动态悬浮平台
     for (let platform of floatingPlatforms) {
-      platform.update();
+      platform.update(dt);
     }  
 }
 
 // New function to update screen shake using a trauma-based system
-function updateScreenShake() {
-  // Reduce trauma over time
-  screenShakeTrauma *= screenShakeDecay;
+function updateScreenShake(deltaTime) {
+  // Reduce trauma over time - adjusted for deltaTime
+  screenShakeTrauma *= Math.pow(screenShakeDecay, deltaTime * 60); // Scale with frameRate
   
   // If trauma is very small, reset it to zero
   if (screenShakeTrauma < 0.01) {
@@ -516,10 +529,11 @@ function updateScreenShake() {
   }
   
   // Use noise to create more natural-looking shake
-  // Increment noise offsets for continuous variation
-  screenShakeNoiseOffsetX += 0.1;
-  screenShakeNoiseOffsetY += 0.1;
-  screenShakeNoiseOffsetAngle += 0.1;
+  // Increment noise offsets for continuous variation - adjusted for deltaTime
+  const noiseStep = 0.1 * deltaTime * 60; // Scale with frameRate
+  screenShakeNoiseOffsetX += noiseStep;
+  screenShakeNoiseOffsetY += noiseStep;
+  screenShakeNoiseOffsetAngle += noiseStep;
   
   // Calculate shake amount based on trauma (squared for more dramatic effect)
   const traumaSquared = screenShakeTrauma * screenShakeTrauma;
@@ -540,8 +554,9 @@ function updateScreenShake() {
 
 /**
  * Draw the game
+ * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
-export function drawGame() {
+export function drawGame(interpolation = 0) {
   push(); // Save the current transformation state
   
   // Apply screen shake if active
@@ -563,7 +578,7 @@ export function drawGame() {
   } else if (gameState === "difficulty") {
     drawDifficultyMenu();
   } else if (gameState === "play" || gameState === "over" || gameState === "win") {
-    drawGameScreen();
+    drawGameScreen(interpolation);
   }
   
   pop(); // Restore the transformation state
@@ -704,8 +719,9 @@ function drawStars() {
 
 /**
  * Draw the game screen (actual gameplay)
+ * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
-function drawGameScreen() {
+function drawGameScreen(interpolation = 0) {
   // Draw background image or fallback
   if (backgroundImage) {
     image(backgroundImage, 0, 0, width, height);
@@ -727,34 +743,32 @@ function drawGameScreen() {
   // Draw exit gate
   exitGate.draw(cameraOffsetX);
 
-  // Draw enemies
+  // Draw enemies with interpolation
   for (let enemy of enemies) {
-    enemy.draw(cameraOffsetX);
+    enemy.draw(cameraOffsetX, interpolation);
   }
   
-  // Draw bullets
+  // Draw bullets with interpolation
   if (window.bullets && window.bullets.length > 0) {
     for (let bullet of window.bullets) {
-      bullet.draw(cameraOffsetX);
+      bullet.draw(cameraOffsetX, interpolation);
     }
   }
 
 
   // 在绘制玩家之前添加动态平台绘制
-for (let platform of floatingPlatforms) {
-  platform.draw(cameraOffsetX);
-}
-
-
-
-  // Draw player with invincibility effect
+  for (let platform of floatingPlatforms) {
+    platform.draw(cameraOffsetX, interpolation);
+  }
+  
+  // Draw player with invincibility effect and interpolation
   if (invincibilityActive && !hitstopActive) {
     // Flash the player during invincibility (show only every other 4 frames)
-    if (frameCount % 8 < 4) {
-      player.draw(cameraOffsetX);
+    if (window.frameCount % 8 < 4) {
+      player.draw(cameraOffsetX, interpolation);
     }
   } else {
-    player.draw(cameraOffsetX);
+    player.draw(cameraOffsetX, interpolation);
   }
   
   pop();

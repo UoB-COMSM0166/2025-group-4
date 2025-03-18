@@ -6,6 +6,11 @@
 import { initGame, updateGame, drawGame, handleKeyPressed, handleTouchStarted, handleMouseClicked, reloadCurrentLevel } from './game.js';
 import { numCols, numRows, tileSize, updateTileSize } from './config.js';
 
+// Fixed timestep physics variables
+let previousTime = 0;
+let accumulator = 0;
+const FIXED_DELTA_TIME = 1/60; // 60 updates per second (in seconds)
+const MAX_FRAME_TIME = 0.25; // Maximum time to prevent spiral of death
 
 // p5.js setup function
 function setup() {
@@ -13,13 +18,34 @@ function setup() {
   // Calculate appropriate tile size before initializing the game
   updateTileSize(windowWidth, windowHeight);
   initGame();
+  
+  // Initialize time for fixed timestep
+  previousTime = millis() / 1000; // Convert to seconds
 }
 
 // p5.js draw function
 function draw() {
-  // 直接调用 game.js 中的更新与绘制函数
-  updateGame();
-  drawGame();
+  // Calculate deltaTime for fixed timestep
+  const currentTime = millis() / 1000; // Convert to seconds
+  let deltaTime = currentTime - previousTime;
+  previousTime = currentTime;
+  
+  // Prevent spiral of death by clamping deltaTime
+  if (deltaTime > MAX_FRAME_TIME) {
+    deltaTime = MAX_FRAME_TIME;
+  }
+  
+  // Add to accumulator
+  accumulator += deltaTime;
+  
+  // Update game physics at fixed intervals while accumulator has enough time
+  while (accumulator >= FIXED_DELTA_TIME) {
+    updateGame(FIXED_DELTA_TIME);
+    accumulator -= FIXED_DELTA_TIME;
+  }
+  
+  // Always draw at the frame rate
+  drawGame(accumulator / FIXED_DELTA_TIME); // Pass interpolation factor
 }
 
 // p5.js keyPressed function

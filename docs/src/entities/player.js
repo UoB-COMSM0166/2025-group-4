@@ -49,9 +49,17 @@ export class Player {
     // Hit flash effect
     this.hitFlashActive = false;
     this.hitFlashIntensity = 0;
+    
+    // For interpolation in render
+    this.previousX = px;
+    this.previousY = py;
   }
 
-  update(tileMap, cameraOffsetX) {
+  update(tileMap, cameraOffsetX, deltaTime = 1/60) {
+    // Store previous position for interpolation
+    this.previousX = this.x;
+    this.previousY = this.y;
+    
     // Get current invincibility state from window
     invincibilityActive = window.invincibilityActive;
     
@@ -68,39 +76,46 @@ export class Player {
     const prevX = this.x;
     const prevY = this.y;
     
+    // Scale gravity and other physics with deltaTime
+    const timeScaledGravity = gravity * deltaTime * 60; // Scale to expected 60 fps
+    
     // Apply gravity
-    this.vy += gravity * this.gravityDirection;
+    this.vy += timeScaledGravity * this.gravityDirection;
 
     // Limit maximum vertical speed to prevent falling through tiles
     const maxVerticalSpeed = 12 * (tileSize / baseSize); // Scale with tile size
     if (this.vy > maxVerticalSpeed) this.vy = maxVerticalSpeed;
     if (this.vy < -maxVerticalSpeed) this.vy = -maxVerticalSpeed;
-
+    
     // Smooth acceleration to target speed when on ground
     if (this.onGround) {
       this.lastGroundTimestamp = window.millis();
       
-      // Gradually accelerate to target speed
+      // Gradually accelerate to target speed, scaled with deltaTime
       const speedDiff = (this.autoDirection * this.targetSpeed) - this.vx;
-      this.vx += speedDiff * this.acceleration;
+      this.vx += speedDiff * this.acceleration * deltaTime * 60;
       
       // Normalize after wall hit
       const wallHitCooldown = 300; // ms
       if (window.millis() - this.hitWallTimestamp > wallHitCooldown) {
         // If we're past the wall hit cooldown, increase target speed back to normal
-        this.targetSpeed = Math.min(this.targetSpeed + 0.1, this.autoSpeed);
+        this.targetSpeed = Math.min(this.targetSpeed + 0.1 * deltaTime * 60, this.autoSpeed);
       }
     }
 
     // Clamp horizontal speed
     if (this.vx > maxSpeedX) this.vx = maxSpeedX;
     if (this.vx < -maxSpeedX) this.vx = -maxSpeedX;
-
+    
+    // Scale movement with deltaTime
+    const scaledVx = this.vx * deltaTime * 60;
+    const scaledVy = this.vy * deltaTime * 60;
+    
     // For high vertical speeds, do multiple collision checks to prevent tunneling
-    const steps = Math.max(1, Math.ceil(Math.abs(this.vy) / 5));
+    const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));
     
     // Move horizontally and resolve collisions
-    this.x += this.vx;
+    this.x += scaledVx;
     const hadHorizontalCollision = this.checkTileCollisions(true, tileMap, prevX, prevY);
     
     // Store onGround state before vertical movement
@@ -108,7 +123,7 @@ export class Player {
     
     // Move vertically in steps for high speeds
     if (steps > 1) {
-      const stepVy = this.vy / steps;
+      const stepVy = scaledVy / steps;
       for (let i = 0; i < steps; i++) {
         this.y += stepVy;
         // Reset onGround before checking vertical collisions
@@ -120,7 +135,7 @@ export class Player {
       }
     } else {
       // Normal vertical movement for low speeds
-      this.y += this.vy;
+      this.y += scaledVy;
       // Reset onGround before checking vertical collisions
       this.onGround = false;
       const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
@@ -138,9 +153,10 @@ export class Player {
       }
     }
     
-    // Gradually recover from squash/stretch
-    this.squashFactor = this.squashFactor + (1 - this.squashFactor) * this.recoveryRate;
-    this.stretchFactor = this.stretchFactor + (1 - this.stretchFactor) * this.recoveryRate;
+    // Gradually recover from squash/stretch, scaled with deltaTime
+    const timeScaledRecoveryRate = this.recoveryRate * deltaTime * 60;
+    this.squashFactor = this.squashFactor + (1 - this.squashFactor) * timeScaledRecoveryRate;
+    this.stretchFactor = this.stretchFactor + (1 - this.stretchFactor) * timeScaledRecoveryRate;
 
     // Check for a buffered flip input
     if (this.bufferedFlipAvailable) {
@@ -210,7 +226,9 @@ export class Player {
         this.cameraPositionRatio = targetRatio;
     }
     // Smoothly update the camera ratio (adjust the smoothing factor as needed)
-    this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * 0.02;
+    // Scale with deltaTime
+    const smoothFactor = 0.02 * deltaTime * 60;
+    this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * smoothFactor;
     let newCameraOffsetX = this.x - window.width * this.cameraPositionRatio;
       
       // Ensure camera doesn't go negative
@@ -433,14 +451,23 @@ export class Player {
     window.regravitySound.play();
   }
 
-  draw(cameraOffsetX) {
+  /**
+   * Draw the player with interpolation support
+   * @param {number} cameraOffsetX - Camera offset for rendering
+   * @param {number} interpolation - Interpolation factor between 0 and 1
+   */
+  draw(cameraOffsetX, interpolation = 0) {
     // Update dimensions based on current tile size
     this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
     this.autoSpeed = 4.0 * (tileSize / baseSize);
 
+    // Calculate interpolated position
+    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
+    const renderY = this.previousY + (this.y - this.previousY) * interpolation;
+
     window.push();
-    window.translate(this.x - cameraOffsetX, this.y);
+    window.translate(renderX - cameraOffsetX, renderY);
     
     // Apply squash and stretch for more dynamic feel
     window.scale(this.stretchFactor, this.squashFactor);
@@ -488,7 +515,7 @@ export class Player {
       // Use tinted version if invincible but not during hit flash
       if (invincibilityActive && !this.hitFlashActive) {
         // Apply a pulsing effect during invincibility
-        const pulseAmount = 0.5 + Math.sin(window.frameCount * 0.2) * 0.3;
+        const pulseAmount = 0.5 + Math.sin(window.physicsClock * 10) * 0.3;
         window.tint(255, 255, 255, 150 + pulseAmount * 105); // Semi-transparent when invincible
       }
       
@@ -537,7 +564,7 @@ export class Player {
       }
     }
   }
-  
+
 
   
 }

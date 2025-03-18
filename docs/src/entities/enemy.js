@@ -18,11 +18,23 @@ export class Enemy {
     this.maxX = px + tileSize * this.range;
     this.speed = 2 * (tileSize / baseSize); // Scale speed with tile size
     this.direction = 1; // 1 = right, -1 = left
+    
+    // For interpolation
+    this.previousX = px;
+    this.previousY = py;
   }
 
-  update() {
+  update(deltaTime = 1/60) {
+    // Store previous position for interpolation
+    this.previousX = this.x;
+    this.previousY = this.y;
+    
+    // Scale movement with deltaTime (60 fps is our baseline)
+    const scaledSpeed = this.speed * deltaTime * 60;
+    
     // 简单的巡逻运动
-    this.x += this.speed * this.direction;
+    this.x += scaledSpeed * this.direction;
+    
     if (this.x > this.maxX) {
       this.x = this.maxX;
       this.direction = -1;
@@ -56,11 +68,14 @@ export class Enemy {
     );
   }
 
-  draw(cameraOffsetX) {
+  draw(cameraOffsetX, interpolation = 0) {
+    // Calculate interpolated position
+    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
+    
     push();
     imageMode(CENTER);
     // 使用全局 enemyImage 绘制敌人
-    image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+    image(window.enemyImage, renderX - cameraOffsetX, this.y, this.w, this.h);
     pop();
   }
 }
@@ -74,9 +89,17 @@ export class ShooterEnemy {
     this.h = tileSize * 0.9;
     this.shootCooldown = 2000; // 每2秒射击一次
     this.lastShotTime = 0; // 初始化为0，确保首次更新时会射击
+    
+    // For interpolation
+    this.previousX = px;
+    this.previousY = py;
   }
 
-  update() {
+  update(deltaTime = 1/60) {
+    // Store previous position for interpolation
+    this.previousX = this.x;
+    this.previousY = this.y;
+    
     // 到达射击时间则发射子弹
     if (millis() - this.lastShotTime > this.shootCooldown) {
       this.shoot();
@@ -115,9 +138,12 @@ export class ShooterEnemy {
   }
 
   // 接受 cameraOffsetX 作为参数
-  draw(cameraOffsetX) {
+  draw(cameraOffsetX, interpolation = 0) {
+    // Calculate interpolated position
+    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
+    
     push();
-    translate(this.x - cameraOffsetX, this.y);
+    translate(renderX - cameraOffsetX, this.y);
     fill(150, 0, 0);
     rectMode(CENTER);
     rect(0, 0, this.w, this.h);
@@ -135,10 +161,21 @@ export class Bullet {
     this.active = true;
     this.w = tileSize * 0.4; // 子弹宽度（用于绘制）
     this.h = tileSize * 0.4; // 子弹高度（用于绘制）
+    
+    // For interpolation
+    this.previousX = px;
+    this.previousY = py;
   }
 
-  update() {
-    this.x += this.speed;
+  update(deltaTime = 1/60) {
+    // Store previous position for interpolation
+    this.previousX = this.x;
+    this.previousY = this.y;
+    
+    // Scale movement with deltaTime (60 fps is our baseline)
+    const scaledSpeed = this.speed * deltaTime * 60;
+    
+    this.x += scaledSpeed;
     
     // 如果子弹离开屏幕，将其标记为非活动
     if (this.x < 0 || this.x > width + tileSize) {
@@ -164,14 +201,17 @@ export class Bullet {
     }
   }
 
-  draw(cameraOffsetX) {
+  draw(cameraOffsetX, interpolation = 0) {
     if (!this.active) return;
+    
+    // Calculate interpolated position
+    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
     
     push();
     fill(255, 0, 0);
     noStroke();
     ellipseMode(CENTER);
-    ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
+    ellipse(renderX - cameraOffsetX, this.y, this.r * 2);
     pop();
   }
 }
