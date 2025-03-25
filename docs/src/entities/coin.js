@@ -34,8 +34,16 @@ export class Coin {
     this.r = tileSize * 0.3;
     window.push();
     window.imageMode(window.CENTER);
-    // 用 coinImage 绘制硬币，并将其尺寸设置为直径的两倍
-    window.image(window.coinImage, this.x - cameraOffsetX, this.y, this.r * 2, this.r * 2);
+    
+    // Use coinImage if available, otherwise fallback to circle
+    if (window.coinImage) {
+      window.image(window.coinImage, this.x - cameraOffsetX, this.y, this.r * 2, this.r * 2);
+    } else {
+      // Fallback to drawing a circle if image is not loaded
+      window.fill(255, 215, 0);
+      window.ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
+    }
+    
     window.pop();
   }
 }

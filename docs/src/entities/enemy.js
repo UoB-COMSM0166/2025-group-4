@@ -1,218 +1,232 @@
 /**
- * enemy.js
- * 定义普通敌人、射击敌人和子弹类
+ * Enemy class
  */
-import { tileSize, baseSize } from '../config.js';
-import { loseLife } from '../game.js';
+import { tileSize } from '../config.js';
 
-// 普通敌人类
 export class Enemy {
   constructor(px, py) {
     this.x = px;
     this.y = py;
-    this.w = tileSize * 0.9;
-    this.h = tileSize * 0.9;
-    // Patrol movement boundaries.
-    this.range = 3; // Default patrol range in tiles
-    this.minX = px - tileSize * this.range;
-    this.maxX = px + tileSize * this.range;
-    this.speed = 2 * (tileSize / baseSize); // Scale speed with tile size
-    this.direction = 1; // 1 = right, -1 = left
+    this.w = tileSize * 0.8;
+    this.h = tileSize * 0.8;
+    this.speed = 1.5;
+    this.direction = 1; // 1 for right, -1 for left
     
-    // For interpolation
-    this.previousX = px;
-    this.previousY = py;
+    // Set patrol boundaries
+    this.minX = this.x - tileSize * 3;
+    this.maxX = this.x + tileSize * 3;
+    
+    // Patrol range (in tiles)
+    this.range = 3;
   }
 
-  update(deltaTime = 1/60) {
-    // Store previous position for interpolation
-    this.previousX = this.x;
-    this.previousY = this.y;
+  update(deltaTime) {
+    // Move left and right
+    this.x += this.speed * this.direction * deltaTime * 60;
     
-    // Scale movement with deltaTime (60 fps is our baseline)
-    const scaledSpeed = this.speed * deltaTime * 60;
-    
-    // 简单的巡逻运动
-    this.x += scaledSpeed * this.direction;
-    
-    if (this.x > this.maxX) {
-      this.x = this.maxX;
-      this.direction = -1;
-    } else if (this.x < this.minX) {
+    // If reached boundary, change direction
+    if (this.x <= this.minX) {
       this.x = this.minX;
       this.direction = 1;
+    } else if (this.x >= this.maxX) {
+      this.x = this.maxX;
+      this.direction = -1;
     }
   }
 
-  // Updates the patrol range (used when difficulty changes)
-  updateRange() {
-    const centerX = (this.minX + this.maxX) / 2;
-    this.minX = centerX - tileSize * this.range;
-    this.maxX = centerX + tileSize * this.range;
-  }
-
-  checkPlayerCollision(pl) {
-    // Check for player invincibility first
-    if (window.invincibilityActive) {
-      return false;
-    }
-    
-    // 简单的 AABB 碰撞检测
-    let halfW = this.w * 0.5;
-    let halfH = this.h * 0.5;
-    let plHalfW = pl.w * 0.5;
-    let plHalfH = pl.h * 0.5;
-    return (
-      Math.abs(this.x - pl.x) < halfW + plHalfW &&
-      Math.abs(this.y - pl.y) < halfH + plHalfH
+  checkPlayerCollision(player) {
+    // Simple rectangle collision
+    return !(
+      player.x - player.w / 2 > this.x + this.w / 2 ||
+      player.x + player.w / 2 < this.x - this.w / 2 ||
+      player.y - player.h / 2 > this.y + this.h / 2 ||
+      player.y + player.h / 2 < this.y - this.h / 2
     );
   }
 
   draw(cameraOffsetX, interpolation = 0) {
-    // Calculate interpolated position
-    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
+    window.push();
     
-    push();
-    imageMode(CENTER);
-    // 使用全局 enemyImage 绘制敌人
-    image(window.enemyImage, renderX - cameraOffsetX, this.y, this.w, this.h);
-    pop();
+    // Apply direction
+    if (this.direction === -1) {
+      window.translate(this.x - cameraOffsetX, this.y);
+      window.scale(-1, 1);
+      window.translate(-(this.x - cameraOffsetX), -this.y);
+    }
+    
+    window.imageMode(window.CENTER);
+    
+    // Use enemy image if available, otherwise fallback to rectangle
+    if (window.enemyImage) {
+      window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+    } else {
+      // Fallback to drawing a rectangle if image is not loaded
+      window.rectMode(window.CENTER);
+      window.fill(255, 0, 0);
+      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h);
+    }
+    
+    window.pop();
   }
 }
 
-// 射击敌人类
-export class ShooterEnemy {
+/**
+ * Shooter Enemy class (extends from Enemy)
+ */
+export class ShooterEnemy extends Enemy {
   constructor(px, py) {
-    this.x = px;
-    this.y = py;
-    this.w = tileSize * 0.9;
-    this.h = tileSize * 0.9;
-    this.shootCooldown = 2000; // 每2秒射击一次
-    this.lastShotTime = 0; // 初始化为0，确保首次更新时会射击
-    
-    // For interpolation
-    this.previousX = px;
-    this.previousY = py;
+    super(px, py);
+    this.shootCooldown = 0;
+    this.shootCooldownMax = 120; // frames between shots
+    this.bulletSpeed = 3;
   }
 
-  update(deltaTime = 1/60) {
-    // Store previous position for interpolation
-    this.previousX = this.x;
-    this.previousY = this.y;
+  update(deltaTime) {
+    super.update(deltaTime);
     
-    // 到达射击时间则发射子弹
-    if (millis() - this.lastShotTime > this.shootCooldown) {
-      this.shoot();
-      this.lastShotTime = millis();
+    // Handle shooting cooldown
+    if (this.shootCooldown > 0) {
+      this.shootCooldown -= deltaTime * 60; // Convert to frames
     }
-  }
-
-  shoot() {
-    let bulletSpeed = 5;
-    // 确保全局变量 player 和 bullets 已定义
-    if (window.player) {
-      // 计算射击方向（朝向玩家）
-      let direction = (window.player.x > this.x) ? 1 : -1;
-      
-      // 确保全局 bullets 数组存在
-      if (!window.bullets) {
-        window.bullets = [];
-      }
-      
-      // 添加新子弹到数组
-      window.bullets.push(new Bullet(this.x, this.y, bulletSpeed * direction));
-      console.log("敌人发射子弹，方向：", direction);
+    
+    // Check if player is in range and shoot
+    if (window.player && this.canSeePlayer() && this.shootCooldown <= 0) {
+      this.shoot();
+      this.shootCooldown = this.shootCooldownMax;
     }
   }
   
-  // 为 ShooterEnemy 添加碰撞检测方法
-  checkPlayerCollision(pl) {
-    let halfW = this.w * 0.5;
-    let halfH = this.h * 0.5;
-    let plHalfW = pl.w * 0.5;
-    let plHalfH = pl.h * 0.5;
-    return (
-      Math.abs(this.x - pl.x) < halfW + plHalfW &&
-      Math.abs(this.y - pl.y) < halfH + plHalfH
-    );
-  }
-
-  // 接受 cameraOffsetX 作为参数
-  draw(cameraOffsetX, interpolation = 0) {
-    // Calculate interpolated position
-    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
+  canSeePlayer() {
+    // Simple check if player is in the same horizontal direction as enemy facing
+    if (!window.player) return false;
     
-    push();
-    translate(renderX - cameraOffsetX, this.y);
-    fill(150, 0, 0);
-    rectMode(CENTER);
-    rect(0, 0, this.w, this.h);
-    pop();
+    let playerDirection = Math.sign(window.player.x - this.x);
+    return playerDirection === this.direction;
+  }
+  
+  shoot() {
+    // Create bullet and add to global bullets array
+    if (!window.bullets) window.bullets = [];
+    
+    window.bullets.push(new Bullet(
+      this.x, 
+      this.y,
+      this.bulletSpeed * this.direction,
+      0
+    ));
+  }
+  
+  draw(cameraOffsetX, interpolation = 0) {
+    window.push();
+    
+    // Apply direction
+    if (this.direction === -1) {
+      window.translate(this.x - cameraOffsetX, this.y);
+      window.scale(-1, 1);
+      window.translate(-(this.x - cameraOffsetX), -this.y);
+    }
+    
+    // Draw enemy with a special color to indicate it's a shooter
+    window.imageMode(window.CENTER);
+    
+    if (window.enemyImage) {
+      // Use tint to show it's a shooter enemy
+      window.tint(255, 100, 100);
+      window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.noTint();
+    } else {
+      // Fallback rectangle
+      window.rectMode(window.CENTER);
+      window.fill(255, 50, 50);
+      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h);
+      
+      // Gun indicator
+      window.fill(0);
+      window.rect(this.x - cameraOffsetX + this.w * 0.3 * this.direction, this.y, this.w * 0.4, this.h * 0.2);
+    }
+    
+    window.pop();
   }
 }
 
-// 子弹类
+/**
+ * Bullet class for shooter enemies
+ */
 export class Bullet {
-  constructor(px, py, speed) {
+  constructor(px, py, vx, vy) {
     this.x = px;
     this.y = py;
-    this.speed = speed;
-    this.r = tileSize * 0.3; // 子弹半径
+    this.vx = vx;
+    this.vy = vy;
+    this.r = tileSize * 0.2; // Bullet radius
     this.active = true;
-    this.w = tileSize * 0.4; // 子弹宽度（用于绘制）
-    this.h = tileSize * 0.4; // 子弹高度（用于绘制）
-    
-    // For interpolation
-    this.previousX = px;
-    this.previousY = py;
+    this.ttl = 180; // Time to live in frames (3 seconds)
   }
-
-  update(deltaTime = 1/60) {
-    // Store previous position for interpolation
-    this.previousX = this.x;
-    this.previousY = this.y;
+  
+  update(deltaTime) {
+    // Move bullet
+    this.x += this.vx * deltaTime * 60;
+    this.y += this.vy * deltaTime * 60;
     
-    // Scale movement with deltaTime (60 fps is our baseline)
-    const scaledSpeed = this.speed * deltaTime * 60;
-    
-    this.x += scaledSpeed;
-    
-    // 如果子弹离开屏幕，将其标记为非活动
-    if (this.x < 0 || this.x > width + tileSize) {
+    // Reduce TTL
+    this.ttl -= deltaTime * 60;
+    if (this.ttl <= 0) {
       this.active = false;
       return;
     }
     
-    // 检测与玩家的碰撞
-    if (window.player && this.active) {
-      // Skip collision if player is invincible
-      if (window.invincibilityActive) {
-        return;
+    // Check collision with walls
+    if (this.checkWallCollision()) {
+      this.active = false;
+      return;
+    }
+    
+    // Check collision with player
+    if (window.player && this.checkPlayerCollision(window.player)) {
+      this.active = false;
+      // Trigger player hit
+      if (typeof window.loseLife === 'function') {
+        window.loseLife();
       }
-      
-      if (dist(this.x, this.y, window.player.x, window.player.y) < this.r + window.player.w * 0.5) {
-        this.active = false;
-        // Trigger hit effect on player if possible
-        if (window.player.triggerHitEffect) {
-          window.player.triggerHitEffect();
-        }
-        loseLife();
-      }
+      return;
     }
   }
-
+  
+  checkWallCollision() {
+    if (!window.tileMap) return false;
+    
+    // Convert bullet position to tile coordinates
+    const tileX = Math.floor(this.x / tileSize);
+    const tileY = Math.floor(this.y / tileSize);
+    
+    // Check if tile is solid
+    if (tileX >= 0 && tileX < window.tileMap[0].length && 
+        tileY >= 0 && tileY < window.tileMap.length) {
+      // Get tile
+      const tile = window.tileMap[tileY].charAt(tileX);
+      // Check if tile is solid
+      return tile === '1' || tile === '5';
+    }
+    
+    return false;
+  }
+  
+  checkPlayerCollision(player) {
+    // Calculate distance between bullet and player
+    const dx = this.x - player.x;
+    const dy = this.y - player.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // Check if distance is less than sum of radii
+    return distance < (this.r + player.w * 0.3);
+  }
+  
   draw(cameraOffsetX, interpolation = 0) {
-    if (!this.active) return;
-    
-    // Calculate interpolated position
-    const renderX = this.previousX + (this.x - this.previousX) * interpolation;
-    
-    push();
-    fill(255, 0, 0);
-    noStroke();
-    ellipseMode(CENTER);
-    ellipse(renderX - cameraOffsetX, this.y, this.r * 2);
-    pop();
+    window.push();
+    window.fill(255, 0, 0);
+    window.noStroke();
+    window.ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
+    window.pop();
   }
 }
 

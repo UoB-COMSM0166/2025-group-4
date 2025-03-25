@@ -1,60 +1,57 @@
 /**
- * ExitGate class
+ * Exit Gate class
  */
-import { tileSize, baseSize } from '../config.js';
+import { tileSize } from '../config.js';
 
 export class ExitGate {
   constructor(px, py) {
     this.x = px;
     this.y = py;
-    this.w = tileSize;
-    this.h = tileSize;
+    this.w = tileSize * 0.8;
+    this.h = tileSize * 0.8;
   }
 
   checkPlayer(pl) {
-    // Simple AABB collision check.
-    let halfW = this.w * 0.5;
-    let halfH = this.h * 0.5;
-    let plHalfW = pl.w * 0.5;
-    let plHalfH = pl.h * 0.5;
+    let dx = this.x - pl.x;
+    let dy = this.y - pl.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    let minDist = this.w / 2 + pl.w / 2;
 
-    if (
-      Math.abs(this.x - pl.x) < halfW + plHalfW &&
-      Math.abs(this.y - pl.y) < halfH + plHalfH
-    ) {
-      return true; // Player reached the exit!
-    }
-    return false;
+    return distance < minDist;
   }
 
   draw(cameraOffsetX) {
-    // Update dimensions based on current tile size
-    this.w = tileSize;
-    this.h = tileSize;
-
     window.push();
-    // Draw the exit gate.
-    window.fill(0, 200, 255);
-    window.rectMode(CENTER);
-    window.rect(this.x - cameraOffsetX, this.y, this.w, this.h, 4);
+    window.imageMode(window.CENTER);
+    
+    // Use exitGateImage if available, otherwise fallback to rectangle
+    if (window.exitGateImage) {
+      window.image(window.exitGateImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+    } else {
+      // Fallback to drawing a rectangle if image is not loaded
+      // Draw the exit gate.
+      window.fill(0, 200, 255);
+      window.rectMode(CENTER);
+      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h, 4);
 
-    // Draw a door symbol.
-    window.fill(0, 100, 200);
-    window.rect(
-      this.x - cameraOffsetX,
-      this.y,
-      this.w * 0.6,
-      this.h * 0.8,
-      2
-    );
-    // Draw a doorknob.
-    window.fill(255);
-    window.ellipse(
-      this.x - cameraOffsetX + this.w * 0.15,
-      this.y,
-      this.w * 0.15,
-      this.w * 0.15
-    );
+      // Draw a door symbol.
+      window.fill(0, 100, 200);
+      window.rect(
+        this.x - cameraOffsetX,
+        this.y,
+        this.w * 0.6,
+        this.h * 0.8,
+        2
+      );
+      // Draw a doorknob.
+      window.fill(255);
+      window.ellipse(
+        this.x - cameraOffsetX + this.w * 0.15,
+        this.y,
+        this.w * 0.15,
+        this.w * 0.15
+      );
+      }
     window.pop();
   }
 }

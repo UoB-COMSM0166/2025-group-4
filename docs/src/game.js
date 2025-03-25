@@ -9,6 +9,7 @@ import { Coin } from './entities/coin.js';
 import { ExitGate } from './entities/exitGate.js';
 import { getTile, drawTiles } from './utils.js';
 import { FloatingPlatform } from './floatingPlatform.js';
+import { initLevelEditor, updateLevelEditor, drawLevelEditor, handleEditorMousePressed, handleEditorMouseDragged, handleEditorMouseReleased, handleEditorMouseWheel, handleEditorKeyPressed, exportLevel } from './levelEditor.js';
 
 
 // Game state variables
@@ -21,7 +22,7 @@ let tileMap; // holds the current level data
 let cameraOffsetX = 0; // for scrolling horizontally
 let score = 0; // player's score
 let backgroundColor; // for background gradient
-let gameState = "menu"; // can be "menu", "difficulty", "play", "win", or "over"
+export let gameState = "menu"; // can be "menu", "difficulty", "play", "win", "over", or "editor"
 let lives = 3; // number of lives
 
 // Fixed timestep physics variables
@@ -494,7 +495,7 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
 
   // 检测出口
   if (exitGate) {
-    console.log("玩家位置：", player.x, player.y, "出口门位置：", exitGate.x, exitGate.y);
+    // console.log("玩家位置：", player.x, player.y, "出口门位置：", exitGate.x, exitGate.y);
     // 给玩家一点时间（例如1秒）避免刚加载就碰到门
     if (millis() - window.levelLoadTime > 1000 && exitGate.checkPlayer(player)) {
       console.log("检测到出口碰撞，尝试切换关卡");
@@ -904,5 +905,23 @@ export function handleTouchStarted() {
     gameState = "menu";
   }
   return false;
+}
+
+/**
+ * Add a custom level created in the editor to the game
+ * @param {Object} levelData - The level data from the editor
+ * @return {boolean} - True if level was added successfully
+ */
+export function addCustomLevel(levelData) {
+  if (!levelData || !levelData.map || levelData.map.length === 0) {
+    console.error("Invalid level data");
+    return false;
+  }
+  
+  // Add the level to the levels array
+  levels.push(levelData);
+  
+  console.log(`Custom level added! Total levels: ${levels.length}`);
+  return true;
 }
 
