@@ -37,12 +37,13 @@ function preload() {
   // Load images and make them available globally
   window.coinImage = loadImage('src/images/coin.png');
   window.enemyImage = loadImage('src/images/enemy.png');
-  
+
+
   // Player images
   window.playerImages = [];
-  window.playerImages.push(loadImage('src/images/7.png'));
-  window.playerImages.push(loadImage('src/images/8.png'));
-  window.playerImages.push(loadImage('src/images/9.png'));
+  window.playerImages.push(loadImage('src/images/player/7.png'));
+  window.playerImages.push(loadImage('src/images/player/8.png'));
+  window.playerImages.push(loadImage('src/images/player/9.png'));
   
   // Exit gate image
   // window.exitGateImage = loadImage('src/images/9.png');
