@@ -186,25 +186,26 @@ export function loadLevel(idx) {
         exitGate = new ExitGate(x, y);
         console.log("添加出口门在：", x, y);
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "E") {
-        // 敌人
-        if (idx === 3 || idx === levels.length - 1) {
-          enemies.push(new ShooterEnemy(x, y));
-          console.log("添加 ShooterEnemy 在：", x, y);
-        } else {
-          const enemy = new Enemy(x, y);
-          // 根据难度调整敌人的速度和射程
-          if (difficulty === "hard") {
-            enemy.speed = enemySpeed * 1.5; // 50% faster
-            enemy.range = enemy.range * 1.3; // 30% more range
-          } else if (difficulty === "easy") {
-            enemy.speed = enemySpeed * 0.7; // 30% slower
-          }
-          enemies.push(enemy);
-          console.log("添加普通 Enemy 在：", x, y);
+      } else if (tile === "e") {
+        // 添加普通敌人
+        const enemy = new Enemy(x, y);
+        // 根据难度调整普通敌人的属性
+        if (difficulty === "hard") {
+          enemy.speed = enemySpeed * 1.5;
+          enemy.range = enemy.range * 1.3;
+        } else if (difficulty === "easy") {
+          enemy.speed = enemySpeed * 0.7;
         }
+        enemies.push(enemy);
+        console.log("添加普通 Enemy 在：", x, y);
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
-      } else if (tile === "6" || tile === "7") {
+      } else if (tile === "E") {
+        // 添加可攻击的敌人（例如 ShooterEnemy）
+        enemies.push(new ShooterEnemy(x, y));
+        console.log("添加 ShooterEnemy 在：", x, y);
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      }
+       else if (tile === "6" || tile === "7") {
         // 动态悬浮平台
         // 6：上下移动的平台，7：左右移动的平台
         // 创建平台对象后将该位置替换为空白，避免后续静态绘制
@@ -426,6 +427,25 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
   
   // 更新游戏时间
   currentPlayTime = (millis() - gameStartTime) / 1000; // 转换为秒
+
+
+  const playerCol = Math.floor(player.x / tileSize);
+  const playerRow = Math.floor(player.y / tileSize);
+    // 假设玩家触碰到了冰冻陷阱
+    if (
+      playerRow >= 0 && playerRow < tileMap.length &&
+      playerCol >= 0 && playerCol < tileMap[playerRow].length &&
+      tileMap[playerRow].charAt(playerCol) === "I" &&
+      !player.isFrozen
+    ) {
+      // 将该冰冻陷阱替换为空格，使陷阱消失
+      tileMap[playerRow] = tileMap[playerRow].substring(0, playerCol) + "." + tileMap[playerRow].substring(playerCol + 1);
+      // 设置冻结效果（例如冻结60帧，约1秒）
+      player.freezeTimer = 60;
+      player.isFrozen = true;
+      console.log("玩家触碰到冰冻陷阱,被冻结1秒,陷阱消失");
+    }
+  
   
   // Update hitstop and invincibility timers - convert frame-based to time-based
   if (hitstopActive) {

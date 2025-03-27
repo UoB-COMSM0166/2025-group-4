@@ -146,6 +146,12 @@ export function drawTiles(tileMap, cameraOffsetX) {
           tileSize * 0.8
         );
       }
+      else if (tile === "I") {
+        // 用淡蓝色表示冰冻陷阱，你也可以用图片替换
+        fill(150, 220, 255);
+        noStroke();
+        rect(x, y, tileSize, tileSize);
+      }
     }
   }
 }

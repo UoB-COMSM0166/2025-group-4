@@ -53,9 +53,22 @@ export class Player {
     // For interpolation in render
     this.previousX = px;
     this.previousY = py;
+    this.freezeTimer = 0;  // 冻结剩余帧数（例如60帧大约1秒）
+    this.isFrozen = false; // 当前是否被冻结
   }
 
   update(tileMap, cameraOffsetX, deltaTime = 1/60) {
+
+    if (this.freezeTimer > 0) {
+      this.freezeTimer--;
+      if (this.freezeTimer === 0) {
+        this.isFrozen = false;
+      }
+      // 保持位置不变，直接返回当前 cameraOffsetX
+      return cameraOffsetX;
+    }
+
+
     // Store previous position for interpolation
     this.previousX = this.x;
     this.previousY = this.y;
@@ -425,6 +438,9 @@ export class Player {
 
   // Enhanced gravity flip with more feedback
   attemptGravityFlip() {
+
+    if (this.isFrozen) return;
+    
     // Allow flip with a short grace period after leaving ground
     const GROUND_GRACE_PERIOD = 150; // ms
     const wasRecentlyOnGround = window.millis() - this.lastGroundTimestamp < GROUND_GRACE_PERIOD;
