@@ -98,6 +98,9 @@ export function loseLife() {
     // We don't reset player position immediately during hitstop
     // It will be reset when hitstop ends
   }
+  //检测子弹碰撞是否损失生命
+  window.loseLife = loseLife;
+
 }
 
 // Add a new function to handle the end of hitstop

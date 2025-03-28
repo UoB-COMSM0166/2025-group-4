@@ -164,33 +164,33 @@ export class Bullet {
   }
   
   update(deltaTime) {
-    // Move bullet
+    // 移动子弹
     this.x += this.vx * deltaTime * 60;
     this.y += this.vy * deltaTime * 60;
     
-    // Reduce TTL
+    // 减少生存时间（以帧为单位）
     this.ttl -= deltaTime * 60;
     if (this.ttl <= 0) {
       this.active = false;
       return;
     }
     
-    // Check collision with walls
+    // 检查子弹与墙壁的碰撞
     if (this.checkWallCollision()) {
       this.active = false;
       return;
     }
     
-    // Check collision with player
+    // 检查子弹与玩家的碰撞（使用矩形碰撞检测）
     if (window.player && this.checkPlayerCollision(window.player)) {
       this.active = false;
-      // Trigger player hit
       if (typeof window.loseLife === 'function') {
         window.loseLife();
       }
       return;
     }
   }
+  
   
   checkWallCollision() {
     if (!window.tileMap) return false;
@@ -212,14 +212,26 @@ export class Bullet {
   }
   
   checkPlayerCollision(player) {
-    // Calculate distance between bullet and player
-    const dx = this.x - player.x;
-    const dy = this.y - player.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    // 计算子弹的矩形边界
+    const bulletLeft = this.x - this.r;
+    const bulletRight = this.x + this.r;
+    const bulletTop = this.y - this.r;
+    const bulletBottom = this.y + this.r;
     
-    // Check if distance is less than sum of radii
-    return distance < (this.r + player.w * 0.3);
+    // 计算玩家的矩形边界（玩家的 x,y 为中心）
+    const playerLeft = player.x - player.w / 2;
+    const playerRight = player.x + player.w / 2;
+    const playerTop = player.y - player.h / 2;
+    const playerBottom = player.y + player.h / 2;
+    
+    // 如果两矩形不相交，则返回 false，否则返回 true
+    return !(bulletRight < playerLeft ||
+             bulletLeft > playerRight ||
+             bulletBottom < playerTop ||
+             bulletTop > playerBottom);
   }
+
+  
   
   draw(cameraOffsetX, interpolation = 0) {
     window.push();

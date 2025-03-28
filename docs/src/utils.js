@@ -19,7 +19,7 @@ export function getTile(col, row, tileMap) {
 
   // Get the character at this position.
   let tile = tileMap[row][col];
-  if (tile === "1") return 1; // Solid tile.
+  if (tile === "1"|| tile === "S") return 1; // Solid tile.
   if (tile === "5") return 5; // Hazard (spike).
   return 0; // Empty or other.
 }
@@ -145,13 +145,17 @@ export function drawTiles(tileMap, cameraOffsetX) {
           tileSize * 1.2,
           tileSize * 0.8
         );
-      }
-      else if (tile === "I") {
+      }else if (tile === "I") {
         // 用淡蓝色表示冰冻陷阱，你也可以用图片替换
         fill(150, 220, 255);
         noStroke();
         rect(x, y, tileSize, tileSize);
-      }
+      }else if (tile === "S") {
+        // 使用淡蓝色绘制特殊滑行墙壁
+        fill(180, 220, 255);
+        noStroke();
+        rect(x, y, tileSize, tileSize);
+      }      
     }
   }
 }

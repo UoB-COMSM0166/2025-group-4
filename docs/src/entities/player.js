@@ -55,6 +55,7 @@ export class Player {
     this.previousY = py;
     this.freezeTimer = 0;  // 冻结剩余帧数（例如60帧大约1秒）
     this.isFrozen = false; // 当前是否被冻结
+    this.isSlipping = false;
   }
 
   update(tileMap, cameraOffsetX, deltaTime = 1/60) {
@@ -64,19 +65,18 @@ export class Player {
       if (this.freezeTimer === 0) {
         this.isFrozen = false;
       }
-      // 保持位置不变，直接返回当前 cameraOffsetX
+      // 冻结期间不更新位置，直接返回当前 cameraOffsetX
       return cameraOffsetX;
     }
-
-
-    // Store previous position for interpolation
+  
+    // 存储上一次的位置，用于插值
     this.previousX = this.x;
     this.previousY = this.y;
     
-    // Get current invincibility state from window
+    // 更新全局无敌状态
     invincibilityActive = window.invincibilityActive;
     
-    // Update hit flash effect
+    // 更新命中闪光效果
     if (this.hitFlashActive) {
       this.hitFlashIntensity -= 0.1;
       if (this.hitFlashIntensity <= 0) {
@@ -85,61 +85,55 @@ export class Player {
       }
     }
     
-    // Store previous position for collision detection
+    // 存储当前位置用于碰撞检测
     const prevX = this.x;
     const prevY = this.y;
     
-    // Scale gravity and other physics with deltaTime
-    const timeScaledGravity = gravity * deltaTime * 60; // Scale to expected 60 fps
-    
-    // Apply gravity
+    // 根据 deltaTime 计算重力的影响
+    const timeScaledGravity = gravity * deltaTime * 60; // 期望 60 fps
     this.vy += timeScaledGravity * this.gravityDirection;
-
-    // Limit maximum vertical speed to prevent falling through tiles
-    const maxVerticalSpeed = 12 * (tileSize / baseSize); // Scale with tile size
+  
+    // 限制最大垂直速度
+    const maxVerticalSpeed = 12 * (tileSize / baseSize);
     if (this.vy > maxVerticalSpeed) this.vy = maxVerticalSpeed;
     if (this.vy < -maxVerticalSpeed) this.vy = -maxVerticalSpeed;
     
-    // Smooth acceleration to target speed when on ground
+    // 当在地面上时，平滑加速到目标速度
     if (this.onGround) {
       this.lastGroundTimestamp = window.millis();
-      
-      // Gradually accelerate to target speed, scaled with deltaTime
       const speedDiff = (this.autoDirection * this.targetSpeed) - this.vx;
       this.vx += speedDiff * this.acceleration * deltaTime * 60;
       
-      // Normalize after wall hit
+      // 如果超过一定冷却期后，目标速度恢复到基础速度
       const wallHitCooldown = 300; // ms
       if (window.millis() - this.hitWallTimestamp > wallHitCooldown) {
-        // If we're past the wall hit cooldown, increase target speed back to normal
         this.targetSpeed = Math.min(this.targetSpeed + 0.1 * deltaTime * 60, this.autoSpeed);
       }
     }
-
-    // Clamp horizontal speed
+  
+    // 限制水平速度
     if (this.vx > maxSpeedX) this.vx = maxSpeedX;
     if (this.vx < -maxSpeedX) this.vx = -maxSpeedX;
     
-    // Scale movement with deltaTime
+    // 计算移动量
     const scaledVx = this.vx * deltaTime * 60;
     const scaledVy = this.vy * deltaTime * 60;
     
-    // For high vertical speeds, do multiple collision checks to prevent tunneling
+    // 为防止高速下穿透，分步进行垂直碰撞检测
     const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));
     
-    // Move horizontally and resolve collisions
+    // 水平移动并检测碰撞
     this.x += scaledVx;
     const hadHorizontalCollision = this.checkTileCollisions(true, tileMap, prevX, prevY);
     
-    // Store onGround state before vertical movement
+    // 存储之前的 onGround 状态
     const wasOnGround = this.onGround;
     
-    // Move vertically in steps for high speeds
+    // 垂直移动：分步检测碰撞
     if (steps > 1) {
       const stepVy = scaledVy / steps;
       for (let i = 0; i < steps; i++) {
         this.y += stepVy;
-        // Reset onGround before checking vertical collisions
         if (i === 0) {
           this.onGround = false;
         }
@@ -147,114 +141,111 @@ export class Player {
         if (hadVerticalCollision) break;
       }
     } else {
-      // Normal vertical movement for low speeds
       this.y += scaledVy;
-      // Reset onGround before checking vertical collisions
       this.onGround = false;
       const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
     }
     
-    // Add squash/stretch effects based on collisions and velocity
+    // 着地后应用挤压/拉伸效果
     if (!wasOnGround && this.onGround) {
-      // Just landed - squash
       this.squashFactor = 0.7;
       this.stretchFactor = 1.3;
-      
-      // Make small particles on landing if speed was high enough
       if (Math.abs(this.vy) > 5) {
-        // If we had particles system, we'd create landing particles here
+        // 如果有粒子系统，可在此创建落地粒子
       }
     }
     
-    // Gradually recover from squash/stretch, scaled with deltaTime
+    // 渐进恢复挤压/拉伸效果
     const timeScaledRecoveryRate = this.recoveryRate * deltaTime * 60;
     this.squashFactor = this.squashFactor + (1 - this.squashFactor) * timeScaledRecoveryRate;
     this.stretchFactor = this.stretchFactor + (1 - this.stretchFactor) * timeScaledRecoveryRate;
-
-    // Check for a buffered flip input
+  
+    // 检查缓冲重力翻转输入
     if (this.bufferedFlipAvailable) {
-      let bufferDuration = allowBufferedFlipWhileAir
-        ? airBufferDuration
-        : preSurfaceBufferDuration;
+      let bufferDuration = allowBufferedFlipWhileAir ? airBufferDuration : preSurfaceBufferDuration;
       if (window.millis() - this.flipBufferTimestamp > bufferDuration) {
-        // Buffer expired
         this.bufferedFlipAvailable = false;
       } else if (this.onGround) {
-        // Player just landed and a buffered flip is available
         this.performGravityFlip();
         this.bufferedFlipAvailable = false;
       }
     }
-
+  
+    // 检查是否超出地图边界
     if (window.strictVerticalBoundaries) {
-      // 对于严格的半开放地图，一旦玩家的 y 坐标超出地图范围立即判输
       if (this.y < 0 || this.y > tileMap.length * tileSize) {
         this.triggerHitEffect();
         loseLife();
         return;
       }
     } else {
-    // Check if the player has fallen off the map or gone beyond the boundaries
-    const mapHeight = tileMap.length * tileSize;
-    
-    if (this.gravityDirection === 1) {
-      // Normal gravity - check if fallen off the bottom
-      if (this.y > mapHeight + 200) {
-        this.triggerHitEffect();
-        loseLife();
-        return;
-      }
-    } else {
-      // Flipped gravity - check if gone beyond the top
-      if (this.y < -200) {
-        this.triggerHitEffect();
-        loseLife();
-        return;
+      const mapHeight = tileMap.length * tileSize;
+      if (this.gravityDirection === 1) {
+        if (this.y > mapHeight + 200) {
+          this.triggerHitEffect();
+          loseLife();
+          return;
+        }
+      } else {
+        if (this.y < -200) {
+          this.triggerHitEffect();
+          loseLife();
+          return;
+        }
       }
     }
-  }
-    // Check collisions with hazards (spike tiles)
+  
+    // 检测危险（如尖刺）
     this.checkHazards(tileMap);
-
-
+    
+    // 检测动态悬浮平台碰撞
     this.checkFloatingPlatformCollisions(window.floatingPlatforms);
-    // Improved camera positioning with better centering:
-    
-    // Calculate map dimensions
+  
+    // ----- 滑行检测代码：根据玩家脚部所在 tile 判断是否为 "S" -----
+    if (this.onGround) {
+      // 根据重力方向确定玩家脚部所在的行
+      const footRow = this.gravityDirection > 0 
+        ? Math.floor((this.y + this.h * 0.5) / tileSize)
+        : Math.floor((this.y - this.h * 0.5) / tileSize);
+      const col = Math.floor(this.x / tileSize);
+      if (
+        footRow >= 0 && footRow < tileMap.length &&
+        col >= 0 && col < tileMap[footRow].length &&
+        tileMap[footRow].charAt(col) === "S"
+      ) {
+        this.isSlipping = true;
+        // 自动加速效果：增加额外水平速度（可根据需要调整数值）
+        this.vx += 100.0 * deltaTime * 60 * this.autoDirection;
+      } else {
+        this.isSlipping = false;
+      }
+    } else {
+      this.isSlipping = false;
+    }
+    // ----- 滑行检测结束 -----
+  
+    // 计算相机偏移
     const mapWidth = tileMap[0].length * tileSize;
-    
-    // Check if the entire map can fit within the viewport
     if (mapWidth <= window.width) {
-      // If the map is smaller than the viewport, center it horizontally
       let newCameraOffsetX = (mapWidth - window.width) / 2;
-      // Ensure we don't go negative (which would happen if map is smaller than viewport)
       newCameraOffsetX = Math.max(0, newCameraOffsetX);
       return newCameraOffsetX;
     } else {
-    // Map is larger than viewport, follow player with improved positioning
-    // Smoothly adjust camera position based on player's direction to avoid abrupt changes
-    const targetRatio = this.autoDirection > 0 ? 0.4 : 0.6;
-    // Ensure cameraPositionRatio is initialized
-    if (this.cameraPositionRatio === undefined) {
+      const targetRatio = this.autoDirection > 0 ? 0.4 : 0.6;
+      if (this.cameraPositionRatio === undefined) {
         this.cameraPositionRatio = targetRatio;
-    }
-    // Smoothly update the camera ratio (adjust the smoothing factor as needed)
-    // Scale with deltaTime
-    const smoothFactor = 0.02 * deltaTime * 60;
-    this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * smoothFactor;
-    let newCameraOffsetX = this.x - window.width * this.cameraPositionRatio;
-      
-      // Ensure camera doesn't go negative
+      }
+      const smoothFactor = 0.02 * deltaTime * 60;
+      this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * smoothFactor;
+      let newCameraOffsetX = this.x - window.width * this.cameraPositionRatio;
       newCameraOffsetX = Math.max(0, newCameraOffsetX);
-      
-      // Ensure camera doesn't go beyond the right edge of the level
       const maxCameraX = mapWidth - window.width;
       newCameraOffsetX = Math.min(newCameraOffsetX, maxCameraX);
       return newCameraOffsetX;
     }
-    // 静态碰撞检测之后，加入动态平台检测
-
   }
+
+  
 
   // Trigger hit visual effect
   triggerHitEffect() {
@@ -439,7 +430,7 @@ export class Player {
   // Enhanced gravity flip with more feedback
   attemptGravityFlip() {
 
-    if (this.isFrozen) return;
+    if (this.isFrozen || this.isSlipping) return;
     
     // Allow flip with a short grace period after leaving ground
     const GROUND_GRACE_PERIOD = 150; // ms
@@ -476,7 +467,7 @@ export class Player {
     // Update dimensions based on current tile size
     this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
-    this.autoSpeed = 4.0 * (tileSize / baseSize);
+    this.autoSpeed = 2.5 * (tileSize / baseSize);
 
     // Calculate interpolated position
     const renderX = this.previousX + (this.x - this.previousX) * interpolation;
