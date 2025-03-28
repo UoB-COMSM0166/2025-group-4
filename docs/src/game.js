@@ -10,6 +10,7 @@ import { ExitGate } from './entities/exitGate.js';
 import { getTile, drawTiles } from './utils.js';
 import { FloatingPlatform } from './floatingPlatform.js';
 import { initLevelEditor, updateLevelEditor, drawLevelEditor, handleEditorMousePressed, handleEditorMouseDragged, handleEditorMouseReleased, handleEditorMouseWheel, handleEditorKeyPressed, exportLevel } from './levelEditor.js';
+import { particleSystem } from './particles.js';
 
 
 // Game state variables
@@ -80,6 +81,9 @@ export function loseLife() {
   lives--;
   window.deathSound.play();
   
+  // Create death particle effect at player position
+  particleSystem.createDeath(player.x, player.y);
+  
   if (lives <= 0) {
     // Game over
     gameState = "over";
@@ -142,6 +146,8 @@ export function loadLevel(idx) {
     return;
   }
 
+  // Clear particles when loading a new level
+  particleSystem.clear();
 
   // 清空旧的动态悬浮平台
   floatingPlatforms = [];
@@ -179,6 +185,15 @@ export function loadLevel(idx) {
         console.log("找到玩家起始点：", x, y);
         // 替换为默认空格
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+        
+        // Create a spawn particle effect
+        particleSystem.createBurst(x, y, 20, {
+          color: color(150, 200, 255),
+          life: random(30, 60),
+          size: random(4, 10),
+          speed: random(1, 3),
+          gravity: 0.03
+        });
       } else if (tile === "2") {
         // 金币
         coins.push(new Coin(x, y));
@@ -189,6 +204,16 @@ export function loadLevel(idx) {
         exitGate = new ExitGate(x, y);
         console.log("添加出口门在：", x, y);
         tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+        
+        // Create a subtle portal effect around the exit gate
+        particleSystem.createBurst(x, y, 15, {
+          color: color(0, 255, 150, 150),
+          life: random(60, 120),
+          size: random(3, 8),
+          speed: random(0.5, 1.5),
+          gravity: 0,
+          drag: 0.99
+        });
       } else if (tile === "e") {
         // 添加普通敌人
         const enemy = new Enemy(x, y);
@@ -267,6 +292,33 @@ export function initGame() {
  */
 export function setDifficulty(difficultyLevel) {
   difficulty = difficultyLevel;
+  
+  // Add a colorful burst based on difficulty
+  let difficultyColor;
+  if (difficulty === "easy") {
+    difficultyColor = color(100, 255, 100);
+  } else if (difficulty === "hard") {
+    difficultyColor = color(255, 100, 100);
+  } else {
+    difficultyColor = color(100, 200, 255);
+  }
+  
+  // Create burst across the entire screen
+  for (let i = 0; i < 10; i++) {
+    particleSystem.createBurst(
+      random(width),
+      random(height),
+      15,
+      {
+        color: difficultyColor,
+        life: random(30, 60),
+        size: random(4, 10),
+        speed: random(1, 3),
+        gravity: 0,
+        drag: 0.95
+      }
+    );
+  }
   
   // Update game parameters based on difficulty
   if (difficulty === "easy") {
@@ -446,6 +498,10 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
       // 设置冻结效果（例如冻结60帧，约1秒）
       player.freezeTimer = 60;
       player.isFrozen = true;
+      
+      // Create frozen effect particles
+      particleSystem.createFrozenEffect(player.x, player.y, player.w, player.h);
+      
       console.log("玩家触碰到冰冻陷阱,被冻结1秒,陷阱消失");
     }
   
@@ -464,7 +520,8 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     // Update window game state
     updateWindowGameState();
     
-    // Don't update game logic during hitstop
+    // Don't update game logic during hitstop, but update particles
+    particleSystem.update(dt);
     return;
   } else {
     // Continue to update screen shake even after hitstop ends
@@ -502,6 +559,9 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
       console.log("玩家收集金币，位置：", coin.x, coin.y);
       score += coinValue;  // 使用难度对应的金币分值
       coin.collected = true;
+      
+      // Create coin collection particle effect
+      particleSystem.createCoin(coin.x, coin.y);
     }
   }
   
@@ -522,6 +582,10 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     // 给玩家一点时间（例如1秒）避免刚加载就碰到门
     if (millis() - window.levelLoadTime > 1000 && exitGate.checkPlayer(player)) {
       console.log("检测到出口碰撞，尝试切换关卡");
+      
+      // Create exit gate particles
+      particleSystem.createExitGate(exitGate.x, exitGate.y);
+      
       window.passSound.play();
       if (levelIndex < levels.length - 1) {
         loadLevel(levelIndex + 1);
@@ -535,7 +599,10 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     // 更新动态悬浮平台
     for (let platform of floatingPlatforms) {
       platform.update(dt);
-    }  
+    }
+    
+    // Update particle system
+    particleSystem.update(dt);
 }
 
 // New function to update screen shake using a trauma-based system
@@ -625,6 +692,26 @@ function drawMainMenu() {
   // Add animated stars in the background
   drawStars();
   
+  // Create ambient particles in the menu
+  if (random() < 0.1) {
+    const x = random(width);
+    const y = random(height);
+    particleSystem.addParticle(x, y, {
+      vx: random(-0.5, 0.5),
+      vy: random(-0.3, -0.1), // Slowly float upward
+      color: color(200, 220, 255, 150),
+      life: random(120, 240),
+      size: random(2, 5),
+      gravity: 0,
+      drag: 0.99,
+      shape: random() > 0.7 ? 'square' : 'circle'
+    });
+  }
+  
+  // Update and draw particles
+  particleSystem.update(1/60);
+  particleSystem.draw(0);
+  
   // Draw a game logo or icon
   fill(255, 220, 0);
   textAlign(CENTER, CENTER);
@@ -643,6 +730,25 @@ function drawMainMenu() {
   fill(100, 200, 255, 220);
   rect(width / 2 - 150 - pulseSize/2, height * 0.55 - 40 - pulseSize/2, 
        300 + pulseSize, 80 + pulseSize, 15);
+       
+  // Add button hover effect particles
+  if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
+      mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40) {
+    if (random() < 0.3) {
+      const x = width / 2 + random(-150, 150);
+      const y = height * 0.55 + random(-40, 40);
+      particleSystem.addParticle(x, y, {
+        vx: random(-0.5, 0.5),
+        vy: random(-1, -0.5),
+        color: color(255, 255, 255, 150),
+        life: random(20, 40),
+        size: random(1, 3),
+        gravity: 0,
+        drag: 0.98
+      });
+    }
+  }
+       
   fill(0);
   textSize(Math.max(24, width / 30));
   text("PLAY", width / 2, height * 0.55);
@@ -670,6 +776,26 @@ function drawDifficultyMenu() {
   
   // Add some animated elements
   drawStars();
+  
+  // Create ambient particles in the menu
+  if (random() < 0.1) {
+    const x = random(width);
+    const y = random(height);
+    particleSystem.addParticle(x, y, {
+      vx: random(-0.5, 0.5),
+      vy: random(-0.3, -0.1), // Slowly float upward
+      color: color(200, 220, 255, 150),
+      life: random(120, 240),
+      size: random(2, 5),
+      gravity: 0,
+      drag: 0.99,
+      shape: random() > 0.7 ? 'square' : 'circle'
+    });
+  }
+  
+  // Update and draw particles
+  particleSystem.update(1/60);
+  particleSystem.draw(0);
   
   // Draw title
   fill(255, 220, 0);
@@ -794,6 +920,9 @@ function drawGameScreen(interpolation = 0) {
   } else {
     player.draw(cameraOffsetX, interpolation);
   }
+  
+  // Draw particles with camera offset
+  particleSystem.draw(cameraOffsetX);
   
   pop();
   

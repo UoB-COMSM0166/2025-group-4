@@ -4,6 +4,7 @@
 import { tileSize, baseSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
 import { getTile } from '../utils.js';
 import { loseLife } from '../game.js';
+import { particleSystem } from '../particles.js';
 
 // Get reference to global game state
 let invincibilityActive = false;
@@ -395,6 +396,11 @@ export class Player {
     this.targetSpeed = this.autoSpeed * this.wallHitSlowdown;
     this.hitWallTimestamp = window.millis();
     
+    // Create wall hit particles at the appropriate position and direction
+    // Position particles at the edge of the player in the direction of the wall
+    const particleX = this.x + (this.w * 0.5 * this.autoDirection);
+    particleSystem.createWallHit(particleX, this.y, this.autoDirection);
+    
     // If we had a sound system, play wall hit sound here
     // window.wallHitSound.play();
   }
@@ -454,6 +460,9 @@ export class Player {
     // Stretch effect when flipping
     this.stretchFactor = 1.3;
     this.squashFactor = 0.8;
+    
+    // Create particle effect for gravity flip
+    particleSystem.createGravityFlip(this.x, this.y, this.w, this.gravityDirection);
     
     window.regravitySound.play();
   }
