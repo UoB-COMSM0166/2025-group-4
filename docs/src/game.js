@@ -146,6 +146,31 @@ export function loadLevel(idx) {
     return;
   }
 
+
+  const currentLevel = levels[idx];
+
+  //加载墙壁图像
+  if (currentLevel.assets && currentLevel.assets.wall) {
+    window.currentWallImage = loadImage(currentLevel.assets.wall);
+  } else {
+    window.currentWallImage = null;
+  }
+
+  // 加载背景图
+  if (currentLevel.assets && currentLevel.assets.background) {
+    backgroundImage = loadImage(currentLevel.assets.background);
+  } else {
+    backgroundImage = null;
+  }
+
+  // 新增：加载尖刺资源
+  if (currentLevel.assets && currentLevel.assets.spike) {
+    window.currentSpikeImage = loadImage(currentLevel.assets.spike);
+  } else {
+    window.currentSpikeImage = null;
+  }
+
+
   // Clear particles when loading a new level
   particleSystem.clear();
 

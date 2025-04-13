@@ -56,96 +56,94 @@ export function drawTiles(tileMap, cameraOffsetX) {
       }
 
       if (tile === "1") {
-        // Solid ground with enhanced visuals
-        // Base platform color
-        window.fill(80, 80, 90);
-        window.stroke(60, 60, 70);
-        window.strokeWeight(Math.max(1, tileSize / 20));
-        window.rect(x, y, tileSize, tileSize, 2); // Slightly rounded corners
-        
-        // Add texture details to platforms
-        window.noStroke();
-        
-        // Check adjacent tiles to determine edge styling
-        const hasTopTile = row > 0 && tileMap[row-1][col] === "1";
-        const hasLeftTile = col > 0 && tileMap[row][col-1] === "1";
-        const hasRightTile = col < tileMap[row].length-1 && tileMap[row][col+1] === "1";
-        const hasBottomTile = row < tileMap.length-1 && tileMap[row+1][col] === "1";
-        
-        // Top highlight if no tile above
-        if (!hasTopTile) {
-          window.fill(100, 100, 110, 150);
-          window.rect(x, y, tileSize, tileSize/6, 2, 2, 0, 0);
+        if (window.currentWallImage) {
+          // 使用当前关卡的墙壁图像，不绘制附加效果
+          window.image(window.currentWallImage, x, y, tileSize, tileSize);
+        } else {
+          // 绘制默认固体地面，并添加边缘高亮和纹理
+          window.fill(80, 80, 90);
+          window.stroke(60, 60, 70);
+          window.strokeWeight(Math.max(1, tileSize / 20));
+          window.rect(x, y, tileSize, tileSize, 2); // 略带圆角
+          window.noStroke();
+      
+          // 检查相邻的墙壁以添加高光和阴影细节
+          const hasTopTile = row > 0 && tileMap[row - 1][col] === "1";
+          const hasLeftTile = col > 0 && tileMap[row][col - 1] === "1";
+          const hasRightTile = col < tileMap[row].length - 1 && tileMap[row][col + 1] === "1";
+          const hasBottomTile = row < tileMap.length - 1 && tileMap[row + 1][col] === "1";
+      
+          // 顶部高光
+          if (!hasTopTile) {
+            window.fill(100, 100, 110, 150);
+            window.rect(x, y, tileSize, tileSize / 6, 2, 2, 0, 0);
+          }
+          // 底部阴影
+          if (!hasBottomTile) {
+            window.fill(40, 40, 50, 150);
+            window.rect(x, y + tileSize - tileSize / 6, tileSize, tileSize / 6, 0, 0, 2, 2);
+          }
+          // 左侧高光
+          if (!hasLeftTile) {
+            window.fill(90, 90, 100, 100);
+            window.rect(x, y, tileSize / 6, tileSize, 2, 0, 0, 2);
+          }
+          // 右侧阴影
+          if (!hasRightTile) {
+            window.fill(60, 60, 70, 100);
+            window.rect(x + tileSize - tileSize / 6, y, tileSize / 6, tileSize, 0, 2, 2, 0);
+          }
+          // 加入一些装饰性的小点与线条
+          window.fill(70, 70, 80, 100);
+          const dotSize = Math.max(1, tileSize / 12);
+          const seed = (row * 7 + col * 13) % 5;
+          for (let i = 0; i < 3; i++) {
+            const offsetX = (seed + i * 2) * tileSize / 8;
+            const offsetY = ((seed + i) % 3 + 1) * tileSize / 6;
+            window.ellipse(x + offsetX, y + offsetY, dotSize, dotSize);
+          }
+          // 绘制简约网格效果
+          window.stroke(60, 60, 70, 40);
+          window.strokeWeight(1);
+          window.line(x, y + tileSize / 2, x + tileSize, y + tileSize / 2);
+          window.line(x + tileSize / 2, y, x + tileSize / 2, y + tileSize);
         }
-        
-        // Bottom shadow if no tile below
-        if (!hasBottomTile) {
-          window.fill(40, 40, 50, 150);
-          window.rect(x, y + tileSize - tileSize/6, tileSize, tileSize/6, 0, 0, 2, 2);
-        }
-        
-        // Left edge highlight if no tile to left
-        if (!hasLeftTile) {
-          window.fill(90, 90, 100, 100);
-          window.rect(x, y, tileSize/6, tileSize, 2, 0, 0, 2);
-        }
-        
-        // Right edge shadow if no tile to right
-        if (!hasRightTile) {
-          window.fill(60, 60, 70, 100);
-          window.rect(x + tileSize - tileSize/6, y, tileSize/6, tileSize, 0, 2, 2, 0);
-        }
-        
-        // Add some texture dots/lines for visual interest
-        window.fill(70, 70, 80, 100);
-        const dotSize = Math.max(1, tileSize / 12);
-        
-        // Create a semi-random pattern based on position
-        const seed = (row * 7 + col * 13) % 5; // Deterministic "random" value
-        
-        for (let i = 0; i < 3; i++) {
-          const offsetX = (seed + i * 2) * tileSize / 8;
-          const offsetY = ((seed + i) % 3 + 1) * tileSize / 6;
-          window.ellipse(x + offsetX, y + offsetY, dotSize, dotSize);
-        }
-        
-        // Add a subtle grid pattern
-        window.stroke(60, 60, 70, 40);
-        window.strokeWeight(1);
-        window.line(x, y + tileSize/2, x + tileSize, y + tileSize/2);
-        window.line(x + tileSize/2, y, x + tileSize/2, y + tileSize);
-        
       } else if (tile === "5") {
-        // Enhanced spike hazard
-        window.fill(200, 30, 30);
-        window.stroke(100, 10, 10);
-        window.strokeWeight(Math.max(1, tileSize / 32));
-        
-        // Draw a more detailed triangular spike
-        window.beginShape();
-        window.vertex(x, y + tileSize);
-        window.vertex(x + tileSize / 2, y);
-        window.vertex(x + tileSize, y + tileSize);
-        window.endShape(window.CLOSE);
-        
-        // Add inner detail to spike
-        window.noStroke();
-        window.fill(230, 60, 60);
-        window.triangle(
-          x + tileSize * 0.25, y + tileSize * 0.5,
-          x + tileSize * 0.5, y + tileSize * 0.2,
-          x + tileSize * 0.75, y + tileSize * 0.5
-        );
-        
-        // Add a subtle glow effect
-        window.fill(255, 100, 100, 30);
-        window.ellipse(
-          x + tileSize / 2,
-          y + tileSize / 2,
-          tileSize * 1.2,
-          tileSize * 0.8
-        );
-      }else if (tile === "I") {
+        if (window.currentSpikeImage) {
+          // 如果加载到了尖刺资源，就使用图片绘制
+          window.image(window.currentSpikeImage, x, y, tileSize, tileSize);
+        } else {
+          // 原先的默认尖刺绘制
+          window.fill(200, 30, 30);
+          window.stroke(100, 10, 10);
+          window.strokeWeight(Math.max(1, tileSize / 32));
+          
+          // 三角形尖刺
+          window.beginShape();
+          window.vertex(x, y + tileSize);
+          window.vertex(x + tileSize / 2, y);
+          window.vertex(x + tileSize, y + tileSize);
+          window.endShape(window.CLOSE);
+          
+          // 细节
+          window.noStroke();
+          window.fill(230, 60, 60);
+          window.triangle(
+            x + tileSize * 0.25, y + tileSize * 0.5,
+            x + tileSize * 0.5, y + tileSize * 0.2,
+            x + tileSize * 0.75, y + tileSize * 0.5
+          );
+          
+          // 柔光
+          window.fill(255, 100, 100, 30);
+          window.ellipse(
+            x + tileSize / 2,
+            y + tileSize / 2,
+            tileSize * 1.2,
+            tileSize * 0.8
+          );
+        }
+      }  else if (tile === "I") {
         // 用淡蓝色表示冰冻陷阱，你也可以用图片替换
         fill(150, 220, 255);
         noStroke();

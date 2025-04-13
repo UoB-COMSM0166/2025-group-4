@@ -34,7 +34,13 @@ export function setupLevels() {
       "1..11111..1...........111",  
       "1.3.......1........555111",  
       "1111111111111111111111111"  
-    ]
+    ],
+    assets: {
+
+      wall: "src/assets/art/level_1_ice/tiles.png",
+      background: "src/assets/art/level_1_ice/background.png",
+      spike: "src/assets/art/level_1_ice/thorn.png"
+    }
   });
   
 
@@ -57,7 +63,12 @@ export function setupLevels() {
       "1......1..1111..1.......1",
       "1.3.....11111111........1",
       "1111111111111111111111111"
-    ]
+    ],
+    assets: {
+      wall: "src/assets/art/level_2/tiles.png", 
+      background: "src/assets/art/level_2/background.png", 
+      spike: "src/assets/art/level_2/thorn.png" 
+    }
   });
 
   
@@ -78,7 +89,12 @@ export function setupLevels() {
         "11111111.........................................................111111111111...1",
         "1.3............................1111111111.................e.....................1",
         "111111111111111111111111155555555555511111111111115555551111111115555555555555551"
-      ]
+      ],
+      assets: {
+        wall: "src/assets/art/level_3/tiles.png", 
+        background: "src/assets/art/level_3/background.png", 
+        spike: "src/assets/art/level_3/thorn.png" 
+      }
     });
 
 
@@ -98,7 +114,12 @@ export function setupLevels() {
           "1............................................................5.......................................1",
           "1E.................E..................E.................E.......I..........E................E........1",
           "11111111111111111111111111SSSSS1111111111111SSSSSSSS11111111111111111111111111111111111111111111111111"
-        ]
+        ],
+        assets: {
+          wall: "src/assets/art/level_4/tiles.png", 
+          background: "src/assets/art/level_4/background.png", 
+          spike: "src/assets/art/level_4/thorn.png" 
+        }
       });
 
 
@@ -117,7 +138,12 @@ export function setupLevels() {
       "1..............E.1.......5..1..........1.5.1...........E.11......5.1.............1.5......E.1....11",
       "1...11115.........222.............222.1...........222.11111......222.1..................222...1..11",
       "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
-    ]
+    ],
+    assets: {
+      wall: "src/assets/art/level_5/tiles.png", 
+      background: "src/assets/art/level_5/background.png", 
+      spike: "src/assets/art/level_5/thorn.png" 
+    }
    });
 
 
@@ -197,6 +223,11 @@ export function setupLevels() {
       "1.....1.............1",
       "111111111111111111111",
     ],
+    assets: {
+      wall: "src/assets/art/level_10/tiles.png", 
+      background: "src/assets/art/level_10/background.png", 
+      spike: "src/assets/art/level_10/thorn.png" 
+    }
   });
   
 
