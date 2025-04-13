@@ -101,9 +101,6 @@ export class FloatingPlatform {
         rect(drawX, drawY, this.width, this.height, 4);
       }
     }
-    
-    rect(drawX, drawY, this.width, this.height, 4);
-    
     pop();
   }
 }
