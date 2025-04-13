@@ -484,7 +484,16 @@ export class Player {
 
     window.push();
     window.translate(renderX - cameraOffsetX, renderY);
-    
+
+    // 如果正在打滑 && 有打滑贴图
+    if (this.isSlipping && window.slipperyPlayerImage) {
+    window.imageMode(window.CENTER);
+    window.image(window.slipperyPlayerImage, 0, 0, this.w, this.h);
+    } else if (this.isFrozen && window.inIcePlayerImage) {
+        // 绘制 dog_in_ice.png
+        imageMode(CENTER);
+        image(window.inIcePlayerImage, 0, 0, this.w, this.h);
+      }else{
     // Apply squash and stretch for more dynamic feel
     window.scale(this.stretchFactor, this.squashFactor);
     
@@ -545,7 +554,7 @@ export class Player {
       window.strokeWeight(2);
       window.rect(-this.w/2, -this.h/2, this.w, this.h);
     }
-    
+  }
     window.pop();
   }
 

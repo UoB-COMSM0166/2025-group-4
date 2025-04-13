@@ -118,7 +118,9 @@ export function setupLevels() {
         assets: {
           wall: "src/assets/art/level_4/tiles.png", 
           background: "src/assets/art/level_4/background.png", 
-          spike: "src/assets/art/level_4/thorn.png" 
+          spike: "src/assets/art/level_4/thorn.png",
+          slipperyPlayer: "src/assets/art/level_1_ice/dog_surprise.png",
+          inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png"
         }
       });
 
@@ -162,6 +164,11 @@ export function setupLevels() {
       "1..................1",
       "11111111111111111111",
     ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
   });
 // Original small levels2:
   levels.push({
@@ -175,6 +182,11 @@ export function setupLevels() {
       "1..............1",
       "1111111111111111",
     ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
   });
 
 // Original small levels3:
@@ -191,6 +203,11 @@ export function setupLevels() {
       "1...................1",
       "111111111111111111111",
     ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
   });
 
 // Original small levels4:
@@ -207,6 +224,11 @@ export function setupLevels() {
       "1...................1",
       "111111111111111111111",
     ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
   }); 
 //hidden level
   levels.push({

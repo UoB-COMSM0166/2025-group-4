@@ -163,12 +163,25 @@ export function loadLevel(idx) {
     backgroundImage = null;
   }
 
-  // 新增：加载尖刺资源
+  // 加载尖刺资源
   if (currentLevel.assets && currentLevel.assets.spike) {
     window.currentSpikeImage = loadImage(currentLevel.assets.spike);
   } else {
     window.currentSpikeImage = null;
   }
+  // 加载打滑墙壁资源
+  if (currentLevel.assets && currentLevel.assets.slipperyPlayer) {
+    window.slipperyPlayerImage = loadImage(currentLevel.assets.slipperyPlayer);
+  } else {
+    window.slipperyPlayerImage = null;
+  }
+
+  // 加载 inIcePlayer
+if (currentLevel.assets && currentLevel.assets.inIcePlayer) {
+  window.inIcePlayerImage = loadImage(currentLevel.assets.inIcePlayer);
+} else {
+  window.inIcePlayerImage = null;
+}
 
 
   // Clear particles when loading a new level
