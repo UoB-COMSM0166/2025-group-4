@@ -110,40 +110,45 @@ export function drawTiles(tileMap, cameraOffsetX) {
         }
       } else if (tile === "5") {
         if (window.currentSpikeImage) {
-          // 如果加载到了尖刺资源，就使用图片绘制
-          window.image(window.currentSpikeImage, x, y, tileSize, tileSize);
+          push();
+          // 如果当前尖刺位于地图顶部（row 等于 0），则对其垂直翻转
+          if (row === 0) {
+            // 翻转时，将坐标原点移到该 tile 的底边
+            translate(x, y + tileSize);
+            scale(1, -1);
+            // 此时绘制的图像坐标以 (0,0) 为起点
+            image(window.currentSpikeImage, 0, 0, tileSize, tileSize);
+          } else {
+            // 否则正常绘制
+            image(window.currentSpikeImage, x, y, tileSize, tileSize);
+          }
+          pop();
         } else {
-          // 原先的默认尖刺绘制
-          window.fill(200, 30, 30);
-          window.stroke(100, 10, 10);
-          window.strokeWeight(Math.max(1, tileSize / 32));
-          
-          // 三角形尖刺
-          window.beginShape();
-          window.vertex(x, y + tileSize);
-          window.vertex(x + tileSize / 2, y);
-          window.vertex(x + tileSize, y + tileSize);
-          window.endShape(window.CLOSE);
-          
-          // 细节
-          window.noStroke();
-          window.fill(230, 60, 60);
-          window.triangle(
-            x + tileSize * 0.25, y + tileSize * 0.5,
-            x + tileSize * 0.5, y + tileSize * 0.2,
-            x + tileSize * 0.75, y + tileSize * 0.5
-          );
-          
-          // 柔光
-          window.fill(255, 100, 100, 30);
-          window.ellipse(
-            x + tileSize / 2,
-            y + tileSize / 2,
-            tileSize * 1.2,
-            tileSize * 0.8
-          );
+          // 默认绘制：下面同样添加翻转判断
+          push();
+          if (row === 0) {
+            translate(x, y + tileSize);
+            scale(1, -1);
+          }
+          fill(200, 30, 30);
+          stroke(100, 10, 10);
+          strokeWeight(Math.max(1, tileSize / 32));
+          beginShape();
+          vertex(0, tileSize);
+          vertex(tileSize / 2, 0);
+          vertex(tileSize, tileSize);
+          endShape(CLOSE);
+          noStroke();
+          fill(230, 60, 60);
+          triangle(tileSize * 0.25, tileSize * 0.5,
+                   tileSize * 0.5, tileSize * 0.2,
+                   tileSize * 0.75, tileSize * 0.5);
+          fill(255, 100, 100, 30);
+          ellipse(tileSize / 2, tileSize / 2, tileSize * 1.2, tileSize * 0.8);
+          pop();
         }
-      }  else if (tile === "I") {
+      }
+        else if (tile === "I") {
         // 用淡蓝色表示冰冻陷阱，你也可以用图片替换
         fill(150, 220, 255);
         noStroke();
