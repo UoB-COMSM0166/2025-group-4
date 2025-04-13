@@ -87,9 +87,19 @@ export class FloatingPlatform {
     
     // 根据类型设定不同颜色，便于区分
     if (this.type === "6") {
-      fill(150, 150, 250); // 比较偏蓝
+      if (window.platformUpDownImage) {
+        image(window.platformUpDownImage, drawX, drawY, this.width, this.height);
+      } else {
+        fill(150, 150, 250); 
+        rect(drawX, drawY, this.width, this.height, 4);
+      }
     } else if (this.type === "7") {
-      fill(150, 250, 150); // 比较偏绿
+      if (window.platformleftrightImage) {
+        image(window.platformleftrightImage, drawX, drawY, this.width, this.height);
+      } else {
+        fill(150, 150, 250); 
+        rect(drawX, drawY, this.width, this.height, 4);
+      }
     }
     
     rect(drawX, drawY, this.width, this.height, 4);

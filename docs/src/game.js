@@ -183,6 +183,22 @@ if (currentLevel.assets && currentLevel.assets.inIcePlayer) {
   window.inIcePlayerImage = null;
 }
 
+// 加载上下移动平台图片
+if (currentLevel.assets && currentLevel.assets.platformUpDown) {
+  window.platformUpDownImage = loadImage(currentLevel.assets.platformUpDown);
+} else {
+  window.platformUpDownImage = null;
+}
+
+
+// 加载左右移动平台图片
+if (currentLevel.assets && currentLevel.assets.platformleftright) {
+  window.platformleftrightImage = loadImage(currentLevel.assets.platformleftright);
+} else {
+  window.platformleftrightImage = null;
+}
+
+
 
   // Clear particles when loading a new level
   particleSystem.clear();

@@ -39,7 +39,8 @@ export function setupLevels() {
 
       wall: "src/assets/art/level_1_ice/tiles.png",
       background: "src/assets/art/level_1_ice/background.png",
-      spike: "src/assets/art/level_1_ice/thorn.png"
+      spike: "src/assets/art/level_1_ice/thorn.png",
+      platformUpDown: "src/assets/art/level_1_ice/platforms6.png"
     }
   });
   
@@ -67,7 +68,8 @@ export function setupLevels() {
     assets: {
       wall: "src/assets/art/level_2/tiles.png", 
       background: "src/assets/art/level_2/background.png", 
-      spike: "src/assets/art/level_2/thorn.png" 
+      spike: "src/assets/art/level_2/thorn.png",
+      platformleftright: "src/assets/art/level_6-9/platforms7.png" 
     }
   });
 
@@ -120,8 +122,7 @@ export function setupLevels() {
           background: "src/assets/art/level_4/background.png", 
           spike: "src/assets/art/level_4/thorn.png",
           slipperyPlayer: "src/assets/art/level_1_ice/dog_surprise.png",
-          inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png",
-       
+          inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png"
         }
       });
 
