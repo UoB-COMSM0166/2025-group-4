@@ -51,11 +51,7 @@ let screenShakeNoiseOffsetY = 100; // noise offset for Y shake
 let screenShakeNoiseOffsetAngle = 200; // noise offset for rotation shake
 let screenShakeRotation = 0; // current rotation shake amount
 
-// Add state variables for gravity flip delay
-let gravityFlipDelayActive = false;
-let gravityFlipDelayDuration = 3; // Short duration in frames
-let gravityFlipDelayFramesLeft = 0;
-
+// Player state variables
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
@@ -83,7 +79,6 @@ function updateWindowGameState() {
   window.hitstopActive = hitstopActive;
   window.frameCount = window.frameCount || 0; // Ensure frameCount exists
   window.physicsClock = physicsClock; // Expose physics clock to window
-  window.gravityFlipDelayActive = gravityFlipDelayActive; // Expose gravity flip delay state
 }
 
 /**
@@ -121,44 +116,6 @@ export function loseLife() {
   }
   //检测子弹碰撞是否损失生命
   window.loseLife = loseLife;
-
-}
-
-// Add a new function to trigger the gravity flip delay
-export function triggerGravityFlipDelay() {
-  // Don't trigger if already in damage hitstop
-  if (hitstopActive) return;
-  
-  gravityFlipDelayActive = true;
-  gravityFlipDelayFramesLeft = gravityFlipDelayDuration;
-}
-
-// Add a new function to handle the end of hitstop
-function endHitstop() {
-  hitstopActive = false;
-  
-  // Only reset player position if outside map boundaries
-  const mapWidth = tileMap[0].length * tileSize;
-  const mapHeight = tileMap.length * tileSize;
-  
-  const isOutsideMap = 
-    player.x < 0 || 
-    player.x > mapWidth || 
-    player.y < -200 || // Allow some space above for flipped gravity
-    player.y > mapHeight + 200; // Allow some space below
-  
-  if (isOutsideMap) {
-    // Reset player position
-    player.x = playerSpawnX;
-    player.y = playerSpawnY;
-    player.vx = 0;
-    player.vy = 0;
-    player.gravityDirection = 1; // Reset gravity to normal.
-  } else {
-    // Just reduce velocity to give player a chance to recover
-    player.vx *= 0.5;
-    player.vy *= 0.5;
-  }
 }
 
 /**
@@ -613,21 +570,8 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     particleSystem.update(dt);
     return; // Stop game logic update
   } 
-  // Handle gravity flip delay if damage hitstop isn't active
-  else if (gravityFlipDelayActive) {
-    gravityFlipDelayFramesLeft -= 1;
-    
-    if (gravityFlipDelayFramesLeft <= 0) {
-      gravityFlipDelayActive = false;
-    }
-    
-    // Update window game state
-    updateWindowGameState();
-    
-    // Update particles during gravity flip delay
-    particleSystem.update(dt);
-    return; // Stop game logic update
-  } else {
+  // No need to check for gravity flip delay here since it's handled by the player
+  else {
     // Only update screen shake when NOT in hitstop (it's handled above)
     // Continue to update screen shake even after hitstop ends for smooth transition
     updateScreenShake(dt);
@@ -1795,6 +1739,48 @@ export function addCustomLevel(levelData) {
   
   console.log(`Custom level added! Total levels: ${levels.length}`);
   return true;
+}
+
+// Add a new function to trigger the gravity flip delay
+export function triggerGravityFlipDelay() {
+  // Don't trigger if already in damage hitstop
+  if (hitstopActive) return;
+  
+  // Instead of using a global delay, set the player's freeze timer directly
+  // This way only the player pauses while the rest of the world continues
+  if (window.player) {
+    const gravityFlipFreezeFrames = 10; // Short duration in frames
+    window.player.freezeTimer = gravityFlipFreezeFrames;
+    window.player.isFrozen = true;
+  }
+}
+
+// Function to handle the end of hitstop
+function endHitstop() {
+  hitstopActive = false;
+  
+  // Only reset player position if outside map boundaries
+  const mapWidth = tileMap[0].length * tileSize;
+  const mapHeight = tileMap.length * tileSize;
+  
+  const isOutsideMap = 
+    player.x < 0 || 
+    player.x > mapWidth || 
+    player.y < -200 || // Allow some space above for flipped gravity
+    player.y > mapHeight + 200; // Allow some space below
+  
+  if (isOutsideMap) {
+    // Reset player position
+    player.x = playerSpawnX;
+    player.y = playerSpawnY;
+    player.vx = 0;
+    player.vy = 0;
+    player.gravityDirection = 1; // Reset gravity to normal.
+  } else {
+    // Just reduce velocity to give player a chance to recover
+    player.vx *= 0.5;
+    player.vy *= 0.5;
+  }
 }
 
 
