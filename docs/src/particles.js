@@ -719,6 +719,59 @@ class ParticleSystem {
     }
   }
   
+  createLandingEffect(x, y, width, gravityDirection, options = {}) {
+    const dustColor = color(200, 200, 200, 150); // Slightly transparent dust
+    const impactColor = color(255, 255, 255, 200);
+    
+    // Create small impact ring
+    this.addParticle(x, y, {
+      color: impactColor,
+      life: 15,
+      size: 6,
+      growRate: 0.6,
+      shape: 'ring',
+      fadeMode: 'linear'
+    });
+    
+    // Determine direction based on gravity
+    const burstAngle = gravityDirection > 0 ? HALF_PI : -HALF_PI;
+    
+    // Create horizontal dust particles spreading outward
+    for (let i = 0; i < 10; i++) {
+      const spreadAngle = random(-PI * 0.8, PI * 0.8);
+      const offsetX = random(-width/2, width/2) * 0.7; // Stay within player width
+      
+      this.addParticle(x + offsetX, y + (gravityDirection * 5), {
+        vx: cos(spreadAngle) * random(0.3, 1.5),
+        vy: sin(spreadAngle) * random(0.3, 1.2) * gravityDirection,
+        color: dustColor,
+        life: random(15, 30),
+        size: random(2, 4),
+        shape: 'circle',
+        gravity: 0.02,
+        fadeMode: 'easeOut',
+        drag: 0.97
+      });
+    }
+    
+    // Create a few tiny particles that bounce slightly
+    for (let i = 0; i < 5; i++) {
+      const offsetX = random(-width/3, width/3);
+      
+      this.addParticle(x + offsetX, y + (gravityDirection * 5), {
+        vx: random(-1, 1),
+        vy: -random(0.5, 1.2) * gravityDirection, // Tiny bounce opposite to gravity
+        color: color(180, 175, 160),
+        life: random(12, 25),
+        size: random(1, 2),
+        shape: 'square',
+        gravity: 0.1,
+        rotationSpeed: random(-0.1, 0.1),
+        fadeMode: 'linear'
+      });
+    }
+  }
+  
   update(dt = 1/60) {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       this.particles[i].update(dt);

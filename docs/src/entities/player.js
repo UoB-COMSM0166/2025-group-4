@@ -57,6 +57,9 @@ export class Player {
     this.freezeTimer = 0;  // 冻结剩余帧数（例如60帧大约1秒）
     this.isFrozen = false; // 当前是否被冻结
     this.isSlipping = false;
+    
+    // For landing effects
+    this.landingVelocity = 0;
   }
 
   update(tileMap, cameraOffsetX, deltaTime = 1/60) {
@@ -151,9 +154,18 @@ export class Player {
     if (!wasOnGround && this.onGround) {
       this.squashFactor = 0.7;
       this.stretchFactor = 1.3;
-      if (Math.abs(this.vy) > 5) {
-        // 如果有粒子系统，可在此创建落地粒子
+      // 使用存储的着陆速度创建粒子效果
+      if (this.landingVelocity > 2) { // 只有足够的落地速度才创建效果
+        const impactScale = Math.min(this.landingVelocity / 10, 1); // 根据速度调整效果强度
+        particleSystem.createLandingEffect(
+          this.x, 
+          this.y + (this.gravityDirection * this.h * 0.4), // 在玩家脚部位置生成
+          this.w * impactScale, 
+          this.gravityDirection
+        );
       }
+      // 重置着陆速度
+      this.landingVelocity = 0;
     }
     
     // 渐进恢复挤压/拉伸效果
@@ -331,6 +343,11 @@ export class Player {
           if (Math.abs(this.vy) > 2) {
             this.squashFactor = Math.max(0.7, 1 - Math.abs(this.vy) * 0.02);
             this.stretchFactor = Math.min(1.3, 1 + Math.abs(this.vy) * 0.02);
+          }
+          
+          // Store landing velocity before resetting it
+          if (!this.onGround) {
+            this.landingVelocity = Math.abs(this.vy);
           }
           
           this.vy = 0;
@@ -573,6 +590,10 @@ export class Player {
         if (this.y + halfPlayerH >= platform.y - halfPlatformH - tolerance &&
             this.y + halfPlayerH <= platform.y - halfPlatformH + tolerance &&
             Math.abs(this.x - platform.x) < halfPlayerW + halfPlatformW) {
+          // 存储着陆速度（如果之前不在地面上）
+          if (!this.onGround) {
+            this.landingVelocity = Math.abs(this.vy);
+          }
           this.y = platform.y - halfPlatformH - halfPlayerH;
           this.vy = 0;
           this.onGround = true;
@@ -582,6 +603,10 @@ export class Player {
         if (this.y - halfPlayerH <= platform.y + halfPlatformH + tolerance &&
             this.y - halfPlayerH >= platform.y + halfPlatformH - tolerance &&
             Math.abs(this.x - platform.x) < halfPlayerW + halfPlatformW) {
+          // 存储着陆速度（如果之前不在地面上）
+          if (!this.onGround) {
+            this.landingVelocity = Math.abs(this.vy);
+          }
           this.y = platform.y + halfPlatformH + halfPlayerH;
           this.vy = 0;
           this.onGround = true;
