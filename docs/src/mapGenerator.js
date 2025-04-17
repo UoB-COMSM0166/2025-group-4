@@ -162,6 +162,12 @@ export function generateMap(width = 30, height = 15, difficulty = 1) {
   const hazardCount = Math.floor(difficulty * 0.5);
   map = addHazards(map, hazardCount);
   
+  // Ensure the exit is reachable; if not, regenerate this map
+  if (!isMapReachable(map, startX, startY, exitX, exitY)) {
+    console.warn("Generated map unreachable, regenerating...");
+    return generateMap(width, height, difficulty);
+  }
+  
   // Verify player start is still in the map
   let playerFound = false;
   for (let y = 0; y < map.length; y++) {
@@ -582,4 +588,30 @@ export function generateLevels(count = 10, seed = undefined) {
   }
   
   return levels;
+}
+
+// Helper function to check reachability between start and exit
+function isMapReachable(map, startX, startY, exitX, exitY) {
+  const rows = map.length;
+  const cols = map[0].length;
+  const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+  const queue = [[startY, startX]];
+  visited[startY][startX] = true;
+  const directions = [[1,0],[-1,0],[0,1],[0,-1]];
+  while (queue.length) {
+    const [r, c] = queue.shift();
+    if (r === exitY && c === exitX) return true;
+    for (const [dr, dc] of directions) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && !visited[nr][nc]) {
+        const tile = map[nr].charAt(nc);
+        if (!['1','5','^','v','<','>'].includes(tile)) {
+          visited[nr][nc] = true;
+          queue.push([nr, nc]);
+        }
+      }
+    }
+  }
+  return false;
 } 

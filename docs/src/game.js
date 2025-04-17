@@ -26,6 +26,8 @@ let score = 0; // player's score
 let backgroundColor; // for background gradient
 export let gameState = "menu"; // can be "menu", "difficulty", "play", "win", "over", or "editor"
 let lives = 3; // number of lives
+// Flag to ensure exit logic triggers only once per level
+let exitTriggered = false;
 
 // Fixed timestep physics variables
 let physicsClock = 0; // Tracks physics simulation time
@@ -170,6 +172,8 @@ export function loadLevel(idx) {
     return;
   }
 
+  // Reset exit trigger when loading a new level
+  exitTriggered = false;
 
   const currentLevel = levels[idx];
 
@@ -700,7 +704,8 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
   particleSystem.update(dt);
 
   // When the player reaches the exit, update level logic
-  if (gameState === "play" && player && exitGate && exitGate.checkPlayer(player)) {
+  if (gameState === "play" && player && exitGate && exitGate.checkPlayer(player) && !exitTriggered) {
+    exitTriggered = true;
     // Add special particles when reaching the exit
     particleSystem.createExitGate(exitGate.x, exitGate.y);
     
@@ -1339,6 +1344,8 @@ function startGeneratedMode() {
  * Load a generated level by index
  */
 function loadGeneratedLevel(idx) {
+  // Reset exit trigger when loading a new generated level
+  exitTriggered = false;
   if (idx < 0 || idx >= generatedLevels.length) {
     // All levels completed - win the game
     gameState = "win";
