@@ -240,7 +240,11 @@ export class Player {
     this.checkHazards(tileMap);
     
     // 检测动态悬浮平台碰撞
-    this.checkFloatingPlatformCollisions(window.floatingPlatforms);
+    // Make sure window.floatingPlatforms exists and is an array
+    const platforms = window.floatingPlatforms || [];
+    if (Array.isArray(platforms)) {
+      this.checkFloatingPlatformCollisions(platforms);
+    }
   
     // ----- 滑行检测代码：根据玩家脚部所在 tile 判断是否为 "S" -----
     if (this.onGround) {
@@ -645,11 +649,21 @@ export class Player {
 
 
   checkFloatingPlatformCollisions(platforms) {
+    // Skip if platforms is not an array or is undefined
+    if (!platforms || !Array.isArray(platforms) || platforms.length === 0) {
+      return;
+    }
+    
     const tolerance = 4;
     const halfPlayerW = this.w * 0.5;
     const halfPlayerH = this.h * 0.5;
     
     for (let platform of platforms) {
+      // Skip if platform is invalid
+      if (!platform || typeof platform.width === 'undefined' || typeof platform.height === 'undefined') {
+        continue;
+      }
+      
       const halfPlatformW = platform.width * 0.5;
       const halfPlatformH = platform.height * 0.5;
       

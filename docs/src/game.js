@@ -11,6 +11,7 @@ import { getTile, drawTiles } from './utils.js';
 import { FloatingPlatform } from './floatingPlatform.js';
 import { initLevelEditor, updateLevelEditor, drawLevelEditor, handleEditorMousePressed, handleEditorMouseDragged, handleEditorMouseReleased, handleEditorMouseWheel, handleEditorKeyPressed, exportLevel } from './levelEditor.js';
 import { particleSystem } from './particles.js';
+import { generateLevels } from './mapGenerator.js';
 
 
 // Game state variables
@@ -64,6 +65,14 @@ let coinValue = 10; // base coin value - will be modified by difficulty
 let gameStartTime = 0; // 游戏开始时间
 let currentPlayTime = 0; // 当前游戏时间（秒）
 let floatingPlatforms = [];//动态悬浮平台对象
+let generatedMode = false; // whether we're in generated mode
+let generatedLevels = []; // store generated levels
+let generatedLevelCount = 0; // how many levels completed in generated mode
+let totalCoinsCollected = 0; // total coins collected in generated mode
+let selectedLives = 5; // default number of lives for generated mode
+let statsDisplayActive = false; // whether the stats display is active
+let seedValue = ""; // Empty string means random seed
+let seedInput = false; // Flag to indicate if we're editing the seed
 
 
 // Export game state to window for access in other modules
@@ -537,12 +546,43 @@ export function reloadCurrentLevel(oldTileSize) {
 
 /**
  * Update game state
- * @param {number} deltaTime - Time in seconds since the last update (for fixed timestep)
+ * @param {number} deltaTime - Time since last update
  */
 export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
+  // Skip update if in stats display
+  if (statsDisplayActive) {
+    return;
+  }
+  
+  // Update game time if game is active
+  if (gameState === "play") {
+    currentPlayTime = (millis() - gameStartTime) / 1000;
+  }
+  
   // If not in play state, nothing to update
   if (gameState !== "play") return;
   
+  // Skip update if required objects aren't initialized
+  if (!player || !tileMap) {
+    console.warn("Player or tile map not initialized, skipping update");
+    return;
+  }
+
+  // Ensure floating platforms is initialized
+  if (!floatingPlatforms) {
+    floatingPlatforms = [];
+  }
+  window.floatingPlatforms = floatingPlatforms;
+
+  // Update global invincibility state
+  if (invincibilityFramesLeft > 0) {
+    invincibilityFramesLeft--;
+    if (invincibilityFramesLeft <= 0) {
+      invincibilityActive = false;
+    }
+  }
+  window.invincibilityActive = invincibilityActive;
+
   // Update physics clock
   physicsClock += deltaTime;
   
@@ -612,14 +652,6 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     }
   
   
-  // Update invincibility - convert frame-based to time-based
-  if (invincibilityActive) {
-    invincibilityFramesLeft -= 1;
-    if (invincibilityFramesLeft <= 0) {
-      invincibilityActive = false;
-    }
-  }
-  
   // Update window game state (ensure it's updated even if no delays are active)
   updateWindowGameState();
   
@@ -659,33 +691,39 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     }
   }
 
-  // 检测出口
-  if (exitGate) {
-    // console.log("玩家位置：", player.x, player.y, "出口门位置：", exitGate.x, exitGate.y);
-    // 给玩家一点时间（例如1秒）避免刚加载就碰到门
-    if (millis() - window.levelLoadTime > 1000 && exitGate.checkPlayer(player)) {
-      console.log("检测到出口碰撞，尝试切换关卡");
+  // 更新动态悬浮平台
+  for (let platform of floatingPlatforms) {
+    platform.update(dt);
+  }
+  
+  // Update particle system
+  particleSystem.update(dt);
+
+  // When the player reaches the exit, update level logic
+  if (gameState === "play" && player && exitGate && exitGate.checkPlayer(player)) {
+    // Add special particles when reaching the exit
+    particleSystem.createExitGate(exitGate.x, exitGate.y);
+    
+    // Play exit sound
+    window.passSound.play();
+    
+    // In generated mode, use the generated level completion logic
+    if (generatedMode) {
+      // Award bonus points for completing a generated level
+      score += 20;
       
-      // Create exit gate particles
-      particleSystem.createExitGate(exitGate.x, exitGate.y);
-      
-      window.passSound.play();
-      if (levelIndex < levels.length - 1) {
-        loadLevel(levelIndex + 1);
-      } else {
+      // Complete the level
+      completeGeneratedLevel();
+    } else {
+      // Regular mode - load the next level or win if at the end
+      levelIndex++;
+      if (levelIndex >= levels.length) {
         gameState = "win";
+      } else {
+        loadLevel(levelIndex);
       }
     }
   }
-
-
-    // 更新动态悬浮平台
-    for (let platform of floatingPlatforms) {
-      platform.update(dt);
-    }
-    
-    // Update particle system
-    particleSystem.update(dt);
 }
 
 // New function to update screen shake using a trauma-based system
@@ -751,6 +789,10 @@ export function drawGame(interpolation = 0) {
     drawMainMenu();
   } else if (gameState === "difficulty") {
     drawDifficultyMenu();
+  } else if (gameState === "lives") {
+    drawLivesMenu();
+  } else if (gameState === "stats") {
+    drawStatsScreen();
   } else if (gameState === "play" || gameState === "over" || gameState === "win") {
     drawGameScreen(interpolation);
   }
@@ -811,15 +853,15 @@ function drawMainMenu() {
   // Draw play button with a pulsing effect
   let pulseSize = sin(frameCount * 0.05) * 10;
   fill(100, 200, 255, 220);
-  rect(width / 2 - 150 - pulseSize/2, height * 0.55 - 40 - pulseSize/2, 
+  rect(width / 2 - 150 - pulseSize/2, height * 0.5 - 40 - pulseSize/2, 
        300 + pulseSize, 80 + pulseSize, 15);
        
   // Add button hover effect particles
   if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
-      mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40) {
+      mouseY > height * 0.5 - 40 && mouseY < height * 0.5 + 40) {
     if (random() < 0.3) {
       const x = width / 2 + random(-150, 150);
-      const y = height * 0.55 + random(-40, 40);
+      const y = height * 0.5 + random(-40, 40);
       particleSystem.addParticle(x, y, {
         vx: random(-0.5, 0.5),
         vy: random(-1, -0.5),
@@ -834,7 +876,34 @@ function drawMainMenu() {
        
   fill(0);
   textSize(Math.max(24, width / 30));
-  text("PLAY", width / 2, height * 0.55);
+  text("PLAY", width / 2, height * 0.5);
+  
+  // Draw GENERATE button
+  fill(255, 150, 100, 220);
+  rect(width / 2 - 150 - pulseSize/2, height * 0.65 - 40 - pulseSize/2, 
+       300 + pulseSize, 80 + pulseSize, 15);
+       
+  // Add button hover effect for GENERATE
+  if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
+      mouseY > height * 0.65 - 40 && mouseY < height * 0.65 + 40) {
+    if (random() < 0.3) {
+      const x = width / 2 + random(-150, 150);
+      const y = height * 0.65 + random(-40, 40);
+      particleSystem.addParticle(x, y, {
+        vx: random(-0.5, 0.5),
+        vy: random(-1, -0.5),
+        color: color(255, 200, 150, 150),
+        life: random(20, 40),
+        size: random(1, 3),
+        gravity: 0,
+        drag: 0.98
+      });
+    }
+  }
+       
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("RANDOM", width / 2, height * 0.65);
   
   // Add game description at the bottom
   fill(255);
@@ -1066,19 +1135,63 @@ function drawGameScreen(interpolation = 0) {
  * Handle key press
  */
 export function handleKeyPressed() {
+  // Handle seed input for generated levels
+  if (gameState === "lives" && seedInput) {
+    // Handle backspace
+    if (keyCode === BACKSPACE) {
+      seedValue = seedValue.slice(0, -1);
+      return;
+    }
+    
+    // Handle enter to confirm input
+    if (keyCode === ENTER || keyCode === RETURN) {
+      seedInput = false;
+      return;
+    }
+    
+    // Handle escape to cancel input
+    if (keyCode === ESCAPE) {
+      seedInput = false;
+      return;
+    }
+    
+    // Add characters (only allow alphanumeric and some special chars)
+    if ((key >= '0' && key <= '9') || 
+        (key >= 'a' && key <= 'z') || 
+        (key >= 'A' && key <= 'Z') ||
+        key === '-' || key === '_' || key === '.') {
+      // Limit length to prevent overflow
+      if (seedValue.length < 20) {
+        seedValue += key;
+      }
+    }
+    return;
+  }
+
+  // Handle other key presses
   if (keyCode === 32) { // Space bar
     if (gameState === "menu") {
-      // 从主菜单进入难度选择
+      // From main menu to difficulty selection
       gameState = "difficulty";
     } else if (gameState === "play") {
-      // 在游戏中按空格尝试翻转重力
+      // In game, attempt to flip gravity
       player.attemptGravityFlip();
     } else if (gameState === "over" || gameState === "win") {
-      // 游戏结束或胜利时，按空格回到主菜单
+      // Game over or win, return to main menu
       gameState = "menu";
+    } else if (gameState === "stats") {
+      // Continue from stats screen
+      statsDisplayActive = false;
+      gameState = "play";
     } else {
-      // 其他情况（例如直接从菜单跳过），重新初始化游戏
+      // Other cases, reinitialize game
       initGame();
+    }
+  } else if (keyCode === ESCAPE) {
+    // Escape can be used to return to the main menu from anywhere
+    if (gameState !== "menu") {
+      initGame();
+      gameState = "menu";
     }
   }
 }
@@ -1099,9 +1212,20 @@ export function handleMouseClicked() {
   
   if (gameState === "menu") {
     // Check if play button clicked
-    if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
+    if (mouseY > height * 0.5 - 40 && mouseY < height * 0.5 + 40 && 
         mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
       gameState = "difficulty";
+      generatedMode = false;
+      window.lastStateChangeTime = Date.now();
+    }
+    // Check if generate button clicked
+    else if (mouseY > height * 0.65 - 40 && mouseY < height * 0.65 + 40 && 
+             mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      gameState = "lives";
+      generatedMode = true;
+      selectedLives = 5; // Default to 5 lives for the generated mode
+      seedValue = ""; // Reset seed value
+      seedInput = false; // Reset seed input mode
       window.lastStateChangeTime = Date.now();
     }
   } else if (gameState === "difficulty") {
@@ -1122,7 +1246,513 @@ export function handleMouseClicked() {
       setDifficulty("hard");
       window.lastStateChangeTime = Date.now();
     }
+  } else if (gameState === "lives") {
+    const options = [3, 5, 10, 99];
+    const buttonY = [height * 0.30, height * 0.38, height * 0.46, height * 0.54];
+    
+    // Check if seed input box was clicked
+    if (mouseY > height * 0.7 - 25 && mouseY < height * 0.7 + 25 && 
+        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
+      seedInput = true;
+    } else {
+      // If clicked outside the seed input, stop editing
+      if (seedInput) {
+        seedInput = false;
+      }
+      
+      // Check if any lives option was clicked
+      for (let i = 0; i < options.length; i++) {
+        if (mouseY > buttonY[i] - 30 && mouseY < buttonY[i] + 30 && 
+            mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
+          selectedLives = options[i];
+          break;
+        }
+      }
+      
+      // Check if start button was clicked
+      if (mouseY > height * 0.82 - 35 && mouseY < height * 0.82 + 35 && 
+          mouseX > width / 2 - 120 && mouseX < width / 2 + 120) {
+        seedInput = false; // Exit seed input mode
+        startGeneratedMode();
+        window.lastStateChangeTime = Date.now();
+      }
+    }
+  } else if (gameState === "stats") {
+    const panelWidth = Math.min(600, width * 0.8);
+    const panelHeight = Math.min(400, height * 0.7);
+    const panelX = width / 2 - panelWidth / 2;
+    const panelY = height / 2 - panelHeight / 2;
+    
+    // Check if continue button was clicked
+    if (mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30 && 
+        mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
+      statsDisplayActive = false;
+      gameState = "play";
+      window.lastStateChangeTime = Date.now();
+    }
+    // Check if quit button was clicked
+    else if (mouseY > panelY + panelHeight - 20 && mouseY < panelY + panelHeight + 30 && 
+             mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
+      // Return to main menu
+      initGame();
+      gameState = "menu";
+      window.lastStateChangeTime = Date.now();
+    }
   }
+}
+
+/**
+ * Start the generated mode
+ */
+function startGeneratedMode() {
+  // Generate levels with seed if provided
+  generatedLevels = generateLevels(20, seedValue); // Generate 20 levels with optional seed
+  generatedLevelCount = 0;
+  totalCoinsCollected = 0;
+  score = 0;
+  
+  // Set lives based on selection
+  lives = selectedLives;
+  
+  // Set difficulty to easy
+  difficulty = "easy";
+  import('./config.js').then(config => {
+    config.updatePhysicsForDifficulty("easy");
+  });
+  
+  // Initialize game time
+  gameStartTime = millis();
+  currentPlayTime = 0;
+  
+  // Initialize floating platforms array
+  floatingPlatforms = [];
+  window.floatingPlatforms = floatingPlatforms;
+  
+  // Load the first generated level
+  loadGeneratedLevel(0);
+  
+  // Change game state to play
+  gameState = "play";
+}
+
+/**
+ * Load a generated level by index
+ */
+function loadGeneratedLevel(idx) {
+  if (idx < 0 || idx >= generatedLevels.length) {
+    // All levels completed - win the game
+    gameState = "win";
+    return;
+  }
+  
+  const currentLevel = generatedLevels[idx];
+  levelIndex = idx;
+  
+  // Load wall image
+  if (currentLevel.assets && currentLevel.assets.wall) {
+    window.currentWallImage = loadImage(currentLevel.assets.wall);
+  } else {
+    window.currentWallImage = null;
+  }
+
+  // Load background image
+  if (currentLevel.assets && currentLevel.assets.background) {
+    backgroundImage = loadImage(currentLevel.assets.background);
+  } else {
+    backgroundImage = null;
+  }
+
+  // Load spike image
+  if (currentLevel.assets && currentLevel.assets.spike) {
+    window.currentSpikeImage = loadImage(currentLevel.assets.spike);
+  } else {
+    window.currentSpikeImage = null;
+  }
+  
+  // Load other assets as needed
+  if (currentLevel.assets && currentLevel.assets.slipperyPlayer) {
+    window.slipperyPlayerImage = loadImage(currentLevel.assets.slipperyPlayer);
+  } else {
+    window.slipperyPlayerImage = null;
+  }
+  
+  if (currentLevel.assets && currentLevel.assets.inIcePlayer) {
+    window.inIcePlayerImage = loadImage(currentLevel.assets.inIcePlayer);
+  } else {
+    window.inIcePlayerImage = null;
+  }
+  
+  if (currentLevel.assets && currentLevel.assets.platformUpDown) {
+    window.platformUpDownImage = loadImage(currentLevel.assets.platformUpDown);
+  } else {
+    window.platformUpDownImage = null;
+  }
+  
+  if (currentLevel.assets && currentLevel.assets.platformleftright) {
+    window.platformleftrightImage = loadImage(currentLevel.assets.platformleftright);
+  } else {
+    window.platformleftrightImage = null;
+  }
+  
+  // Clear particles
+  particleSystem.clear();
+  
+  // Clear floating platforms
+  floatingPlatforms = [];
+  window.floatingPlatforms = floatingPlatforms;
+  
+  // Set tile map and initialize entities
+  tileMap = currentLevel.map.slice();
+  coins = [];
+  enemies = [];
+  bullets = [];
+  window.bullets = bullets;
+  exitGate = null;
+  
+  let foundPlayer = false;
+  let foundExit = false;
+  
+  // Process the map
+  for (let row = 0; row < tileMap.length; row++) {
+    for (let col = 0; col < tileMap[row].length; col++) {
+      let tile = tileMap[row].charAt(col);
+      let x = col * tileSize + tileSize / 2;
+      let y = row * tileSize + tileSize / 2;
+      
+      if (tile === "3") {
+        // Player start position
+        foundPlayer = true;
+        playerSpawnX = x;
+        playerSpawnY = y;
+        player = new Player(x, y);
+        player.autoSpeed *= 0.5; // Slower speed for generated mode (easy)
+        window.player = player;
+        
+        // Replace with empty space
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+        
+        // Create spawn effect
+        particleSystem.createBurst(x, y, 20, {
+          color: color(150, 200, 255),
+          life: random(30, 60),
+          size: random(4, 10),
+          speed: random(1, 3),
+          gravity: 0.03
+        });
+      } else if (tile === "2") {
+        // Coin
+        coins.push(new Coin(x, y));
+      } else if (tile === "4") {
+        // Exit gate
+        exitGate = new ExitGate(x, y);
+        foundExit = true;
+      } else if (tile === "e") {
+        // Normal enemy
+        const enemy = new Enemy(x, y);
+        enemy.speed = enemySpeed * 0.7; // Slower for generated mode (easy)
+        enemies.push(enemy);
+      } else if (tile === "E") {
+        // Shooter enemy
+        const enemy = new ShooterEnemy(x, y);
+        enemy.speed = enemySpeed * 0.7; // Slower for generated mode (easy)
+        enemies.push(enemy);
+      } else if (tile === "6") {
+        // Up-down floating platform
+        floatingPlatforms.push(new FloatingPlatform(x, y, tileSize * 2, tileSize / 2, 0, 1));
+        // Replace with empty space
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      } else if (tile === "7") {
+        // Left-right floating platform
+        floatingPlatforms.push(new FloatingPlatform(x, y, tileSize * 2, tileSize / 2, 1, 0));
+        // Replace with empty space
+        tileMap[row] = tileMap[row].substring(0, col) + "." + tileMap[row].substring(col + 1);
+      }
+    }
+  }
+  
+  // Update the global floatingPlatforms reference
+  window.floatingPlatforms = floatingPlatforms;
+  
+  // Center the camera
+  cameraOffsetX = 0;
+  
+  // Ensure player was found - if not, create player at a safe position
+  if (!foundPlayer) {
+    console.error("No player start position found in generated level");
+    
+    // Find a safe position near the left side of the map
+    let safeRow = -1;
+    for (let row = 2; row < tileMap.length - 3; row++) {
+      if (tileMap[row].charAt(2) === "." && tileMap[row + 1].charAt(2) === "1") {
+        safeRow = row;
+        break;
+      }
+    }
+    
+    // If no ideal position found, place at arbitrary position and add platform
+    if (safeRow === -1) {
+      safeRow = Math.floor(tileMap.length / 2);
+      // Add a platform at this position
+      for (let col = 2; col < 6; col++) {
+        const rowString = tileMap[safeRow + 1];
+        tileMap[safeRow + 1] = rowString.substring(0, col) + "1" + rowString.substring(col + 1);
+      }
+    }
+    
+    // Create player at the safe position
+    playerSpawnX = 2 * tileSize + tileSize / 2;
+    playerSpawnY = safeRow * tileSize + tileSize / 2;
+    player = new Player(playerSpawnX, playerSpawnY);
+    player.autoSpeed *= 0.5; // Slower speed for generated mode (easy)
+    window.player = player;
+    
+    // Create spawn effect
+    particleSystem.createBurst(playerSpawnX, playerSpawnY, 20, {
+      color: color(150, 200, 255),
+      life: random(30, 60),
+      size: random(4, 10),
+      speed: random(1, 3),
+      gravity: 0.03
+    });
+  }
+  
+  // Ensure exit gate was found - if not, create one
+  if (!foundExit) {
+    console.error("No exit gate found in generated level");
+    
+    // Find a safe position near the right side of the map
+    const col = tileMap[0].length - 3;
+    let safeRow = -1;
+    for (let row = 2; row < tileMap.length - 3; row++) {
+      if (tileMap[row].charAt(col) === "." && tileMap[row + 1].charAt(col) === "1") {
+        safeRow = row;
+        break;
+      }
+    }
+    
+    // If no ideal position found, place at arbitrary position and add platform
+    if (safeRow === -1) {
+      safeRow = Math.floor(tileMap.length / 2);
+      // Add a platform at this position
+      for (let c = col - 2; c <= col + 2; c++) {
+        if (c >= 0 && c < tileMap[0].length) {
+          const rowString = tileMap[safeRow + 1];
+          tileMap[safeRow + 1] = rowString.substring(0, c) + "1" + rowString.substring(c + 1);
+        }
+      }
+    }
+    
+    // Create exit gate at the safe position
+    const exitX = col * tileSize + tileSize / 2;
+    const exitY = safeRow * tileSize + tileSize / 2;
+    exitGate = new ExitGate(exitX, exitY);
+  }
+}
+
+/**
+ * Handle level completion for generated mode
+ */
+function completeGeneratedLevel() {
+  // Increment level count
+  generatedLevelCount++;
+  
+ // Count coins collected
+  for (const coin of coins) {
+    if (coin.collected) {
+      totalCoinsCollected++;
+    }
+  }
+  
+  // Check if this is a milestone (every 5 levels)
+  if (generatedLevelCount % 5 === 0) {
+    // Show stats screen
+    statsDisplayActive = true;
+    gameState = "stats";
+  } else {
+    // Add a slight delay before loading the next level
+    setTimeout(() => {
+      // Load the next level
+      loadGeneratedLevel(levelIndex + 1);
+    }, 500);
+  }
+}
+
+/**
+ * Draw the lives selection screen
+ */
+function drawLivesMenu() {
+  // Clear the screen with a gradient background
+  let c1 = color(30, 20, 50);
+  let c2 = color(60, 30, 70);
+  for (let y = 0; y < height; y++) {
+    let inter = map(y, 0, height, 0, 1);
+    let c = lerpColor(c1, c2, inter);
+    stroke(c);
+    line(0, y, width, y);
+  }
+  
+  // Add some animated elements
+  drawStars();
+  
+  // Create ambient particles
+  if (random() < 0.1) {
+    particleSystem.addParticle(random(width), random(height), {
+      vx: random(-0.5, 0.5),
+      vy: random(-0.3, -0.1),
+      color: color(255, 180, 150, 150),
+      life: random(120, 240),
+      size: random(2, 5),
+      gravity: 0,
+      drag: 0.99
+    });
+  }
+  
+  // Update and draw particles
+  particleSystem.update(1/60);
+  particleSystem.draw(0);
+  
+  // Draw title
+  fill(255, 180, 80);
+  textAlign(CENTER, CENTER);
+  textSize(Math.max(40, width / 15));
+  text("SELECT LIVES", width / 2, height * 0.15);
+  
+  // Draw lives options
+  const options = [3, 5, 10, 99];
+  const buttonY = [height * 0.30, height * 0.38, height * 0.46, height * 0.54];
+  
+  for (let i = 0; i < options.length; i++) {
+    // Highlight selected option
+    if (options[i] === selectedLives) {
+      fill(255, 200, 100);
+      stroke(255, 150, 50);
+      strokeWeight(3);
+    } else {
+      fill(200, 100, 80);
+      noStroke();
+    }
+    
+    rect(width / 2 - 100, buttonY[i] - 30, 200, 60, 10);
+    
+    fill(0);
+    noStroke();
+    textSize(Math.max(24, width / 30));
+    text(options[i] === 99 ? "INFINITE" : options[i], width / 2, buttonY[i]);
+  }
+  
+  // Draw seed input section
+  noStroke();
+  fill(255);
+  textSize(Math.max(18, width / 45));
+  textAlign(CENTER, CENTER);
+  text("LEVEL SEED", width / 2, height * 0.65);
+  
+  // Draw seed input box
+  if (seedInput) {
+    // Active state
+    fill(255);
+    stroke(255, 200, 100);
+    strokeWeight(3);
+  } else {
+    // Inactive state
+    fill(150, 150, 180);
+    noStroke();
+  }
+  
+  rect(width / 2 - 150, height * 0.7 - 25, 300, 50, 10);
+  
+  // Draw seed value or placeholder
+  fill(seedInput ? 0 : 200);
+  textSize(Math.max(16, width / 50));
+  textAlign(CENTER, CENTER);
+  text(seedValue || "Random (click to enter seed)", width / 2, height * 0.7);
+  
+  // Add a blinking cursor if seed input is active
+  if (seedInput && frameCount % 60 < 30) {
+    // Use window.textWidth or directly call p5's textWidth function
+    const textWidthValue = textWidth(seedValue);
+    stroke(0);
+    strokeWeight(2);
+    line(width / 2 + textWidthValue / 2 + 5, height * 0.7 - 15, 
+         width / 2 + textWidthValue / 2 + 5, height * 0.7 + 15);
+  }
+  
+  // Draw start button
+  fill(100, 255, 150);
+  noStroke();
+  rect(width / 2 - 120, height * 0.82 - 35, 240, 70, 10);
+  
+  fill(0);
+  textSize(Math.max(24, width / 30));
+  text("START", width / 2, height * 0.82);
+  
+  // Instructions
+  fill(255);
+  textSize(Math.max(14, width / 60));
+  text("Choose the number of lives and enter an optional seed", width / 2, height * 0.9);
+  text("Using the same seed will generate the same level sequence", width / 2, height * 0.93);
+}
+
+/**
+ * Draw the stats display screen
+ */
+function drawStatsScreen() {
+  // Darkened background
+  fill(0, 0, 0, 200);
+  rect(0, 0, width, height);
+  
+  // Stats panel
+  const panelWidth = Math.min(600, width * 0.8);
+  const panelHeight = Math.min(400, height * 0.7);
+  const panelX = width / 2 - panelWidth / 2;
+  const panelY = height / 2 - panelHeight / 2;
+  
+  fill(40, 40, 60);
+  stroke(255, 180, 100);
+  strokeWeight(3);
+  rect(panelX, panelY, panelWidth, panelHeight, 15);
+  
+  // Title
+  noStroke();
+  fill(255, 220, 100);
+  textAlign(CENTER);
+  textSize(Math.max(30, width / 20));
+  text("LEVEL MILESTONE", width / 2, panelY + 50);
+  
+  // Stats
+  fill(255);
+  textAlign(LEFT);
+  textSize(Math.max(20, width / 40));
+  text("Levels Completed:", panelX + 50, panelY + 120);
+  text("Current Score:", panelX + 50, panelY + 160);
+  text("Total Coins Collected:", panelX + 50, panelY + 200);
+  text("Lives Remaining:", panelX + 50, panelY + 240);
+  
+  // Values
+  textAlign(RIGHT);
+  fill(100, 255, 150);
+  text(generatedLevelCount, panelX + panelWidth - 50, panelY + 120);
+  text(score, panelX + panelWidth - 50, panelY + 160);
+  text(totalCoinsCollected, panelX + panelWidth - 50, panelY + 200);
+  text(lives, panelX + panelWidth - 50, panelY + 240);
+  
+  // Continue button
+  fill(100, 200, 255);
+  noStroke();
+  rect(width / 2 - 100, panelY + panelHeight - 80, 200, 50, 10);
+  
+  fill(0);
+  textAlign(CENTER);
+  textSize(Math.max(20, width / 40));
+  text("CONTINUE", width / 2, panelY + panelHeight - 55);
+  
+  // Quit button
+  fill(255, 100, 100);
+  rect(width / 2 - 100, panelY + panelHeight - 20, 200, 50, 10);
+  
+  fill(0);
+  textSize(Math.max(20, width / 40));
+  text("QUIT", width / 2, panelY + panelHeight + 5);
 }
 
 /**
@@ -1131,7 +1761,7 @@ export function handleMouseClicked() {
 export function handleTouchStarted() {
   if (gameState === "play") {
     player.attemptGravityFlip();
-  } else if (gameState === "menu" || gameState === "difficulty") {
+  } else if (gameState === "menu" || gameState === "difficulty" || gameState === "lives" || gameState === "stats") {
     // Simulate a mouse click for touch events
     handleMouseClicked();
   } else {
@@ -1159,4 +1789,6 @@ export function addCustomLevel(levelData) {
   console.log(`Custom level added! Total levels: ${levels.length}`);
   return true;
 }
+
+
 
