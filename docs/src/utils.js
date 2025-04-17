@@ -20,7 +20,7 @@ export function getTile(col, row, tileMap) {
   // Get the character at this position.
   let tile = tileMap[row][col];
   if (tile === "1"|| tile === "S") return 1; // Solid tile.
-  if (tile === "5") return 5; // Hazard (spike).
+  if (tile === "5" || tile === "^" || tile === "v" || tile === "<" || tile === ">") return 5; // Hazard (spike).
   return 0; // Empty or other.
 }
 
@@ -108,48 +108,62 @@ export function drawTiles(tileMap, cameraOffsetX) {
           window.line(x, y + tileSize / 2, x + tileSize, y + tileSize / 2);
           window.line(x + tileSize / 2, y, x + tileSize / 2, y + tileSize);
         }
-      } else if (tile === "5") {
+      } else if (tile === "5" || tile === "^" || tile === "v" || tile === "<" || tile === ">") {
+        // --- Spike Drawing Logic ---
         if (window.currentSpikeImage) {
           push();
-          // 如果当前尖刺位于地图顶部（row 等于 0），则对其垂直翻转
-          if (row === 0) {
-            // 翻转时，将坐标原点移到该 tile 的底边
-            translate(x, y + tileSize);
-            scale(1, -1);
-            // 此时绘制的图像坐标以 (0,0) 为起点
-            image(window.currentSpikeImage, 0, 0, tileSize, tileSize);
-          } else {
-            // 否则正常绘制
-            image(window.currentSpikeImage, x, y, tileSize, tileSize);
+          // Center the transformation pivot point
+          translate(x + tileSize / 2, y + tileSize / 2);
+          
+          // Apply rotation based on the tile character
+          if (tile === "v") {
+            rotate(PI); // Pointing down
+          } else if (tile === "<") {
+            rotate(-HALF_PI); // Pointing left
+          } else if (tile === ">") {
+            rotate(HALF_PI); // Pointing right
           }
+          // '^' or '5' point up by default, no rotation needed
+
+          // Draw the image centered around the (now rotated) origin
+          image(window.currentSpikeImage, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
           pop();
         } else {
-          // 默认绘制：下面同样添加翻转判断
+          // Default drawing logic if image fails to load
           push();
-          if (row === 0) {
-            translate(x, y + tileSize);
-            scale(1, -1);
-          }
           fill(200, 30, 30);
           stroke(100, 10, 10);
           strokeWeight(Math.max(1, tileSize / 32));
+          translate(x + tileSize / 2, y + tileSize / 2);
+
+          if (tile === "v") {
+            rotate(PI);
+          } else if (tile === "<") {
+            rotate(-HALF_PI);
+          } else if (tile === ">") {
+            rotate(HALF_PI);
+          }
+          // '^' or '5' point up by default
+
+          // Draw the triangle centered around the origin
           beginShape();
-          vertex(0, tileSize);
-          vertex(tileSize / 2, 0);
-          vertex(tileSize, tileSize);
+          vertex(0, -tileSize / 2); // Top point
+          vertex(-tileSize / 2, tileSize / 2); // Bottom left
+          vertex(tileSize / 2, tileSize / 2); // Bottom right
           endShape(CLOSE);
+
+          // Optional: Add some detail to default spike
           noStroke();
           fill(230, 60, 60);
-          triangle(tileSize * 0.25, tileSize * 0.5,
-                   tileSize * 0.5, tileSize * 0.2,
-                   tileSize * 0.75, tileSize * 0.5);
-          fill(255, 100, 100, 30);
-          ellipse(tileSize / 2, tileSize / 2, tileSize * 1.2, tileSize * 0.8);
+          triangle(-tileSize * 0.25, 0,
+                    tileSize * 0.25, 0,
+                    0, -tileSize * 0.3);
           pop();
         }
+        // --- End Spike Drawing Logic ---
       }
         else if (tile === "I") {
-        // 用淡蓝色表示冰冻陷阱，你也可以用图片替换
+        // Use light blue for ice traps
         fill(150, 220, 255);
         noStroke();
         rect(x, y, tileSize, tileSize);
