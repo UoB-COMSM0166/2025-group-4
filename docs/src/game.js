@@ -48,6 +48,11 @@ let screenShakeNoiseOffsetY = 100; // noise offset for Y shake
 let screenShakeNoiseOffsetAngle = 200; // noise offset for rotation shake
 let screenShakeRotation = 0; // current rotation shake amount
 
+// Add state variables for gravity flip delay
+let gravityFlipDelayActive = false;
+let gravityFlipDelayDuration = 3; // Short duration in frames
+let gravityFlipDelayFramesLeft = 0;
+
 let playerSpawnX = 0; // where the player starts (X)
 let playerSpawnY = 0; // where the player starts (Y)
 let enemies = []; // store enemies
@@ -67,6 +72,7 @@ function updateWindowGameState() {
   window.hitstopActive = hitstopActive;
   window.frameCount = window.frameCount || 0; // Ensure frameCount exists
   window.physicsClock = physicsClock; // Expose physics clock to window
+  window.gravityFlipDelayActive = gravityFlipDelayActive; // Expose gravity flip delay state
 }
 
 /**
@@ -79,7 +85,7 @@ export function loseLife() {
   }
   
   lives--;
-  window.deathSound.play();
+  // window.deathSound.play();
   
   // Create death particle effect at player position
   particleSystem.createDeath(player.x, player.y);
@@ -105,6 +111,15 @@ export function loseLife() {
   //检测子弹碰撞是否损失生命
   window.loseLife = loseLife;
 
+}
+
+// Add a new function to trigger the gravity flip delay
+export function triggerGravityFlipDelay() {
+  // Don't trigger if already in damage hitstop
+  if (hitstopActive) return;
+  
+  gravityFlipDelayActive = true;
+  gravityFlipDelayFramesLeft = gravityFlipDelayDuration;
 }
 
 // Add a new function to handle the end of hitstop
@@ -537,7 +552,44 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
   // 更新游戏时间
   currentPlayTime = (millis() - gameStartTime) / 1000; // 转换为秒
 
-
+  // --- Handle Delays ---
+  // Prioritize damage hitstop
+  if (hitstopActive) {
+    hitstopFramesLeft -= 1;
+    updateScreenShake(dt); // Update screen shake during hitstop
+    
+    if (hitstopFramesLeft <= 0) {
+      endHitstop();
+    }
+    
+    // Update window game state
+    updateWindowGameState();
+    
+    // Update particles during hitstop
+    particleSystem.update(dt);
+    return; // Stop game logic update
+  } 
+  // Handle gravity flip delay if damage hitstop isn't active
+  else if (gravityFlipDelayActive) {
+    gravityFlipDelayFramesLeft -= 1;
+    
+    if (gravityFlipDelayFramesLeft <= 0) {
+      gravityFlipDelayActive = false;
+    }
+    
+    // Update window game state
+    updateWindowGameState();
+    
+    // Update particles during gravity flip delay
+    particleSystem.update(dt);
+    return; // Stop game logic update
+  } else {
+    // Only update screen shake when NOT in hitstop (it's handled above)
+    // Continue to update screen shake even after hitstop ends for smooth transition
+    updateScreenShake(dt);
+  }
+  // --- End Handle Delays ---
+  
   const playerCol = Math.floor(player.x / tileSize);
   const playerRow = Math.floor(player.y / tileSize);
     // 假设玩家触碰到了冰冻陷阱
@@ -560,29 +612,6 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     }
   
   
-  // Update hitstop and invincibility timers - convert frame-based to time-based
-  if (hitstopActive) {
-    hitstopFramesLeft -= 1;
-    
-    // Update screen shake using trauma-based system
-    updateScreenShake(dt);
-    
-    if (hitstopFramesLeft <= 0) {
-      endHitstop();
-    }
-    
-    // Update window game state
-    updateWindowGameState();
-    
-    // Don't update game logic during hitstop, but update particles
-    particleSystem.update(dt);
-    return;
-  } else {
-    // Continue to update screen shake even after hitstop ends
-    // for a smoother transition
-    updateScreenShake(dt);
-  }
-  
   // Update invincibility - convert frame-based to time-based
   if (invincibilityActive) {
     invincibilityFramesLeft -= 1;
@@ -591,7 +620,7 @@ export function updateGame(deltaTime = DEFAULT_DELTA_TIME) {
     }
   }
   
-  // Update window game state
+  // Update window game state (ensure it's updated even if no delays are active)
   updateWindowGameState();
   
   // Update player with deltaTime

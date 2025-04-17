@@ -3,7 +3,7 @@
  */
 import { tileSize, baseSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
 import { getTile } from '../utils.js';
-import { loseLife } from '../game.js';
+import { loseLife, triggerGravityFlipDelay } from '../game.js';
 import { particleSystem } from '../particles.js';
 
 // Get reference to global game state
@@ -490,6 +490,9 @@ export class Player {
     
     // Create particle effect for gravity flip
     particleSystem.createGravityFlip(this.x, this.y, this.w, this.gravityDirection);
+    
+    // Trigger the short global delay
+    triggerGravityFlipDelay();
     
     window.regravitySound.play();
   }
