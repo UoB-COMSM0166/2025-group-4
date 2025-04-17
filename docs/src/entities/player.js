@@ -8,6 +8,8 @@ import { particleSystem } from '../particles.js';
 
 // Get reference to global game state
 let invincibilityActive = false;
+// Define the ground grace period constant here for reuse
+const GROUND_GRACE_PERIOD = 150; // ms
 
 export class Player {
   constructor(px, py) {
@@ -57,6 +59,9 @@ export class Player {
     this.freezeTimer = 0;  // 冻结剩余帧数（例如60帧大约1秒）
     this.isFrozen = false; // 当前是否被冻结
     this.isSlipping = false;
+    
+    // Add state for flip readiness indicator
+    this.isFlipReady = false;
     
     // For landing effects
     this.landingVelocity = 0;
@@ -173,12 +178,17 @@ export class Player {
     this.squashFactor = this.squashFactor + (1 - this.squashFactor) * timeScaledRecoveryRate;
     this.stretchFactor = this.stretchFactor + (1 - this.stretchFactor) * timeScaledRecoveryRate;
   
+    // Check flip readiness state (before movement updates)
+    const wasRecentlyOnGround = window.millis() - this.lastGroundTimestamp < GROUND_GRACE_PERIOD;
+    this.isFlipReady = (this.onGround || wasRecentlyOnGround) && !this.isFrozen && !this.isSlipping;
+  
     // 检查缓冲重力翻转输入
     if (this.bufferedFlipAvailable) {
       let bufferDuration = allowBufferedFlipWhileAir ? airBufferDuration : preSurfaceBufferDuration;
+      // Check if buffer expired OR if the flip condition is now met
       if (window.millis() - this.flipBufferTimestamp > bufferDuration) {
         this.bufferedFlipAvailable = false;
-      } else if (this.onGround) {
+      } else if (this.isFlipReady) { // Use isFlipReady state here
         this.performGravityFlip();
         this.bufferedFlipAvailable = false;
       }
@@ -454,16 +464,16 @@ export class Player {
   attemptGravityFlip() {
 
     if (this.isFrozen || this.isSlipping) return;
-    
-    // Allow flip with a short grace period after leaving ground
-    const GROUND_GRACE_PERIOD = 150; // ms
-    const wasRecentlyOnGround = window.millis() - this.lastGroundTimestamp < GROUND_GRACE_PERIOD;
-    
-    if (this.onGround || wasRecentlyOnGround) {
+
+    // Use the pre-calculated isFlipReady state
+    if (this.isFlipReady) {
       this.performGravityFlip();
     } else {
-      this.flipBufferTimestamp = window.millis();
-      this.bufferedFlipAvailable = true;
+      // Only buffer if not already ready and not already buffered
+      if (!this.bufferedFlipAvailable) {
+          this.flipBufferTimestamp = window.millis();
+          this.bufferedFlipAvailable = true;
+      }
     }
   }
 
@@ -510,69 +520,100 @@ export class Player {
         // 绘制 dog_in_ice.png
         imageMode(CENTER);
         image(window.inIcePlayerImage, 0, 0, this.w, this.h);
-      }else{
-    // Apply squash and stretch for more dynamic feel
-    window.scale(this.stretchFactor, this.squashFactor);
-    
-    // Draw character shadow - position depends on gravity direction
-    window.fill(0, 0, 0, 60);
-    window.noStroke();
-    // Shadow above when gravity is flipped, below when normal
-    const shadowOffsetY = tileSize * 0.45 * this.gravityDirection;
-    if (this.onGround) {
-      window.ellipse(0, shadowOffsetY, this.w * 0.6, this.h * 0.2);
-    }
-    
-    // Draw hit flash effect if active
-    if (this.hitFlashActive) {
-      window.fill(255, 255, 255, this.hitFlashIntensity * 200);
-      window.noStroke();
-      window.rect(-this.w/2, -this.h/2, this.w, this.h);
-    }
+      } else {
+        // Apply squash and stretch for more dynamic feel
+        window.scale(this.stretchFactor, this.squashFactor);
 
-    // Update animation frame counter, and switch current frame
-    this.frameCounter++;
-    if (this.frameCounter >= this.frameDelay) {
-      // Speed up animation based on horizontal velocity
-      const speed = Math.abs(this.vx);
-      this.currentFrame = (this.currentFrame + 1) % window.playerImages.length;
-      this.frameCounter = 0;
-    }
-    
-    // Draw the player sprite
-    if (window.playerImages && window.playerImages.length > 0) {
-      // If facing left, flip the image horizontally
-      // If gravity is flipped, flip the image vertically
-      window.push();
-      
-      // Apply horizontal flip if moving left
-      const horizontalFlip = this.autoDirection < 0 ? -1 : 1;
-      
-      // Apply vertical flip if gravity is flipped
-      const verticalFlip = this.gravityDirection < 0 ? -1 : 1;
-      
-      // Apply both flips
-      window.scale(horizontalFlip, verticalFlip);
-      
-      // Use tinted version if invincible but not during hit flash
-      if (invincibilityActive && !this.hitFlashActive) {
-        // Apply a pulsing effect during invincibility
-        const pulseAmount = 0.5 + Math.sin(window.physicsClock * 10) * 0.3;
-        window.tint(255, 255, 255, 150 + pulseAmount * 105); // Semi-transparent when invincible
-      }
-      
-      window.imageMode(window.CENTER);
-      window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
-      window.pop();
-    } else {
-      // Simple rectangle representation if no image is available
-      window.fill(255, 0, 0);
-      window.stroke(0);
-      window.strokeWeight(2);
-      window.rect(-this.w/2, -this.h/2, this.w, this.h);
-    }
-  }
-    window.pop();
+        // --- Draw Flip Readiness Indicator ---
+        window.push();
+        // Apply flips first so outline matches player orientation
+        const horizontalFlip = this.autoDirection < 0 ? -1 : 1;
+        const verticalFlip = this.gravityDirection < 0 ? -1 : 1;
+        window.scale(horizontalFlip, verticalFlip);
+
+        window.noFill();
+        window.strokeWeight(2); // Make outline visible
+
+        if (this.isFlipReady) {
+          // Pulsing green outline when ready
+          const pulse = (1 + Math.sin(window.physicsClock * 8)) / 2; // 0 to 1
+          const alpha = 100 + pulse * 100; // Pulse alpha between 100 and 200
+          window.stroke(100, 255, 100, alpha);
+          // Draw ellipse slightly larger than the player
+          window.ellipse(0, 0, this.w * 1.1, this.h * 1.1);
+        } else if (this.bufferedFlipAvailable) {
+          // Static yellow outline when buffered
+          window.stroke(255, 255, 0, 200); // Yellow, slightly transparent
+          window.ellipse(0, 0, this.w * 1.1, this.h * 1.1);
+        }
+        window.pop(); // Restore scale before drawing shadow/player
+        // --- End Flip Indicator ---
+
+        // Draw character shadow - position depends on gravity direction
+        window.fill(0, 0, 0, 60);
+        window.noStroke();
+        // Shadow above when gravity is flipped, below when normal
+        const shadowOffsetY = tileSize * 0.45 * this.gravityDirection;
+        if (this.onGround) {
+          window.ellipse(0, shadowOffsetY, this.w * 0.6, this.h * 0.2);
+        }
+        
+        // Draw hit flash effect if active
+        if (this.hitFlashActive) {
+          window.fill(255, 255, 255, this.hitFlashIntensity * 200);
+          window.noStroke();
+          window.rect(-this.w/2, -this.h/2, this.w, this.h);
+        }
+
+        // Update animation frame counter, and switch current frame
+        this.frameCounter++;
+        if (this.frameCounter >= this.frameDelay) {
+          // Speed up animation based on horizontal velocity
+          const speed = Math.abs(this.vx);
+          this.currentFrame = (this.currentFrame + 1) % window.playerImages.length;
+          this.frameCounter = 0;
+        }
+        
+        // Draw the player sprite
+        if (window.playerImages && window.playerImages.length > 0) {
+          // If facing left, flip the image horizontally
+          // If gravity is flipped, flip the image vertically
+          window.push();
+          
+          // Apply horizontal flip if moving left
+          const horizontalFlip = this.autoDirection < 0 ? -1 : 1;
+          
+          // Apply vertical flip if gravity is flipped
+          const verticalFlip = this.gravityDirection < 0 ? -1 : 1;
+          
+          // Apply both flips
+          window.scale(horizontalFlip, verticalFlip);
+          
+          // Use tinted version if invincible but not during hit flash
+          if (invincibilityActive && !this.hitFlashActive) {
+            // Apply a pulsing effect during invincibility
+            const pulseAmount = 0.5 + Math.sin(window.physicsClock * 10) * 0.3;
+            window.tint(255, 255, 255, 150 + pulseAmount * 105); // Semi-transparent when invincible
+          }
+          
+          window.imageMode(window.CENTER);
+          window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+          window.pop();
+        } else {
+          // Simple rectangle representation if no image is available
+          window.fill(255, 0, 0);
+          window.stroke(0);
+          window.strokeWeight(2);
+          // Apply necessary transforms for rect mode CENTER
+          window.push();
+          const horizontalFlipRect = this.autoDirection < 0 ? -1 : 1;
+          const verticalFlipRect = this.gravityDirection < 0 ? -1 : 1;
+          window.scale(horizontalFlipRect, verticalFlipRect);
+          window.rect(0, 0, this.w, this.h); // Assuming rect mode is CENTER
+          window.pop();
+        }
+      } // End of the 'else' block for frozen/slipping check
+    window.pop(); // Pop the main translate transform
   }
 
 
