@@ -1,7 +1,8 @@
 /**
  * Player class
  */
-import { tileSize, baseSize, gravity, maxSpeedX, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
+import { tileSize, baseSize, gravity, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
+import * as config from '../config.js'; // Import the whole config module
 import { getTile } from '../utils.js';
 import { loseLife, triggerGravityFlipDelay } from '../game.js';
 import { particleSystem } from '../particles.js';
@@ -24,7 +25,8 @@ export class Player {
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
     this.cameraPositionRatio = this.autoDirection > 0 ? 0.4 : 0.6;
     this.autoSpeed = 4.0 * (tileSize / baseSize); // Scale speed with tile size
-    this.targetSpeed = this.autoSpeed; // Target speed for smooth acceleration
+    // Initialize targetSpeed based on current config speed
+    this.targetSpeed = this.autoSpeed * (config.maxSpeedX / 8); // Adjust initial speed based on config
     // Gravity direction: 1 = normal (downward), -1 = flipped (upward)
     this.gravityDirection = 1;
     // For buffering the flip input:
@@ -120,9 +122,10 @@ export class Player {
       }
     }
   
-    // 限制水平速度
-    if (this.vx > maxSpeedX) this.vx = maxSpeedX;
-    if (this.vx < -maxSpeedX) this.vx = -maxSpeedX;
+    // 限制水平速度 - Use config.maxSpeedX
+    const currentMaxSpeedX = config.maxSpeedX * (tileSize / baseSize); // Scale max speed with tile size
+    if (this.vx > currentMaxSpeedX) this.vx = currentMaxSpeedX;
+    if (this.vx < -currentMaxSpeedX) this.vx = -currentMaxSpeedX;
     
     // 计算移动量
     const scaledVx = this.vx * deltaTime * 60;
@@ -131,6 +134,21 @@ export class Player {
     // 为防止高速下穿透，分步进行垂直碰撞检测
     const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));
     
+    // --- Diagonal Gap Assistance ---
+    // Check if grounded, moving vertically, and about to hit a wall horizontally
+    if (this.onGround && Math.abs(this.vy) > 0.1 && scaledVx !== 0) {
+      const checkX = this.x + (this.w * 0.5 * Math.sign(scaledVx)) + (1 * Math.sign(scaledVx)); // Check slightly ahead horizontally
+      const checkCol = Math.floor(checkX / tileSize);
+      const checkRow = Math.floor(this.y / tileSize); // Current row
+
+      if (getTile(checkCol, checkRow, tileMap) === 1) {
+        // About to hit a wall horizontally while grounded and moving vertically
+        // Drastically reduce vertical velocity to ease diagonal movement
+        this.vy *= 0.05; // Adjust this factor as needed
+      }
+    }
+    // --- End Diagonal Gap Assistance ---
+
     // 水平移动并检测碰撞
     this.x += scaledVx;
     const hadHorizontalCollision = this.checkTileCollisions(true, tileMap, prevX, prevY);
@@ -506,7 +524,13 @@ export class Player {
     // Update dimensions based on current tile size
     this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
-    this.autoSpeed = 2.5 * (tileSize / baseSize);
+    this.autoSpeed = 4.0 * (tileSize / baseSize);
+    // Update base auto speed based on current maxSpeedX from config
+    const currentMaxSpeedXDraw = config.maxSpeedX * (tileSize / baseSize);
+    // Ensure targetSpeed respects the current difficulty setting
+    if (window.millis() - this.hitWallTimestamp > 300) { // Cooldown period after wall hit
+      this.targetSpeed = Math.min(this.targetSpeed, currentMaxSpeedXDraw);
+    }
 
     // Calculate interpolated position
     const renderX = this.previousX + (this.x - this.previousX) * interpolation;
