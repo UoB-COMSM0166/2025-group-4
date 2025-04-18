@@ -1,7 +1,7 @@
 /**
  * Player class
  */
-import { tileSize, baseSize, gravity, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
+import { tileSize, gravity, allowBufferedFlipWhileAir, airBufferDuration, preSurfaceBufferDuration } from '../config.js';
 import * as config from '../config.js'; // Import the whole config module
 import { getTile } from '../utils.js';
 import { loseLife, triggerGravityFlipDelay } from '../game.js';
@@ -24,7 +24,7 @@ export class Player {
     // Auto-run direction: -1 (left) or 1 (right)
     this.autoDirection = Math.random() < 0.5 ? -1 : 1;
     this.cameraPositionRatio = this.autoDirection > 0 ? 0.4 : 0.6;
-    this.autoSpeed = 4.0 * (tileSize / baseSize); // Scale speed with tile size
+    this.autoSpeed = 4.0 * (tileSize / 24); // Scale speed with tile size
     // Initialize targetSpeed based on current config speed
     this.targetSpeed = this.autoSpeed * (config.maxSpeedX / 8); // Adjust initial speed based on config
     // Gravity direction: 1 = normal (downward), -1 = flipped (upward)
@@ -110,7 +110,7 @@ export class Player {
     this.vy += timeScaledGravity * this.gravityDirection;
   
     // Limit max vertical speed
-    const maxVerticalSpeed = 12 * (tileSize / baseSize);
+    const maxVerticalSpeed = 12 * (tileSize / 24);
     if (this.vy > maxVerticalSpeed) this.vy = maxVerticalSpeed;
     if (this.vy < -maxVerticalSpeed) this.vy = -maxVerticalSpeed;
     
@@ -128,7 +128,7 @@ export class Player {
     }
   
     // Limit horizontal speed - Use config.maxSpeedX
-    const currentMaxSpeedX = config.maxSpeedX * (tileSize / baseSize); // Scale max speed with tile size
+    const currentMaxSpeedX = config.maxSpeedX * (tileSize / 24); // Scale max speed with tile size
     if (this.vx > currentMaxSpeedX) this.vx = currentMaxSpeedX;
     if (this.vx < -currentMaxSpeedX) this.vx = -currentMaxSpeedX;
     
@@ -511,9 +511,9 @@ export class Player {
     // Update dimensions based on current tile size
     this.w = tileSize * 0.9;
     this.h = tileSize * 0.9;
-    this.autoSpeed = 4.0 * (tileSize / baseSize);
+    this.autoSpeed = 4.0 * (tileSize / 24);
     // Update base auto speed based on current maxSpeedX from config
-    const currentMaxSpeedXDraw = config.maxSpeedX * (tileSize / baseSize);
+    const currentMaxSpeedXDraw = config.maxSpeedX * (tileSize / 24);
     // Ensure targetSpeed respects the current difficulty setting
     if (window.millis() - this.hitWallTimestamp > 300) { // Cooldown period after wall hit
       this.targetSpeed = Math.min(this.targetSpeed, currentMaxSpeedXDraw);

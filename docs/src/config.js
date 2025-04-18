@@ -4,9 +4,8 @@
 
 // Tile and level configuration
 export let tileSize = 12; // pixel size of each tile (will be dynamically calculated)
-export const baseSize = 12; // base tile size for reference
 export const numCols = 40; // visible columns on screen
-export const numRows = 30; // visible rows on screen
+export const numRows = 16; // visible rows on screen (changed from 30 to 16)
 
 // Physics configuration - base values that can be modified by difficulty
 export let gravity = 4; // base gravity magnitude
@@ -40,15 +39,14 @@ export function updatePhysicsForDifficulty(difficulty) {
 
 // Function to update the tile size based on window dimensions
 export function updateTileSize(windowWidth, windowHeight) {
+  // Calculate available height (excluding HUD)
   const availableHeight = windowHeight - hudHeight;
-  const widthBasedSize = windowWidth / numCols;
-  const heightBasedSize = availableHeight / numRows;
   
-  // Use the smaller of the two to ensure the whole level fits
-  tileSize = Math.floor(Math.min(widthBasedSize, heightBasedSize));
+  // Set tile size to always display 16 tiles vertically
+  tileSize = Math.floor(availableHeight / numRows);
   
   // Ensure minimum size
-  tileSize = Math.max(tileSize, 12); // Reduced minimum size from 16 to 12
+  tileSize = Math.max(tileSize, 12);
   
   return tileSize;
 }

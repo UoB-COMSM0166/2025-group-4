@@ -181,15 +181,29 @@ export const camera = {
     const visibleWidth = window.width / this.zoom;
     const visibleHeight = window.height / this.zoom;
     
-    // Calculate boundaries with margins
-    const leftBound = visibleWidth * 0.5;
-    const rightBound = this.mapWidth - visibleWidth * 0.5;
-    const topBound = visibleHeight * 0.5;
-    const bottomBound = this.mapHeight - visibleHeight * 0.5;
+    // Check if map is smaller than viewport
+    const isMapSmallerThanViewportWidth = this.mapWidth < visibleWidth;
+    const isMapSmallerThanViewportHeight = this.mapHeight < visibleHeight;
     
-    // Apply constraints
-    this.x = Math.max(leftBound, Math.min(this.x, rightBound));
-    this.y = Math.max(topBound, Math.min(this.y, bottomBound));
+    if (isMapSmallerThanViewportWidth) {
+      // Center horizontally if map fits entirely within viewport width
+      this.x = this.mapWidth / 2;
+    } else {
+      // Apply normal horizontal constraints if map is larger than viewport
+      const leftBound = visibleWidth * 0.5;
+      const rightBound = this.mapWidth - visibleWidth * 0.5;
+      this.x = Math.max(leftBound, Math.min(this.x, rightBound));
+    }
+    
+    if (isMapSmallerThanViewportHeight) {
+      // Center vertically if map fits entirely within viewport height
+      this.y = this.mapHeight / 2;
+    } else {
+      // Apply normal vertical constraints if map is larger than viewport
+      const topBound = visibleHeight * 0.5;
+      const bottomBound = this.mapHeight - visibleHeight * 0.5;
+      this.y = Math.max(topBound, Math.min(this.y, bottomBound));
+    }
   },
   
   /**
