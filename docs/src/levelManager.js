@@ -427,6 +427,13 @@ export function loadGeneratedLevel(idx) {
   window.bullets = gameState.state.bullets;
   gameState.state.exitGate = null;
   
+  // Calculate map dimensions for camera setup
+  const mapWidth = Math.max(...gameState.state.tileMap.map(row => row.length)) * tileSize;
+  const mapHeight = gameState.state.tileMap.length * tileSize;
+  
+  // Initialize camera with map dimensions
+  camera.init(mapWidth, mapHeight);
+  
   let foundPlayer = false;
   let foundExit = false;
   

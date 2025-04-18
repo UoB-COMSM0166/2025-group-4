@@ -84,6 +84,11 @@ export class Player {
       // When frozen, don't update position
       return;
     }
+    
+    // Check if exit gate was triggered, and if so, prevent player movement
+    if (window.exitTriggered) {
+      return;
+    }
 
     // Store previous position for interpolation
     this.previousX = this.x;

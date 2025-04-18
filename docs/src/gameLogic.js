@@ -158,9 +158,12 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
       if (gameState.state.levelIndex >= gameState.state.levels.length) {
         gameState.setGameState("win");
       } else {
-        import('./levelManager.js').then(levelManager => {
-          levelManager.loadLevel(gameState.state.levelIndex);
-        });
+        // Add a slight delay before loading the next level, matching generated levels
+        setTimeout(() => {
+          import('./levelManager.js').then(levelManager => {
+            levelManager.loadLevel(gameState.state.levelIndex);
+          });
+        }, 500);
       }
     }
   }

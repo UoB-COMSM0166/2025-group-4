@@ -54,9 +54,17 @@ export function handleKeyPressed() {
       // Game over or win, return to main menu
       gameState.state.gameState = "menu";
     } else if (gameState.state.gameState === "stats") {
-      // Continue from stats screen
+      // Continue from stats screen - similar to clicking CONTINUE
       gameState.state.statsDisplayActive = false;
-      gameState.state.gameState = "play";
+      
+      // Make sure exit trigger is reset
+      gameState.setExitTriggered(false);
+      
+      // Load the next level
+      import('./levelManager.js').then(levelManager => {
+        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+        gameState.state.gameState = "play";
+      });
     } else {
       // Other cases, reinitialize game
       gameState.initGame();
@@ -160,14 +168,26 @@ export function handleMouseClicked() {
     // Check if continue button was clicked
     if (mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30 && 
         mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
+      // Clear the stats display
       gameState.state.statsDisplayActive = false;
-      gameState.state.gameState = "play";
-      window.lastStateChangeTime = Date.now();
+      
+      // Make sure exit trigger is reset
+      gameState.setExitTriggered(false);
+      
+      // Load the next level
+      import('./levelManager.js').then(levelManager => {
+        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+        gameState.state.gameState = "play";
+        window.lastStateChangeTime = Date.now();
+      });
     }
     // Check if quit button was clicked
     else if (mouseY > panelY + panelHeight - 20 && mouseY < panelY + panelHeight + 30 && 
              mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
-      // Return to main menu
+      // Return to main menu and reset all relevant state
+      gameState.state.statsDisplayActive = false;
+      gameState.setExitTriggered(false);
+      gameState.state.generatedMode = false;
       gameState.initGame();
       gameState.state.gameState = "menu";
       window.lastStateChangeTime = Date.now();

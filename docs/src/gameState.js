@@ -79,6 +79,7 @@ export function updateWindowGameState() {
   window.floatingPlatforms = state.floatingPlatforms;
   window.bullets = state.bullets;
   window.player = state.player;
+  window.exitTriggered = state.exitTriggered; // Expose exit trigger state
 }
 
 /**
