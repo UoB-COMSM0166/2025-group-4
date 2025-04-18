@@ -44,11 +44,11 @@ export function drawTiles(tileMap, cameraOffsetX) {
   for (let row = 0; row < tileMap.length; row++) {
     for (let col = 0; col < tileMap[row].length; col++) {
       let tile = tileMap[row][col];
-      let x = col * tileSize - cameraOffsetX;
+      let x = col * tileSize;
       let y = row * tileSize;
 
-      // Skip drawing if off-screen.
-      if (x < -tileSize || x > window.width) continue;
+      // Skip drawing if off-screen (handled by camera system now)
+      // if (x < -tileSize || x > window.width) continue;
 
       // 如果是动态平台的标记，不在这里绘制，由 floatingPlatform 处理
       if (tile === "6" || tile === "7") {

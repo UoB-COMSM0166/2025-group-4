@@ -3,10 +3,10 @@
  */
 
 // Tile and level configuration
-export let tileSize = 24; // pixel size of each tile (will be dynamically calculated)
-export const baseSize = 24; // base tile size for reference
-export const numCols = 20; // visible columns on screen
-export const numRows = 15; // visible rows on screen
+export let tileSize = 12; // pixel size of each tile (will be dynamically calculated)
+export const baseSize = 12; // base tile size for reference
+export const numCols = 40; // visible columns on screen
+export const numRows = 30; // visible rows on screen
 
 // Physics configuration - base values that can be modified by difficulty
 export let gravity = 4; // base gravity magnitude

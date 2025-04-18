@@ -6,21 +6,14 @@ import { tileSize, numCols, numRows, hudHeight } from './config.js';
 import { drawTiles } from './utils.js';
 import { particleSystem } from './particles.js';
 import * as gameState from './gameState.js';
+import { camera } from './camera.js';
 
 /**
  * Draw the game
  * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
 export function drawGame(interpolation = 0) {
-  push(); // Save the current transformation state
-  
-  // Apply screen shake if active
-  if (gameState.state.screenShakeTrauma > 0) {
-    translate(width/2 + gameState.state.screenShakeX, height/2 + gameState.state.screenShakeY);
-    rotate(gameState.state.screenShakeRotation);
-    translate(-width/2, -height/2);
-  }
-  
+  // Draw background or clear screen
   if (gameState.state.backgroundImage) {
     image(gameState.state.backgroundImage, 0, 0, width, height);
   } else {
@@ -39,8 +32,6 @@ export function drawGame(interpolation = 0) {
   } else if (gameState.state.gameState === "play" || gameState.state.gameState === "over" || gameState.state.gameState === "win") {
     drawGameScreen(interpolation);
   }
-  
-  pop(); // Restore the transformation state
 }
 
 /**
@@ -274,53 +265,54 @@ function drawGameScreen(interpolation = 0) {
     background(220);
   }
 
-  // Apply camera transform for game elements
-  push();
+  // Apply camera transform
+  camera.apply();
 
   // Draw tiles
-  drawTiles(gameState.state.tileMap, gameState.state.cameraOffsetX);
+  drawTiles(gameState.state.tileMap, 0);
 
   // Draw coins
   for (let coin of gameState.state.coins) {
-    coin.draw(gameState.state.cameraOffsetX);
+    coin.draw(0);
   }
 
   // Draw exit gate
-  gameState.state.exitGate.draw(gameState.state.cameraOffsetX);
+  gameState.state.exitGate.draw(0);
 
   // Draw enemies with interpolation
   for (let enemy of gameState.state.enemies) {
-    enemy.draw(gameState.state.cameraOffsetX, interpolation);
+    enemy.draw(0, interpolation);
   }
   
   // Draw bullets with interpolation
   if (gameState.state.bullets && gameState.state.bullets.length > 0) {
     for (let bullet of gameState.state.bullets) {
-      bullet.draw(gameState.state.cameraOffsetX, interpolation);
+      bullet.draw(0, interpolation);
     }
   }
 
   // Draw floating platforms before player
   for (let platform of gameState.state.floatingPlatforms) {
-    platform.draw(gameState.state.cameraOffsetX, interpolation);
+    platform.draw(0, interpolation);
   }
   
   // Draw player with invincibility effect and interpolation
   if (gameState.state.invincibilityActive && !gameState.state.hitstopActive) {
     // Flash the player during invincibility (show only every other 4 frames)
     if (window.frameCount % 8 < 4) {
-      gameState.state.player.draw(gameState.state.cameraOffsetX, interpolation);
+      gameState.state.player.draw(0, interpolation);
     }
   } else {
-    gameState.state.player.draw(gameState.state.cameraOffsetX, interpolation);
+    gameState.state.player.draw(0, interpolation);
   }
   
-  // Draw particles with camera offset
-  particleSystem.draw(gameState.state.cameraOffsetX);
+  // Draw particles
+  particleSystem.draw(0);
   
-  pop();
+  // End camera transform
+  camera.end();
   
-  // Draw HUD
+  // Draw HUD (fixed on screen, outside camera transform)
   fill(0, 0, 0, 100);
   noStroke();
   rect(0, 0, width, hudHeight);

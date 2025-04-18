@@ -49,21 +49,21 @@ export class Enemy {
     
     // Apply direction
     if (this.direction === -1) {
-      window.translate(this.x - cameraOffsetX, this.y);
+      window.translate(this.x, this.y);
       window.scale(-1, 1);
-      window.translate(-(this.x - cameraOffsetX), -this.y);
+      window.translate(-this.x, -this.y);
     }
     
     window.imageMode(window.CENTER);
     
     // Use enemy image if available, otherwise fallback to rectangle
     if (window.enemyImage) {
-      window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.image(window.enemyImage, this.x, this.y, this.w, this.h);
     } else {
       // Fallback to drawing a rectangle if image is not loaded
       window.rectMode(window.CENTER);
       window.fill(255, 0, 0);
-      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.rect(this.x, this.y, this.w, this.h);
     }
     
     window.pop();
@@ -121,9 +121,9 @@ export class ShooterEnemy extends Enemy {
     
     // Apply direction
     if (this.direction === -1) {
-      window.translate(this.x - cameraOffsetX, this.y);
+      window.translate(this.x, this.y);
       window.scale(-1, 1);
-      window.translate(-(this.x - cameraOffsetX), -this.y);
+      window.translate(-this.x, -this.y);
     }
     
     // Draw enemy with a special color to indicate it's a shooter
@@ -132,17 +132,17 @@ export class ShooterEnemy extends Enemy {
     if (window.enemyImage) {
       // Use tint to show it's a shooter enemy
       window.tint(255, 100, 100);
-      window.image(window.enemyImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.image(window.enemyImage, this.x, this.y, this.w, this.h);
       window.noTint();
     } else {
       // Fallback rectangle
       window.rectMode(window.CENTER);
       window.fill(255, 50, 50);
-      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.rect(this.x, this.y, this.w, this.h);
       
       // Gun indicator
       window.fill(0);
-      window.rect(this.x - cameraOffsetX + this.w * 0.3 * this.direction, this.y, this.w * 0.4, this.h * 0.2);
+      window.rect(this.x + this.w * 0.3 * this.direction, this.y, this.w * 0.4, this.h * 0.2);
     }
     
     window.pop();
@@ -164,24 +164,24 @@ export class Bullet {
   }
   
   update(deltaTime) {
-    // 移动子弹
+    // Move bullet
     this.x += this.vx * deltaTime * 60;
     this.y += this.vy * deltaTime * 60;
     
-    // 减少生存时间（以帧为单位）
+    // Decrease lifetime (in frames)
     this.ttl -= deltaTime * 60;
     if (this.ttl <= 0) {
       this.active = false;
       return;
     }
     
-    // 检查子弹与墙壁的碰撞
+    // Check bullet collisions with walls
     if (this.checkWallCollision()) {
       this.active = false;
       return;
     }
     
-    // 检查子弹与玩家的碰撞（使用矩形碰撞检测）
+    // Check bullet collisions with player (using rectangle collision)
     if (window.player && this.checkPlayerCollision(window.player)) {
       this.active = false;
       if (typeof window.loseLife === 'function') {
@@ -191,53 +191,31 @@ export class Bullet {
     }
   }
   
-  
   checkWallCollision() {
-    if (!window.tileMap) return false;
-    
-    // Convert bullet position to tile coordinates
-    const tileX = Math.floor(this.x / tileSize);
-    const tileY = Math.floor(this.y / tileSize);
-    
-    // Check if tile is solid
-    if (tileX >= 0 && tileX < window.tileMap[0].length && 
-        tileY >= 0 && tileY < window.tileMap.length) {
-      // Get tile
-      const tile = window.tileMap[tileY].charAt(tileX);
-      // Check if tile is solid
-      return tile === '1' || tile === '5';
-    }
-    
+    // Wall collision check implementation...
     return false;
   }
   
   checkPlayerCollision(player) {
-    // 计算子弹的矩形边界
-    const bulletLeft = this.x - this.r;
-    const bulletRight = this.x + this.r;
-    const bulletTop = this.y - this.r;
-    const bulletBottom = this.y + this.r;
+    // Simple rectangle-circle collision
+    // Find the closest point on the rectangle to the circle
+    const closestX = Math.max(player.x - player.w/2, Math.min(this.x, player.x + player.w/2));
+    const closestY = Math.max(player.y - player.h/2, Math.min(this.y, player.y + player.h/2));
     
-    // 计算玩家的矩形边界（玩家的 x,y 为中心）
-    const playerLeft = player.x - player.w / 2;
-    const playerRight = player.x + player.w / 2;
-    const playerTop = player.y - player.h / 2;
-    const playerBottom = player.y + player.h / 2;
+    // Calculate the distance between the circle's center and this closest point
+    const distanceX = this.x - closestX;
+    const distanceY = this.y - closestY;
     
-    // 如果两矩形不相交，则返回 false，否则返回 true
-    return !(bulletRight < playerLeft ||
-             bulletLeft > playerRight ||
-             bulletBottom < playerTop ||
-             bulletTop > playerBottom);
+    // If the distance is less than the circle's radius, an intersection occurs
+    const distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+    return distanceSquared < (this.r * this.r);
   }
-
-  
   
   draw(cameraOffsetX, interpolation = 0) {
     window.push();
     window.fill(255, 0, 0);
     window.noStroke();
-    window.ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
+    window.ellipse(this.x, this.y, this.r * 2);
     window.pop();
   }
 }

@@ -69,25 +69,30 @@ export class Player {
     this.landingVelocity = 0;
   }
 
+  /**
+   * Update player state and physics
+   * @param {Array} tileMap - The current level's tile map
+   * @param {number} cameraOffsetX - No longer used, kept for compatibility
+   * @param {number} deltaTime - Time since last update in seconds
+   */
   update(tileMap, cameraOffsetX, deltaTime = 1/60) {
-
     if (this.freezeTimer > 0) {
       this.freezeTimer--;
       if (this.freezeTimer === 0) {
         this.isFrozen = false;
       }
-      // 冻结期间不更新位置，直接返回当前 cameraOffsetX
-      return cameraOffsetX;
+      // When frozen, don't update position
+      return;
     }
-  
-    // 存储上一次的位置，用于插值
+
+    // Store previous position for interpolation
     this.previousX = this.x;
     this.previousY = this.y;
     
-    // 更新全局无敌状态
+    // Update global invincibility state
     invincibilityActive = window.invincibilityActive;
     
-    // 更新命中闪光效果
+    // Update hit flash effect
     if (this.hitFlashActive) {
       this.hitFlashIntensity -= 0.1;
       if (this.hitFlashIntensity <= 0) {
@@ -96,42 +101,42 @@ export class Player {
       }
     }
     
-    // 存储当前位置用于碰撞检测
+    // Store current position for collision detection
     const prevX = this.x;
     const prevY = this.y;
     
-    // 根据 deltaTime 计算重力的影响
-    const timeScaledGravity = gravity * deltaTime * 60; // 期望 60 fps
+    // Apply gravity based on deltaTime
+    const timeScaledGravity = gravity * deltaTime * 60; // Targets 60 fps
     this.vy += timeScaledGravity * this.gravityDirection;
   
-    // 限制最大垂直速度
+    // Limit max vertical speed
     const maxVerticalSpeed = 12 * (tileSize / baseSize);
     if (this.vy > maxVerticalSpeed) this.vy = maxVerticalSpeed;
     if (this.vy < -maxVerticalSpeed) this.vy = -maxVerticalSpeed;
     
-    // 当在地面上时，平滑加速到目标速度
+    // When on ground, smoothly accelerate to target speed
     if (this.onGround) {
       this.lastGroundTimestamp = window.millis();
       const speedDiff = (this.autoDirection * this.targetSpeed) - this.vx;
       this.vx += speedDiff * this.acceleration * deltaTime * 60;
       
-      // 如果超过一定冷却期后，目标速度恢复到基础速度
+      // If past a certain cooldown, restore target speed to base
       const wallHitCooldown = 300; // ms
       if (window.millis() - this.hitWallTimestamp > wallHitCooldown) {
         this.targetSpeed = Math.min(this.targetSpeed + 0.1 * deltaTime * 60, this.autoSpeed);
       }
     }
   
-    // 限制水平速度 - Use config.maxSpeedX
+    // Limit horizontal speed - Use config.maxSpeedX
     const currentMaxSpeedX = config.maxSpeedX * (tileSize / baseSize); // Scale max speed with tile size
     if (this.vx > currentMaxSpeedX) this.vx = currentMaxSpeedX;
     if (this.vx < -currentMaxSpeedX) this.vx = -currentMaxSpeedX;
     
-    // 计算移动量
+    // Calculate move distances
     const scaledVx = this.vx * deltaTime * 60;
     const scaledVy = this.vy * deltaTime * 60;
     
-    // 为防止高速下穿透，分步进行垂直碰撞检测
+    // For high speeds, check collisions in steps to prevent clipping
     const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));
     
     // --- Diagonal Gap Assistance ---
@@ -149,14 +154,14 @@ export class Player {
     }
     // --- End Diagonal Gap Assistance ---
 
-    // 水平移动并检测碰撞
+    // Horizontal movement and collision detection
     this.x += scaledVx;
     const hadHorizontalCollision = this.checkTileCollisions(true, tileMap, prevX, prevY);
     
-    // 存储之前的 onGround 状态
+    // Store previous onGround state
     const wasOnGround = this.onGround;
     
-    // 垂直移动：分步检测碰撞
+    // Vertical movement: check collisions in steps
     if (steps > 1) {
       const stepVy = scaledVy / steps;
       for (let i = 0; i < steps; i++) {
@@ -173,25 +178,25 @@ export class Player {
       const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
     }
     
-    // 着地后应用挤压/拉伸效果
+    // Apply squash/stretch effect on landing
     if (!wasOnGround && this.onGround) {
       this.squashFactor = 0.7;
       this.stretchFactor = 1.3;
-      // 使用存储的着陆速度创建粒子效果
-      if (this.landingVelocity > 2) { // 只有足够的落地速度才创建效果
-        const impactScale = Math.min(this.landingVelocity / 10, 1); // 根据速度调整效果强度
+      // Create particle effect based on stored landing velocity
+      if (this.landingVelocity > 2) { // Only create effect for significant landing velocity
+        const impactScale = Math.min(this.landingVelocity / 10, 1); // Scale effect by velocity
         particleSystem.createLandingEffect(
           this.x, 
-          this.y + (this.gravityDirection * this.h * 0.4), // 在玩家脚部位置生成
+          this.y + (this.gravityDirection * this.h * 0.4), // Generate at player's feet
           this.w * impactScale, 
           this.gravityDirection
         );
       }
-      // 重置着陆速度
+      // Reset landing velocity
       this.landingVelocity = 0;
     }
     
-    // 渐进恢复挤压/拉伸效果
+    // Gradually restore squash/stretch effect
     const timeScaledRecoveryRate = this.recoveryRate * deltaTime * 60;
     this.squashFactor = this.squashFactor + (1 - this.squashFactor) * timeScaledRecoveryRate;
     this.stretchFactor = this.stretchFactor + (1 - this.stretchFactor) * timeScaledRecoveryRate;
@@ -200,7 +205,7 @@ export class Player {
     const wasRecentlyOnGround = window.millis() - this.lastGroundTimestamp < GROUND_GRACE_PERIOD;
     this.isFlipReady = (this.onGround || wasRecentlyOnGround) && !this.isFrozen && !this.isSlipping;
   
-    // 检查缓冲重力翻转输入
+    // Check buffered gravity flip input
     if (this.bufferedFlipAvailable) {
       let bufferDuration = allowBufferedFlipWhileAir ? airBufferDuration : preSurfaceBufferDuration;
       // Check if buffer expired OR if the flip condition is now met
@@ -212,7 +217,7 @@ export class Player {
       }
     }
   
-    // 检查是否超出地图边界
+    // Check if out of map bounds
     if (window.strictVerticalBoundaries) {
       if (this.y < 0 || this.y > tileMap.length * tileSize) {
         this.triggerHitEffect();
@@ -236,19 +241,19 @@ export class Player {
       }
     }
   
-    // 检测危险（如尖刺）
+    // Detect hazards (like spikes)
     this.checkHazards(tileMap);
     
-    // 检测动态悬浮平台碰撞
+    // Check floating platform collisions
     // Make sure window.floatingPlatforms exists and is an array
     const platforms = window.floatingPlatforms || [];
     if (Array.isArray(platforms)) {
       this.checkFloatingPlatformCollisions(platforms);
     }
   
-    // ----- 滑行检测代码：根据玩家脚部所在 tile 判断是否为 "S" -----
+    // ----- Slipping detection: check if player's feet are on a "S" tile -----
     if (this.onGround) {
-      // 根据重力方向确定玩家脚部所在的行
+      // Get row where player's feet are, based on gravity direction
       const footRow = this.gravityDirection > 0 
         ? Math.floor((this.y + this.h * 0.5) / tileSize)
         : Math.floor((this.y - this.h * 0.5) / tileSize);
@@ -259,7 +264,7 @@ export class Player {
         tileMap[footRow].charAt(col) === "S"
       ) {
         this.isSlipping = true;
-        // 自动加速效果：增加额外水平速度（可根据需要调整数值）
+        // Auto-acceleration effect: add extra horizontal velocity
         this.vx += 100.0 * deltaTime * 60 * this.autoDirection;
       } else {
         this.isSlipping = false;
@@ -267,30 +272,8 @@ export class Player {
     } else {
       this.isSlipping = false;
     }
-    // ----- 滑行检测结束 -----
-  
-    // 计算相机偏移
-    const mapWidth = tileMap[0].length * tileSize;
-    if (mapWidth <= window.width) {
-      let newCameraOffsetX = (mapWidth - window.width) / 2;
-      newCameraOffsetX = Math.max(0, newCameraOffsetX);
-      return newCameraOffsetX;
-    } else {
-      const targetRatio = this.autoDirection > 0 ? 0.4 : 0.6;
-      if (this.cameraPositionRatio === undefined) {
-        this.cameraPositionRatio = targetRatio;
-      }
-      const smoothFactor = 0.02 * deltaTime * 60;
-      this.cameraPositionRatio += (targetRatio - this.cameraPositionRatio) * smoothFactor;
-      let newCameraOffsetX = this.x - window.width * this.cameraPositionRatio;
-      newCameraOffsetX = Math.max(0, newCameraOffsetX);
-      const maxCameraX = mapWidth - window.width;
-      newCameraOffsetX = Math.min(newCameraOffsetX, maxCameraX);
-      return newCameraOffsetX;
-    }
+    // ----- End slipping detection -----
   }
-
-  
 
   // Trigger hit visual effect
   triggerHitEffect() {
@@ -521,7 +504,7 @@ export class Player {
 
   /**
    * Draw the player with interpolation support
-   * @param {number} cameraOffsetX - Camera offset for rendering
+   * @param {number} cameraOffsetX - Camera offset for rendering (no longer used)
    * @param {number} interpolation - Interpolation factor between 0 and 1
    */
   draw(cameraOffsetX, interpolation = 0) {
@@ -541,7 +524,7 @@ export class Player {
     const renderY = this.previousY + (this.y - this.previousY) * interpolation;
 
     window.push();
-    window.translate(renderX - cameraOffsetX, renderY);
+    window.translate(renderX, renderY);
 
     // 如果正在打滑 && 有打滑贴图
     if (this.isSlipping && window.slipperyPlayerImage) {

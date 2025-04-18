@@ -7,6 +7,7 @@ import { tileSize } from './config.js';
 import { particleSystem } from './particles.js';
 import { completeGeneratedLevel } from './levelManager.js';
 import { updateEffects } from './effectsManager.js';
+import { camera } from './camera.js';
 
 /**
  * Update game state
@@ -74,8 +75,16 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     console.log("Player touched ice trap, frozen for 1 second, trap disappears");
   }
   
-  // Update player with deltaTime
-  gameState.state.cameraOffsetX = gameState.state.player.update(gameState.state.tileMap, gameState.state.cameraOffsetX, deltaTime);
+  // Update player
+  gameState.state.player.update(gameState.state.tileMap, 0, deltaTime);
+  
+  // Update camera to follow player
+  camera.follow(
+    gameState.state.player, 
+    gameState.state.player.autoDirection, 
+    gameState.state.player.gravityDirection
+  );
+  camera.update(deltaTime);
   
   // Update enemies and check collisions
   for (let enemy of gameState.state.enemies) {
@@ -83,6 +92,7 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     if (enemy.checkPlayerCollision(gameState.state.player)) {
       console.log("Player collision with enemy detected at:", enemy.x, enemy.y);
       gameState.loseLife();
+      camera.addTrauma(0.6); // Add camera trauma on hit
       return;
     }
   }
@@ -96,6 +106,9 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
       
       // Create coin collection particle effect
       particleSystem.createCoin(coin.x, coin.y);
+      
+      // Small camera boost on collecting coins
+      camera.addTrauma(0.1);
     }
   }
   
@@ -127,6 +140,10 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     
     // Play exit sound
     window.passSound.play();
+    
+    // Dramatic camera zoom effect on level completion
+    camera.setZoom(1.2);
+    camera.addTrauma(0.3);
     
     // In generated mode, use the generated level completion logic
     if (gameState.state.generatedMode) {

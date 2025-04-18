@@ -11,6 +11,7 @@ import { FloatingPlatform } from './entities/floatingPlatform.js';
 import { particleSystem } from './particles.js';
 import { generateLevels } from './mapGenerator.js';
 import * as gameState from './gameState.js';
+import { camera } from './camera.js';
 
 /**
  * Load a level by index
@@ -92,6 +93,13 @@ export function loadLevel(idx) {
   
   let foundPlayer = false;
   
+  // Calculate map dimensions for camera setup
+  const mapWidth = Math.max(...gameState.state.tileMap.map(row => row.length)) * tileSize;
+  const mapHeight = gameState.state.tileMap.length * tileSize;
+  
+  // Initialize camera with map dimensions
+  camera.init(mapWidth, mapHeight);
+  
   // Process each character in the map for player, coins, exit gates and enemies
   for (let row = 0; row < gameState.state.tileMap.length; row++) {
     for (let col = 0; col < gameState.state.tileMap[row].length; col++) {
@@ -115,6 +123,10 @@ export function loadLevel(idx) {
         
         window.player = gameState.state.player;
         console.log("Found player spawn point:", x, y);
+        
+        // Initialize camera to follow player
+        camera.follow(gameState.state.player, gameState.state.player.autoDirection, 0);
+        camera.update(1/60); // Initial update to center camera
         
         // Replace with empty space
         gameState.state.tileMap[row] = gameState.state.tileMap[row].substring(0, col) + "." + gameState.state.tileMap[row].substring(col + 1);
@@ -181,6 +193,10 @@ export function loadLevel(idx) {
     console.log("No player start point found, using default:", gameState.state.playerSpawnX, gameState.state.playerSpawnY);
     gameState.state.player = new Player(gameState.state.playerSpawnX, gameState.state.playerSpawnY);
     window.player = gameState.state.player;
+    
+    // Initialize camera to follow player
+    camera.follow(gameState.state.player, gameState.state.player.autoDirection, 0);
+    camera.update(1/60); // Initial update to center camera
   }
   
   // If exit gate not found, use default exit position
@@ -230,9 +246,6 @@ export function reloadCurrentLevel(oldTileSize) {
     playerDirection = gameState.state.player.autoDirection;
   }
   
-  // Store camera offset relative to the old tile size
-  const cameraTileOffset = gameState.state.cameraOffsetX / oldTileSize;
-  
   // Save coins' state in relative (tile) coordinates
   const coinStates = gameState.state.coins.map(coin => ({
     tileX: coin.x / oldTileSize,
@@ -248,69 +261,59 @@ export function reloadCurrentLevel(oldTileSize) {
     tileMinX: enemy.minX / oldTileSize,
     tileMaxX: enemy.maxX / oldTileSize
   }));
-  
-  // Save exit gate state in relative coordinates
-  let exitTileX = 0;
-  let exitTileY = 0;
-  
-  if (gameState.state.exitGate) {
-    exitTileX = gameState.state.exitGate.x / oldTileSize;
-    exitTileY = gameState.state.exitGate.y / oldTileSize;
-  }
-  
-  // Reload the level (which resets entities using the new tile size)
-  gameState.state.difficulty = currentDifficulty;
+
+  // Save camera zoom/state
+  const currentZoom = camera.zoom;
+  const cameraDirections = {
+    horizontal: camera.playerDirection,
+    vertical: camera.playerVerticalDirection
+  };
+
+  // Load the current level (this will reset everything)
   loadLevel(currentLevel);
   
   // Restore game state
   gameState.state.score = currentScore;
   gameState.state.lives = currentLives;
   gameState.state.gameState = currentGameState;
+  gameState.state.difficulty = currentDifficulty;
   
-  // Restore the player's position using the new tile size
+  // Restore player state with updated tile size
   if (gameState.state.player) {
     gameState.state.player.x = playerTileX * tileSize;
     gameState.state.player.y = playerTileY * tileSize;
-    gameState.state.player.vx = playerVelocity.vx;
-    gameState.state.player.vy = playerVelocity.vy;
+    gameState.state.player.vx = playerVelocity.vx * (tileSize / oldTileSize);
+    gameState.state.player.vy = playerVelocity.vy * (tileSize / oldTileSize);
     gameState.state.player.gravityDirection = playerGravityDirection;
     gameState.state.player.autoDirection = playerDirection;
-    gameState.state.playerSpawnX = gameState.state.player.x;
-    gameState.state.playerSpawnY = gameState.state.player.y;
-  }
-  
-  // Restore camera position
-  gameState.state.cameraOffsetX = cameraTileOffset * tileSize;
-  
-  // Recreate coins at the new scale
-  gameState.state.coins = [];
-  for (const state of coinStates) {
-    const coin = new Coin(state.tileX * tileSize, state.tileY * tileSize);
-    coin.collected = state.collected;
-    gameState.state.coins.push(coin);
-  }
-  
-  // Recreate enemies at the new scale
-  gameState.state.enemies = [];
-  for (const state of enemyStates) {
-    const enemy = new Enemy(state.tileX * tileSize, state.tileY * tileSize);
-    enemy.direction = state.direction;
-    enemy.minX = state.tileMinX * tileSize;
-    enemy.maxX = state.tileMaxX * tileSize;
     
-    // Apply difficulty settings to enemy
-    if (gameState.state.difficulty === "hard") {
-      enemy.speed = gameState.state.enemySpeed * 1.5;
-      enemy.range = enemy.range * 1.3;
-    } else if (gameState.state.difficulty === "easy") {
-      enemy.speed = gameState.state.enemySpeed * 0.7;
+    // Update camera with restored player position
+    camera.follow(gameState.state.player, playerDirection, playerGravityDirection);
+    camera.setZoom(currentZoom); // Restore zoom level
+    camera.update(1/60);
+  }
+  
+  // Restore coins
+  gameState.state.coins.forEach((coin, idx) => {
+    if (idx < coinStates.length) {
+      coin.x = coinStates[idx].tileX * tileSize;
+      coin.y = coinStates[idx].tileY * tileSize;
+      coin.collected = coinStates[idx].collected;
     }
-    
-    gameState.state.enemies.push(enemy);
-  }
+  });
   
-  // Recreate exit gate
-  gameState.state.exitGate = new ExitGate(exitTileX * tileSize, exitTileY * tileSize);
+  // Restore enemies
+  gameState.state.enemies.forEach((enemy, idx) => {
+    if (idx < enemyStates.length) {
+      enemy.x = enemyStates[idx].tileX * tileSize;
+      enemy.y = enemyStates[idx].tileY * tileSize;
+      enemy.direction = enemyStates[idx].direction;
+      enemy.minX = enemyStates[idx].tileMinX * tileSize;
+      enemy.maxX = enemyStates[idx].tileMaxX * tileSize;
+    }
+  });
+  
+  console.log("Reloaded current level with new tile size:", tileSize);
 }
 
 /**

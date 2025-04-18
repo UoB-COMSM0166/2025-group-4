@@ -78,14 +78,14 @@ export class FloatingPlatform {
     const renderX = this.previousX + (this.x - this.previousX) * interpolation;
     const renderY = this.previousY + (this.y - this.previousY) * interpolation;
     
-    // 绘制平台时，同样用类似静态平台的样式（但可以设置不同颜色）
-    let drawX = renderX - cameraOffsetX - this.width / 2;
+    // Draw platform with proper positioning
+    let drawX = renderX - this.width / 2;
     let drawY = renderY - this.height / 2;
     
     push();
     noStroke();
     
-    // 根据类型设定不同颜色，便于区分
+    // Use different colors based on platform type
     if (this.type === "6") {
       if (window.platformUpDownImage) {
         image(window.platformUpDownImage, drawX, drawY, this.width, this.height);

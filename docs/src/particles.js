@@ -153,13 +153,13 @@ class Particle {
         }
         
         const trailSize = this.size * (1 - i / this.trailPositions.length);
-        ellipse(pos.x - cameraOffsetX, pos.y, trailSize, trailSize);
+        ellipse(pos.x, pos.y, trailSize, trailSize);
       }
     }
     
     // Main particle
     push();
-    translate(this.x - cameraOffsetX, this.y);
+    translate(this.x, this.y);
     rotate(this.rotation);
     
     // Set color with alpha
@@ -783,7 +783,7 @@ class ParticleSystem {
   
   draw(cameraOffsetX = 0) {
     for (let particle of this.particles) {
-      particle.draw(cameraOffsetX);
+      particle.draw();
     }
   }
   

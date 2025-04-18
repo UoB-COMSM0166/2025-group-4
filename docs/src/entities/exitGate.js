@@ -26,18 +26,18 @@ export class ExitGate {
     
     // Use exitGateImage if available, otherwise fallback to rectangle
     if (window.exitGateImage) {
-      window.image(window.exitGateImage, this.x - cameraOffsetX, this.y, this.w, this.h);
+      window.image(window.exitGateImage, this.x, this.y, this.w, this.h);
     } else {
       // Fallback to drawing a rectangle if image is not loaded
       // Draw the exit gate.
       window.fill(0, 200, 255);
       window.rectMode(CENTER);
-      window.rect(this.x - cameraOffsetX, this.y, this.w, this.h, 4);
+      window.rect(this.x, this.y, this.w, this.h, 4);
 
       // Draw a door symbol.
       window.fill(0, 100, 200);
       window.rect(
-        this.x - cameraOffsetX,
+        this.x,
         this.y,
         this.w * 0.6,
         this.h * 0.8,
@@ -46,12 +46,12 @@ export class ExitGate {
       // Draw a doorknob.
       window.fill(255);
       window.ellipse(
-        this.x - cameraOffsetX + this.w * 0.15,
+        this.x + this.w * 0.15,
         this.y,
         this.w * 0.15,
         this.w * 0.15
       );
-      }
+    }
     window.pop();
   }
 }

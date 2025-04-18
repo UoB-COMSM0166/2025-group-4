@@ -37,11 +37,11 @@ export class Coin {
     
     // Use coinImage if available, otherwise fallback to circle
     if (window.coinImage) {
-      window.image(window.coinImage, this.x - cameraOffsetX, this.y, this.r * 2, this.r * 2);
+      window.image(window.coinImage, this.x, this.y, this.r * 2, this.r * 2);
     } else {
       // Fallback to drawing a circle if image is not loaded
       window.fill(255, 215, 0);
-      window.ellipse(this.x - cameraOffsetX, this.y, this.r * 2);
+      window.ellipse(this.x, this.y, this.r * 2);
     }
     
     window.pop();
