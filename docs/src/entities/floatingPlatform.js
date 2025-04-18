@@ -1,5 +1,5 @@
 // floatingPlatform.js
-import { tileSize } from './config.js';
+import { tileSize } from '../config.js';
 
 export class FloatingPlatform {
   /**

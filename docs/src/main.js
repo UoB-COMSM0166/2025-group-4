@@ -4,7 +4,7 @@
 import { 
   initGame, updateGame, drawGame, handleKeyPressed, 
   handleMouseClicked, handleTouchStarted, reloadCurrentLevel,
-  loadLevel, gameState
+  loadLevel, state
 } from './game.js';
 import { tileSize, updateTileSize } from './config.js';
 import { 
@@ -88,7 +88,7 @@ function draw() {
     drawLevelEditor();
   } else {
     // Only update if in play state, otherwise just render
-    if (gameState === "play") {
+    if (state.gameState === "play") {
       updateGame(deltaTime);
     }
     drawGame();
@@ -136,7 +136,7 @@ function mousePressed() {
     handleEditorMousePressed();
   } else {
     // In game mode, attempt to flip gravity on mouse press
-    if (gameState === "play" && window.player) {
+    if (state.gameState === "play" && window.player) {
       window.player.attemptGravityFlip();
     } else {
       // Handle other mouse press events in different game states
