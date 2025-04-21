@@ -51,7 +51,7 @@
 
 ### **Game Background**
 - After a cosmic rupture shattered the world into floating realms, civilization crumbled. The skies are now home to scattered ruins, suspended biomes, and gravity-defying hazards. 
-- Players must traverse **hazardous glaciers, forgotten jungles, dark Castle, menacing fireballs,Heavy fogs,Magic forest, Death Cliff**, while avoiding **hostile mechanical creatures and environmental hazards**.
+- Players must traverse **hazardous glaciers, forgotten jungles, dark Castle, menacing fireballs,Heavy fogs,Magic forest, Death Cliff(Final Stage)**, while avoiding **hostile mechanical creatures and environmental hazards**.
 -You are one such survivor—a daring creature exiled from their homeland, now navigating perilous floating landscapes filled with traps, enemies, and glimmers of hope. Between the spikes and shadows lies a secret: the world can be reconnected… but only if you survive long enough to reach the final gate.
 
 ---
@@ -79,39 +79,45 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
   
 ---
 
-### **Level Themes & Biomes**
-#### **🏜️ Radiation Desert**
-- **Challenge:** Electronic storms disrupt movement and visibility.  
-- **Mechanic:** Gravity shifts randomly with storm intensity.  
+### **🌍 Level Themes & Biomes**
+#### **🧊 Glacial Rift**
+-Challenge: Slippery surfaces and freeze traps
 
-#### **☣️ Toxic Swamp**
-- **Challenge:** Mutated creatures thrive in polluted areas.  
-- **Mechanic:** Players must collect **plant samples** to neutralize toxins.  
+#### **🌿 Bio-Fusion Forest**
+-Challenge: Unpredictable mutated flora
 
-#### **🏙️ Abandoned Metropolis**
-- **Challenge:** Collapsing skyscrapers and rogue AI drones attack intruders.  
-- **Mechanic:** EMP fields **disable movement for short periods**.  
+#### **🌌 Nightfall Ruins**
+-Challenge: Darkened stages with hidden traps and stealth enemies
 
-#### **🔬 Sci-Fi Industrial Zone**
-- **Challenge:** Floating platforms and unstable gravity disrupt navigation.  
-- **Mechanic:** Quantum energy fields allow for **low-gravity traversal**.  
+#### **🌋 Magma Fortress**
+-Challenge: Periodic lava bursts and crumbling platforms
 
-#### **🌿 Jungle Restoration Zone**
-- **Challenge:** One of the last green areas, but protected by defense AI.  
-- **Mechanic:** Gravity manipulation puzzles required to navigate terrain.  
+#### **☁️ Phantom Mist**
+-Challenge: Heavy fog limits visibility and spatial orientation
 
-#### **🏜️ Wasteland Ruins**
-- **Challenge:** Final battleground where **Earth’s fate is decided**.  
-- **Mechanic:** Radiation levels rise, limiting survival time.  
+#### **🌟 Magic Forest**
+-Challenge: Enchanted flora and invisible terrain hazards
+
+#### **👑 The Gate of Collapse (Final Stage)**
+-Challenge: Trap-dense gauntlet with gravity chaos
 
 ---
 
-### **Endings**
-- 🏆 **Perfect Ending** – Earth’s restoration is successful, humanity returns, and 007 is honored.  
-- ❌ **Tragic Ending** – Restoration fails, and 007 shuts down forever.  
-- 🔄 **Unresolved Ending** – Partial success, leaving Earth in **an uncertain future**.  
+### **🎬 Endings**
+#### **🏆 Perfect Ending**
+You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
+"Earth is restored. You are the last spark that re-lit the future."
+
+#### **❌ Tragic Ending**
+You fall before the final gate. The floating world collapses, swallowed by the void.
+"The world collapses. Your legacy fades into dust."
+
+#### **♻️ Bittersweet Ending***
+You survive but fail to fully restore balance. The world remains partially fragmented. You become its lone guardian, watching over what remains.
+"A fractured peace. A future undefined. You live to guide the next."
 
 ---
+
 ## **Stakeholders**
 ### **Surrogate Roles**
  #### 🧅 Onion Model of game Rusty Rover's Run
