@@ -50,40 +50,33 @@
 ## **Introduction**
 
 ### **Game Background**
-- The game is set in a **post-apocalyptic Earth**, where electronic pollution has caused irreversible environmental damage.  
-- Humanity has **migrated to other planets**, leaving behind a **desolate world** filled with toxic air, radiation, and decaying cities.  
-- The protagonist, **007, an AI-driven robotic dog**, is left behind with a **mission to restore the planet** by activating the **Earth’s Ecological Monitoring System**.  
-- 007 must traverse **hazardous wastelands, forgotten jungles, ruined metropolises, and unstable energy zones**, while avoiding **hostile mechanical creatures and environmental hazards**.
+- After a cosmic rupture shattered the world into floating realms, civilization crumbled. The skies are now home to scattered ruins, suspended biomes, and gravity-defying hazards. 
+- Players must traverse **hazardous glaciers, forgotten jungles, dark Castle, menacing fireballs,Heavy fogs,Magic forest, Death Cliff**, while avoiding **hostile mechanical creatures and environmental hazards**.
+-You are one such survivor—a daring creature exiled from their homeland, now navigating perilous floating landscapes filled with traps, enemies, and glimmers of hope. Between the spikes and shadows lies a secret: the world can be reconnected… but only if you survive long enough to reach the final gate.
 
 ---
 
 ### **Game Mechanics**
-- The game follows a **roguelike action-adventure structure**, with **procedurally generated levels**, ensuring **high replayability**.  
-- The **gravity replacement system** allows for **dynamic movement and puzzle-solving**, where gravity is manipulated rather than instantly flipped.  
-- Players experience a **continuous loop of exploration, survival, and decision-making**:
-  1. **Start** – Begin a new journey with a procedural map.
-  2. **Explore** – Traverse through various biomes, unlocking hidden areas.
-  3. **Battle** – Face off against corrupted mechanical enemies and extreme environmental threats.
-  4. **Decision-Making** – Choose between purifying the environment or exploiting chaos for short-term advantages.
-  5. **Death/Victory** – Progress or restart with new adaptive strategies.
+- The game features a fast-paced, roguelike platforming system with procedurally generated levels.
+- Each run includes:
+**Limited lives & checkpoints (difficulty varies by mode)**,**Coin collection to increase score**,**Environmental hazards like spikes, enemies, and moving traps**,**One-way gates and portals to guide progression**
+Character mobility such as gravity reversal, jumping, wall-sliding.
+Players must adapt quickly, react precisely, and memorize patterns to reach the end before losing all lives.
 
 ---
 
 ### **Game Innovation**
-#### **1️⃣ Dynamic Gravity System**
-- Unlike traditional platformers, gravity does not simply "flip"; instead, **players adjust gravitational forces dynamically**.
-- Certain zones **alter movement physics**, making **timing and positioning critical**.
-
-#### **2️⃣ Evolving Environmental Conditions**
-- The game world **adapts based on player actions**:
-  - High pollution **spawns more mechanical enemies** and **reduces resource availability**.
-  - Cleaning the environment **grants upgrades and unlocks hidden story elements**.
-
-#### **3️⃣ Strategic Choice-Based Survival**
-- Players must choose:
-  - **Restoring the Earth** – Unlock better technology but face **stronger environmental hazards**.
-  - **Exploiting Pollution** – Gain temporary advantages but increase the difficulty in future levels.
-
+#### **1️⃣ Multi-biome progression: 
+- Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
+#### **2️⃣ Dynamic difficulty modes: 
+- Easy (100 lives), Normal (3 lives), and Hard (2 lives) offer replay value for both casual and hardcore players.
+#### **3️⃣ Subtle narrative layering: 
+- While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
+#### **4⃣️ Precision-based skill challenge: 
+- Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
+#### **5⃣️ Lightweight multiplayer scoring system (if implemented): 
+- Future versions could track high scores and time records to foster friendly competition.
+  
 ---
 
 ### **Level Themes & Biomes**
