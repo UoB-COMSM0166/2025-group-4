@@ -172,11 +172,11 @@ Our team designed several posters featuring characters to represent these user s
 |  Standard Mode                 |  Random Mode                      | 
 |-----------------------|---------------------------|
 | Description | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed.|
-|Basic Flow | Goal: Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies.|
+              |Basic Flow | Goal: Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies.|
 |Step One | Player presses Spacebar to flip gravity, switching between floor and ceiling traversal.|
 |Step Two | Player collects Energy Cells to extend the timer and touches Checkpoints to save progress.|
 |Step Three | Certain platforms or obstacles are triggered by proximity or player movement.|
-|Alternative Flow | Challenges: Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run.|
+              |Alternative Flow | Challenges: Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run.|
 |Step One | Collision with enemies = lose 1 life. Player starts with 3 lives.|
 |Step Two | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change.|
 |Step Three | Optional Cosmetic Unlocks can be collected for personalization (no gameplay effect).|
@@ -184,7 +184,7 @@ Our team designed several posters featuring characters to represent these user s
 | Standard Mode                 |  Random Mode                       |
 |-----------------------|---------------------------|
 |Description | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential.|
-|Advanced Flow | Players can learn the layout and improve timing with repeated attempts.|
+             |Advanced Flow | Players can learn the layout and improve timing with repeated attempts.|
 |Step One | Flip gravity using Spacebar to dodge hazards and navigate fixed obstacles.|
 |Step Two | Difficulty increases slightly with level progression but remains consistent across sessions.|
 |Step Three | Completion rewards include time ranks and collectible counts.|
