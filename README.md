@@ -169,23 +169,25 @@ Our team designed several posters featuring characters to represent these user s
 ##Game Design – Rusty Rover’s Run
 <img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
 
-Non-Accessibility Mode | Accessibility Mode
-Description | A core gameplay level involving platforming, enemies, and item collection using keyboard controls.
-Basic Flow | Goal: Reach the exit by flipping gravity, collecting items, and avoiding hazards.
-Step One | User presses Spacebar or G to flip gravity, navigating floor-to-ceiling paths. Movement controlled via Arrow or A/D keys.
-Step Two | User collects Energy Cells to extend timer and reaches Checkpoints for respawn.
-Step Three | Interaction with Switches or destructible barriers using E key or automatic trigger on contact.
-Alternative Flow | Challenges: Running out of time, falling off-screen, or touching invulnerable enemies.
-Step One | Collision with enemy = life lost. Three lives per level.
-Step Two | If user repeats same mistake 3 times, a hint appears showing gravity path recommendation.
-Step Three | Optional cosmetic items collected don’t affect gameplay but unlock after level ends.
+|  Standard Mode | Random Mode | 
+|-----------------------|---------------------------|
+| Description | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed.|
+|Basic Flow | Goal: Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies.|
+|Step One | Player presses Spacebar to flip gravity, switching between floor and ceiling traversal.|
+|Step Two | Player collects Energy Cells to extend the timer and touches Checkpoints to save progress.|
+|Step Three | Certain platforms or obstacles are triggered by proximity or player movement.|
+|Alternative Flow | Challenges: Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run.|
+|Step One | Collision with enemies = lose 1 life. Player starts with 3 lives.|
+|Step Two | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change.|
+|Step Three | Optional Cosmetic Unlocks can be collected for personalization (no gameplay effect).|
 
-Non-Accessibility Mode | Accessibility Mode
-Description | A dynamic level where enemy and hazard positions slightly shift each time. Controlled with keyboard.
-Advanced Flow | User expects slight enemy variation on each attempt. Must adapt quickly, using WASD/Arrow keys and gravity flip to react.
-Step One | Player reacts to moving enemies or random spike placements. Gravity used to dodge threats.
-Step Two | Adaptive difficulty increases enemy speed or hazard frequency with each success.
-Step Three | Completion rewards include time rank and hidden collectible bonuses.
+| Standard Mode | Random Mode |
+|-----------------------|---------------------------|
+|Description | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential.|
+|Advanced Flow | Players can learn the layout and improve timing with repeated attempts.|
+|Step One | Flip gravity using Spacebar to dodge hazards and navigate fixed obstacles.|
+|Step Two | Difficulty increases slightly with level progression but remains consistent across sessions.|
+|Step Three | Completion rewards include time ranks and collectible counts.|
 
 
 ##Summary of Development & Ideation Process
