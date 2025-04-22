@@ -169,27 +169,23 @@ Our team designed several posters featuring characters to represent these user s
 ##Game Design – Rusty Rover’s Run
 <img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
 
+Non-Accessibility Mode | Accessibility Mode
+Description | A core gameplay level involving platforming, enemies, and item collection using keyboard controls.
+Basic Flow | Goal: Reach the exit by flipping gravity, collecting items, and avoiding hazards.
+Step One | User presses Spacebar or G to flip gravity, navigating floor-to-ceiling paths. Movement controlled via Arrow or A/D keys.
+Step Two | User collects Energy Cells to extend timer and reaches Checkpoints for respawn.
+Step Three | Interaction with Switches or destructible barriers using E key or automatic trigger on contact.
+Alternative Flow | Challenges: Running out of time, falling off-screen, or touching invulnerable enemies.
+Step One | Collision with enemy = life lost. Three lives per level.
+Step Two | If user repeats same mistake 3 times, a hint appears showing gravity path recommendation.
+Step Three | Optional cosmetic items collected don’t affect gameplay but unlock after level ends.
 
-1. Player Units
-• Health & Timer: Limited lives (e.g., 3) and a countdown system.
-• Gravity Flip: One-button mechanic to switch between floor and ceiling traversal.
-• Items: Energy Cells (extra time), Checkpoints, Cosmetic Unlocks.
-
-2. Enemy Units
-• Types: Stationary hazards (spikes, lasers), moving enemies (patrol, chase).
-• Interactions: Some enemies can be stomped; others are invulnerable.
-
-3. Neutral & Environmental Elements
-• Interactables: Switches, destructible barriers, dynamic world changes.
-• Level Design: Ruined cityscapes, indestructible terrain, gravity-based platforming.
-
-4. User Interface & Interaction
-• Scoring: Based on completion time, lives remaining, hidden collectibles.
-• Easter Eggs: Subtle nods to classic platformers.
-
-5. Randomization & Procedural Elements
-• Spawn Variability: Minor changes in enemy/hazard positions per playthrough.
-• Adaptive Difficulty: Gradual challenge scaling based on performance.
+Non-Accessibility Mode | Accessibility Mode
+Description | A dynamic level where enemy and hazard positions slightly shift each time. Controlled with keyboard.
+Advanced Flow | User expects slight enemy variation on each attempt. Must adapt quickly, using WASD/Arrow keys and gravity flip to react.
+Step One | Player reacts to moving enemies or random spike placements. Gravity used to dodge threats.
+Step Two | Adaptive difficulty increases enemy speed or hazard frequency with each success.
+Step Three | Completion rewards include time rank and hidden collectible bonuses.
 
 
 ##Summary of Development & Ideation Process
