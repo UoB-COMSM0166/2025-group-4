@@ -169,25 +169,45 @@ Our team designed several posters featuring characters to represent these user s
 ##Game Design – Rusty Rover’s Run
 <img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
 
-|  Standard Mode                 |  Random Mode                      | 
-|-----------------------|---------------------------|
-| Description | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed.|
-|Basic Flow | Goal: Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies.|
-|Step One | Player presses Spacebar to flip gravity, switching between floor and ceiling traversal.|
-|Step Two | Player collects Energy Cells to extend the timer and touches Checkpoints to save progress.|
-|Step Three | Certain platforms or obstacles are triggered by proximity or player movement.|
-|Alternative Flow | Challenges: Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run.|
-|Step One | Collision with enemies = lose 1 life. Player starts with 3 lives.|
-|Step Two | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change.|
-|Step Three | Optional Cosmetic Unlocks can be collected for personalization (no gameplay effect).|
+### Gravity Flip Mode Use Case Specification
 
-| Standard Mode                 |  Random Mode                       |
-|-----------------------|---------------------------|
-|Description | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential.|
-|Advanced Flow | Players can learn the layout and improve timing with repeated attempts.|
-|Step One | Flip gravity using Spacebar to dodge hazards and navigate fixed obstacles.|
-|Step Two | Difficulty increases slightly with level progression but remains consistent across sessions.|
-|Step Three | Completion rewards include time ranks and collectible counts.|
+### Gravity Flip Mode Use Case Specification (Reorganized)
+
+| **Standard Mode** |   |
+|-------------------|---|
+| **Description** | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed. |
+| **Basic Flow** | **Goal:** Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies. |
+| **Step One** | Player presses **Spacebar** to flip gravity, switching between floor and ceiling traversal. |
+| **Step Two** | Player collects **Energy Cells** to extend the timer and touches **Checkpoints** to save progress. |
+| **Step Three** | Certain platforms or obstacles are triggered by proximity or player movement. |
+
+| **Random Mode** |   |
+|------------------|---|
+| **Alternative Flow** | **Challenges:** Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run. |
+| **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
+| **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
+| **Step Three (Alt)** | Optional **Cosmetic Unlocks** can be collected for personalization (no gameplay effect). |
+
+
+
+### Procedural Challenge Mode Use Case Specification
+
+| **Standard Mode** |   |
+|-------------------|---|
+| **Description** | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential. |
+| **Advanced Flow** | Players can learn the layout and improve timing with repeated attempts. |
+| **Step One** | Flip gravity using **Spacebar** to dodge hazards and navigate fixed obstacles. |
+| **Step Two** | Difficulty increases slightly with level progression but remains consistent across sessions. |
+| **Step Three** | Completion rewards include **time ranks** and **collectible counts**. |
+
+| **Random Mode** |   |
+|------------------|---|
+| **Description** | The same level design, but traps and enemy placements are randomized each run. |
+| **Advanced Flow** | Players must react and adapt to changes in the environment with each attempt. |
+| **Step One** | Flip gravity using **Spacebar**, but obstacles may spawn in new positions, increasing unpredictability. |
+| **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
+| **Step Three** | Bonus points and titles awarded for completing unpredictable runs efficiently. |
+
 
 
 ##Summary of Development & Ideation Process
