@@ -167,7 +167,9 @@ Our team designed several posters featuring characters to represent these user s
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
 ##Game Design – Rusty Rover’s Run
-<img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
+[
+](https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-f01c-61f7-852b-ed05157f0a93/raw?se=2025-04-23T00%3A25%3A38Z&sp=r&sv=2024-08-04&sr=b&scid=801c78b7-22a6-5723-8e6f-bdedbd78aefe&skoid=7c382de0-129f-486b-9922-6e4a89c6eb7d&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-04-22T22%3A20%3A36Z&ske=2025-04-23T22%3A20%3A36Z&sks=b&skv=2024-08-04&sig=bw1RxVGrN%2B1n4fWQQXbbIDA8R6eiGImVxfBAW34ahmc%3D)![image](https://github.com/user-attachments/assets/43dda773-4b44-43ed-b958-c813339484af)
+
 
 ### Gravity Flip Mode Use Case Specification
 
