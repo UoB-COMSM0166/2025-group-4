@@ -171,8 +171,6 @@ Our team designed several posters featuring characters to represent these user s
 
 ### Gravity Flip Mode Use Case Specification
 
-### Gravity Flip Mode Use Case Specification (Reorganized)
-
 | **Standard Mode** |   |
 |-------------------|---|
 | **Description** | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed. |
@@ -187,7 +185,6 @@ Our team designed several posters featuring characters to represent these user s
 | **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
 | **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
 | **Step Three (Alt)** | Optional **Cosmetic Unlocks** can be collected for personalization (no gameplay effect). |
-
 
 
 ### Procedural Challenge Mode Use Case Specification
