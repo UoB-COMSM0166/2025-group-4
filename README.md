@@ -169,7 +169,7 @@ Our team designed several posters featuring characters to represent these user s
 ##Game Design – Rusty Rover’s Run
 <img width="489" alt="image" src="https://github.com/user-attachments/assets/ffcff277-875b-4ed2-bada-7529c1e500d4" />
 
-|  Standard Mode | Random Mode | 
+|  Standard Mode                 |  Random Mode                      | 
 |-----------------------|---------------------------|
 | Description | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed.|
 |Basic Flow | Goal: Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies.|
@@ -181,7 +181,7 @@ Our team designed several posters featuring characters to represent these user s
 |Step Two | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change.|
 |Step Three | Optional Cosmetic Unlocks can be collected for personalization (no gameplay effect).|
 
-| Standard Mode | Random Mode |
+| Standard Mode                 |  Random Mode                       |
 |-----------------------|---------------------------|
 |Description | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential.|
 |Advanced Flow | Players can learn the layout and improve timing with repeated attempts.|
