@@ -46,3 +46,24 @@ We used the **Wilcoxon Signed Rank Test** to determine whether there was a signi
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
 
 ---
+## 📈 SUS (System Usability Scale) Analysis
+
+The SUS results offered insight into the overall usability and clarity of the game interface. Each participant rated the system across 10 standardized usability statements after completing Levels 1 and 2.
+
+### Key Findings:
+- **Ease of Use**: Most participants strongly agreed that the game was easy to use in Level 1, with average scores of 4–5 for related items. However, scores slightly declined in Level 2, indicating increased complexity may have impacted perceived usability.
+
+- **Confidence & Learnability**: Participants consistently reported feeling confident using the system, even as difficulty increased. Items like "I feel confident using it" maintained high scores (mostly 4s and 5s), suggesting intuitive control schemes and effective visual design.
+
+- **Complexity Awareness**: Scores for "The system is too complex" and "The system is cumbersome to use" increased in Level 2 (i.e., indicating higher agreement), reflecting the intentional jump in difficulty and system complexity. This suggests the need for refined onboarding or adaptive guidance as levels become more intricate.
+
+- **Support Expectations**: The statement "I would need technical support to use this system" received low scores across both levels, confirming that the game mechanics are largely self-explanatory and accessible.
+
+- **Workload increased as intended**:  
+  Significant increases from L1 → L2 in TLX scores confirm proper difficulty scaling:  
+  - *p = 0.0035* (L1 → L2)  
+  - *p = 0.0038* (L2 → L3)
+  
+### Summary:
+
+While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.
