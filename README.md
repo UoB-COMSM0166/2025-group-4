@@ -256,17 +256,118 @@ This design pattern clearly defines object responsibilities through the class di
 
 - 15% ~750 words
 
-- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game. 
+- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game.
 
-### Evaluation
+---
 
-- 15% ~750 words
+## **6. Evaluation**
 
-- One qualitative evaluation (your choice) 
+Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, and **heuristic evaluation** to ensure thorough assessment.
 
-- One quantitative evaluation (of your choice) 
+---
 
-- Description of how code was tested. 
+### **🧠 Qualitative Evaluation**
+
+#### Stakeholder Feedback
+
+We identified stakeholders including developers, testers, instructors, and potential players. Team roles were assigned based on skillsets, and feedback was continuously gathered during development cycles. Early playtests involved live demonstrations with peers, leading to several key insights:
+
+- **Positive:** Controls felt natural and responsive.
+- **Issues Identified:** Bug with extended jumping; unclear objective due to early exit visibility; confusing enemy sprites.
+- **Actions Taken:** Added visual cues, revised platform placements, and fixed collisions.
+
+---
+
+#### **🔍 Heuristic Evaluation**
+
+We conducted a heuristic evaluation using **Jakob Nielsen’s usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
+
+- **Frequency** (how often it occurs)
+- **Impact** (how seriously it affects gameplay)
+- **Persistence** (how long it lasts if unaddressed)
+
+Findings were classified by severity to prioritize improvements. For example:
+
+- **Issue**: Inconsistent feedback when interacting with game objects  
+  **Heuristic**: Visibility of system status  
+  **Severity**: Major – addressed by adding audio-visual feedback during interaction.
+
+The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
+
+---
+
+## 📊 Quantitative Analysis
+
+### Methodology
+
+We conducted structured user testing with **10 participants**, each playing **two difficulty levels (L1 and L2)**. After each session, they completed:
+
+- **System Usability Scale (SUS)** – 10 usability questions
+- **NASA TLX** – 6 workload categories (mental, physical, temporal, performance, effort, frustration)
+
+We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1 and L2.
+### **User Evaluation Summary (SUS & NASA TLX Scores)**  
+
+#### **System Usability Scale (SUS) Scores**
+| User | I will frequently use this system (L1) | (L2) | The system is too complex (L1) | (L2) | The system is easy to use (L1) | (L2) | Need technical support (L1) | (L2) | Functions are well-integrated (L1) | (L2) | The system is inconsistent (L1) | (L2) | Most people can quickly learn (L1) | (L2) | The system is cumbersome (L1) | (L2) | I feel confident using it (L1) | (L2) | I need to learn a lot before using it (L1) | (L2) |
+|------|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|
+| **1**  | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 3 | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 4 | 5 | 3 | 2 | 4 |
+| **2**  | 5 | 2 | 2 | 5 | 4 | 3 | 1 | 4 | 4 | 3 | 1 | 5 | 5 | 2 | 1 | 5 | 5 | 2 | 2 | 5 |
+| **3**  | 4 | 3 | 3 | 4 | 5 | 3 | 1 | 4 | 3 | 2 | 2 | 5 | 4 | 3 | 2 | 4 | 4 | 3 | 3 | 5 |
+| **4**  | 3 | 3 | 3 | 5 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 5 |
+| **5**  | 4 | 2 | 2 | 4 | 5 | 3 | 1 | 4 | 4 | 2 | 2 | 5 | 5 | 3 | 1 | 4 | 5 | 3 | 2 | 5 |
+| **6**  | 5 | 3 | 1 | 4 | 5 | 3 | 1 | 4 | 5 | 3 | 1 | 4 | 5 | 2 | 1 | 4 | 5 | 2 | 1 | 4 |
+| **7**  | 4 | 3 | 3 | 5 | 4 | 3 | 2 | 5 | 3 | 3 | 2 | 5 | 4 | 3 | 2 | 5 | 4 | 3 | 2 | 5 |
+| **8**  | 3 | 4 | 4 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 |
+| **9**  | 5 | 2 | 2 | 5 | 5 | 3 | 1 | 4 | 4 | 2 | 1 | 5 | 5 | 2 | 1 | 5 | 5 | 2 | 2 | 5 |
+| **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
+
+---
+
+#### **NASA Task Load Index (NASA TLX Scores)**
+| User | Mental Demand (L1) | (L2) | Physical Demand (L1) | (L2) | Temporal Demand (L1) | (L2) | Performance (L1) | (L2) | Effort (L1) | (L2) | Frustration (L1) | (L2) |
+|------|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|
+| **1**  | 8  | 14 | 5  | 12 | 9  | 16 | 15 | 13 | 10 | 18 | 8  | 15 |
+| **2**  | 6  | 15 | 4  | 14 | 8  | 17 | 17 | 10 | 9  | 19 | 6  | 16 |
+| **3**  | 9  | 16 | 6  | 13 | 10 | 18 | 14 | 11 | 12 | 20 | 8  | 17 |
+| **4**  | 7  | 18 | 5  | 15 | 7  | 19 | 16 | 9  | 8  | 20 | 6  | 18 |
+| **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
+
+---
+
+### 📈 SUS (System Usability Scale) Analysis
+
+The SUS results offered insight into the overall usability and clarity of the game interface. Each participant rated the system across 10 standardized usability statements after completing Levels 1 and 2.
+
+#### Key Findings:
+- **Ease of Use**: Most participants strongly agreed that the game was easy to use in Level 1, with average scores of 4–5 for related items. However, scores slightly declined in Level 2, indicating increased complexity may have impacted perceived usability.
+
+- **Confidence & Learnability**: Participants consistently reported feeling confident using the system, even as difficulty increased. Items like "I feel confident using it" maintained high scores (mostly 4s and 5s), suggesting intuitive control schemes and effective visual design.
+
+- **Complexity Awareness**: Scores for "The system is too complex" and "The system is cumbersome to use" increased in Level 2 (i.e., indicating higher agreement), reflecting the intentional jump in difficulty and system complexity. This suggests the need for refined onboarding or adaptive guidance as levels become more intricate.
+
+- **Support Expectations**: The statement "I would need technical support to use this system" received low scores across both levels, confirming that the game mechanics are largely self-explanatory and accessible.
+
+- **Workload increased as intended**:  
+  Significant increases from L1 → L2 in TLX scores confirm proper difficulty scaling:  
+  - *p = 0.0035* (L1 → L2)  
+  - *p = 0.0038* (L2 → L3)
+  
+#### Summary:
+
+While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.
+
+---
+
+## 🧪 Code Testing
+
+To maintain software quality throughout development, we used:
+
+- **White-box testing**: Custom `Test` class with assertions to simulate and verify mechanics.
+- **Black-box testing**: Manual testing during gameplay by developers and users.
+- **Test Specification Document**: Includes defined scenarios and expected outcomes. Updated after each major version.
+
+This hybrid testing ensured that both internal logic and user experience were rigorously validated.
 
 ### Process 
 
