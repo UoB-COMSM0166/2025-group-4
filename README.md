@@ -209,19 +209,19 @@ Our team designed several posters featuring characters to represent these user s
 
 ### Summary of Development & Ideation Process
 1⃣️ Initial Concept:
-• Inspired by The Way of the Dodo, the game was originally a simple one-button platformer.
-• The team introduced a gravity-flip mechanic to differentiate it from similar games.
+- Inspired by The Way of the Dodo, the game was originally a simple one-button platformer.
+- The team introduced a gravity-flip mechanic to differentiate it from similar games.
 2⃣️ Refinement & Evolution:
-• Early iterations felt too linear, leading to deeper level design and interactive environments.
-• A post-apocalyptic setting was chosen to enhance the atmosphere and justify the robotic protagonist.
+- Early iterations felt too linear, leading to deeper level design and interactive environments.
+- A post-apocalyptic setting was chosen to enhance the atmosphere and justify the robotic protagonist.
 3⃣️ Gameplay Enhancements:
-• Introduced time pressure and limited lives to balance challenge and accessibility.
-• Designed environmental storytelling to make the short playtime emotionally engaging.
-• Incorporated easter eggs as nods to classic platformers.
+- Introduced time pressure and limited lives to balance challenge and accessibility.
+- Designed environmental storytelling to make the short playtime emotionally engaging.
+- Incorporated easter eggs as nods to classic platformers.
 4⃣️ Final Adjustments:
-• Optimized difficulty curve, ensuring a fair but rewarding experience.
-• Simplified the UI and controls to maintain a clean, intuitive design.
-• Focused on pixel-art visuals and lightweight assets for smooth performance.
+- Optimized difficulty curve, ensuring a fair but rewarding experience.
+- Simplified the UI and controls to maintain a clean, intuitive design.
+- Focused on pixel-art visuals and lightweight assets for smooth performance.
 
 
 
