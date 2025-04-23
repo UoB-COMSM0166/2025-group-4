@@ -95,7 +95,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 -Challenge: Heavy fog limits visibility and spatial orientation
 
 #### **🌟 Magic Forest**
--Challenge: Enchanted flora and invisible terrain hazards
+-Challenge: Enchanted flora
 
 #### **👑 The Gate of Collapse (Final Stage)**
 -Challenge: Trap-dense gauntlet with gravity chaos
