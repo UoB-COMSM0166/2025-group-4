@@ -228,10 +228,29 @@ Our team designed several posters featuring characters to represent these user s
 
 
 
-### Design
+## **Design**
 
-- 15% ~750 words 
-- System architecture. Class diagrams, behavioural diagrams. 
+After analyzing potential stakeholders and evaluating a diverse range of user stories, we gradually identified the core features to be implemented in our gravity-reversal platform puzzle game. Based on these features, we designed use-case diagrams and detailed specifications to guide the development of accessibility features.
+
+### **Class Diagram**
+![Class Diagram](images/Class%20Diagram.png)
+The class diagram provides a systematic view of our game system, helping us model the relationships between objects and laying the foundation for good object-oriented design (OOD) in the source code. We collaboratively developed the system architecture through face-to-face whiteboard sessions, which enabled us to smoothly produce the final class structure.
+
+At the center of the class diagram is the Game class, which includes attributes such as lives, score, and the current gravity state (gravityState). It offers methods like jump() and reverseGravity() to allow for character jumping and gravity reversal. The Game class is associated with multiple Level instances, either through composition or inheritance. Each Level contains a number identifier and methods such as load() and generate() to handle level loading and generation. Levels may also include Enemy and Hazard objects, which implement behavior through methods like move() and activate() respectively.
+
+### **Game Mechanics**
+Given the complexity of our platform puzzle game—particularly its gravity and time inversion mechanics—we designed several key components:
+
+-Game Class: Central manager of the game’s state, including score, remaining lives, and gravity direction. It is responsible for calling jump and gravity-switching functions.
+
+-Level Class and Subcomponents: Each level can be dynamically loaded and may include multiple enemies (Enemy) and hazards (Hazard), which are triggered through player interactions.
+
+-Behavioral Flow Diagram: The player starts by navigating the level. Throughout gameplay, the system continuously checks for collisions. If a collision is detected, the player loses a life; if not, they progress to the next level. If all lives are lost, the game ends.
+
+This design pattern clearly defines object responsibilities through the class diagram and illustrates gameplay logic and player interaction through the behavioral diagram, providing strong architectural support for implementation.
+![Behavioral Diagram](images/Behavioral%20Diagram.png)
+
+---
 
 ### Implementation
 
