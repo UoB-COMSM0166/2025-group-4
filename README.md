@@ -66,16 +66,15 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ---
 
 ### **Game Innovation**
-#### **1️⃣ Multi-biome progression: 
+#### **1** Multi-biome progression: 
 - Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
-#### **2️⃣ Dynamic difficulty modes: 
+#### **2** Dynamic difficulty modes: 
 - Easy (100 lives), Normal (3 lives), and Hard (2 lives) offer replay value for both casual and hardcore players.
-#### **3️⃣ Subtle narrative layering: 
+#### **3** Subtle narrative layering: 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
-#### **4⃣️ Precision-based skill challenge: 
+#### **4** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
-#### **5⃣️ Lightweight multiplayer scoring system (if implemented): 
-- Future versions could track high scores and time records to foster friendly competition.
+
   
 ---
 
