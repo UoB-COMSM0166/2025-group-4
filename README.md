@@ -276,11 +276,21 @@ This design pattern clearly defines object responsibilities through the class di
 
 ### Conclusion
 
-- 10% ~500 words
+Developing *Gravity Flip Mode* has been a transformative experience for our entire team, pushing the boundaries of our software engineering, game design, and team collaboration capabilities. We set out to create a game that centers around the unique mechanic of gravity flipping, and through disciplined design and consistent iteration, we succeeded in delivering a platformer that is engaging, challenging, and satisfying to play.
 
-- Reflect on project as a whole. Lessons learned. Reflect on challenges. Future work. 
+Our game features both **Standard Mode** and **Random Mode**, each offering distinct gameplay experiences. Standard Mode allows players to learn and master level layouts through repetition and precise timing, while Random Mode introduces dynamic, procedurally altered elements that challenge adaptability and reflexes. Designing both systems required thoughtful planning of user interaction flows, collision logic, adaptive difficulty scaling, and reward feedback loops.
 
-### Contribution Statement
+One of the major hurdles we overcame was synchronizing gravity mechanics with level triggers, collision detection, and adaptive enemy AI. Implementing proximity-based obstacle activation, real-time hint systems after failed attempts, and life-based retries added depth and accessibility. Additionally, optional cosmetic unlockables added a layer of personalization without affecting gameplay balance, maintaining fairness while increasing player engagement.
+
+Adopting an Agile workflow allowed us to iterate efficiently, incorporate user feedback, and ensure that our design decisions aligned with player expectations. Through repeated playtesting, we fine-tuned mechanics such as gravity switch timing, item placement, and environmental hazards. These efforts resulted in a well-balanced experience that gradually scales in difficulty while remaining fair and fun.
+
+Despite our achievements, we acknowledge several areas for improvement. Incorporating **Test-Driven Development (TDD)** from the beginning would have allowed us to reduce dependency on manual playtesting for bug detection. Additionally, had we structured our codebase using a clearer architectural pattern such as **Model-View-Controller (MVC)**, we could have separated concerns more effectively, reducing coupling between game logic and visual presentation.
+
+Looking ahead, we see immense potential for *Gravity Flip Mode*. Given more time or resources, we envision expanding the game's world with additional level packs, introducing boss encounters that test both mechanical skill and puzzle-solving, and enhancing immersion with dynamic sound design and original music. Features like leaderboard integration, time challenge modes, and narrative elements could further enrich the gameplay experience.
+
+This project has not only allowed us to explore game development deeply, but has also strengthened our collaboration, problem-solving, and adaptability as a team. *Gravity Flip Mode* is our first collective effort at building a complete, playable game from concept to delivery. Each of us leaves this experience better prepared for future challenges, with a shared sense of accomplishment and valuable lessons we will carry into our careers.
+
+---
 
 - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
 
