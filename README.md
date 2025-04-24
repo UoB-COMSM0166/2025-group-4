@@ -1,7 +1,7 @@
 # 2025-group-4
 2025 COMSM0166 group 4
 
-## Rusty Rover's Run
+## PUPPY'S MAGICAL ADVENTURE
 
 <p align="center">
   <a href="https://uob-comsm0166.github.io/2025-group-4/">PLAY HERE</a>
