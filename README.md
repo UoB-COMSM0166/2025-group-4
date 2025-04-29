@@ -54,7 +54,7 @@
 - You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers, haunted castles, cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
 - Watch your step. Triangular spikes jut from the ground and sky. Red magical orbs float motionless, deadly on contact. Enchanted cactus-like plants fire projectiles without warning, and razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
 - Your journey leads to **Death Cliff**—the last known fragment of the World Core. Only by surviving the trials of magic and reclaiming your lost power can you unlock the secret to restoring the world.
-**Survive the skies. Master the magic. Reconnect the realms.**
+- **“Survive the skies. Master the magic. Reconnect the realms.”**
 
 ---
 
