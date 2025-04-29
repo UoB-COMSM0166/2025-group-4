@@ -172,7 +172,7 @@ Our team designed several posters featuring characters to represent these user s
 | **Description** | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed. |
 | **Basic Flow** | **Goal:** Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies. |
 | **Step One** | Player presses **Spacebar** to flip gravity, switching between floor and ceiling traversal. |
-| **Step Two** | Player collects **Energy Cells** to extend the timer and touches **Checkpoints** to save progress. |
+| **Step Two** | Player collects **Gold Coin** . |
 | **Step Three** | Certain platforms or obstacles are triggered by proximity or player movement. |
 
 | **Random Mode** |   |
@@ -180,7 +180,7 @@ Our team designed several posters featuring characters to represent these user s
 | **Alternative Flow** | **Challenges:** Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run. |
 | **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
 | **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
-| **Step Three (Alt)** | Optional **Cosmetic Unlocks** can be collected for personalization (no gameplay effect). |
+| **Step Three (Alt)** | Optional **Gold coin** can be collected (no gameplay effect). |
 
 ---
 
@@ -200,7 +200,7 @@ Our team designed several posters featuring characters to represent these user s
 | **Advanced Flow** | Players must react and adapt to changes in the environment with each attempt. |
 | **Step One** | Flip gravity using **Spacebar**, but obstacles may spawn in new positions, increasing unpredictability. |
 | **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
-| **Step Three** | Bonus points and titles awarded for completing unpredictable runs efficiently. |
+| **Step Three** | Coin points awarded for completing unpredictable runs efficiently. |
 
 ---
 
@@ -212,12 +212,12 @@ Our team designed several posters featuring characters to represent these user s
 
 **2. Refinement & Evolution**  
 - Early iterations felt too linear, so we introduced more interactive environments.  
-- A post-apocalyptic world and robotic protagonist gave it identity and story.
+- A magic world and a magic dog gave it identity and story.
 
 **3. Gameplay Enhancements**  
 - Added time pressure and limited lives to balance challenge vs accessibility.  
 - Environmental storytelling was layered into gameplay.  
-- Hidden easter eggs reward exploration.
+- Hidden reward exploration.
 
 **4. Final Adjustments**  
 - Difficulty curve tuned for fairness and fun.  
