@@ -287,9 +287,16 @@ This diagram supports both functional transitions and UI switching.
 
 ### Implementation
 
-- 15% ~750 words
+1.Implementation of a time-independent physics system and a stable collision mechanism
 
-- Describe implementation of your game, in particular highlighting the three areas of challenge in developing your game.
+The main goal we want to achieve is to ensure that the game can maintain a consistent gameplay experience and stability of physics interactions on different devices and with different refresh rates. Regardless of the type of device, players should have a fluid, precise and predictable feel for character movements and collisions, which is the foundation of the game's fairness and playability.
+
+In terms of physics updates, the project introduces a mechanism of fixed time steps. By standardising the deltaTime parameter, all motion-related physics calculations (e.g. gravitational acceleration, maximum horizontal velocity, skill recovery times, etc.) will be decoupled from the time step, thus avoiding variations in the gameplay experience due to differences in refresh rate. Even on devices with a high refresh rate or in environments with a temporary delay, the character's jump height, the distance travelled and the movement speed of the floating platform will remain constant. At the same time, the system sets a reasonable upper limit for deltaTime to avoid abnormal character movements due to low refresh rates and to ensure that the physics simulation can run stably, even under extreme conditions.
+
+For collision detection, the game has developed an extremely robust, fine-grained collision processing system. Interactions between the player and scene elements (ground, walls, spikes, floating platforms, etc.) are split into horizontal and vertical directions for detection, and a small-step strategy is used to avoid penetration problems during high-speed movements. As the game introduces a ‘gravity flip’ mechanism, the system automatically and dynamically adapts the contact piece to the current direction of gravity to ensure that the character can always land correctly on the ground and climb the wall in a ‘flip’ state. For dynamic interaction elements such as floating platforms and skating stones, special evaluation logic has been developed to ensure that the player can straddle, slide or push in a stable way. To increase the realism of the physical interaction and gameplay, detailed feedback, such as when the player hits the ground and bumps into walls, has also been incorporated into the collision response, making the overall action experience more vivid and natural.
+
+By building in systematic physics and collision modules, the game gains an extremely consistent gameplay experience across different operating environments and also provides a solid foundation for future expansion of more complex game sequences (e.g. dynamic bodies, time manipulation and gravity shifting bodies). The stable and reliable physics system and collision mechanism not only improve the playability and polish of the current version, but also provide a solid technical foundation for the future development of the project.
+
 
 ---
 
