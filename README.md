@@ -163,9 +163,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-##Game Design – Rusty Rover’s Run
-![image](https://github.com/user-attachments/assets/1043e22b-a125-4654-a50d-fbf6535c6aac)
-
+## Game Design – Rusty Rover’s Run
 
 ### Gravity Flip Mode Use Case Specification
 
@@ -184,6 +182,7 @@ Our team designed several posters featuring characters to represent these user s
 | **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
 | **Step Three (Alt)** | Optional **Cosmetic Unlocks** can be collected for personalization (no gameplay effect). |
 
+---
 
 ### Procedural Challenge Mode Use Case Specification
 
@@ -203,47 +202,86 @@ Our team designed several posters featuring characters to represent these user s
 | **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
 | **Step Three** | Bonus points and titles awarded for completing unpredictable runs efficiently. |
 
-
+---
 
 ### Summary of Development & Ideation Process
-1⃣️ Initial Concept:
-- Inspired by The Way of the Dodo, the game was originally a simple one-button platformer.
+
+**1. Initial Concept**  
+- Inspired by *The Way of the Dodo*, the game was originally a simple one-button platformer.  
 - The team introduced a gravity-flip mechanic to differentiate it from similar games.
-2⃣️ Refinement & Evolution:
-- Early iterations felt too linear, leading to deeper level design and interactive environments.
-- A post-apocalyptic setting was chosen to enhance the atmosphere and justify the robotic protagonist.
-3⃣️ Gameplay Enhancements:
-- Introduced time pressure and limited lives to balance challenge and accessibility.
-- Designed environmental storytelling to make the short playtime emotionally engaging.
-- Incorporated easter eggs as nods to classic platformers.
-4⃣️ Final Adjustments:
-- Optimized difficulty curve, ensuring a fair but rewarding experience.
-- Simplified the UI and controls to maintain a clean, intuitive design.
-- Focused on pixel-art visuals and lightweight assets for smooth performance.
 
+**2. Refinement & Evolution**  
+- Early iterations felt too linear, so we introduced more interactive environments.  
+- A post-apocalyptic world and robotic protagonist gave it identity and story.
 
+**3. Gameplay Enhancements**  
+- Added time pressure and limited lives to balance challenge vs accessibility.  
+- Environmental storytelling was layered into gameplay.  
+- Hidden easter eggs reward exploration.
 
-## **Design**
+**4. Final Adjustments**  
+- Difficulty curve tuned for fairness and fun.  
+- UI simplified, controls tightened.  
+- Pixel art and lightweight assets ensure smooth performance.
 
-After analyzing potential stakeholders and evaluating a diverse range of user stories, we gradually identified the core features to be implemented in our gravity-reversal platform puzzle game. Based on these features, we designed use-case diagrams and detailed specifications to guide the development of accessibility features.
+---
 
-### **Class Diagram**
-![Class Diagram](images/Class%20Diagram.png)
-The class diagram provides a systematic view of our game system, helping us model the relationships between objects and laying the foundation for good object-oriented design (OOD) in the source code. We collaboratively developed the system architecture through face-to-face whiteboard sessions, which enabled us to smoothly produce the final class structure.
+## Game Architecture & Visual Modeling
 
-At the center of the class diagram is the Game class, which includes attributes such as lives, score, and the current gravity state (gravityState). It offers methods like jump() and reverseGravity() to allow for character jumping and gravity reversal. The Game class is associated with multiple Level instances, either through composition or inheritance. Each Level contains a number identifier and methods such as load() and generate() to handle level loading and generation. Levels may also include Enemy and Hazard objects, which implement behavior through methods like move() and activate() respectively.
+###  Class Diagram  
+**File**: `./images/class-diagram.png`  
+The class diagram outlines object relationships in our game system and supports modular, object-oriented structure.
 
-### **Game Mechanics**
-Given the complexity of our platform puzzle game—particularly its gravity and time inversion mechanics—we designed several key components:
+- `Player`: manages gravity flip, movement, collision detection  
+- `Enemy` / `ShooterEnemy`: define enemy movement and bullet logic  
+- `GameState` / `LevelManager`: handle overall game flow and level transitions  
+- `Renderer`, `Camera`: control drawing and visual effects  
+- `InputHandler`: responds to user keyboard/mouse/touch input  
+- `Bullet`, `Coin`, `ExitGate`, `FloatingPlatform`: represent environmental elements  
+- `Config`: centralizes constants for difficulty and level layout
 
--Game Class: Central manager of the game’s state, including score, remaining lives, and gravity direction. It is responsible for calling jump and gravity-switching functions.
+![Class Diagram](./images/class-diagram.png)
 
--Level Class and Subcomponents: Each level can be dynamically loaded and may include multiple enemies (Enemy) and hazards (Hazard), which are triggered through player interactions.
+---
 
--Behavioral Flow Diagram: The player starts by navigating the level. Throughout gameplay, the system continuously checks for collisions. If a collision is detected, the player loses a life; if not, they progress to the next level. If all lives are lost, the game ends.
+###  Sequence Diagram  
+**File**: `./images/sequence-diagram.png`  
+This diagram illustrates runtime logic and how game events propagate.
 
-This design pattern clearly defines object responsibilities through the class diagram and illustrates gameplay logic and player interaction through the behavioral diagram, providing strong architectural support for implementation.
-![Behavioral Diagram](images/Behavioral%20Diagram.png)
+- The user starts the game → triggers `initGame()` → `loadLevel()`  
+- `updateGame(deltaTime)` runs every frame  
+- Gravity flip via Spacebar calls:  
+  `attemptGravityFlip()` → `performGravityFlip()` → `Camera.follow()`  
+- Collisions with objects affect lives, score, or progression  
+- Renderer updates visual elements based on game state
+
+![Sequence Diagram](./images/sequence-diagram.png)
+
+---
+
+###  State Diagram  
+**File**: `./images/state-diagram.png`  
+We designed a hierarchical FSM to control game progression.
+
+- Top states: `MainMenu`, `Play`, `Editor`, `GameOver`, `Win`, `Stats`  
+- Inside `Play`: substates include `Moving`, `Jumping`, `Frozen`, `Hit`, `Falling`  
+- Transitions include: player input (Spacebar), collision with enemy, reaching `ExitGate`, losing all lives
+
+This diagram supports both functional transitions and UI switching.
+
+![State Diagram](./images/state-diagram.png)
+
+---
+
+## Game Mechanics Summary
+
+- **Gravity Flip**: The player can flip gravity using Spacebar to swap between floor and ceiling.  
+- **Enemy Logic**: Contact with enemies or bullets results in life loss. Shooter enemies fire projectiles.  
+- **Coins & Exit**: Coins boost score; reaching ExitGate completes the level.  
+- **Difficulty Scaling**: Random mode adjusts speed and spawn density based on performance.  
+- **Procedural Generation**: Some levels are generated using custom seed + difficulty logic.  
+- **Camera & Visuals**: Interpolated camera movement, screen shake, UI state indicators.  
+- **GameState Management**: Controls life count, transitions, and HUD rendering.
 
 ---
 
