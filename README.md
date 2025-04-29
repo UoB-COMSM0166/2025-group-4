@@ -81,22 +81,22 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ---
 
 ### **🌍 Level Themes & Biomes**
-#### **🧊 Glacial Rift**
+#### ** Glacial Rift**
 -Challenge: Slippery surfaces and freeze traps
 
-#### **🌿 Bio-Fusion Forest**
+#### ** Bio-Fusion Forest**
 -Challenge: Unpredictable mutated flora
 
-#### **🌌 Nightfall Ruins**
+#### ** Nightfall Ruins**
 -Challenge: Darkened stages with hidden traps and stealth enemies
 
-#### **🌋 Magma Fortress**
+#### ** Magma Fortress**
 -Challenge: Periodic lava bursts and crumbling platforms
 
-#### **☁️ Phantom Mist**
+#### ** Phantom Mist**
 -Challenge: Heavy fog limits visibility and spatial orientation
 
-#### **🌟 Magic Forest**
+#### ** Magic Forest**
 -Challenge: Enchanted flora
 
 #### **👑 The Gate of Collapse (Final Stage)**
