@@ -113,10 +113,6 @@ You collect all energy shards, stabilize the gravity core, and unlock the final 
 You fall before the final gate. The floating world collapses, swallowed by the void.
 "The world collapses. Your legacy fades into dust."
 
-#### **♻️ Bittersweet Ending***
-You survive but fail to fully restore balance. The world remains partially fragmented. You become its lone guardian, watching over what remains.
-"A fractured peace. A future undefined. You live to guide the next."
-
 ---
 
 ## **Stakeholders**
