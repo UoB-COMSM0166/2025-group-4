@@ -80,7 +80,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
   
 ---
 
-### **🌍 Level Themes & Biomes**
+### ** Level Themes & Biomes**
 #### ** Glacial Rift**
 -Challenge: Slippery surfaces and freeze traps
 
@@ -99,17 +99,17 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 #### ** Magic Forest**
 -Challenge: Enchanted flora
 
-#### **👑 The Gate of Collapse (Final Stage)**
+#### ** The Gate of Collapse (Final Stage)**
 -Challenge: Trap-dense gauntlet with gravity chaos
 
 ---
 
 ### **🎬 Endings**
-#### **🏆 Perfect Ending**
+#### ** Perfect Ending**
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
 
-#### **❌ Tragic Ending**
+#### ** Tragic Ending**
 You fall before the final gate. The floating world collapses, swallowed by the void.
 "The world collapses. Your legacy fades into dust."
 
@@ -117,7 +117,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ## **Stakeholders**
 ### **Surrogate Roles**
- #### 🧅 Onion Model of game Rusty Rover's Run
+ ####  Onion Model of game Rusty Rover's Run
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
 
 Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander (2004, p. 227). Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
@@ -128,7 +128,7 @@ It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically 
 ---
 
 ### **Identifying Top-Level Needs with User Stories**
-#### 🧠 User Posters of four different player types
+####  User Posters of four different player types
 
 | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20one.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20two.png?raw=true) |
 |:--:|:--:|
