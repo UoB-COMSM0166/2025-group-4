@@ -72,7 +72,7 @@ function setup() {
 
   window.bgm = bgm;
   bgm.setLoop(true);
-  bgm.play();
+
 
   // Initialize the game
   initGame();
@@ -137,6 +137,16 @@ function toggleEditorMode() {
  * p5.js mousePressed function - handle mouse input
  */
 function mousePressed() {
+
+  if (window.bgm && !window.bgmStarted) {
+    window.bgm.setLoop(true);
+    window.bgm.setVolume(0.5); // 可选：设置音量
+    window.bgm.play();
+    window.bgmStarted = true;
+    console.log("BGM started on first user interaction.");
+  }
+
+  
   if (editorMode) {
     handleEditorMousePressed();
   } else {
