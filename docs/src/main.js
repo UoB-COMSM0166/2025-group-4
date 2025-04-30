@@ -33,7 +33,7 @@ function preload() {
   getCoinSound = loadSound('src/assets/music/getcoin.mp3');
   passSound = loadSound('src/assets/music/pass.mp3');
   regravitySound = loadSound('src/assets/music/regravity.mp3');
-  bgm = loadSound('src/assets/music/bgm/2.mp3');
+  bgm = loadSound('src/assets/music/2.mp3');
   
   // Load images and make them available globally
   window.coinImage = loadImage('src/assets/art/images/coin.png');
