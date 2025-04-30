@@ -2,7 +2,7 @@
 
 2025 COMSM0166 group 4
 
-## PUPPY'S MAGICAL ADVENTURE
+# PUPPY'S MAGICAL ADVENTURE
 
 <p align="center">
   <a href="https://uob-comsm0166.github.io/2025-group-4/">PLAY HERE</a>
@@ -10,7 +10,7 @@
 
 ![Banner Image](images/banner.webp)
 
-## Weekly Work Summary
+# Weekly Work Summary
 
  [Week 1 Game Idea & Creativity](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
 
