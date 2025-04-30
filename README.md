@@ -68,49 +68,50 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ---
 
 ### **Game Innovation**
-#### **1** Multi-biome progression: 
+#### **1.** Multi-biome progression: 
 - Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
-#### **2** Dynamic difficulty modes: 
+#### **2.** Dynamic difficulty modes: 
 - Easy (100 lives), Normal (3 lives), and Hard (2 lives) offer replay value for both casual and hardcore players.
-#### **3** Subtle narrative layering: 
+#### **3.** Subtle narrative layering: 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
-#### **4** Precision-based skill challenge: 
+#### **4.** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
 
   
 ---
 
 ### **Level Themes & Biomes**
-#### ** Glacial Rift**
+
+####  1⃣️🧊Glacial Rift
 -Challenge: Slippery surfaces and freeze traps
 
 
-#### ** Bio-Fusion Forest**
+#### 2⃣️🌲 Bio-Fusion Forest
 -Challenge: Unpredictable mutated flora
 
-#### ** Nightfall Ruins**
+#### 3⃣️🧱 Nightfall Ruins
 -Challenge: Darkened stages with hidden traps and stealth enemies
 
-#### ** Magma Fortress**
+#### 4⃣️🌋 Magma Fortress
 -Challenge: Periodic lava bursts and crumbling platforms
 
-#### ** Phantom Mist**
+#### 5⃣️☁️ Phantom Mist
 -Challenge: Heavy fog limits visibility and spatial orientation
 
-#### ** Magic Forest**
+#### 6⃣️🌳 Magic Forest
 -Challenge: Enchanted flora
 
-#### ** The Gate of Collapse (Final Stage)**
+#### 7⃣️🏯 The Gate of Collapse (Final Stage)
 -Challenge: Trap-dense gauntlet with gravity chaos
 
 ---
 
 ### **Endings**
-#### ** Perfect Ending**
+#### -Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
 
-#### ** Tragic Ending**
+#### -Tragic Ending
 You fall before the final gate. The floating world collapses, swallowed by the void.
 "The world collapses. Your legacy fades into dust."
 
@@ -300,15 +301,15 @@ By building in systematic physics and collision modules, the game gains an extre
 
 ---
 
-## **6. Evaluation**
+## 6.Evaluation
 
 Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, **heuristic evaluation**, and **code-level testing** to ensure a holistic assessment.
 
 ---
 
-### ** Qualitative Evaluation**
+### Qualitative Evaluation
 
-### **🎧 Qualitative Evaluation**
+### 🎧 Qualitative Evaluation
 
 We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviors, and challenges were documented and categorized.
 
