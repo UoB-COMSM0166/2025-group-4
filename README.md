@@ -104,7 +104,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-### **🎬 Endings**
+### **Endings**
 #### ** Perfect Ending**
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
@@ -255,7 +255,7 @@ This diagram illustrates runtime logic and how game events propagate.
 - Collisions with objects affect lives, score, or progression  
 - Renderer updates visual elements based on game state
 
-![Sequence Diagram](./images/sequence-diagram.png)
+![Sequence Diagram](./images/Sequence-diagram.png)
 
 ---
 
