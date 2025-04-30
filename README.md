@@ -566,7 +566,7 @@ We conducted regular **refactoring**:
 
 - **Voting Results**: Ranked-choice polls via WeChat.
 <div align="center">
-  <img src="images/Wechat.jpg" alt="投票结果" width="400">
+  <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
 
   
