@@ -286,7 +286,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-### Implementation
+### **Implementation**
 
 1.Implementation of a time-independent physics system and a stable collision mechanism
 
@@ -307,7 +307,7 @@ Evaluating whether the game provides an engaging and appropriately challenging e
 
 ---
 
-### Qualitative Evaluation
+### **Qualitative Evaluation**
 
 ### 🎧 Qualitative Evaluation
 
