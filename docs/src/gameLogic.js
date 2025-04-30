@@ -92,7 +92,10 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     if (enemy.checkPlayerCollision(gameState.state.player)) {
       console.log("Player collision with enemy detected at:", enemy.x, enemy.y);
       gameState.loseLife();
-      camera.addTrauma(0.6); // Add camera trauma on hit
+      // Apply stronger camera trauma on enemy hit for a more impactful effect
+      if (camera) {
+        camera.addTrauma(0.8); // Higher value for more pronounced shake
+      }
       return;
     }
   }

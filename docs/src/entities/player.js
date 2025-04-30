@@ -6,6 +6,7 @@ import * as config from '../config.js'; // Import the whole config module
 import { getTile } from '../utils.js';
 import { loseLife, triggerGravityFlipDelay } from '../game.js';
 import { particleSystem } from '../particles.js';
+import { camera } from '../camera.js';
 
 // Get reference to global game state
 let invincibilityActive = false;
@@ -67,6 +68,16 @@ export class Player {
     
     // For landing effects
     this.landingVelocity = 0;
+    
+    // Initialize rendering
+    if (window.playerImages && window.playerImages.length > 0) {
+      // Ensure proper transparency settings for player images
+      window.push();
+      window.imageMode(window.CENTER);
+      window.noTint();
+      window.pop();
+      console.log("Player images initialized with proper transparency settings");
+    }
   }
 
   /**
@@ -285,9 +296,13 @@ export class Player {
     this.hitFlashActive = true;
     this.hitFlashIntensity = 1.0;
     
-    // Add extra squash for impact feel
-    this.squashFactor = 0.5;
-    this.stretchFactor = 1.5;
+    // We'll no longer apply squashing when hit by spikes
+    // Squashing should only occur when landing on platforms
+    
+    // Ensure proper reset of drawing state
+    window.push();
+    window.noTint();
+    window.pop();
   }
 
   // Enhanced collision checking with wall bounce effects
@@ -460,6 +475,8 @@ export class Player {
             // Only take damage if not invincible
             if (!invincibilityActive) {
               this.triggerHitEffect();
+              // Apply a stronger camera shake for spike hit to compensate for lack of squashing
+              camera.addTrauma(0.6); // Higher trauma value for more pronounced shake
               loseLife();
               return true;
             }
@@ -501,9 +518,12 @@ export class Player {
     // Create particle effect for gravity flip
     particleSystem.createGravityFlip(this.x, this.y, this.w, this.gravityDirection);
     
-    // Trigger the short global delay
-    // triggerGravityFlipDelay();
+    // Ensure tint is reset so we don't have transparency issues during flipping
+    window.push();
+    window.noTint();
+    window.pop();
     
+    // Play gravity flip sound
     window.regravitySound.play();
   }
 
@@ -524,10 +544,19 @@ export class Player {
       this.targetSpeed = Math.min(this.targetSpeed, currentMaxSpeedXDraw);
     }
 
+    // Handle invincibility flashing internally
+    // Skip drawing if during invincibility flashing on certain frames
+    if (invincibilityActive && !this.hitFlashActive && window.frameCount % 8 >= 4) {
+      return; // Skip rendering this frame for flash effect
+    }
+
     // Calculate interpolated position
     const renderX = this.previousX + (this.x - this.previousX) * interpolation;
     const renderY = this.previousY + (this.y - this.previousY) * interpolation;
 
+    // Set global image mode to CENTER once at the beginning to ensure consistency
+    window.imageMode(window.CENTER);
+    
     window.push();
     window.translate(renderX, renderY);
 
@@ -577,13 +606,6 @@ export class Player {
           window.ellipse(0, shadowOffsetY, this.w * 0.6, this.h * 0.2);
         }
         
-        // Draw hit flash effect if active
-        if (this.hitFlashActive) {
-          window.fill(255, 255, 255, this.hitFlashIntensity * 200);
-          window.noStroke();
-          window.rect(-this.w/2, -this.h/2, this.w, this.h);
-        }
-
         // Update animation frame counter, and switch current frame
         this.frameCounter++;
         if (this.frameCounter >= this.frameDelay) {
@@ -592,31 +614,46 @@ export class Player {
           this.currentFrame = (this.currentFrame + 1) % window.playerImages.length;
           this.frameCounter = 0;
         }
-        
+         
         // Draw the player sprite
         if (window.playerImages && window.playerImages.length > 0) {
           // If facing left, flip the image horizontally
           // If gravity is flipped, flip the image vertically
           window.push();
-          
+           
           // Apply horizontal flip if moving left
           const horizontalFlip = this.autoDirection < 0 ? -1 : 1;
-          
+           
           // Apply vertical flip if gravity is flipped
           const verticalFlip = this.gravityDirection < 0 ? -1 : 1;
-          
+           
           // Apply both flips
           window.scale(horizontalFlip, verticalFlip);
-          
-          // Use tinted version if invincible but not during hit flash
-          if (invincibilityActive && !this.hitFlashActive) {
+           
+          // Handle tinting based on player state
+          if (this.hitFlashActive) {
+            // Use blendMode for hit effect instead of tint
+            window.push();
+            // First draw the normal player image
+            window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+            
+            // Then overlay a white flash with ADD blend mode
+            window.blendMode(window.ADD);
+            const alpha = Math.floor(this.hitFlashIntensity * 200);
+            window.tint(alpha, alpha, alpha, 255); // Use appropriate intensity for the flash
+            window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+            window.pop();
+          } else if (invincibilityActive) {
             // Apply a pulsing effect during invincibility
             const pulseAmount = 0.5 + Math.sin(window.physicsClock * 10) * 0.3;
-            window.tint(255, 255, 255, 150 + pulseAmount * 105); // Semi-transparent when invincible
+            window.tint(255, 255, 255, 150 + pulseAmount * 105);
+            window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+          } else {
+            // Normal drawing - no tint
+            window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
           }
-          
-          window.imageMode(window.CENTER);
-          window.image(window.playerImages[this.currentFrame], 0, 0, this.w, this.h);
+           
+          window.noTint(); // Always reset the tint after drawing
           window.pop();
         } else {
           // Simple rectangle representation if no image is available

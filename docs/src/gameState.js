@@ -6,6 +6,7 @@ import { particleSystem } from './particles.js';
 import { setupLevels } from './levels.js';
 import { loadLevel } from './levelManager.js';
 import { tileSize } from './config.js';
+import { camera } from './camera.js';
 
 // Create a single mutable state object
 export const state = {
@@ -188,6 +189,9 @@ export function loseLife() {
     
     // Apply enhanced screen shake - set trauma to max
     state.screenShakeTrauma = 1.0;
+    
+    // Also use the camera's trauma system directly if available
+    camera.addTrauma(1.0); // Maximum trauma
     
     // Start invincibility period
     state.invincibilityActive = true;

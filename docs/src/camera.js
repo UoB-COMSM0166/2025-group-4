@@ -19,9 +19,10 @@ const CAMERA_CONFIG = {
   minZoom: 0.8,
   maxZoom: 1.5,
   zoomEasing: 0.05,
-  // Screen shake settings
+  // Screen shake settings - updated for stronger effect
   shakeDecay: 0.9,
   shakeRotationFactor: 0.01,
+  shakeAmplitude: 20, // Increased amplitude for more pronounced shake
 };
 
 // Create a camera object with state
@@ -229,13 +230,23 @@ export const camera = {
    */
   updateScreenShake(deltaTime) {
     if (this.shakeTrauma > 0) {
-      const intensity = this.shakeTrauma * this.shakeTrauma;
+      // Make intensity curve more pronounced for stronger initial shake
+      const intensity = this.shakeTrauma * this.shakeTrauma * this.shakeTrauma;
+      
+      // Higher frequency noise (0.01 -> 0.03) for more rapid shake
+      const noiseFreq = 0.03;
+      // Add frameCount to create more variation between invocations
+      const timeOffset = Date.now() + window.frameCount;
       
       // Use noise for organic, repeatable shake
-      this.shakeX = intensity * 20 * (window.noise(Date.now() * 0.01) * 2 - 1);
-      this.shakeY = intensity * 20 * (window.noise(Date.now() * 0.01 + 100) * 2 - 1);
+      this.shakeX = intensity * CAMERA_CONFIG.shakeAmplitude * (window.noise(timeOffset * noiseFreq) * 2 - 1);
+      this.shakeY = intensity * CAMERA_CONFIG.shakeAmplitude * (window.noise(timeOffset * noiseFreq + 100) * 2 - 1);
       this.shakeRotation = intensity * CAMERA_CONFIG.shakeRotationFactor * 
-                         (window.noise(Date.now() * 0.01 + 200) * 2 - 1);
+                         (window.noise(timeOffset * noiseFreq + 200) * 2 - 1);
+      
+      // Add some true randomness for more dynamic feel
+      this.shakeX += intensity * CAMERA_CONFIG.shakeAmplitude * 0.2 * (Math.random() * 2 - 1);
+      this.shakeY += intensity * CAMERA_CONFIG.shakeAmplitude * 0.2 * (Math.random() * 2 - 1);
       
       // Decay trauma over time
       this.shakeTrauma *= Math.pow(CAMERA_CONFIG.shakeDecay, deltaTime * 60);

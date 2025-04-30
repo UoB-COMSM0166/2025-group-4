@@ -297,14 +297,7 @@ function drawGameScreen(interpolation = 0) {
   }
   
   // Draw player with invincibility effect and interpolation
-  if (gameState.state.invincibilityActive && !gameState.state.hitstopActive) {
-    // Flash the player during invincibility (show only every other 4 frames)
-    if (window.frameCount % 8 < 4) {
-      gameState.state.player.draw(0, interpolation);
-    }
-  } else {
-    gameState.state.player.draw(0, interpolation);
-  }
+  gameState.state.player.draw(0, interpolation);
   
   // Draw particles
   particleSystem.draw(0);
