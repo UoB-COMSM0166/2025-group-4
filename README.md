@@ -561,16 +561,13 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ---
 
 ## 5. Sustainability Score Overview (Out of 10)
-| Dimension     | Score |
-|---------------|-------|
-| Social        | 8     |
-| Environmental | 7     |
-| Economic      | 9     |
-| Technical     | 9     |
-| Individual    | 8     |
 
-![Sustainability Score Overview](images/Sustainability%20Score%20Overview.png)
 
+<div align="center">
+  <img src="images/Sustainability%20Score%20Overview.png" alt="Sustainability Score Overview" width="60%">
+</div>
+
+Economic and Technical dimensions scored highest (9/10), reflecting strong implementation feasibility and future adaptability.
 
 ---
 
