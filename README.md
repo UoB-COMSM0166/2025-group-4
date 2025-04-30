@@ -26,10 +26,15 @@
 
  [Week 8 User Evaluation & Quantitative Analysis](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week08.md)
  
+## Table of Contents
+
+- [Development Group](#development-group)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
 
 
-
-## Your Group
+## Development Group
 ![Group Photo](images/group4-photo.jpg)
 **The names are listed from left to right in the group photo.**
 
