@@ -90,7 +90,6 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ### **4.** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
 
-  
 ---
 
 ## 3.1.4 **Level Themes & Biomes**
@@ -119,7 +118,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-## 3.1.6 **Endings**
+## 3.1.5 **Endings**
 ### -Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
@@ -130,7 +129,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ---
 
-## 3.1.7 **Stakeholders**
+## 3.1.6 **Stakeholders**
 ### **Surrogate Roles**
  ####  Onion Model of game Rusty Rover's Run
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
@@ -142,7 +141,7 @@ It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically 
 
 ---
 
-## 3.1.8 **Identifying Top-Level Needs with User Stories**
+## 3.1.7 **Identifying Top-Level Needs with User Stories**
 ###  User Posters of four different player types
 
 | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20one.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20two.png?raw=true) |
