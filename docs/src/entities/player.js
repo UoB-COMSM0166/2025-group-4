@@ -502,7 +502,7 @@ export class Player {
     particleSystem.createGravityFlip(this.x, this.y, this.w, this.gravityDirection);
     
     // Trigger the short global delay
-    triggerGravityFlipDelay();
+    // triggerGravityFlipDelay();
     
     window.regravitySound.play();
   }
