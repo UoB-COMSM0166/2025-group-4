@@ -572,7 +572,16 @@ export class Player {
     // 如果正在打滑 && 有打滑贴图
     if (this.isSlipping && window.slipperyPlayerImage) {
     window.imageMode(window.CENTER);
-    window.image(window.slipperyPlayerImage, 0, 0, this.w, this.h);
+    if (this.vx < 0) {
+      // 向左滑动，镜像图像
+      window.push();
+      window.scale(-1, 1); // 水平翻转
+      window.image(window.slipperyPlayerImage, -0, 0, this.w, this.h); // 注意：-0 是为了对称性
+      window.pop();
+    } else {
+      // 向右滑动，正常显示
+      window.image(window.slipperyPlayerImage, 0, 0, this.w, this.h);
+    }
     } else if (this.isFrozen && window.inIcePlayerImage) {
         // 绘制 dog_in_ice.png
         imageMode(CENTER);
