@@ -80,9 +80,10 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
   
 ---
 
-### ** Level Themes & Biomes**
+### **Level Themes & Biomes**
 #### ** Glacial Rift**
 -Challenge: Slippery surfaces and freeze traps
+
 
 #### ** Bio-Fusion Forest**
 -Challenge: Unpredictable mutated flora
