@@ -494,11 +494,74 @@ To maintain software quality throughout development, we used:
 
 This hybrid testing ensured that both internal logic and user experience were rigorously validated.
 
-### Process 
+# 🔁 Process
 
-- 15% ~750 words
+## 🤝 Collaboration
 
-- Teamwork. How did you work together, what tools did you use. Did you have team roles? Reflection on how you worked together. 
+In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
+
+We used a voting-based decision-making process:
+- For simple tasks, we held quick votes during in-person lab discussions.
+- For complex choices (e.g., game theme or major mechanic decisions), we used anonymous online voting via **WeChat** or face-to face discussion to ensure everyone’s voice was heard without pressure.
+
+After lab sessions each week, we frequently merged code during offline co-working blocks, ensuring that each team member could test the latest build and contribute to debugging together.
+
+As the project progressed into the remote phase, we transitioned to **scrum-style stand-up meetings** via **Microsoft Teams** or **WeChat** (3x per week). During holiday sprints, we followed a weekly sprint cycle with decomposed story points to evenly distribute work and avoid last-minute pressure. We observed “heroic efforts” during early deadlines and addressed this through better task granularity.
+
+---
+
+## 🛠️ Tools and Techniques
+
+To coordinate collaboration and track progress, we used a combination of digital tools:
+
+- **VS Code + Live Share**: Enabled real-time pair programming and p5.js collaboration.
+- **GitHub**: Used for version control, issue tracking, and PR-based code review.
+- **WeChat Group**: Real-time communication, shared documents for meeting notes and sketch sharingand PR review reminders.
+- **GitHub Kanban Board**: Used for weekly plans and task tracking (To Do → In Progress → Done). Helped visualize sprint workflow and reassign tasks if needed.
+
+>  We initially used GitHub Projects, and we found it's was really flexible for visual/multi-step UI/gameplay tasks.
+
+---
+
+## 🧪 Agile Methodology
+
+We followed an agile workflow with weekly iteration cycles:
+
+- Daily updates were shared via **WeChat** or online stand-ups.
+- Sprint goals were discussed in **offline backlog refinement sessions** (e.g., after class or in MVB).
+- Each sprint began with **story point estimation** using a lightweight version of planning poker.
+- Workload was adjusted based on individual capacity.
+
+We conducted regular **refactoring**:
+> E.g., Sprint 3 involved a rewrite of the collision detection logic for better modularity and extensibility.
+
+**Pair programming** was a key technique:
+- Senior devs partnered with juniors to prototype levels and debug game physics.
+- Helped build shared knowledge and cohesion.
+
+### Agile Focus Points:
+-  Incremental delivery of playable builds.
+-  Fast internal feedback loops.
+-  Well-documented commits and PRs.
+-  Priority shifts when needed (e.g., UI before backend in Week 5).
+
+---
+
+##  Visuals
+
+-  **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
+-  **Voting Results**: Ranked-choice polls via WeChat.
+-  **Kanban Board**: GitHub task board (To Do / In Progress / Done).
+-  **Pair Programming**: Screenshots of VS Code Live Share sessions.
+-  **Pull Requests**: GitHub PR timeline with tags and labels.
+-  **Sprint Chart**: 
+-  **Burndown Chart**:
+
+---
+
+Our iterative, flexible process and thoughtful use of collaborative digital tools enabled the successful delivery of a highly interactive, multi-biome gravity reversal platformer.
+
+
 
 ### Conclusion
 
