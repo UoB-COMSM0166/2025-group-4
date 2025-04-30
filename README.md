@@ -332,8 +332,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 | Visual Design | Pixel art is immersive | Exit unclear, enemy sprites confusing | Updated assets and added arrow cues |
 | Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
 
-🖼️ _[Insert thematic mind map diagram here]_  
-🖼️ _[Insert gameplay environment screenshots showing before/after adjustments]_  
+![Thematic Mind Map](images/Thematic%20Mind%20Map.png)
 
 ---
 
