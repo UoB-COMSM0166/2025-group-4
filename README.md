@@ -547,21 +547,39 @@ We conducted regular **refactoring**:
 
 ---
 
-##  Visuals
+## Visuals
 
--  **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
--  **Voting Results**: Ranked-choice polls via WeChat.
--  **Kanban Board**: GitHub task board (To Do / In Progress / Done).
--  **Pair Programming**: Screenshots of VS Code Live Share sessions.
--  **Pull Requests**: GitHub PR timeline with tags and labels.
--  **Sprint Chart**: 
--  **Burndown Chart**:
+- **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
+<div align="center">
+  <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
+</div>
+
+
+- **Voting Results**: Ranked-choice polls via WeChat.
+<div align="center">
+  <img src="images/Wechat.jpg" alt="投票结果" width="400">
+</div>
+
+  
+- **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
+  ![Kanban Board](images/Kanban.png)
+
+
+- **Sprint process**:
+<div align="center">
+  <img src="images/process-sprint.png" alt="Sprint Process" width="400">
+</div>
+
+
+- **Burndown Chart**:  
+  ![Burndown Chart](images/Burn%20chart.jpg.png)
+
 
 ---
 
 Our iterative, flexible process and thoughtful use of collaborative digital tools enabled the successful delivery of a highly interactive, multi-biome gravity reversal platformer.
 
-
+---
 
 ### Conclusion
 
@@ -582,15 +600,3 @@ This project has not only allowed us to explore game development deeply, but has
 ---
 
 - Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
-
-### Additional Marks
-
-You can delete this section in your own repo, it's just here for information. in addition to the marks above, we will be marking you on the following two points:
-
-- **Quality** of report writing, presentation, use of figures and visual material (5%) 
-  - Please write in a clear concise manner suitable for an interested layperson. Write as if this repo was publicly available.
-
-- **Documentation** of code (5%)
-
-  - Is your repo clearly organised? 
-  - Is code well commented throughout?
