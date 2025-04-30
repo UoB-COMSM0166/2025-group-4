@@ -19,7 +19,7 @@ let deathSound;
 let getCoinSound;
 let passSound;
 let regravitySound;
-
+let bgm;
 // Global state
 let lastFrameTime = 0; // For fixed timestep
 let editorMode = false; // Track whether we're in editor mode
@@ -33,6 +33,7 @@ function preload() {
   getCoinSound = loadSound('src/assets/music/getcoin.mp3');
   passSound = loadSound('src/assets/music/pass.mp3');
   regravitySound = loadSound('src/assets/music/regravity.mp3');
+  bgm = loadSound('src/assets/music/bgm1/2.mp3');
   
   // Load images and make them available globally
   window.coinImage = loadImage('src/assets/art/images/coin.png');
@@ -68,6 +69,10 @@ function setup() {
   window.getCoinSound = getCoinSound;
   window.passSound = passSound;
   window.regravitySound = regravitySound;
+
+  window.bgm = bgm;
+  bgm.setLoop(true);
+  bgm.play();
 
   // Initialize the game
   initGame();
