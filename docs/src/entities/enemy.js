@@ -2,6 +2,8 @@
  * Enemy class
  */
 import { tileSize } from '../config.js';
+import { getTile } from '../utils.js';
+import { state } from '../gameState.js';
 
 export class Enemy {
   constructor(px, py) {
@@ -21,17 +23,59 @@ export class Enemy {
   }
 
   update(deltaTime) {
-    // Move left and right
-    this.x += this.speed * this.direction * deltaTime * 60;
+    // We need to get the tileMap from the game state
+    const tileMap = state.tileMap;
     
-    // If reached boundary, change direction
-    if (this.x <= this.minX) {
-      this.x = this.minX;
-      this.direction = 1;
-    } else if (this.x >= this.maxX) {
-      this.x = this.maxX;
-      this.direction = -1;
+    // Calculate next position
+    const nextX = this.x + this.speed * this.direction * deltaTime * 60;
+    
+    // Check for wall collision
+    if (this.checkWallCollision(nextX, tileMap)) {
+      // If wall detected, reverse direction
+      this.direction *= -1;
+    } else {
+      // Move left and right
+      this.x = nextX;
+      
+      // If reached boundary, change direction
+      if (this.x <= this.minX) {
+        this.x = this.minX;
+        this.direction = 1;
+      } else if (this.x >= this.maxX) {
+        this.x = this.maxX;
+        this.direction = -1;
+      }
     }
+  }
+
+  checkWallCollision(nextX, tileMap) {
+    // If no tileMap provided, we can't check collisions
+    if (!tileMap) return false;
+    
+    // Calculate the position to check based on direction
+    const checkX = nextX + (this.w * 0.5 * this.direction);
+    const checkCol = Math.floor(checkX / tileSize);
+    
+    // Check top and bottom points of the enemy to handle walls of different heights
+    const topRow = Math.floor((this.y - this.h * 0.4) / tileSize);
+    const midRow = Math.floor(this.y / tileSize);
+    const bottomRow = Math.floor((this.y + this.h * 0.4) / tileSize);
+    
+    // Check if any of these points hit a wall
+    const rowsToCheck = [midRow, topRow, bottomRow];
+    
+    for (const row of rowsToCheck) {
+      // Skip invalid rows
+      if (row < 0) continue;
+      
+      // Get the tile at the check position
+      const tile = getTile(checkCol, row, tileMap);
+      if (tile === 1) {
+        return true; // Wall collision detected
+      }
+    }
+    
+    return false; // No wall collision
   }
 
   checkPlayerCollision(player) {
@@ -192,7 +236,15 @@ export class Bullet {
   }
   
   checkWallCollision() {
-    // Wall collision check implementation...
+    // Check for walls at the bullet's current position
+    const col = Math.floor(this.x / tileSize);
+    const row = Math.floor(this.y / tileSize);
+    
+    if (state.tileMap) {
+      const tile = getTile(col, row, state.tileMap);
+      return tile === 1; // Return true if the bullet hit a wall
+    }
+    
     return false;
   }
   
