@@ -309,7 +309,7 @@ Evaluating whether the game provides an engaging and appropriately challenging e
 
 ### **Qualitative Evaluation**
 
-### 🎧 Qualitative Evaluation
+###  Qualitative Evaluation
 
 We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviors, and challenges were documented and categorized.
 
@@ -359,16 +359,6 @@ Findings were classified by severity to prioritize improvements. For example:
 | Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
 
 The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
-
-####  Findings Table:
-| Heuristic | Issue Example | Severity | Fix Implemented |
-|-----------|---------------|----------|-----------------|
-| Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
-| Consistency and Standards | Shooting & jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
-| Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
-
- _[Insert screenshot of heuristic checklist evaluation sheet]_  
- _[Insert visual of improved UI]_  
 
 ---
 
