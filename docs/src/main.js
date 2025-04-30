@@ -30,6 +30,7 @@ let editorMode = false; // Track whether we're in editor mode
  */
 function preload() {
   // Load sounds
+  freezeSound = loadSound('src/assets/music/freeze.mp3'); 
   deathSound = loadSound('src/assets/music/death.wav');
   getCoinSound = loadSound('src/assets/music/getcoin.mp3');
   passSound = loadSound('src/assets/music/pass.mp3');
