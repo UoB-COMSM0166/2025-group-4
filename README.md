@@ -569,6 +569,9 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 | Technical     | 9     |
 | Individual    | 8     |
 
+![Sustainability Score Overview](images/Sustainability%20Score%20Overview.png)
+
+
 ---
 
 # Process
