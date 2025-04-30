@@ -500,6 +500,15 @@ This hybrid testing ensured that both internal logic and user experience were ri
 
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
+
+
+<div align="center">
+  <p style="font-size:14px; margin: 4px 0;">Team Meeting</p>
+  <img src="images/Team-photo.jpg" alt="Team Photo" width="400">
+</div>
+
+
+
 We used a voting-based decision-making process:
 - For simple tasks, we held quick votes during in-person lab discussions.
 - For complex choices (e.g., game theme or major mechanic decisions), we used anonymous online voting via **WeChat** or face-to face discussion to ensure everyone’s voice was heard without pressure.
