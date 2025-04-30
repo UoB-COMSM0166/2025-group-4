@@ -164,7 +164,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
 ## Game Design – Rusty Rover’s Run
-![user case](./images/usercase.png)
+![user case](./images/user case.png)
 
 | **Standard Mode** |   |
 |-------------------|---|
