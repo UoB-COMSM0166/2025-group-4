@@ -399,29 +399,41 @@ While SUS scores were slightly lower in Level 2, this trend was consistent with 
 
 ---
 
-##  Sustainability 
+## 🧪 Code Testing
 
-### 1. Project Overview
+To maintain software quality throughout development, we used:
+
+- **White-box testing**: Custom `Test` class with assertions to simulate and verify mechanics.
+- **Black-box testing**: Manual testing during gameplay by developers and users.
+- **Test Specification Document**: Includes defined scenarios and expected outcomes. Updated after each major version.
+
+This hybrid testing ensured that both internal logic and user experience were rigorously validated.
+
+---
+
+#  Sustainability 
+
+## 1. Project Overview
 This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
 
 ---
 
-### 2.1 Sustainability Dimension Analysis
-####  Social
+## 2.1 Sustainability Dimension Analysis
+###  Social
 - **Participation & Equity**: All difficulty modes offer equal chances to progress without time-based punishment. Player profiles are anonymous and inclusive.
 - **Communication**: Players may provide feedback. Easy levels help experienced users support new players.
 
-####  Individual
+###  Individual
 - **Health & Wellbeing**: The low-stress visual theme and intuitive control layout reduce mental load. Clear level boundaries discourage excessive playtime.
 - **Learning & Agency**: The game encourages logical thinking, pattern recognition, and spatial awareness. Optional modes allow players to opt out of competitive elements.
 - **Privacy & Safety**: No sensitive personal data required for gameplay.
 
-####  Environmental
+###  Environmental
 - **Energy & Emissions**: Optimized for low-power hardware; includes dark-mode UI and frame limiter for lower GPU usage.
 - **Materials & Waste**: Fully digital, no physical packaging or distribution. Assets are reused and compressed.
 - **Ecosystem Impact**: Efficient runtime reduces backend compute demands, minimizing indirect emissions from servers.
 
-####  Economic
+###  Economic
 - **Accessibility & Fairness**: Game is free-to-play. No pay-to-win mechanics.
 - **Customer Relationship**: A feedback loop helps prioritize updates based on player needs. Rewards are based on gold coins collected.
 
@@ -433,7 +445,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-### 2.2 Sustainability Effects – Chains of Impact
+## 2.2 Sustainability Effects – Chains of Impact
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
 | Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
@@ -444,25 +456,25 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-### 3. Threats, Opportunities, Actions
-####  Threats
+## 3. Threats, Opportunities, Actions
+###  Threats
 - Overcomplicated mechanics may alienate casual users.
 - No optimization for old hardware could cause energy waste.
 - Lack of structured update process could lead to technical debt.
 
-####  Opportunities
+###  Opportunities
 - Use gravity mechanics as an educational metaphor (STEM-based levels).
 - Optimize with green software practices to target eco-conscious markets.
 - Build loyalty with players through transparent update logs and version notes.
 
-####  Actions
+###  Actions
 - Introduce accessibility settings (e.g., slower mode, motion-reduced mode).
 - Enable low-power rendering mode and limit background processing.
 - Establish modular design conventions and continuous refactoring schedule.
 
 ---
 
-### 4. Sustainability User Stories
+## 4. Sustainability User Stories
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
 |------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | Social     | As a casual player, I want co-op gameplay so I can share the experience. | Game supports share.                              |
@@ -473,7 +485,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-### 5. Sustainability Score Overview (Out of 10)
+## 5. Sustainability Score Overview (Out of 10)
 | Dimension     | Score |
 |---------------|-------|
 | Social        | 8     |
@@ -484,17 +496,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-## 🧪 Code Testing
-
-To maintain software quality throughout development, we used:
-
-- **White-box testing**: Custom `Test` class with assertions to simulate and verify mechanics.
-- **Black-box testing**: Manual testing during gameplay by developers and users.
-- **Test Specification Document**: Includes defined scenarios and expected outcomes. Updated after each major version.
-
-This hybrid testing ensured that both internal logic and user experience were rigorously validated.
-
-# 🔁 Process
+# Process
 
 ## 🤝 Collaboration
 
@@ -590,7 +592,7 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 
 ---
 
-## Conclusion
+# Conclusion
 
 The development of Puppy’s Magical Adventure was a transformative learning experience for our team, combining creativity, technical skill, and agile collaboration. From ideation to implementation, we followed an iterative process that allowed us to continuously refine our design, balance gameplay mechanics, and deliver a playable game within the limited time frame.
 
