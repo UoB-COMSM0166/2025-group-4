@@ -30,11 +30,15 @@
 
 - 1.[Development Group](#development-group)
 - 2.[Kanban link](#kanban-link)
-- 3.[Game Design](game-design)
-- [Implemantation](#implementation)
-- [Evaluation](#evaluation)
-- [Process](#process)
-- 13.[Conclusion](conlusion)
+- 3.[Project report](#project-report)
+- 4.[Game Design](#game-design)
+- 5.[Implemantation](#implementation)
+- 6.[Evaluation](#evaluation)
+- 7.[Code Testing](#code-testing)
+- 8.[Summary & Future Improvements](#summary-&-future-improvements)
+- 9.[sustanability](#sustainbability)
+- 10.[Process](#process)
+- 11.[Conclusion](conlusion)
 
 
 # 1.Development Group
@@ -174,7 +178,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-## 4.Game Design – Rusty Rover’s Run
+# 4.Game Design – Rusty Rover’s Run
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
 
 | **Standard Mode** |   |
@@ -194,7 +198,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-### Procedural Challenge Mode Use Case Specification
+## 4.1 Procedural Challenge Mode Use Case Specification
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -214,7 +218,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-### Summary of Development & Ideation Process
+## 4.2 Summary of Development & Ideation Process
 
 **1. Initial Concept**  
 - Inspired by *The Way of the Dodo*, the game was originally a simple one-button platformer.  
@@ -236,9 +240,9 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## Game Architecture & Visual Modeling
+## 4.3 Game Architecture & Visual Modeling
 
-###  Class Diagram  
+### 4.3.1 Class Diagram  
 **File**: `./images/class-diagram.png`  
 The class diagram outlines object relationships in our game system and supports modular, object-oriented structure.
 
@@ -254,7 +258,7 @@ The class diagram outlines object relationships in our game system and supports 
 
 ---
 
-###  Sequence Diagram  
+### 4.3.2 Sequence Diagram  
 **File**: `./images/sequence-diagram.png`  
 This diagram illustrates runtime logic and how game events propagate.
 
@@ -269,7 +273,7 @@ This diagram illustrates runtime logic and how game events propagate.
 
 ---
 
-###  State Diagram  
+### 4.3.3 State Diagram  
 **File**: `./images/state-diagram.png`  
 We designed a hierarchical FSM to control game progression.
 
@@ -283,7 +287,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-## Game Mechanics Summary
+## 4.4 Game Mechanics Summary
 
 - **Gravity Flip**: The player can flip gravity using Spacebar to swap between floor and ceiling.  
 - **Enemy Logic**: Contact with enemies or bullets results in life loss. Shooter enemies fire projectiles.  
@@ -295,7 +299,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-### **Implementation**
+# 5.Implementation
 
 1.Implementation of a time-independent physics system and a stable collision mechanism
 
@@ -307,34 +311,31 @@ For collision detection, the game has developed an extremely robust, fine-graine
 
 By building in systematic physics and collision modules, the game gains an extremely consistent gameplay experience across different operating environments and also provides a solid foundation for future expansion of more complex game sequences (e.g. dynamic bodies, time manipulation and gravity shifting bodies). The stable and reliable physics system and collision mechanism not only improve the playability and polish of the current version, but also provide a solid technical foundation for the future development of the project.
 
-
 ---
 
-## 6.Evaluation
+# 6.Evaluation
 
 Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, **heuristic evaluation**, and **code-level testing** to ensure a holistic assessment.
 
 ---
 
-### **Qualitative Evaluation**
-
-###  Qualitative Evaluation
+## 6.1 Qualitative Evaluation
 
 We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviors, and challenges were documented and categorized.
 
-####  Key Research Questions:
+### 6.1.2 Key Research Questions:
 - Can players intuitively understand and use the gravity flip mechanic?
 - Is the platforming difficulty curve fair across levels?
 - Do visual cues and indicators support understanding of objectives?
 
-####  Method:
+### 6.1.3 Method:
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
 | 2 | Asked to play L1 and L2 while thinking aloud | Verbalizations documented by two observers |
 | 3 | Feedback grouped thematically | Data analyzed using thematic analysis (Braun & Clarke 2006) |
 
-####  Thematic Insights:
+### 6.1.4 Thematic Insights:
 
 | Theme | Positive Feedback | Identified Issues | Action Taken |
 |-------|------------------|------------------|---------------|
@@ -346,7 +347,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ---
 
-#### Heuristic Evaluation
+## 6.2 Heuristic Evaluation
 
 We conducted a heuristic evaluation using **Jakob Nielsen’s usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
 
@@ -360,7 +361,7 @@ Findings were classified by severity to prioritize improvements. For example:
   **Heuristic**: Visibility of system status  
   **Severity**: Major – addressed by adding audio-visual feedback during interaction.
 
-  ####  Findings Table:
+### Findings Table:
 | Heuristic | Issue Example | Severity | Fix Implemented |
 |-----------|---------------|----------|-----------------|
 | Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
@@ -371,9 +372,9 @@ The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%
 
 ---
 
-##  Quantitative Analysis
+## 6.3 Quantitative Analysis
 
-### Methodology
+### 6.3.1 Methodology
 
 We conducted structured user testing with **10 participants**, each playing **two difficulty levels (L1 and L2)**. After each session, they completed:
 
@@ -381,6 +382,7 @@ We conducted structured user testing with **10 participants**, each playing **tw
 - **NASA TLX** – 6 workload categories (mental, physical, temporal, performance, effort, frustration)
 
 We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1 and L2.
+
 ### **User Evaluation Summary (SUS & NASA TLX Scores)**  
 
 #### **System Usability Scale (SUS) Scores**
@@ -445,7 +447,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 ---
 
-#### Key Findings:
+### 6.3.2 Key Findings:
 - **Ease of Use**: Most participants strongly agreed that the game was easy to use in Level 1, with average scores of 4–5 for related items. However, scores slightly declined in Level 2, indicating increased complexity may have impacted perceived usability.
 
 - **Confidence & Learnability**: Participants consistently reported feeling confident using the system, even as difficulty increased. Items like "I feel confident using it" maintained high scores (mostly 4s and 5s), suggesting intuitive control schemes and effective visual design.
@@ -457,13 +459,13 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 - **Workload increased as intended**:  
   Significant increases in TLX scores confirm proper difficulty scaling
   
-#### Summary:
+### 6.3.3 Summary:
 
 While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.
 
 ---
 
-### Code Testing
+# 7. Code Testing
 
 We ensured code quality with a **hybrid white-box + black-box** approach:
 
@@ -478,7 +480,7 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
 
 ---
 
-### Summary & Future Improvements
+# 8.Summary & Future Improvements
 
 | Category | Key Insight | Planned Improvement |
 |----------|-------------|----------------------|
@@ -495,14 +497,14 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
  
 ---
 
-#  Sustainability 
+# 9. Sustainability 
 
-## 1. Project Overview
+## 9.1. Project Overview
 This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
 
 ---
 
-## 2.1 Sustainability Dimension Analysis
+## 9.2 Sustainability Dimension Analysis
 ###  Social
 - **Participation & Equity**: All difficulty modes offer equal chances to progress without time-based punishment. Player profiles are anonymous and inclusive.
 - **Communication**: Players may provide feedback. Easy levels help experienced users support new players.
@@ -529,7 +531,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-## 2.2 Sustainability Effects – Chains of Impact
+## 9.3 Sustainability Effects – Chains of Impact
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
 | Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
@@ -540,7 +542,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-## 3. Threats, Opportunities, Actions
+## 9.4 Threats, Opportunities, Actions
 ###  Threats
 - Overcomplicated mechanics may alienate casual users.
 - No optimization for old hardware could cause energy waste.
@@ -558,7 +560,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-## 4. Sustainability User Stories
+## 9.5 Sustainability User Stories
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
 |------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | Social     | As a casual player, I want co-op gameplay so I can share the experience. | Game supports share.                              |
@@ -569,7 +571,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ---
 
-## 5. Sustainability Score Overview (Out of 10)
+## 9.6 Sustainability Score Overview (Out of 10)
 
 
 <div align="center">
@@ -580,9 +582,9 @@ Economic and Technical dimensions scored highest (9/10), reflecting strong imple
 
 ---
 
-# Process
+# 10. Process
 
-##  Collaboration
+## 10.1 Collaboration
 
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
@@ -605,7 +607,7 @@ As the project progressed into the remote phase, we transitioned to **scrum-styl
 
 ---
 
-##  Tools and Techniques
+## 10.2 Tools and Techniques
 
 To coordinate collaboration and track progress, we used a combination of digital tools:
 
@@ -618,7 +620,7 @@ To coordinate collaboration and track progress, we used a combination of digital
 
 ---
 
-##  Agile Methodology
+## 10.3 Agile Methodology
 
 We followed an agile workflow with weekly iteration cycles:
 
@@ -642,7 +644,7 @@ We conducted regular **refactoring**:
 
 ---
 
-## Visuals
+## 10.4 Visuals
 
 - **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
 <div align="center">
@@ -676,7 +678,7 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 
 ---
 
-# Conclusion
+# 11. Conclusion
 
 The development of Puppy’s Magical Adventure was a transformative learning experience for our team, combining creativity, technical skill, and agile collaboration. From ideation to implementation, we followed an iterative process that allowed us to continuously refine our design, balance gameplay mechanics, and deliver a playable game within the limited time frame.
 
