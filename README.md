@@ -398,6 +398,8 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **9**  | 5 | 2 | 2 | 5 | 5 | 3 | 1 | 4 | 4 | 2 | 1 | 5 | 5 | 2 | 1 | 5 | 5 | 2 | 2 | 5 |
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
 
+![SUS Scores Comparison](images/SUS%20Scores%20Comparison.png)
+
 ---
 
 #### **NASA Task Load Index (NASA TLX Scores)**
@@ -408,6 +410,8 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **3**  | 9  | 16 | 6  | 13 | 10 | 18 | 14 | 11 | 12 | 20 | 8  | 17 |
 | **4**  | 7  | 18 | 5  | 15 | 7  | 19 | 16 | 9  | 8  | 20 | 6  | 18 |
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
+
+![NASA TLX Scores Comparison](images/NASA%20TLX%20Scores%20Comparison.png)
 
 ---
 
