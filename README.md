@@ -419,7 +419,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | System Integration | 4.1 | 3.9 | ↓ |
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 
-🖼️ _[Insert bar chart comparing SUS item-by-item for L1 and L2]_  
+![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
 
 ####  NASA TLX Summary:
 | Dimension | L1 Median | L2 Median | L3 Median |
@@ -435,8 +435,9 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 - **L1 vs L2**: *p = 0.0035*  
 - **L2 vs L3**: *p = 0.0038*
 
- _[Insert line graph of NASA TLX workload scaling across levels]_  
- _[Insert grouped bar chart per dimension]_  
+![NASA TLX Workload Trend Across Levels](images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png)
+
+![NASA TLX Workload by Dimension](images/NASA%20TLX%20Workload%20by%20Dimension.png)
 
 ---
 
