@@ -125,6 +125,14 @@ export function drawTiles(tileMap, cameraOffsetX) {
           }
           // '^' or '5' point up by default, no rotation needed
 
+
+          // ✅ 添加浮动 + 缩放动画
+          const pulse = 0.05 * sin(frameCount * 0.15 + row * 5 + col * 3);
+          const float = 2 * sin(frameCount * 0.1 + row * 2 + col);
+
+           scale(1 + pulse);
+           translate(0, float);
+
           // Draw the image centered around the (now rotated) origin
           image(window.currentSpikeImage, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
           pop();
