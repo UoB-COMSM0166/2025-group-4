@@ -82,26 +82,26 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ### **Level Themes & Biomes**
 
-####  1⃣️🧊Glacial Rift
+####  1⃣️Glacial Rift
 -Challenge: Slippery surfaces and freeze traps
 
 
-#### 2⃣️🌲 Bio-Fusion Forest
+#### 2⃣️ Bio-Fusion Forest
 -Challenge: Unpredictable mutated flora
 
-#### 3⃣️🧱 Nightfall Ruins
+#### 3⃣️ Nightfall Ruins
 -Challenge: Darkened stages with hidden traps and stealth enemies
 
-#### 4⃣️🌋 Magma Fortress
+#### 4⃣️ Magma Fortress
 -Challenge: Periodic lava bursts and crumbling platforms
 
-#### 5⃣️☁️ Phantom Mist
+#### 5⃣️ Phantom Mist
 -Challenge: Heavy fog limits visibility and spatial orientation
 
-#### 6⃣️🌳 Magic Forest
+#### 6⃣️ Magic Forest
 -Challenge: Enchanted flora
 
-#### 7⃣️🏯 The Gate of Collapse (Final Stage)
+#### 7⃣️ The Gate of Collapse (Final Stage)
 -Challenge: Trap-dense gauntlet with gravity chaos
 
 ---
@@ -337,7 +337,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ---
 
-#### ** Heuristic Evaluation**
+#### Heuristic Evaluation
 
 We conducted a heuristic evaluation using **Jakob Nielsen’s usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
 
@@ -454,7 +454,7 @@ While SUS scores were slightly lower in Level 2, this trend was consistent with 
 
 ---
 
-### ** Code Testing**
+### Code Testing
 
 We ensured code quality with a **hybrid white-box + black-box** approach:
 
@@ -469,7 +469,7 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
 
 ---
 
-### ** Summary & Future Improvements**
+### Summary & Future Improvements
 
 | Category | Key Insight | Planned Improvement |
 |----------|-------------|----------------------|
