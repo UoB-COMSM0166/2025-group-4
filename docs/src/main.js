@@ -21,6 +21,7 @@ let getCoinSound;
 let passSound;
 let regravitySound;
 let bgm;
+let freezeSound;
 // Global state
 let lastFrameTime = 0; // For fixed timestep
 let editorMode = false; // Track whether we're in editor mode
