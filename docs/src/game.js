@@ -13,6 +13,7 @@ export {
   setDifficulty, 
   addCustomLevel, 
   triggerGravityFlipDelay,
+  selectDifficulty,
   state
 } from './gameState.js';
 export { 

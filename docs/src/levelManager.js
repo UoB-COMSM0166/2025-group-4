@@ -13,7 +13,7 @@ import { generateLevels } from './mapGenerator.js';
 import * as gameState from './gameState.js';
 import { camera } from './camera.js';
 import { setupLevels } from './levels.js';
-
+import { createDifficultySelectors } from './gameState.js';
 
 /**
  * Load a level by index
@@ -232,6 +232,7 @@ export function reloadCurrentLevel(oldTileSize) {
   const currentLives = gameState.state.lives;
   const currentGameState = gameState.state.gameState;
   const currentDifficulty = gameState.state.difficulty;
+  const currentMenuDemoActive = gameState.state.menuDemoActive;
   
   // Convert player's position using the old tile size
   let playerTileX = 0;
@@ -279,6 +280,7 @@ export function reloadCurrentLevel(oldTileSize) {
   gameState.state.lives = currentLives;
   gameState.state.gameState = currentGameState;
   gameState.state.difficulty = currentDifficulty;
+  gameState.state.menuDemoActive = currentMenuDemoActive;
   
   // Restore player state with updated tile size
   if (gameState.state.player) {
@@ -314,6 +316,13 @@ export function reloadCurrentLevel(oldTileSize) {
       enemy.maxX = enemyStates[idx].tileMaxX * tileSize;
     }
   });
+  
+  // If we were in menu demo mode, recreate the selectors with the new tile size
+  if (gameState.state.menuDemoActive) {
+    createDifficultySelectors(); // Recreate selectors using the new tileSize
+    // Ensure the map is set back to the demo map
+    gameState.state.tileMap = gameState.state.menuDemoMap;
+  }
   
   console.log("Reloaded current level with new tile size:", tileSize);
 }

@@ -448,6 +448,15 @@ export class Player {
     this.targetSpeed = this.autoSpeed * this.wallHitSlowdown;
     this.hitWallTimestamp = window.millis();
     
+    // --- Debugging Wall Hit Particles --- 
+    /* if (window.menuDemoActive) { // Check if in menu demo
+        const particleX = this.x + (this.w * 0.5 * this.autoDirection);
+        console.log(`Menu Demo Wall Hit: 
+          Player(x: ${this.x.toFixed(2)}, w: ${this.w.toFixed(2)}, dir: ${this.autoDirection}) 
+          Particle(x: ${particleX.toFixed(2)}, y: ${this.y.toFixed(2)}, dir: ${this.autoDirection})`);
+    } */
+    // --- End Debugging ---
+
     // Create wall hit particles at the appropriate position and direction
     // Position particles at the edge of the player in the direction of the wall
     const particleX = this.x + (this.w * 0.5 * this.autoDirection);

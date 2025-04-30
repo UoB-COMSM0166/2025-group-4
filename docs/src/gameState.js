@@ -5,8 +5,9 @@
 import { particleSystem } from './particles.js';
 import { setupLevels } from './levels.js';
 import { loadLevel } from './levelManager.js';
-import { tileSize } from './config.js';
+import { tileSize, updatePhysicsForDifficulty } from './config.js';
 import { camera } from './camera.js';
+import { Player } from './entities/player.js';
 
 // Create a single mutable state object
 export const state = {
@@ -25,6 +26,11 @@ export const state = {
   lives: 3, // number of lives
   exitTriggered: false, // Flag to ensure exit logic triggers only once per level
 
+  // Menu demo mode
+  menuDemoActive: false, // whether the menu demo is active
+  difficultySelectors: [], // difficulty selector entities in the demo
+  menuDemoMap: null, // the map data for the menu demo
+  
   // Fixed timestep physics variables
   physicsClock: 0, // Tracks physics simulation time
   DEFAULT_DELTA_TIME: 1/60, // Default delta time if not provided
@@ -81,6 +87,8 @@ export function updateWindowGameState() {
   window.bullets = state.bullets;
   window.player = state.player;
   window.exitTriggered = state.exitTriggered; // Expose exit trigger state
+  window.menuDemoActive = state.menuDemoActive; // Expose menu demo state
+  window.difficultySelectors = state.difficultySelectors; // Expose difficulty selectors
 }
 
 /**
@@ -97,20 +105,298 @@ export function initGame() {
   
   // Reset score
   state.score = 0;
+  
+  // Initialize menu demo
+  initMenuDemo();
 }
 
 /**
- * Set the game difficulty
+ * Initialize the menu demo level
  */
-export function setDifficulty(difficultyLevel) {
-  state.difficulty = difficultyLevel;
+export function initMenuDemo() {
+  state.menuDemoActive = true;
   
+  // Create a smaller demo level map that fits better on screen
+  state.menuDemoMap = [
+    "1111111111111111111111111111",
+    "1..........................1",
+    "1..........................1",
+    "1..........................1",
+    "1.............3............1",
+    "1..........................1",
+    "1..........................1",
+    "1...e.....n.....h.....r....1",
+    "1111111111111111111111111111"
+  ];
+  
+  // Create the player starting on the ceiling with flipped gravity
+  if (state.player) {
+    // If player already exists, reset it
+    state.player.x = 14 * tileSize;
+    state.player.y = 4 * tileSize; // Position adjusted to be higher up
+    state.player.gravityDirection = -1; // Start with flipped gravity
+    state.player.vx = 0;
+    state.player.vy = 0;
+    state.player.isFrozen = true;
+  } else {
+    // Create a new player
+    state.player = new Player(14 * tileSize, 4 * tileSize);
+    state.player.gravityDirection = -1; // Start with flipped gravity
+  }
+  
+  window.player = state.player;
+  console.log("Menu demo player initialized at:", state.player.x, state.player.y);
+  
+  // Create difficulty selector entities
+  createDifficultySelectors();
+  
+  // Set up camera for the demo level
+  const menuDemoWidth = state.menuDemoMap[0].length * tileSize;
+  const menuDemoHeight = state.menuDemoMap.length * tileSize;
+  
+  camera.init(menuDemoWidth, menuDemoHeight);
+  camera.setZoom(1.0); // Standard zoom for better visibility
+  
+  // Center camera on the demo level
+  camera.x = menuDemoWidth / 2;
+  camera.y = menuDemoHeight / 2;
+  camera.targetX = camera.x;
+  camera.targetY = camera.y;
+  
+  // Set the current tile map to the menu demo map
+  state.tileMap = state.menuDemoMap;
+}
+
+/**
+ * Create difficulty selector entities for the menu demo
+ */
+export function createDifficultySelectors() {
+  state.difficultySelectors = [];
+  
+  try {
+    // Direct implementation for simplicity
+    const selectorWidth = tileSize * 2.5;
+    const selectorHeight = tileSize * 1.5;
+    
+    console.log("Creating difficulty selectors at y position:", 7 * tileSize);
+    
+    // Create easy selector
+    state.difficultySelectors.push({
+      x: 5 * tileSize, 
+      y: 7 * tileSize,
+      width: selectorWidth,
+      height: selectorHeight,
+      difficulty: "easy",
+      color: color(100, 255, 100),
+      hover: false,
+      draw: function(cameraOffsetX) {
+        // Draw selector
+        push();
+        
+        fill(100, 255, 100, 200);
+        stroke(255);
+        strokeWeight(2);
+        rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height, 8);
+        
+        fill(0);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(tileSize * 0.7);
+        text("EASY", this.x, this.y);
+        
+        pop();
+      },
+      checkCollision: function(player) {
+        if (!player) return false;
+        
+        // Check collision
+        const collision = 
+          player.x + player.w/2 > this.x - this.width/2 &&
+          player.x - player.w/2 < this.x + this.width/2 &&
+          player.y + player.h/2 > this.y - this.height/2 &&
+          player.y - player.h/2 < this.y + this.height/2;
+        
+        if (collision) {
+          console.log("Collision with EASY detected");
+          selectDifficulty("easy");
+          return true;
+        }
+        return false;
+      }
+    });
+    
+    // Normal selector
+    state.difficultySelectors.push({
+      x: 12 * tileSize, 
+      y: 7 * tileSize,
+      width: selectorWidth,
+      height: selectorHeight,
+      difficulty: "normal",
+      color: color(100, 200, 255),
+      hover: false,
+      draw: function(cameraOffsetX) {
+        push();
+        fill(100, 200, 255, 200);
+        stroke(255);
+        strokeWeight(2);
+        rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height, 8);
+        
+        fill(0);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(tileSize * 0.7);
+        text("NORMAL", this.x, this.y);
+        pop();
+      },
+      checkCollision: function(player) {
+        if (!player) return false;
+        const collision = 
+          player.x + player.w/2 > this.x - this.width/2 &&
+          player.x - player.w/2 < this.x + this.width/2 &&
+          player.y + player.h/2 > this.y - this.height/2 &&
+          player.y - player.h/2 < this.y + this.height/2;
+        
+        if (collision) {
+          console.log("Collision with NORMAL detected");
+          selectDifficulty("normal");
+          return true;
+        }
+        return false;
+      }
+    });
+    
+    // Hard selector
+    state.difficultySelectors.push({
+      x: 19 * tileSize, 
+      y: 7 * tileSize,
+      width: selectorWidth,
+      height: selectorHeight,
+      difficulty: "hard",
+      color: color(255, 100, 100),
+      hover: false,
+      draw: function(cameraOffsetX) {
+        push();
+        fill(255, 100, 100, 200);
+        stroke(255);
+        strokeWeight(2);
+        rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height, 8);
+        
+        fill(0);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(tileSize * 0.7);
+        text("HARD", this.x, this.y);
+        pop();
+      },
+      checkCollision: function(player) {
+        if (!player) return false;
+        const collision = 
+          player.x + player.w/2 > this.x - this.width/2 &&
+          player.x - player.w/2 < this.x + this.width/2 &&
+          player.y + player.h/2 > this.y - this.height/2 &&
+          player.y - player.h/2 < this.y + this.height/2;
+        
+        if (collision) {
+          console.log("Collision with HARD detected");
+          selectDifficulty("hard");
+          return true;
+        }
+        return false;
+      }
+    });
+    
+    // Random selector
+    state.difficultySelectors.push({
+      x: 24 * tileSize, 
+      y: 7 * tileSize,
+      width: selectorWidth,
+      height: selectorHeight,
+      difficulty: "random",
+      color: color(255, 180, 80),
+      hover: false,
+      draw: function(cameraOffsetX) {
+        push();
+        fill(255, 180, 80, 200);
+        stroke(255);
+        strokeWeight(2);
+        rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height, 8);
+        
+        fill(0);
+        noStroke();
+        textAlign(CENTER, CENTER);
+        textSize(tileSize * 0.7);
+        text("RANDOM", this.x, this.y);
+        pop();
+      },
+      checkCollision: function(player) {
+        if (!player) return false;
+        const collision = 
+          player.x + player.w/2 > this.x - this.width/2 &&
+          player.x - player.w/2 < this.x + this.width/2 &&
+          player.y + player.h/2 > this.y - this.height/2 &&
+          player.y - player.h/2 < this.y + this.height/2;
+        
+        if (collision) {
+          console.log("Collision with RANDOM detected");
+          selectDifficulty("random");
+          return true;
+        }
+        return false;
+      }
+    });
+    
+    console.log(`Created ${state.difficultySelectors.length} difficulty selectors`);
+  } catch (error) {
+    console.error("Error creating difficulty selectors:", error);
+  }
+}
+
+/**
+ * Select difficulty from the menu demo
+ * @param {string} difficulty - Difficulty level to set
+ */
+export function selectDifficulty(difficulty) {
+  // Close the menu demo
+  state.menuDemoActive = false;
+  
+  // Set difficulty
+  state.difficulty = difficulty;
+  
+  // For random mode
+  if (difficulty === "random") {
+    state.generatedMode = true;
+    state.lives = 99; // Infinite lives for now as requested
+  } else {
+    state.generatedMode = false;
+  }
+  
+  // Set game parameters based on difficulty
+  updateGameParametersForDifficulty(difficulty);
+  
+  // Initialize game time
+  state.gameStartTime = millis();
+  state.currentPlayTime = 0;
+  
+  // Start the game with the first level
+  loadLevel(0);
+  
+  // Change game state to play
+  state.gameState = "play";
+}
+
+/**
+ * Update game parameters based on selected difficulty
+ * @param {string} difficulty - Selected difficulty level
+ */
+function updateGameParametersForDifficulty(difficulty) {
   // Add a colorful burst based on difficulty
   let difficultyColor;
-  if (state.difficulty === "easy") {
+  if (difficulty === "easy") {
     difficultyColor = color(100, 255, 100);
-  } else if (state.difficulty === "hard") {
+  } else if (difficulty === "hard") {
     difficultyColor = color(255, 100, 100);
+  } else if (difficulty === "random") {
+    difficultyColor = color(255, 180, 80);
   } else {
     difficultyColor = color(100, 200, 255);
   }
@@ -133,14 +419,18 @@ export function setDifficulty(difficultyLevel) {
   }
   
   // Update game parameters based on difficulty
-  if (state.difficulty === "easy") {
-    state.lives = 99; // More lives on easy
+  if (difficulty === "easy") {
+    state.lives = 5; // More lives on easy
     state.coinValue = 15; // More points per coin
     state.enemySpeed = 1.0; // Slower enemies
-  } else if (state.difficulty === "hard") {
+  } else if (difficulty === "hard") {
     state.lives = 2; // Fewer lives on hard
     state.coinValue = 5; // Fewer points per coin
     state.enemySpeed = 2.0; // Faster enemies
+  } else if (difficulty === "random") {
+    state.lives = 99; // Infinite lives for random mode
+    state.coinValue = 10;
+    state.enemySpeed = 1.5;
   } else {
     // Normal difficulty
     state.lives = 3;
@@ -149,19 +439,14 @@ export function setDifficulty(difficultyLevel) {
   }
   
   // Update physics parameters for the new difficulty
-  import('./config.js').then(config => {
-    config.updatePhysicsForDifficulty(state.difficulty);
-  });
-  
-  // Initialize game time
-  state.gameStartTime = millis();
-  state.currentPlayTime = 0;
-  
-  // Start the game with the first level
-  loadLevel(0);
-  
-  // Change game state to play
-  state.gameState = "play";
+  updatePhysicsForDifficulty(difficulty);
+}
+
+/**
+ * Set the game difficulty
+ */
+export function setDifficulty(difficultyLevel) {
+  selectDifficulty(difficultyLevel);
 }
 
 /**

@@ -5,7 +5,7 @@
 import * as gameState from './gameState.js';
 import { tileSize } from './config.js';
 import { particleSystem } from './particles.js';
-import { completeGeneratedLevel } from './levelManager.js';
+import { completeGeneratedLevel, loadLevel as loadLevelManager } from './levelManager.js';
 import { updateEffects } from './effectsManager.js';
 import { camera } from './camera.js';
 
@@ -22,6 +22,12 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
   // Update game time if game is active
   if (gameState.state.gameState === "play") {
     gameState.state.currentPlayTime = (millis() - gameState.state.gameStartTime) / 1000;
+  }
+  
+  // Special handling for menu demo mode
+  if (gameState.state.gameState === "menu" && gameState.state.menuDemoActive) {
+    updateMenuDemo(deltaTime);
+    return;
   }
   
   // If not in play state, nothing to update
@@ -163,11 +169,78 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
       } else {
         // Add a slight delay before loading the next level, matching generated levels
         setTimeout(() => {
-          import('./levelManager.js').then(levelManager => {
-            levelManager.loadLevel(gameState.state.levelIndex);
-          });
+          loadLevelManager(gameState.state.levelIndex);
         }, 500);
       }
     }
   }
+}
+
+/**
+ * Update the menu demo gameplay
+ * @param {number} deltaTime - Time since last update 
+ */
+function updateMenuDemo(deltaTime) {
+  // Skip if player isn't initialized yet
+  if (!gameState.state.player || !gameState.state.menuDemoMap) return;
+  
+  // Update physics clock
+  gameState.state.physicsClock += deltaTime;
+  
+  // Update player for menu demo
+  gameState.state.player.update(gameState.state.menuDemoMap, 0, deltaTime);
+  
+  // Regularly log player position for debugging
+  if (frameCount % 200 === 0) {
+    console.log("Menu demo player position:", 
+                gameState.state.player.x, 
+                gameState.state.player.y, 
+                "gravity:", 
+                gameState.state.player.gravityDirection);
+  }
+  
+  // Keep player within bounds of the demo level
+  const levelWidth = gameState.state.menuDemoMap[0].length * tileSize;
+  const levelHeight = gameState.state.menuDemoMap.length * tileSize;
+  
+  if (gameState.state.player.x < tileSize) {
+    gameState.state.player.x = tileSize;
+    gameState.state.player.vx = 0;
+  } else if (gameState.state.player.x > levelWidth - tileSize) {
+    gameState.state.player.x = levelWidth - tileSize;
+    gameState.state.player.vx = 0;
+  }
+  
+  // If player falls out of the demo level, reset position with flipped gravity
+  if (gameState.state.player.y < 0 || gameState.state.player.y > levelHeight) {
+    console.log("Player fell out of demo level, resetting position");
+    gameState.state.player.x = 14 * tileSize;
+    gameState.state.player.y = 4 * tileSize; // Adjusted for new map
+    gameState.state.player.vx = 0;
+    gameState.state.player.vy = 0;
+    gameState.state.player.gravityDirection = -1; // Reset to flipped gravity
+  }
+  
+  // Update difficulty selectors
+  if (gameState.state.difficultySelectors) {
+    for (const selector of gameState.state.difficultySelectors) {
+      if (selector.update) {
+        selector.update(deltaTime);
+      }
+      
+      // Check for collision with difficulty selectors
+      if (selector.checkCollision && selector.checkCollision(gameState.state.player)) {
+        // Collision is handled in the DifficultySelector's checkCollision method which calls selectDifficulty
+        // selectDifficulty is imported into gameState and called from DifficultySelector
+        // No need to call it directly here again.
+        console.log("Player selected difficulty via collision:", selector.difficulty);
+        break;
+      }
+    }
+  }
+  
+  // Note: We're not using camera.follow anymore since we're using a fixed rendering approach
+  
+  // Update menu demo particles
+  particleSystem.update(deltaTime);
 } 

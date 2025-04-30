@@ -56,7 +56,7 @@ export function drawTiles(tileMap, cameraOffsetX) {
       }
 
       if (tile === "1") {
-        if (window.currentWallImage) {
+        if (window.currentWallImage && window.currentWallImage.width > 0) {
           // 使用当前关卡的墙壁图像，不绘制附加效果
           window.image(window.currentWallImage, x, y, tileSize, tileSize);
         } else {

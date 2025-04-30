@@ -1,214 +1,261 @@
 /**
  * Input Handler Module
- * Handles keyboard, mouse and touch input for the game
+ * Handles all user input for the game
  */
 import * as gameState from './gameState.js';
-import { startGeneratedMode, loadGeneratedLevel } from './levelManager.js';
+import { initGame } from './gameState.js';
+import { tileSize } from './config.js';
+import { particleSystem } from './particles.js';
+import { camera } from './camera.js';
 
 /**
- * Handle key press
+ * Handle key press events
  */
 export function handleKeyPressed() {
-  // Handle seed input for generated levels
-  if (gameState.state.gameState === "lives" && gameState.state.seedInput) {
-    // Handle backspace
-    if (keyCode === BACKSPACE) {
-      gameState.state.seedValue = gameState.state.seedValue.slice(0, -1);
-      return;
+  if (gameState.state.gameState === "menu" && gameState.state.menuDemoActive) {
+    // Handle menu demo input
+    if (keyCode === 32) { // Space key
+      flipGravityInMenuDemo();
     }
-    
-    // Handle enter to confirm input
-    if (keyCode === ENTER || keyCode === RETURN) {
-      gameState.state.seedInput = false;
-      return;
-    }
-    
-    // Handle escape to cancel input
-    if (keyCode === ESCAPE) {
-      gameState.state.seedInput = false;
-      return;
-    }
-    
-    // Add characters (only allow alphanumeric and some special chars)
-    if ((key >= '0' && key <= '9') || 
-        (key >= 'a' && key <= 'z') || 
-        (key >= 'A' && key <= 'Z') ||
-        key === '-' || key === '_' || key === '.') {
-      // Limit length to prevent overflow
-      if (gameState.state.seedValue.length < 20) {
-        gameState.state.seedValue += key;
+    return;
+  }
+  
+  if (gameState.state.gameState === "play") {
+    // If game is in play state, handle player controls
+    if (keyCode === 32) { // Space key
+      if (gameState.state.player) {
+        gameState.state.player.attemptGravityFlip();
       }
     }
-    return;
-  }
-
-  // Handle other key presses
-  if (keyCode === 32) { // Space bar
-    if (gameState.state.gameState === "menu") {
-      // From main menu to difficulty selection
-      gameState.state.gameState = "difficulty";
-    } else if (gameState.state.gameState === "play") {
-      // In game, attempt to flip gravity
-      gameState.state.player.attemptGravityFlip();
-    } else if (gameState.state.gameState === "over" || gameState.state.gameState === "win") {
-      // Game over or win, return to main menu
-      gameState.state.gameState = "menu";
-    } else if (gameState.state.gameState === "stats") {
-      // Continue from stats screen - similar to clicking CONTINUE
-      gameState.state.statsDisplayActive = false;
-      
-      // Make sure exit trigger is reset
-      gameState.setExitTriggered(false);
-      
-      // Load the next level
-      import('./levelManager.js').then(levelManager => {
-        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
-        gameState.state.gameState = "play";
-      });
-    } else {
-      // Other cases, reinitialize game
-      gameState.initGame();
-    }
-  } else if (keyCode === ESCAPE) {
-    // Escape can be used to return to the main menu from anywhere
-    if (gameState.state.gameState !== "menu") {
-      gameState.initGame();
-      gameState.state.gameState = "menu";
-    }
-  }
-}
-
-/**
- * Handle mouse clicks
- */
-export function handleMouseClicked() {
-  // Add a timestamp check to prevent accidental double-clicks across state changes
-  if (!window.lastStateChangeTime) {
-    window.lastStateChangeTime = 0;
-  }
-  
-  // Prevent clicks for 300ms after state changes
-  if (Date.now() - window.lastStateChangeTime < 300) {
-    return;
-  }
-  
-  if (gameState.state.gameState === "menu") {
-    // Check if play button clicked
-    if (mouseY > height * 0.5 - 40 && mouseY < height * 0.5 + 40 && 
-        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      gameState.state.gameState = "difficulty";
-      gameState.state.generatedMode = false;
-      window.lastStateChangeTime = Date.now();
-    }
-    // Check if generate button clicked
-    else if (mouseY > height * 0.65 - 40 && mouseY < height * 0.65 + 40 && 
-             mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      gameState.state.gameState = "lives";
-      gameState.state.generatedMode = true;
-      gameState.state.selectedLives = 5; // Default to 5 lives for the generated mode
-      gameState.state.seedValue = ""; // Reset seed value
-      gameState.state.seedInput = false; // Reset seed input mode
-      window.lastStateChangeTime = Date.now();
+  } else if (gameState.state.gameState === "over" || gameState.state.gameState === "win") {
+    // If game is over or won, restart on space
+    if (keyCode === 32) {
+      initGame();
     }
   } else if (gameState.state.gameState === "difficulty") {
-    // Check which difficulty button was clicked
-    if (mouseY > height * 0.4 - 40 && mouseY < height * 0.4 + 40 && 
-        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      // Easy
+    // Handle difficulty selection
+    if (keyCode === 49) { // 1 key for Easy
       gameState.setDifficulty("easy");
-      window.lastStateChangeTime = Date.now();
-    } else if (mouseY > height * 0.55 - 40 && mouseY < height * 0.55 + 40 && 
-               mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      // Normal
+    } else if (keyCode === 50) { // 2 key for Normal
       gameState.setDifficulty("normal");
-      window.lastStateChangeTime = Date.now();
-    } else if (mouseY > height * 0.7 - 40 && mouseY < height * 0.7 + 40 && 
-               mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      // Hard
+    } else if (keyCode === 51) { // 3 key for Hard
       gameState.setDifficulty("hard");
-      window.lastStateChangeTime = Date.now();
     }
   } else if (gameState.state.gameState === "lives") {
-    const options = [3, 5, 10, 99];
-    const buttonY = [height * 0.30, height * 0.38, height * 0.46, height * 0.54];
-    
-    // Check if seed input box was clicked
-    if (mouseY > height * 0.7 - 25 && mouseY < height * 0.7 + 25 && 
-        mouseX > width / 2 - 150 && mouseX < width / 2 + 150) {
-      gameState.state.seedInput = true;
-    } else {
-      // If clicked outside the seed input, stop editing
-      if (gameState.state.seedInput) {
-        gameState.state.seedInput = false;
-      }
-      
-      // Check if any lives option was clicked
-      for (let i = 0; i < options.length; i++) {
-        if (mouseY > buttonY[i] - 30 && mouseY < buttonY[i] + 30 && 
-            mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
-          gameState.state.selectedLives = options[i];
-          break;
-        }
-      }
-      
-      // Check if start button was clicked
-      if (mouseY > height * 0.82 - 35 && mouseY < height * 0.82 + 35 && 
-          mouseX > width / 2 - 120 && mouseX < width / 2 + 120) {
-        gameState.state.seedInput = false; // Exit seed input mode
-        startGeneratedMode();
-        window.lastStateChangeTime = Date.now();
-      }
-    }
+    // Handle lives selection in generated mode
+    handleLivesMenuKeyPressed();
   } else if (gameState.state.gameState === "stats") {
-    const panelWidth = Math.min(600, width * 0.8);
-    const panelHeight = Math.min(400, height * 0.7);
-    const panelX = width / 2 - panelWidth / 2;
-    const panelY = height / 2 - panelHeight / 2;
-    
-    // Check if continue button was clicked
-    if (mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30 && 
-        mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
-      // Clear the stats display
-      gameState.state.statsDisplayActive = false;
-      
-      // Make sure exit trigger is reset
-      gameState.setExitTriggered(false);
-      
-      // Load the next level
-      import('./levelManager.js').then(levelManager => {
-        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
-        gameState.state.gameState = "play";
-        window.lastStateChangeTime = Date.now();
-      });
-    }
-    // Check if quit button was clicked
-    else if (mouseY > panelY + panelHeight - 20 && mouseY < panelY + panelHeight + 30 && 
-             mouseX > width / 2 - 100 && mouseX < width / 2 + 100) {
-      // Return to main menu and reset all relevant state
-      gameState.state.statsDisplayActive = false;
-      gameState.setExitTriggered(false);
-      gameState.state.generatedMode = false;
-      gameState.initGame();
-      gameState.state.gameState = "menu";
-      window.lastStateChangeTime = Date.now();
-    }
+    // Press any key to continue from stats screen
+    gameState.setStatsDisplayActive(false);
+    gameState.setGameState("play");
   }
 }
 
 /**
- * Handle touch start
+ * Handle mouse click events
+ */
+export function handleMouseClicked() {
+  if (gameState.state.gameState === "menu") {
+    // Check if this is a click within the demo area
+    if (gameState.state.menuDemoActive) {
+      // Demo is already active, handle menu demo clicks (e.g. flip gravity)
+      flipGravityInMenuDemo();
+      return;
+    }
+    
+    // Regular menu buttons are no longer needed as we're using the demo
+    // instead for difficulty selection
+  } else if (gameState.state.gameState === "difficulty") {
+    handleDifficultyMenuClick();
+  } else if (gameState.state.gameState === "lives") {
+    handleLivesMenuClick();
+  } else if (gameState.state.gameState === "stats") {
+    handleStatsScreenClick();
+  } else if (gameState.state.gameState === "over" || gameState.state.gameState === "win") {
+    initGame();
+  }
+}
+
+/**
+ * Handle touch events for mobile
  */
 export function handleTouchStarted() {
-  if (gameState.state.gameState === "play") {
-    gameState.state.player.attemptGravityFlip();
-  } else if (gameState.state.gameState === "menu" || gameState.state.gameState === "difficulty" || 
-             gameState.state.gameState === "lives" || gameState.state.gameState === "stats") {
-    // Simulate a mouse click for touch events
-    handleMouseClicked();
-  } else {
-    gameState.initGame();
-    // Over or win state - return to main menu
-    gameState.state.gameState = "menu";
+  if (gameState.state.gameState === "menu" && gameState.state.menuDemoActive) {
+    // Handle menu demo touch
+    flipGravityInMenuDemo();
+    return;
   }
-  return false;
+  
+  if (gameState.state.gameState === "play") {
+    // If game is in play state, attempt to flip gravity
+    if (gameState.state.player) {
+      gameState.state.player.attemptGravityFlip();
+    }
+  } else {
+    // For all other states, treat touches the same as clicks
+    handleMouseClicked();
+  }
+}
+
+/**
+ * Flip gravity in the menu demo
+ */
+function flipGravityInMenuDemo() {
+  if (!gameState.state.player) return;
+  
+  console.log("Attempting to flip gravity in menu demo");
+  
+  // Force gravity flip in menu demo regardless of whether player is on a surface
+  gameState.state.player.gravityDirection *= -1;
+  console.log("Gravity flipped to:", gameState.state.player.gravityDirection);
+  
+  // Play regravity sound if available
+  if (window.regravitySound) {
+    window.regravitySound.play();
+  }
+  
+  // Create gravity flip particles
+  particleSystem.createGravityFlip(
+    gameState.state.player.x,
+    gameState.state.player.y,
+    gameState.state.player.w,
+    gameState.state.player.gravityDirection
+  );
+  
+  // Apply a small upward impulse in the direction of the new gravity
+  gameState.state.player.vy = gameState.state.player.gravityDirection * -4;
+  
+  // Small camera shake
+  camera.addTrauma(0.3);
+}
+
+// Helper functions for the different menu screens
+function handleDifficultyMenuClick() {
+  const buttonWidth = 300;
+  const buttonHeight = 80;
+  
+  // Easy button
+  if (mouseX > width / 2 - buttonWidth/2 && mouseX < width / 2 + buttonWidth/2 &&
+      mouseY > height * 0.4 - buttonHeight/2 && mouseY < height * 0.4 + buttonHeight/2) {
+    gameState.setDifficulty("easy");
+  }
+  
+  // Normal button
+  if (mouseX > width / 2 - buttonWidth/2 && mouseX < width / 2 + buttonWidth/2 &&
+      mouseY > height * 0.55 - buttonHeight/2 && mouseY < height * 0.55 + buttonHeight/2) {
+    gameState.setDifficulty("normal");
+  }
+  
+  // Hard button
+  if (mouseX > width / 2 - buttonWidth/2 && mouseX < width / 2 + buttonWidth/2 &&
+      mouseY > height * 0.7 - buttonHeight/2 && mouseY < height * 0.7 + buttonHeight/2) {
+    gameState.setDifficulty("hard");
+  }
+}
+
+function handleLivesMenuClick() {
+  // Check lives option buttons
+  const options = [3, 5, 10, 99];
+  const buttonY = [height * 0.30, height * 0.38, height * 0.46, height * 0.54];
+  
+  for (let i = 0; i < options.length; i++) {
+    if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
+        mouseY > buttonY[i] - 30 && mouseY < buttonY[i] + 30) {
+      gameState.setSelectedLives(options[i]);
+    }
+  }
+  
+  // Check seed input box
+  if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
+      mouseY > height * 0.7 - 25 && mouseY < height * 0.7 + 25) {
+    gameState.setSeedInput(true);
+  } else {
+    gameState.setSeedInput(false);
+  }
+  
+  // Check start button
+  if (mouseX > width / 2 - 120 && mouseX < width / 2 + 120 &&
+      mouseY > height * 0.82 - 35 && mouseY < height * 0.82 + 35) {
+    // Handle starting the game with the selected options
+    gameState.state.lives = gameState.state.selectedLives;
+    gameState.setGeneratedMode(true);
+    gameState.setGameState("play");
+    
+    // Initialize game time
+    gameState.state.gameStartTime = millis();
+    gameState.state.currentPlayTime = 0;
+    
+    // Start the game with the first level or generated level
+    import('./levelManager.js').then(levelManager => {
+      if (gameState.state.generatedMode) {
+        levelManager.generateAndLoadLevel(gameState.state.seedValue);
+      } else {
+        levelManager.loadLevel(0);
+      }
+    });
+  }
+}
+
+function handleLivesMenuKeyPressed() {
+  if (gameState.state.seedInput) {
+    // Handle keyboard input for seed value
+    if (keyCode === 8) { // Backspace
+      gameState.setSeedValue(gameState.state.seedValue.slice(0, -1));
+    } else if (keyCode === 13) { // Enter
+      gameState.setSeedInput(false);
+    } else if ((keyCode >= 48 && keyCode <= 57) || // Numbers
+               (keyCode >= 65 && keyCode <= 90) || // Letters
+               (keyCode >= 97 && keyCode <= 122)) { // Letters
+      // Add the character if within reasonable length
+      if (gameState.state.seedValue.length < 20) {
+        gameState.setSeedValue(gameState.state.seedValue + key);
+      }
+    }
+  } else {
+    // If not editing seed, allow selection with number keys
+    if (keyCode === 49) { // 1 for 3 lives
+      gameState.setSelectedLives(3);
+    } else if (keyCode === 50) { // 2 for 5 lives
+      gameState.setSelectedLives(5);
+    } else if (keyCode === 51) { // 3 for 10 lives
+      gameState.setSelectedLives(10);
+    } else if (keyCode === 52) { // 4 for infinite lives
+      gameState.setSelectedLives(99);
+    } else if (keyCode === 13) { // Enter to start
+      // Same as clicking start button
+      gameState.state.lives = gameState.state.selectedLives;
+      gameState.setGeneratedMode(true);
+      gameState.setGameState("play");
+      
+      import('./levelManager.js').then(levelManager => {
+        levelManager.generateAndLoadLevel(gameState.state.seedValue);
+      });
+    }
+  }
+}
+
+function handleStatsScreenClick() {
+  const panelWidth = Math.min(600, width * 0.8);
+  const panelHeight = Math.min(400, height * 0.7);
+  const panelX = width / 2 - panelWidth / 2;
+  const panelY = height / 2 - panelHeight / 2;
+  
+  // Continue button
+  if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
+      mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30) {
+    gameState.setStatsDisplayActive(false);
+    gameState.setGameState("play");
+    
+    // Generate the next level
+    import('./levelManager.js').then(levelManager => {
+      levelManager.generateAndLoadLevel(gameState.state.seedValue);
+    });
+  }
+  
+  // Quit button
+  if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
+      mouseY > panelY + panelHeight - 20 && mouseY < panelY + panelHeight + 30) {
+    // Go back to the main menu
+    initGame();
+  }
 } 

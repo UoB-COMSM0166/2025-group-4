@@ -4,7 +4,7 @@
 import { 
   initGame, updateGame, drawGame, handleKeyPressed, 
   handleMouseClicked, handleTouchStarted, reloadCurrentLevel,
-  loadLevel, state
+  loadLevel, state, addCustomLevel
 } from './game.js';
 import { tileSize, updateTileSize } from './config.js';
 import { 
@@ -13,6 +13,7 @@ import {
   handleEditorMouseReleased, handleEditorMouseWheel, 
   handleEditorKeyPressed, exportLevel 
 } from './levelEditor.js';
+import { particleSystem } from './particles.js';
 
 // Assets (images, sounds, etc.)
 let deathSound;
@@ -77,6 +78,13 @@ function setup() {
 
   // Initialize the game
   initGame();
+  // Ensure images are properly loaded
+  console.log("Preloaded player images:", window.playerImages ? window.playerImages.length : "none");
+  
+  initGame();
+  
+  // Force initial redraw to ensure correct dimensions are used - REMOVED as redraw is in setTimeout now
+  // redraw(); 
 }
 
 /**
@@ -93,8 +101,8 @@ function draw() {
     updateLevelEditor();
     drawLevelEditor();
   } else {
-    // Only update if in play state, otherwise just render
-    if (state.gameState === "play") {
+    // Only update if in play state or menu demo mode, otherwise just render
+    if (state.gameState === "play" || (state.gameState === "menu" && state.menuDemoActive)) {
       updateGame(deltaTime);
     }
     drawGame();
@@ -151,6 +159,35 @@ function mousePressed() {
   if (editorMode) {
     handleEditorMousePressed();
   } else {
+    // Check if we're in the menu demo state first
+    if (state.gameState === "menu" && state.menuDemoActive) {
+      console.log("Mouse pressed in menu demo");
+      
+      // Direct gravity flip without going through multiple handlers
+      if (state.player) {
+        // Only flip gravity, don't trigger other handlers
+        state.player.gravityDirection *= -1;
+        console.log("Directly flipped gravity to:", state.player.gravityDirection);
+        
+        // Apply a small upward impulse in the direction of the new gravity
+        state.player.vy = state.player.gravityDirection * -4;
+        
+        // Play sound if available
+        if (window.regravitySound) {
+          window.regravitySound.play();
+        }
+        
+        // Create gravity flip particles
+        particleSystem.createGravityFlip(
+          state.player.x,
+          state.player.y,
+          state.player.w,
+          state.player.gravityDirection
+        );
+      }
+      return;
+    }
+    
     // In game mode, attempt to flip gravity on mouse press
     if (state.gameState === "play" && window.player) {
       window.player.attemptGravityFlip();
@@ -195,6 +232,10 @@ function mouseWheel(event) {
  */
 function mouseClicked() {
   if (!editorMode) {
+    // Do not trigger general mouse click handling if in menu demo mode
+    if (state.gameState === "menu" && state.menuDemoActive) {
+      return; // Already handled by mousePressed
+    }
     handleMouseClicked();
   }
 }
@@ -204,7 +245,15 @@ function mouseClicked() {
  */
 function touchStarted() {
   if (!editorMode) {
-    handleTouchStarted();
+    console.log("Touch started, game state:", state.gameState);
+    
+    // Special handling for menu demo
+    if (state.gameState === "menu" && state.menuDemoActive) {
+      console.log("Touch started in menu demo");
+      handleTouchStarted();
+    } else {
+      handleTouchStarted();
+    }
   }
   return false; // prevent default
 }
@@ -233,12 +282,10 @@ function exportEditorLevel() {
   const levelData = exportLevel();
   if (levelData) {
     // Add the level to the game's levels array
-    import('./game.js').then(game => {
-      if (game.addCustomLevel(levelData)) {
-        console.log("Level successfully added to the game!");
-        return true;
-      }
-    });
+    if (addCustomLevel(levelData)) {
+      console.log("Level successfully added to the game!");
+      return true;
+    }
   }
   return false;
 }

@@ -22,7 +22,13 @@ export function drawGame(interpolation = 0) {
   
   // Draw based on game state
   if (gameState.state.gameState === "menu") {
+    // Draw the main menu first
     drawMainMenu();
+    
+    // If menu demo is active, draw the playable demo area
+    if (gameState.state.menuDemoActive) {
+      drawMenuDemo(interpolation);
+    }
   } else if (gameState.state.gameState === "difficulty") {
     drawDifficultyMenu();
   } else if (gameState.state.gameState === "lives") {
@@ -69,81 +75,31 @@ function drawMainMenu() {
   
   // Update and draw particles
   particleSystem.update(1/60);
-  particleSystem.draw(0);
   
   // Draw a game logo or icon
   fill(255, 220, 0);
   textAlign(CENTER, CENTER);
   textSize(Math.max(40, width / 15));
   textStyle(BOLD);
-  text("Rusty Rover's Run", width / 2, height * 0.3);
+  text("Rusty Rover's Run", width / 2, height * 0.15);
   textStyle(NORMAL);
   
   // Add a subtitle
   fill(200, 200, 255);
   textSize(Math.max(16, width / 40));
-  text("A Gravity-Defying Adventure", width / 2, height * 0.38);
+  text("A Gravity-Defying Adventure", width / 2, height * 0.22);
   
-  // Draw play button with a pulsing effect
-  let pulseSize = sin(frameCount * 0.05) * 10;
-  fill(100, 200, 255, 220);
-  rect(width / 2 - 150 - pulseSize/2, height * 0.5 - 40 - pulseSize/2, 
-       300 + pulseSize, 80 + pulseSize, 15);
-       
-  // Add button hover effect particles
-  if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
-      mouseY > height * 0.5 - 40 && mouseY < height * 0.5 + 40) {
-    if (random() < 0.3) {
-      const x = width / 2 + random(-150, 150);
-      const y = height * 0.5 + random(-40, 40);
-      particleSystem.addParticle(x, y, {
-        vx: random(-0.5, 0.5),
-        vy: random(-1, -0.5),
-        color: color(255, 255, 255, 150),
-        life: random(20, 40),
-        size: random(1, 3),
-        gravity: 0,
-        drag: 0.98
-      });
-    }
-  }
-       
-  fill(0);
-  textSize(Math.max(24, width / 30));
-  text("PLAY", width / 2, height * 0.5);
-  
-  // Draw GENERATE button
-  fill(255, 150, 100, 220);
-  rect(width / 2 - 150 - pulseSize/2, height * 0.65 - 40 - pulseSize/2, 
-       300 + pulseSize, 80 + pulseSize, 15);
-       
-  // Add button hover effect for GENERATE
-  if (mouseX > width / 2 - 150 && mouseX < width / 2 + 150 &&
-      mouseY > height * 0.65 - 40 && mouseY < height * 0.65 + 40) {
-    if (random() < 0.3) {
-      const x = width / 2 + random(-150, 150);
-      const y = height * 0.65 + random(-40, 40);
-      particleSystem.addParticle(x, y, {
-        vx: random(-0.5, 0.5),
-        vy: random(-1, -0.5),
-        color: color(255, 200, 150, 150),
-        life: random(20, 40),
-        size: random(1, 3),
-        gravity: 0,
-        drag: 0.98
-      });
-    }
-  }
-       
-  fill(0);
-  textSize(Math.max(24, width / 30));
-  text("RANDOM", width / 2, height * 0.65);
-  
-  // Add game description at the bottom
+  // Game instructions at the bottom
   fill(255);
   textSize(Math.max(14, width / 60));
-  text("Collect coins, avoid enemies, and flip gravity to reach the exit!", width / 2, height * 0.8);
-  text("Press SPACE or touch to flip gravity during gameplay", width / 2, height * 0.85);
+  text("Flip gravity with SPACE or touch to control the player!", width / 2, height * 0.9);
+  text("Land on a difficulty option to start the game", width / 2, height * 0.95);
+  
+  // Draw the demo level if it's active - this will be rendered by the gameLogic module
+  if (gameState.state.menuDemoActive) {
+    // The actual rendering of the demo level is handled by the same draw logic
+    // that renders the regular game, just with different camera settings
+  }
 }
 
 /**
@@ -254,6 +210,71 @@ function drawStars() {
 }
 
 /**
+ * Draw the menu demo
+ * @param {number} interpolation - Interpolation factor between physics frames
+ */
+function drawMenuDemo(interpolation) {
+  // Calculate demo area dimensions
+  const demoAreaTop = height * 0.3;
+  const demoAreaHeight = height * 0.55;
+
+  // Draw border for demo area
+  push();
+  noFill();
+  stroke(255, 220, 0, 100);
+  strokeWeight(2);
+  rect(0, demoAreaTop, width, demoAreaHeight);
+  pop();
+
+  // Draw semi-transparent background panel
+  push();
+  fill(0, 0, 0, 30);
+  noStroke();
+  rect(0, demoAreaTop, width, demoAreaHeight);
+  pop();
+
+  // Simplified rendering of demo map and entities
+  push();
+  // Move to demo area origin
+  translate(0, demoAreaTop);
+  
+  // Center map within demo area
+  const mapW = gameState.state.menuDemoMap[0].length * tileSize;
+  const mapH = gameState.state.menuDemoMap.length * tileSize;
+  const offsetX = (width - mapW) / 2;
+  const offsetY = (demoAreaHeight - mapH) / 2;
+  translate(offsetX, offsetY);
+
+  // Temporarily disable wall images for demo to use fallback styling
+  // const prevWallImage = window.currentWallImage;
+  // window.currentWallImage = null;
+  
+  // Draw tiles
+  drawTiles(gameState.state.menuDemoMap, 0);
+  
+  // Restore wall image
+  // window.currentWallImage = prevWallImage;
+
+  // Draw difficulty selectors
+  if (gameState.state.difficultySelectors) {
+    for (const sel of gameState.state.difficultySelectors) sel.draw(0);
+  }
+
+  // Draw demo player
+  if (gameState.state.player) gameState.state.player.draw(0, interpolation);
+  pop();
+
+  // Add instructions above the demo area
+  push();
+  fill(255, 220, 0);
+  textAlign(CENTER);
+  textSize(Math.max(18, width / 40));
+  textStyle(ITALIC);
+  text("↓ Jump onto a difficulty below to start! ↓", width / 2, demoAreaTop - 15);
+  pop();
+}
+
+/**
  * Draw the game screen (actual gameplay)
  * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
@@ -294,6 +315,15 @@ function drawGameScreen(interpolation = 0) {
   // Draw floating platforms before player
   for (let platform of gameState.state.floatingPlatforms) {
     platform.draw(0, interpolation);
+  }
+  
+  // Draw difficulty selectors if in menu demo mode
+  if (gameState.state.menuDemoActive && gameState.state.difficultySelectors) {
+    for (const selector of gameState.state.difficultySelectors) {
+      if (selector.draw) {
+        selector.draw(0);
+      }
+    }
   }
   
   // Draw player with invincibility effect and interpolation
