@@ -165,7 +165,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ## Game Design – Rusty Rover’s Run
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
-
+![user case](./images/usercase.png)
 
 | **Standard Mode** |   |
 |-------------------|---|
