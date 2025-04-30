@@ -301,19 +301,38 @@ By building in systematic physics and collision modules, the game gains an extre
 
 ## **6. Evaluation**
 
-Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, and **heuristic evaluation** to ensure thorough assessment.
+Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, **heuristic evaluation**, and **code-level testing** to ensure a holistic assessment.
 
 ---
 
 ### ** Qualitative Evaluation**
 
-#### Stakeholder Feedback
+### **🎧 Qualitative Evaluation**
 
-We identified stakeholders including developers, testers, instructors, and potential players. Team roles were assigned based on skillsets, and feedback was continuously gathered during development cycles. Early playtests involved live demonstrations with peers, leading to several key insights:
+We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviors, and challenges were documented and categorized.
 
-- **Positive:** Controls felt natural and responsive.
-- **Issues Identified:** Bug with extended jumping; unclear objective due to early exit visibility; confusing enemy sprites.
-- **Actions Taken:** Added visual cues, revised platform placements, and fixed collisions.
+####  Key Research Questions:
+- Can players intuitively understand and use the gravity flip mechanic?
+- Is the platforming difficulty curve fair across levels?
+- Do visual cues and indicators support understanding of objectives?
+
+####  Method:
+| Step | Action | Notes |
+|------|--------|-------|
+| 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
+| 2 | Asked to play L1 and L2 while thinking aloud | Verbalizations documented by two observers |
+| 3 | Feedback grouped thematically | Data analyzed using thematic analysis (Braun & Clarke 2006) |
+
+####  Thematic Insights:
+
+| Theme | Positive Feedback | Identified Issues | Action Taken |
+|-------|------------------|------------------|---------------|
+| Controls & Movement | Responsive gravity switch | Jump timing unclear in some sections | Adjusted platform spacing |
+| Visual Design | Pixel art is immersive | Exit unclear, enemy sprites confusing | Updated assets and added arrow cues |
+| Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
+
+🖼️ _[Insert thematic mind map diagram here]_  
+🖼️ _[Insert gameplay environment screenshots showing before/after adjustments]_  
 
 ---
 
@@ -331,7 +350,24 @@ Findings were classified by severity to prioritize improvements. For example:
   **Heuristic**: Visibility of system status  
   **Severity**: Major – addressed by adding audio-visual feedback during interaction.
 
+  ####  Findings Table:
+| Heuristic | Issue Example | Severity | Fix Implemented |
+|-----------|---------------|----------|-----------------|
+| Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
+| Consistency and Standards | jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
+| Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
+
 The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
+
+####  Findings Table:
+| Heuristic | Issue Example | Severity | Fix Implemented |
+|-----------|---------------|----------|-----------------|
+| Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
+| Consistency and Standards | Shooting & jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
+| Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
+
+ _[Insert screenshot of heuristic checklist evaluation sheet]_  
+ _[Insert visual of improved UI]_  
 
 ---
 
@@ -374,9 +410,35 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 ---
 
-###  SUS (System Usability Scale) Analysis
+####  SUS Scores Summary:
+| Metric | L1 (Avg) | L2 (Avg) | Change |
+|--------|----------|----------|--------|
+| Ease of Use | 4.3 | 3.5 | ↓ |
+| Confidence | 4.5 | 4.2 | ↓ slight |
+| Need for Support | 1.2 | 1.8 | ↑ |
+| System Integration | 4.1 | 3.9 | ↓ |
+| Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 
-The SUS results offered insight into the overall usability and clarity of the game interface. Each participant rated the system across 10 standardized usability statements after completing Levels 1 and 2.
+🖼️ _[Insert bar chart comparing SUS item-by-item for L1 and L2]_  
+
+####  NASA TLX Summary:
+| Dimension | L1 Median | L2 Median | L3 Median |
+|-----------|-----------|-----------|-----------|
+| Mental Demand | 25 | 50 | 85 |
+| Physical Demand | 12 | 35 | 55 |
+| Temporal Demand | 26 | 47 | 72 |
+| Performance | 28 | 54 | 78 |
+| Effort | 22 | 48 | 70 |
+| Frustration | 17 | 45 | 65 |
+
+ Wilcoxon Signed-Rank Test:
+- **L1 vs L2**: *p = 0.0035*  
+- **L2 vs L3**: *p = 0.0038*
+
+ _[Insert line graph of NASA TLX workload scaling across levels]_  
+ _[Insert grouped bar chart per dimension]_  
+
+---
 
 #### Key Findings:
 - **Ease of Use**: Most participants strongly agreed that the game was easy to use in Level 1, with average scores of 4–5 for related items. However, scores slightly declined in Level 2, indicating increased complexity may have impacted perceived usability.
@@ -388,9 +450,7 @@ The SUS results offered insight into the overall usability and clarity of the ga
 - **Support Expectations**: The statement "I would need technical support to use this system" received low scores across both levels, confirming that the game mechanics are largely self-explanatory and accessible.
 
 - **Workload increased as intended**:  
-  Significant increases from L1 → L2 in TLX scores confirm proper difficulty scaling:  
-  - *p = 0.0035* (L1 → L2)  
-  - *p = 0.0038* (L2 → L3)
+  Significant increases in TLX scores confirm proper difficulty scaling
   
 #### Summary:
 
@@ -398,16 +458,36 @@ While SUS scores were slightly lower in Level 2, this trend was consistent with 
 
 ---
 
-##  Code Testing
+### ** Code Testing**
 
-To maintain software quality throughout development, we used:
+We ensured code quality with a **hybrid white-box + black-box** approach:
 
-- **White-box testing**: Custom `Test` class with assertions to simulate and verify mechanics.
-- **Black-box testing**: Manual testing during gameplay by developers and users.
-- **Test Specification Document**: Includes defined scenarios and expected outcomes. Updated after each major version.
+| Test Type | Tools | Focus |
+|-----------|-------|-------|
+| White-Box | Custom Test class | Gravity flip, collision logic, object init |
+| Black-Box | Manual playthroughs | Game over conditions, win state, UI response |
+| Test Spec Doc | Excel | Scenario + expected outcomes |
 
-This hybrid testing ensured that both internal logic and user experience were rigorously validated.
+🖼️ _[Insert screenshot of test class code]_  
+🖼️ _[Insert sample rows from test specification table]_  
 
+---
+
+### ** Summary & Future Improvements**
+
+| Category | Key Insight | Planned Improvement |
+|----------|-------------|----------------------|
+| Usability | Interface is intuitive but learning curve spikes too fast | Smooth out level transitions, better onboarding |
+| Challenge | Players enjoy pressure but frustration grows | Add mid-level checkpoints or retry hints |
+| Visual Feedback | Inconsistent early on | Add consistent cues (flashes, effects, arrows) |
+| Test Coverage | Good for core systems | Expand integration and edge case testing |
+
+ _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
+
+---
+
+ This comprehensive evaluation structure allows us to iteratively refine **Rusty Rover's Run**, balancing player enjoyment with performance and usability goals.
+ 
 ---
 
 #  Sustainability 
