@@ -1,4 +1,5 @@
 # 2025-group-4
+
 2025 COMSM0166 group 4
 
 ## PUPPY'S MAGICAL ADVENTURE
@@ -8,7 +9,6 @@
 </p>
 
 ![Banner Image](images/banner.webp)
-
 
 ## Weekly Work Summary
 
