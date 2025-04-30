@@ -399,6 +399,91 @@ While SUS scores were slightly lower in Level 2, this trend was consistent with 
 
 ---
 
+##  Sustainability 
+
+### 1. Project Overview
+This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
+
+---
+
+### 2.1 Sustainability Dimension Analysis
+####  Social
+- **Participation & Equity**: All difficulty modes offer equal chances to progress without time-based punishment. Player profiles are anonymous and inclusive.
+- **Communication**: Players may provide feedback. Easy levels help experienced users support new players.
+
+####  Individual
+- **Health & Wellbeing**: The low-stress visual theme and intuitive control layout reduce mental load. Clear level boundaries discourage excessive playtime.
+- **Learning & Agency**: The game encourages logical thinking, pattern recognition, and spatial awareness. Optional modes allow players to opt out of competitive elements.
+- **Privacy & Safety**: No sensitive personal data required for gameplay.
+
+####  Environmental
+- **Energy & Emissions**: Optimized for low-power hardware; includes dark-mode UI and frame limiter for lower GPU usage.
+- **Materials & Waste**: Fully digital, no physical packaging or distribution. Assets are reused and compressed.
+- **Ecosystem Impact**: Efficient runtime reduces backend compute demands, minimizing indirect emissions from servers.
+
+####  Economic
+- **Accessibility & Fairness**: Game is free-to-play. No pay-to-win mechanics.
+- **Customer Relationship**: A feedback loop helps prioritize updates based on player needs. Rewards are based on gold coins collected.
+
+### Technical
+- **Maintainability**: Modular class architecture (e.g., Level, Hazard, Game, Player) ensures ease of feature expansion.
+- **Adaptability**: Supports multiple OS (Windows, macOS, Linux). Versioning tools are used for upgrade cycles.
+- **Security**: Minimal attack surface; code is bundled and source-hidden. Encrypted local save data.
+- **Performance**: Optimized collision detection and rendering pipeline minimize CPU/GPU load.
+
+---
+
+### 2.2 Sustainability Effects – Chains of Impact
+| Dimension       | Chain of Effects                                                                 |
+|----------------|----------------------------------------------------------------------------------|
+| Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
+| Social          | competition → sharing → belonging & community         |
+| Technical       | modular code → easy maintenance → long lifespan → less redevelopment waste      |
+| Environmental   | fewer assets → less GPU usage → reduced electricity consumption                 |
+| Economic        | free-to-play → increased access → larger base → sustainable ad |
+
+---
+
+### 3. Threats, Opportunities, Actions
+####  Threats
+- Overcomplicated mechanics may alienate casual users.
+- No optimization for old hardware could cause energy waste.
+- Lack of structured update process could lead to technical debt.
+
+####  Opportunities
+- Use gravity mechanics as an educational metaphor (STEM-based levels).
+- Optimize with green software practices to target eco-conscious markets.
+- Build loyalty with players through transparent update logs and version notes.
+
+####  Actions
+- Introduce accessibility settings (e.g., slower mode, motion-reduced mode).
+- Enable low-power rendering mode and limit background processing.
+- Establish modular design conventions and continuous refactoring schedule.
+
+---
+
+### 4. Sustainability User Stories
+| Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
+|------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Social     | As a casual player, I want co-op gameplay so I can share the experience. | Game supports share.                              |
+| Technical  | As a developer, I want modular code so I can easily update and improve the game.                  | Core modules (Game, Level, Enemy, etc.) are isolated and unit tested.               |
+| Environmental | As a laptop user, I want low-power mode so I can save battery while playing.                     | Game provides toggle for reduced framerate and dark theme.                          |
+| Economic   | As a student, I want to enjoy the full game experience without paying money.                      | Game has no paywalls and all gameplay elements are accessible without purchase.     |
+| Individual | As a health-conscious player, I want to play without feeling pressured to grind.                  | Level system provides breaks and doesn't incentivize marathon sessions.             |
+
+---
+
+### 5. Sustainability Score Overview (Out of 10)
+| Dimension     | Score |
+|---------------|-------|
+| Social        | 8     |
+| Environmental | 7     |
+| Economic      | 9     |
+| Technical     | 9     |
+| Individual    | 8     |
+
+---
+
 ## 🧪 Code Testing
 
 To maintain software quality throughout development, we used:
