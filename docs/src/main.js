@@ -72,6 +72,7 @@ function setup() {
   window.getCoinSound = getCoinSound;
   window.passSound = passSound;
   window.regravitySound = regravitySound;
+  window.freezeSound = freezeSound;
 
   window.bgm = bgm;
   bgm.setLoop(true);
