@@ -43,7 +43,7 @@
 | Xiaoliang Su        | gp24306@bristol.ac.uk      |
 
 ## Kanban link
-🚀 [Board-Group4-2025](https://github.com/orgs/UoB-COMSM0166/projects/131)
+[Board-Group4-2025](https://github.com/orgs/UoB-COMSM0166/projects/131)
 
 ## Project Report
 
@@ -306,7 +306,7 @@ Evaluating whether the game provides an engaging and appropriately challenging e
 
 ---
 
-### **🧠 Qualitative Evaluation**
+### ** Qualitative Evaluation**
 
 #### Stakeholder Feedback
 
@@ -318,7 +318,7 @@ We identified stakeholders including developers, testers, instructors, and poten
 
 ---
 
-#### **🔍 Heuristic Evaluation**
+#### ** Heuristic Evaluation**
 
 We conducted a heuristic evaluation using **Jakob Nielsen’s usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
 
@@ -336,7 +336,7 @@ The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%
 
 ---
 
-## 📊 Quantitative Analysis
+##  Quantitative Analysis
 
 ### Methodology
 
@@ -375,7 +375,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 ---
 
-### 📈 SUS (System Usability Scale) Analysis
+###  SUS (System Usability Scale) Analysis
 
 The SUS results offered insight into the overall usability and clarity of the game interface. Each participant rated the system across 10 standardized usability statements after completing Levels 1 and 2.
 
@@ -399,7 +399,7 @@ While SUS scores were slightly lower in Level 2, this trend was consistent with 
 
 ---
 
-## 🧪 Code Testing
+##  Code Testing
 
 To maintain software quality throughout development, we used:
 
@@ -498,7 +498,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 # Process
 
-## 🤝 Collaboration
+##  Collaboration
 
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
@@ -521,7 +521,7 @@ As the project progressed into the remote phase, we transitioned to **scrum-styl
 
 ---
 
-## 🛠️ Tools and Techniques
+##  Tools and Techniques
 
 To coordinate collaboration and track progress, we used a combination of digital tools:
 
@@ -534,7 +534,7 @@ To coordinate collaboration and track progress, we used a combination of digital
 
 ---
 
-## 🧪 Agile Methodology
+##  Agile Methodology
 
 We followed an agile workflow with weekly iteration cycles:
 
