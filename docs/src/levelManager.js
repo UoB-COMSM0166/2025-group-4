@@ -12,6 +12,8 @@ import { particleSystem } from './particles.js';
 import { generateLevels } from './mapGenerator.js';
 import * as gameState from './gameState.js';
 import { camera } from './camera.js';
+import { setupLevels } from './levels.js';
+
 
 /**
  * Load a level by index
