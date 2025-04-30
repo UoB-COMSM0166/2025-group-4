@@ -71,6 +71,15 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
   ) {
     // Replace the ice trap with empty space so trap disappears
     gameState.state.tileMap[playerRow] = gameState.state.tileMap[playerRow].substring(0, playerCol) + "." + gameState.state.tileMap[playerRow].substring(playerCol + 1);
+   
+    if (window.freezeSound && window.freezeSound.isLoaded()) {
+      window.freezeSound.setVolume(window.sfxVolume ?? 1.0); // 可选：用你已有的 sfxVolume 控制音量
+      window.freezeSound.play();
+    }
+   
+   
+   
+   
     // Set freeze effect (e.g., freeze for 60 frames, about 1 second)
     gameState.state.player.freezeTimer = 60;
     gameState.state.player.isFrozen = true;
