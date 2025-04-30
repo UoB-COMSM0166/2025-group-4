@@ -177,7 +177,8 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-# 4.Game Design – Rusty Rover’s Run
+# 4. Game Design – Rusty Rover’s Run
+## 4.1 User Case diagram
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
 
 | **Standard Mode** |   |
@@ -197,7 +198,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.1 Procedural Challenge Mode Use Case Specification
+## 4.2 Procedural Challenge Mode Use Case Specification
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -217,7 +218,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.2 Summary of Development & Ideation Process
+## 4.3 Summary of Development & Ideation Process
 
 **1. Initial Concept**  
 - Inspired by *The Way of the Dodo*, the game was originally a simple one-button platformer.  
@@ -239,9 +240,9 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.3 Game Architecture & Visual Modeling
+## 4.4 Game Architecture & Visual Modeling
 
-### 4.3.1 Class Diagram  
+### 4.4.1 Class Diagram  
 **File**: `./images/class-diagram.png`  
 The class diagram outlines object relationships in our game system and supports modular, object-oriented structure.
 
@@ -257,7 +258,7 @@ The class diagram outlines object relationships in our game system and supports 
 
 ---
 
-### 4.3.2 Sequence Diagram  
+### 4.4.2 Sequence Diagram  
 **File**: `./images/sequence-diagram.png`  
 This diagram illustrates runtime logic and how game events propagate.
 
@@ -272,7 +273,7 @@ This diagram illustrates runtime logic and how game events propagate.
 
 ---
 
-### 4.3.3 State Diagram  
+### 4.4.3 State Diagram  
 **File**: `./images/state-diagram.png`  
 We designed a hierarchical FSM to control game progression.
 
@@ -286,7 +287,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-## 4.4 Game Mechanics Summary
+## 4.5 Game Mechanics Summary
 
 - **Gravity Flip**: The player can flip gravity using Spacebar to swap between floor and ceiling.  
 - **Enemy Logic**: Contact with enemies or bullets results in life loss. Shooter enemies fire projectiles.  
@@ -298,7 +299,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-# 5.Implementation
+# 5. Implementation
 
 1.Implementation of a time-independent physics system and a stable collision mechanism
 
@@ -312,7 +313,7 @@ By building in systematic physics and collision modules, the game gains an extre
 
 ---
 
-# 6.Evaluation
+# 6. Evaluation
 
 Evaluating whether the game provides an engaging and appropriately challenging experience was critical during development. We adopted a **mixed-method approach** that combines **qualitative feedback**, **quantitative testing**, **heuristic evaluation**, and **code-level testing** to ensure a holistic assessment.
 
@@ -479,7 +480,7 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
 
 ---
 
-# 8.Summary & Future Improvements
+# 8. Summary & Future Improvements
 
 | Category | Key Insight | Planned Improvement |
 |----------|-------------|----------------------|
@@ -498,7 +499,7 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
 
 # 9. Sustainability 
 
-## 9.1. Project Overview
+## 9.1 Project Overview
 This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
 
 ---
