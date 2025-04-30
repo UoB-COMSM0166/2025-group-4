@@ -590,21 +590,19 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 
 ---
 
-### Conclusion
+## Conclusion
 
-Developing *Gravity Flip Mode* has been a transformative experience for our entire team, pushing the boundaries of our software engineering, game design, and team collaboration capabilities. We set out to create a game that centers around the unique mechanic of gravity flipping, and through disciplined design and consistent iteration, we succeeded in delivering a platformer that is engaging, challenging, and satisfying to play.
+The development of Puppy’s Magical Adventure was a transformative learning experience for our team, combining creativity, technical skill, and agile collaboration. From ideation to implementation, we followed an iterative process that allowed us to continuously refine our design, balance gameplay mechanics, and deliver a playable game within the limited time frame.
 
-Our game features both **Standard Mode** and **Random Mode**, each offering distinct gameplay experiences. Standard Mode allows players to learn and master level layouts through repetition and precise timing, while Random Mode introduces dynamic, procedurally altered elements that challenge adaptability and reflexes. Designing both systems required thoughtful planning of user interaction flows, collision logic, adaptive difficulty scaling, and reward feedback loops.
+One of the most important lessons we learned was the value of clear team communication and regular feedback loops. Using tools like GitHub Projects, WeChat, and in-person meetings, we managed to stay aligned and adapt quickly to changes. We discovered that dividing tasks not just by discipline (e.g., design vs. development) but by game features (e.g., UI implementation, gravity control, enemy logic) helped streamline our progress and prevent overlaps or delays.
 
-One of the major hurdles we overcame was synchronizing gravity mechanics with level triggers, collision detection, and adaptive enemy AI. Implementing proximity-based obstacle activation, real-time hint systems after failed attempts, and life-based retries added depth and accessibility. Additionally, optional cosmetic unlockables added a layer of personalization without affecting gameplay balance, maintaining fairness while increasing player engagement.
+We also faced several challenges, particularly in terms of feature scoping and game balancing. Initially, our ambition led us to over-plan the number of levels and mechanics. Midway through development, we had to revise our scope to ensure a high-quality core experience rather than spreading ourselves too thin. Another technical challenge was designing the gravity-flipping mechanic without causing bugs or disorientation for the player. We solved this by creating modular physics functions and implementing smoother transitions.
 
-Adopting an Agile workflow allowed us to iterate efficiently, incorporate user feedback, and ensure that our design decisions aligned with player expectations. Through repeated playtesting, we fine-tuned mechanics such as gravity switch timing, item placement, and environmental hazards. These efforts resulted in a well-balanced experience that gradually scales in difficulty while remaining fair and fun.
+Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. These actions not only aligned with the SusAF framework but also improved our project’s maintainability.
 
-Despite our achievements, we acknowledge several areas for improvement. Incorporating **Test-Driven Development (TDD)** from the beginning would have allowed us to reduce dependency on manual playtesting for bug detection. Additionally, had we structured our codebase using a clearer architectural pattern such as **Model-View-Controller (MVC)**, we could have separated concerns more effectively, reducing coupling between game logic and visual presentation.
+In the future, we envision expanding Puppy’s Magical Adventure with more levels, enhanced storytelling (e.g., cutscenes or dialogue), improved accessibility features, and a polished menu system. We are also interested in testing the game on different devices and possibly integrating multiplayer or online leaderboard features. Additionally, user feedback from playtests will continue to inform refinements in level design and UI.
 
-Looking ahead, we see immense potential for *Gravity Flip Mode*. Given more time or resources, we envision expanding the game's world with additional level packs, introducing boss encounters that test both mechanical skill and puzzle-solving, and enhancing immersion with dynamic sound design and original music. Features like leaderboard integration, time challenge modes, and narrative elements could further enrich the gameplay experience.
-
-This project has not only allowed us to explore game development deeply, but has also strengthened our collaboration, problem-solving, and adaptability as a team. *Gravity Flip Mode* is our first collective effort at building a complete, playable game from concept to delivery. Each of us leaves this experience better prepared for future challenges, with a shared sense of accomplishment and valuable lessons we will carry into our careers.
+Ultimately, this project helped us grow as software engineers, designers, and collaborators. It pushed us to apply classroom knowledge in a real-world context, solve problems creatively, and think beyond code—into the realm of player experience, sustainability, and agile teamwork.
 
 ---
 
