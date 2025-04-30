@@ -26,16 +26,20 @@
 
  [Week 8 User Evaluation & Quantitative Analysis](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week08.md)
  
-## Table of Contents
+# Table of Contents
 
-- [Development Group](#development-group)
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+- 1.[Development Group](#development-group)
+- 2.[Kanban link](#kanban-link)
+- 3.[Game Design](game-design)
+- [Implemantation](#implementation)
+- [Evaluation](#evaluation)
+- [Process](#process)
+- 13.[Conclusion](conlusion)
 
 
-## Development Group
+# 1.Development Group
 ![Group Photo](images/group4-photo.jpg)
+
 **The names are listed from left to right in the group photo.**
 
 | Name                  | Email                      |
@@ -47,14 +51,14 @@
 | Amuer               | zd24425@bristol.ac.uk      |
 | Xiaoliang Su        | gp24306@bristol.ac.uk      |
 
-## Kanban link
+# 2. Kanban link
 [Board-Group4-2025](https://github.com/orgs/UoB-COMSM0166/projects/131)
 
-## Project Report
+# 3. Project Report
 
-## **Introduction**
+# 3.1 **Introduction**
 
-### **Game Background**
+## 3.1.1 **Game Background**
 - A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilizations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
 - You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers, haunted castles, cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
 - Watch your step. Triangular spikes jut from the ground and sky. Red magical orbs float motionless, deadly on contact. Enchanted cactus-like plants fire projectiles without warning, and razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
@@ -63,7 +67,7 @@
 
 ---
 
-### **Game Mechanics**
+## 3.1.2 **Game Mechanics**
 - The game features a fast-paced, roguelike platforming system with procedurally generated levels.
 - Each run includes:
 **Limited lives & checkpoints (difficulty varies by mode)**,**Coin collection to increase score**,**Environmental hazards like spikes, enemies, and moving traps**,**One-way gates and portals to guide progression**
@@ -72,57 +76,57 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-### **Game Innovation**
-#### **1.** Multi-biome progression: 
+## 3.1.3 **Game Innovation**
+### **1.** Multi-biome progression: 
 - Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
-#### **2.** Dynamic difficulty modes: 
+### **2.** Dynamic difficulty modes: 
 - Easy (100 lives), Normal (3 lives), and Hard (2 lives) offer replay value for both casual and hardcore players.
-#### **3.** Subtle narrative layering: 
+### **3.** Subtle narrative layering: 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
-#### **4.** Precision-based skill challenge: 
+### **4.** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
 
   
 ---
 
-### **Level Themes & Biomes**
+## 3.1.4 **Level Themes & Biomes**
 
-####  1⃣️Glacial Rift
+###  1⃣️Glacial Rift
 -Challenge: Slippery surfaces and freeze traps
 
 
-#### 2⃣️ Bio-Fusion Forest
+### 2⃣️ Bio-Fusion Forest
 -Challenge: Unpredictable mutated flora
 
-#### 3⃣️ Nightfall Ruins
+### 3⃣️ Nightfall Ruins
 -Challenge: Darkened stages with hidden traps and stealth enemies
 
-#### 4⃣️ Magma Fortress
+### 4⃣️ Magma Fortress
 -Challenge: Periodic lava bursts and crumbling platforms
 
-#### 5⃣️ Phantom Mist
+### 5⃣️ Phantom Mist
 -Challenge: Heavy fog limits visibility and spatial orientation
 
-#### 6⃣️ Magic Forest
+### 6⃣️ Magic Forest
 -Challenge: Enchanted flora
 
-#### 7⃣️ The Gate of Collapse (Final Stage)
+### 7⃣️ The Gate of Collapse (Final Stage)
 -Challenge: Trap-dense gauntlet with gravity chaos
 
 ---
 
-### **Endings**
-#### -Perfect Ending
+## 3.1.6 **Endings**
+### -Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
 
-#### -Tragic Ending
+### -Tragic Ending
 You fall before the final gate. The floating world collapses, swallowed by the void.
 "The world collapses. Your legacy fades into dust."
 
 ---
 
-## **Stakeholders**
+## 3.1.7 **Stakeholders**
 ### **Surrogate Roles**
  ####  Onion Model of game Rusty Rover's Run
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
@@ -134,8 +138,8 @@ It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically 
 
 ---
 
-### **Identifying Top-Level Needs with User Stories**
-####  User Posters of four different player types
+## 3.1.8 **Identifying Top-Level Needs with User Stories**
+###  User Posters of four different player types
 
 | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20one.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20two.png?raw=true) |
 |:--:|:--:|
@@ -170,7 +174,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-## Game Design – Rusty Rover’s Run
+## 4.Game Design – Rusty Rover’s Run
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
 
 | **Standard Mode** |   |
