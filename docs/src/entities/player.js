@@ -583,9 +583,18 @@ export class Player {
       window.image(window.slipperyPlayerImage, 0, 0, this.w, this.h);
     }
     } else if (this.isFrozen && window.inIcePlayerImage) {
-        // 绘制 dog_in_ice.png
-        imageMode(CENTER);
-        image(window.inIcePlayerImage, 0, 0, this.w, this.h);
+      window.imageMode(window.CENTER);
+
+      if (this.vx < 0) {
+        // 向左 → 水平镜像
+        window.push();
+        window.scale(-1, 1);
+        window.image(window.inIcePlayerImage, -0, 0, this.w, this.h); // 注意 -0 对镜像居中处理
+        window.pop();
+      } else {
+        // 向右 → 正常显示
+        window.image(window.inIcePlayerImage, 0, 0, this.w, this.h);
+      }
       } else {
         // Apply squash and stretch for more dynamic feel
         window.scale(this.stretchFactor, this.squashFactor);
