@@ -53,10 +53,10 @@ function preload() {
   // Shooter enemy images (animated frames)
   window.shooterEnemyFrames = [
 
-  loadImage('src/assets/art/images/flyenemy1.png'),
-  loadImage('src/assets/art/images/flyenemy2.png'),
-  loadImage('src/assets/art/images/flyenemy3.png'),
-  loadImage('src/assets/art/images/flyenemy4.png'),
+  loadImage('src/assets/art/images/flyenemy1.jpg'),
+  loadImage('src/assets/art/images/flyenemy2.jpg'),
+  loadImage('src/assets/art/images/flyenemy3.jpg'),
+  loadImage('src/assets/art/images/flyenemy4.jpg'),
 ];
 
 // Shooter enemy bullet
