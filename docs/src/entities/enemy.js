@@ -173,12 +173,15 @@ export class ShooterEnemy extends Enemy {
     // Draw enemy with a special color to indicate it's a shooter
     window.imageMode(window.CENTER);
     
-    if (window.enemyImage) {
-      // Use tint to show it's a shooter enemy
-      window.tint(255, 100, 100);
-      window.image(window.enemyImage, this.x, this.y, this.w, this.h);
-      window.noTint();
-    } else {
+    const frames = window.shooterEnemyFrames;
+
+    if (frames && frames.length > 0) {
+    const frameIndex = Math.floor(frameCount / 4) % frames.length;
+    const frame = frames[frameIndex];
+    window.image(frame, this.x, this.y, this.w, this.h);
+    } else if (window.enemyImage) {
+    window.image(window.enemyImage, this.x, this.y, this.w, this.h);
+    }else {
       // Fallback rectangle
       window.rectMode(window.CENTER);
       window.fill(255, 50, 50);
@@ -265,9 +268,14 @@ export class Bullet {
   
   draw(cameraOffsetX, interpolation = 0) {
     window.push();
-    window.fill(255, 0, 0);
-    window.noStroke();
-    window.ellipse(this.x, this.y, this.r * 2);
+    if (window.shooterBulletImage) {
+      window.imageMode(window.CENTER);
+      window.image(window.shooterBulletImage, this.x, this.y, this.r * 3, this.r * 3);
+    } else {
+      window.fill(255, 0, 0);
+      window.noStroke();
+      window.ellipse(this.x, this.y, this.r * 2);
+    }
     window.pop();
   }
 }

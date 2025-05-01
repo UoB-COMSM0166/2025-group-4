@@ -49,6 +49,18 @@ function preload() {
   window.playerImages.push(loadImage('src/assets/art/images/player/7.png'));
   window.playerImages.push(loadImage('src/assets/art/images/player/8.png'));
   window.playerImages.push(loadImage('src/assets/art/images/player/9.png'));
+
+  // Shooter enemy images (animated frames)
+  window.shooterEnemyFrames = [
+  loadImage('src/assets/art/images/enemies/flyenemy-2/flyEnemy-2 (1).png'),
+  loadImage('src/assets/art/images/enemies/flyenemy-2/flyenemy-2 (2).png'),
+  loadImage('src/assets/art/images/enemies/flyenemy-2/flyenemy-2 (3).png'),
+  loadImage('src/assets/art/images/enemies/flyenemy-2/flyenemy-2 (4).png'),
+];
+
+// Shooter enemy bullet
+window.shooterBulletImage = loadImage('src/assets/art/images/enemies/flyenemy-2/Arrow.png');
+
   
   // Exit gate image
   // window.exitGateImage = loadImage('src/images/9.png');
