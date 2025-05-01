@@ -73,7 +73,6 @@
   * [10.1 Collaboration](#101-collaboration)
   * [10.2 Tools and Techniques](#102-tools-and-techniques)
   * [10.3 Agile Methodology](#103-agile-methodology)
-    + [Agile Focus Points:](#agile-focus-points-)
   * [10.4 Visuals](#104-visuals)
 - [11. Conclusion](#11-conclusion)
 
