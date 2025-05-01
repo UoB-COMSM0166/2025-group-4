@@ -62,6 +62,7 @@ function preload() {
 // Shooter enemy bullet
 window.shooterBulletImage = loadImage('src/assets/art/images/arrow.png');
 
+
   
   // Exit gate image
   // window.exitGateImage = loadImage('src/images/9.png');
