@@ -96,9 +96,9 @@
 
 # 3. Project Report
 
-# 3.1 **Introduction**
+# 3.1 Introduction
 
-## 3.1.1 **Game Background**
+## 3.1.1 Game Background
 - A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilizations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
 - You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers, haunted castles, cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
 - Watch your step. Triangular spikes jut from the ground and sky. Red magical orbs float motionless, deadly on contact. Enchanted cactus-like plants fire projectiles without warning, and razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
@@ -107,7 +107,7 @@
 
 ---
 
-## 3.1.2 **Game Mechanics**
+## 3.1.2 Game Mechanics
 - The game features a fast-paced, roguelike platforming system with procedurally generated levels.
 - Each run includes:
 **Limited lives & checkpoints (difficulty varies by mode)**,**Coin collection to increase score**,**Environmental hazards like spikes, enemies, and moving traps**,**One-way gates and portals to guide progression**
@@ -116,7 +116,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-## 3.1.3 **Game Innovation**
+## 3.1.3 Game Innovation
 ### **1.** Multi-biome progression: 
 - Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
 ### **2.** Dynamic difficulty modes: 
@@ -128,7 +128,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-## 3.1.4 **Level Themes & Biomes**
+## 3.1.4 Level Themes & Biomes
 
 ###  1⃣️Glacial Rift
 -Challenge: Slippery surfaces and freeze traps
@@ -154,7 +154,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ---
 
-## 3.1.5 **Endings**
+## 3.1.5 Endings
 ### -Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
@@ -165,8 +165,8 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ---
 
-## 3.1.6 **Stakeholders**
-### **Surrogate Roles**
+## 3.1.6 Stakeholders
+### Surrogate Roles
  ####  Onion Model of game Rusty Rover's Run
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
 
@@ -177,8 +177,8 @@ It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically 
 
 ---
 
-## 3.1.7 **Identifying Top-Level Needs with User Stories**
-###  User Posters of four different player types
+## 3.1.7 Identifying Top-Level Needs with User Stories
+### User Posters of four different player types
 
 | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20one.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20two.png?raw=true) |
 |:--:|:--:|
@@ -202,7 +202,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-### **User Stories & Acceptance Criteria**
+### User Stories & Acceptance Criteria
 
 | User Story                  | Acceptance Criteria                      |
 |-----------------------|---------------------------|
