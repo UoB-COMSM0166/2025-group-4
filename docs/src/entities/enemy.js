@@ -178,7 +178,8 @@ export class ShooterEnemy extends Enemy {
     if (frames && frames.length > 0) {
     const frameIndex = Math.floor(frameCount / 4) % frames.length;
     const frame = frames[frameIndex];
-    window.image(frame, this.x, this.y, this.w, this.h);
+    const scale = 2;
+    window.image(frame, this.x, this.y, this.w * scale, this.h * scale); 
     } else if (window.enemyImage) {
     window.image(window.enemyImage, this.x, this.y, this.w, this.h);
     }else {
@@ -270,7 +271,7 @@ export class Bullet {
     window.push();
     if (window.shooterBulletImage) {
       window.imageMode(window.CENTER);
-      window.image(window.shooterBulletImage, this.x, this.y, this.r * 3, this.r * 3);
+      window.image(window.shooterBulletImage, this.x, this.y, this.r * 2, this.r * 2);
     } else {
       window.fill(255, 0, 0);
       window.noStroke();
