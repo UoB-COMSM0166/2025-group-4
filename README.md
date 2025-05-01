@@ -143,13 +143,14 @@ It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically 
 ## 3.1.7 Identifying Top-Level Needs with User Stories
 ### User Posters of four different player types
 
-| ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20one.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20two.png?raw=true) |
-|:--:|:--:|
-| Poster 1 | Poster 2 |
-
-| ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20three.png?raw=true) | ![](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/User%20poster%20four.png?raw=true) |
-|:--:|:--:|
-| Poster 3 | Poster 4 |
+<p align="center">
+  <img src="images/user poster 1.png" alt="User Poster 1" width="45%" />
+  <img src="images/user poster 2.png" alt="User Poster 2" width="45%" />
+</p>
+<p align="center">
+  <img src="images/user poster 3.png" alt="User Poster 3" width="45%" />
+  <img src="images/user poster 4.png" alt="User Poster 4" width="45%" />
+</p>
 
 To better understand what features we should prioritize, we created user stories.
 -As a game designer, I aim to set the pacing and difficulty of levels in such a way that the game continues to be both challenging and captivating for players.
