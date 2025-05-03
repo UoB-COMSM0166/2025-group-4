@@ -31,51 +31,51 @@ export function loadLevel(idx) {
 
   const currentLevel = gameState.state.levels[idx];
 
-  // Load wall image
+  // Use preloaded wall image from cache
   if (currentLevel.assets && currentLevel.assets.wall) {
-    window.currentWallImage = loadImage(currentLevel.assets.wall);
+    window.currentWallImage = window.getAsset(currentLevel.assets.wall);
   } else {
     window.currentWallImage = null;
   }
 
-  // Load background image
+  // Use preloaded background image from cache
   if (currentLevel.assets && currentLevel.assets.background) {
-    gameState.state.backgroundImage = loadImage(currentLevel.assets.background);
+    gameState.state.backgroundImage = window.getAsset(currentLevel.assets.background);
   } else {
     gameState.state.backgroundImage = null;
   }
 
-  // Load spike assets
+  // Use preloaded spike assets from cache
   if (currentLevel.assets && currentLevel.assets.spike) {
-    window.currentSpikeImage = loadImage(currentLevel.assets.spike);
+    window.currentSpikeImage = window.getAsset(currentLevel.assets.spike);
   } else {
     window.currentSpikeImage = null;
   }
   
-  // Load slippery wall assets
+  // Use preloaded slippery wall assets from cache
   if (currentLevel.assets && currentLevel.assets.slipperyPlayer) {
-    window.slipperyPlayerImage = loadImage(currentLevel.assets.slipperyPlayer);
+    window.slipperyPlayerImage = window.getAsset(currentLevel.assets.slipperyPlayer);
   } else {
     window.slipperyPlayerImage = null;
   }
 
-  // Load inIcePlayer
+  // Use preloaded ice player assets from cache
   if (currentLevel.assets && currentLevel.assets.inIcePlayer) {
-    window.inIcePlayerImage = loadImage(currentLevel.assets.inIcePlayer);
+    window.inIcePlayerImage = window.getAsset(currentLevel.assets.inIcePlayer);
   } else {
     window.inIcePlayerImage = null;
   }
 
-  // Load up-down moving platform image
+  // Use preloaded up-down moving platform image from cache
   if (currentLevel.assets && currentLevel.assets.platformUpDown) {
-    window.platformUpDownImage = loadImage(currentLevel.assets.platformUpDown);
+    window.platformUpDownImage = window.getAsset(currentLevel.assets.platformUpDown);
   } else {
     window.platformUpDownImage = null;
   }
 
-  // Load left-right moving platform image
+  // Use preloaded left-right moving platform image from cache
   if (currentLevel.assets && currentLevel.assets.platformleftright) {
-    window.platformleftrightImage = loadImage(currentLevel.assets.platformleftright);
+    window.platformleftrightImage = window.getAsset(currentLevel.assets.platformleftright);
   } else {
     window.platformleftrightImage = null;
   }
@@ -377,48 +377,51 @@ export function loadGeneratedLevel(idx) {
   const currentLevel = gameState.state.generatedLevels[idx];
   gameState.state.levelIndex = idx;
   
-  // Load wall image
+  // Use preloaded wall image from cache
   if (currentLevel.assets && currentLevel.assets.wall) {
-    window.currentWallImage = loadImage(currentLevel.assets.wall);
+    window.currentWallImage = window.getAsset(currentLevel.assets.wall);
   } else {
-    window.currentWallImage = null;
+    window.currentWallImage = window.defaultWallImage;
   }
 
-  // Load background image
+  // Use preloaded background image from cache
   if (currentLevel.assets && currentLevel.assets.background) {
-    gameState.state.backgroundImage = loadImage(currentLevel.assets.background);
+    gameState.state.backgroundImage = window.getAsset(currentLevel.assets.background);
   } else {
-    gameState.state.backgroundImage = null;
+    gameState.state.backgroundImage = window.defaultBackgroundImage;
   }
 
-  // Load spike image
+  // Use preloaded spike image from cache
   if (currentLevel.assets && currentLevel.assets.spike) {
-    window.currentSpikeImage = loadImage(currentLevel.assets.spike);
+    window.currentSpikeImage = window.getAsset(currentLevel.assets.spike);
   } else {
-    window.currentSpikeImage = null;
+    window.currentSpikeImage = window.defaultSpikeImage;
   }
   
-  // Load other assets as needed
+  // Use preloaded slippery player assets from cache
   if (currentLevel.assets && currentLevel.assets.slipperyPlayer) {
-    window.slipperyPlayerImage = loadImage(currentLevel.assets.slipperyPlayer);
+    window.slipperyPlayerImage = window.getAsset(currentLevel.assets.slipperyPlayer);
   } else {
-    window.slipperyPlayerImage = null;
+    window.slipperyPlayerImage = window.defaultSlipperyPlayerImage;
   }
   
+  // Use preloaded ice player assets from cache
   if (currentLevel.assets && currentLevel.assets.inIcePlayer) {
-    window.inIcePlayerImage = loadImage(currentLevel.assets.inIcePlayer);
+    window.inIcePlayerImage = window.getAsset(currentLevel.assets.inIcePlayer);
   } else {
-    window.inIcePlayerImage = null;
+    window.inIcePlayerImage = window.defaultInIcePlayerImage;
   }
   
+  // Use preloaded up-down platform from cache
   if (currentLevel.assets && currentLevel.assets.platformUpDown) {
-    window.platformUpDownImage = loadImage(currentLevel.assets.platformUpDown);
+    window.platformUpDownImage = window.getAsset(currentLevel.assets.platformUpDown);
   } else {
     window.platformUpDownImage = null;
   }
   
+  // Use preloaded left-right platform from cache
   if (currentLevel.assets && currentLevel.assets.platformleftright) {
-    window.platformleftrightImage = loadImage(currentLevel.assets.platformleftright);
+    window.platformleftrightImage = window.getAsset(currentLevel.assets.platformleftright);
   } else {
     window.platformleftrightImage = null;
   }

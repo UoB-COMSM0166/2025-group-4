@@ -3,7 +3,7 @@
  */
 
 // Asset paths for randomly selecting level assets
-const assetSets = [
+export const assetSets = [
   {
     wall: "src/assets/art/level_1_ice/tiles.png",
     background: "src/assets/art/level_1_ice/background.png",

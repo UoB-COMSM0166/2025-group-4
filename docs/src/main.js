@@ -14,6 +14,8 @@ import {
   handleEditorKeyPressed, exportLevel 
 } from './levelEditor.js';
 import { particleSystem } from './particles.js';
+import { setupLevels } from './levels.js';
+import { assetSets } from './mapGenerator.js';
 
 // Assets (images, sounds, etc.)
 let deathSound;
@@ -26,47 +28,212 @@ let freezeSound;
 let lastFrameTime = 0; // For fixed timestep
 let editorMode = false; // Track whether we're in editor mode
 
+// Make sure DOM is ready before initializing loading screen
+document.addEventListener('DOMContentLoaded', () => {
+  // Set initial loading text
+  const loadingText = document.getElementById('loading-text');
+  if (loadingText) {
+    loadingText.textContent = 'Preparing to load assets...';
+  }
+});
+
+// Get all level-specific assets to preload
+function collectLevelAssets() {
+  // Get all levels from setupLevels() function
+  const levels = setupLevels();
+  const assetPaths = new Set();
+  
+  // Collect assets from static levels
+  levels.forEach(level => {
+    if (level.assets) {
+      Object.values(level.assets).forEach(path => {
+        if (typeof path === 'string' && path.includes('.')) {
+          assetPaths.add(path);
+        }
+      });
+    }
+  });
+  
+  // Collect assets from mapGenerator assetSets
+  assetSets.forEach(set => {
+    Object.values(set).forEach(path => {
+      if (typeof path === 'string' && path.includes('.')) {
+        assetPaths.add(path);
+      }
+    });
+  });
+  
+  return Array.from(assetPaths);
+}
+
+// Get all level-specific asset paths
+const levelAssetPaths = collectLevelAssets();
+
+// Resource categories for loading
+const categories = {
+  sounds: { total: 6, loaded: 0, name: "Sound Assets" },
+  playerImages: { total: 3, loaded: 0, name: "Player Graphics" },
+  enemyImages: { total: 4, loaded: 0, name: "Enemy Graphics" },
+  bulletImages: { total: 1, loaded: 0, name: "Weapon Graphics" },
+  miscImages: { total: 2, loaded: 0, name: "Misc Graphics" },
+  levelAssets: { total: levelAssetPaths.length, loaded: 0, name: "Level Assets" }
+};
+
+// Asset cache - store all loaded assets by path
+window.assetCache = {};
+
+// Calculate total assets across all categories
+let totalAssets = Object.values(categories).reduce((sum, category) => sum + category.total, 0);
+let loadedAssets = 0;
+let loadingStartTime = 0;
+let loadingMinTime = 1800; // Minimum time to show loading screen (ms)
+let loadingComplete = false;
+
+/**
+ * Update loading progress bar by category
+ */
+function updateLoadingProgress(category, filename) {
+  categories[category].loaded++;
+  loadedAssets++;
+  
+  // Calculate total completion percentage
+  const totalPercentage = Math.min(Math.floor((loadedAssets / totalAssets) * 100), 99); // Cap at 99% until fully complete
+  
+  // Update progress bar
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) {
+    progressBar.style.width = `${totalPercentage}%`;
+  }
+  
+  // Update loading text with category info
+  const loadingText = document.getElementById('loading-text');
+  if (loadingText) {
+    const categoryName = categories[category].name;
+    const categoryProgress = Math.floor((categories[category].loaded / categories[category].total) * 100);
+    loadingText.textContent = `Loading ${categoryName}: ${categoryProgress}%`;
+  }
+  
+  console.log(`Loaded asset: ${filename} in category ${category} - Total progress: ${totalPercentage}%`);
+}
+
+/**
+ * Complete loading and transition to game
+ */
+function completeLoading() {
+  if (loadingComplete) return;
+  loadingComplete = true;
+  
+  // Force progress to 100%
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) {
+    progressBar.style.width = "100%";
+  }
+  
+  // Update text
+  const loadingText = document.getElementById('loading-text');
+  if (loadingText) {
+    loadingText.textContent = "Loading complete! Starting game...";
+  }
+  
+  const loadingTime = Date.now() - loadingStartTime;
+  
+  // Ensure loading screen shows for at least minimum time for better UX
+  if (loadingTime < loadingMinTime) {
+    const remainingTime = loadingMinTime - loadingTime;
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+      // Remove loading screen from DOM after transition
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen && loadingScreen.parentNode) {
+          loadingScreen.parentNode.removeChild(loadingScreen);
+        }
+      }, 800); // Wait for opacity transition to complete
+    }, remainingTime);
+  } else {
+    document.body.classList.add('loaded');
+    // Remove loading screen from DOM after transition
+    setTimeout(() => {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen && loadingScreen.parentNode) {
+        loadingScreen.parentNode.removeChild(loadingScreen);
+      }
+    }, 800); // Wait for opacity transition to complete
+  }
+}
+
+/**
+ * Centralized function to load an image and cache it
+ */
+function loadAndCacheImage(path, category, filename) {
+  const img = loadImage(path, 
+    () => {
+      updateLoadingProgress(category, filename);
+      // Store in cache
+      window.assetCache[path] = img;
+    },
+    (err) => {
+      console.error(`Failed to load image: ${path}`, err);
+      updateLoadingProgress(category, filename);
+    }
+  );
+  return img;
+}
+
 /**
  * p5.js preload function - load assets before setup
  */
 function preload() {
-  // Load sounds
-  freezeSound = loadSound('src/assets/music/freeze.mp3'); 
-  deathSound = loadSound('src/assets/music/death.wav');
-  getCoinSound = loadSound('src/assets/music/getcoin.mp3');
-  passSound = loadSound('src/assets/music/pass.mp3');
-  regravitySound = loadSound('src/assets/music/regravity.mp3');
-  bgm = loadSound('src/assets/music/background.mp3');
+  loadingStartTime = Date.now();
   
+  // Initialize asset cache
+  window.assetCache = {};
+  
+  // Load sounds
+  freezeSound = loadSound('src/assets/music/freeze.mp3', 
+    () => updateLoadingProgress('sounds', 'freeze.mp3')); 
+  deathSound = loadSound('src/assets/music/death.wav',
+    () => updateLoadingProgress('sounds', 'death.wav'));
+  getCoinSound = loadSound('src/assets/music/getcoin.mp3',
+    () => updateLoadingProgress('sounds', 'getcoin.mp3'));
+  passSound = loadSound('src/assets/music/pass.mp3',
+    () => updateLoadingProgress('sounds', 'pass.mp3'));
+  regravitySound = loadSound('src/assets/music/regravity.mp3',
+    () => updateLoadingProgress('sounds', 'regravity.mp3'));
+  bgm = loadSound('src/assets/music/background.mp3',
+    () => updateLoadingProgress('sounds', 'background.mp3'));
   
   // Load images and make them available globally
-  window.coinImage = loadImage('src/assets/art/images/coin.png');
-  window.enemyImage = loadImage('src/assets/art/images/enemy.png');
-
+  window.coinImage = loadAndCacheImage('src/assets/art/images/coin.png', 'miscImages', 'coin.png');
+  window.enemyImage = loadAndCacheImage('src/assets/art/images/enemy.png', 'enemyImages', 'enemy.png');
 
   // Player images
   window.playerImages = [];
-  window.playerImages.push(loadImage('src/assets/art/images/player/7.png'));
-  window.playerImages.push(loadImage('src/assets/art/images/player/8.png'));
-  window.playerImages.push(loadImage('src/assets/art/images/player/9.png'));
+  window.playerImages.push(loadAndCacheImage('src/assets/art/images/player/7.png', 'playerImages', 'player/7.png'));
+  window.playerImages.push(loadAndCacheImage('src/assets/art/images/player/8.png', 'playerImages', 'player/8.png'));
+  window.playerImages.push(loadAndCacheImage('src/assets/art/images/player/9.png', 'playerImages', 'player/9.png'));
 
   // Shooter enemy images (animated frames)
   window.shooterEnemyFrames = [
+    loadAndCacheImage('src/assets/art/images/flyenemy1.png', 'enemyImages', 'flyenemy1.png'),
+    loadAndCacheImage('src/assets/art/images/flyenemy2.png', 'enemyImages', 'flyenemy2.png'),
+    loadAndCacheImage('src/assets/art/images/flyenemy3.png', 'enemyImages', 'flyenemy3.png'),
+    loadAndCacheImage('src/assets/art/images/flyenemy4.png', 'enemyImages', 'flyenemy4.png')
+  ];
 
-  loadImage('src/assets/art/images/flyenemy1.png'),
-  loadImage('src/assets/art/images/flyenemy2.png'),
-  loadImage('src/assets/art/images/flyenemy3.png'),
-  loadImage('src/assets/art/images/flyenemy4.png'),
-];
-
-// Shooter enemy bullet
-window.shooterBulletImage = loadImage('src/assets/art/images/arrow.png');
-
-
+  // Shooter enemy bullet
+  window.shooterBulletImage = loadAndCacheImage('src/assets/art/images/arrow.png', 'bulletImages', 'arrow.png');
   
-  // Exit gate image
-  // window.exitGateImage = loadImage('src/images/9.png');
-  
+  // Load all level-specific assets
+  console.log(`Loading ${levelAssetPaths.length} level-specific assets`);
+  levelAssetPaths.forEach((path, index) => {
+    // Skip if already loaded
+    if (window.assetCache[path]) return;
+    
+    // Load the image and store in cache
+    loadAndCacheImage(path, 'levelAssets', path.split('/').pop());
+  });
+
   console.log("All assets loaded in preload()");
 }
 
@@ -74,6 +241,9 @@ window.shooterBulletImage = loadImage('src/assets/art/images/arrow.png');
  * p5.js setup function - initialize the game
  */
 function setup() {
+  // Complete loading and transition to game
+  completeLoading();
+  
   // Dynamically adjust canvas size based on window
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.style('display', 'block'); // Remove any margin/padding
@@ -99,9 +269,6 @@ function setup() {
   console.log("Preloaded player images:", window.playerImages ? window.playerImages.length : "none");
   
   initGame();
-  
-  // Force initial redraw to ensure correct dimensions are used - REMOVED as redraw is in setTimeout now
-  // redraw(); 
 }
 
 /**
@@ -306,6 +473,35 @@ function exportEditorLevel() {
   }
   return false;
 }
+
+// Helper function to get cached image
+window.getAsset = function(path) {
+  if (window.assetCache[path]) {
+    return window.assetCache[path];
+  }
+  console.warn(`Asset not found in cache: ${path}`);
+  
+  // Determine appropriate default based on filename
+  const filename = path.toLowerCase();
+  if (filename.includes('wall') || filename.includes('tiles')) {
+    return window.defaultWallImage;
+  } else if (filename.includes('background')) {
+    return window.defaultBackgroundImage;
+  } else if (filename.includes('spike') || filename.includes('thorn')) {
+    return window.defaultSpikeImage;
+  } else if (filename.includes('slippery')) {
+    return window.defaultSlipperyPlayerImage;
+  } else if (filename.includes('ice')) {
+    return window.defaultInIcePlayerImage;
+  } else if (filename.includes('platform') && (filename.includes('6') || filename.includes('up'))) {
+    return null;
+  } else if (filename.includes('platform') && (filename.includes('7') || filename.includes('left'))) {
+    return null;
+  }
+  
+  // Default fallback
+  return window.defaultWallImage;
+};
 
 // Assign all p5.js functions to the window object for global mode
 window.preload = preload;

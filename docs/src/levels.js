@@ -123,7 +123,7 @@ export function setupLevels() {
           spike: "src/assets/art/level_4/thorn.png",
           slipperyPlayer: "src/assets/art/level_1_ice/dog_surprise.png",
           inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png",
-          ice: "src\assets\art\level_4\ice.png",
+          ice: "src/assets/art/level_4/ice.png",
         }
       });
 
