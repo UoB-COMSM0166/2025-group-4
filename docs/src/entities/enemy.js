@@ -268,16 +268,29 @@ export class Bullet {
   }
   
   draw(cameraOffsetX, interpolation = 0) {
+
+    
+ if (window.shooterBulletImage) {
     window.push();
-    if (window.shooterBulletImage) {
-      window.imageMode(window.CENTER);
-      window.image(window.shooterBulletImage, this.x, this.y, this.r * 2, this.r * 2);
+
+    window.imageMode(window.CENTER);
+    window.translate(this.x, this.y);
+
+    if (this.vx < 0) {
+      // 向左 → 镜像翻转
+      window.scale(-1, 1);
+      window.image(window.shooterBulletImage, 0, 0, this.r * 2, this.r * 2);
     } else {
-      window.fill(255, 0, 0);
-      window.noStroke();
-      window.ellipse(this.x, this.y, this.r * 2);
+      // 向右 → 正常显示
+      window.image(window.shooterBulletImage, 0, 0, this.r * 2, this.r * 2);
     }
+
     window.pop();
+  } else {
+    window.fill(255, 0, 0);
+    window.ellipse(this.x, this.y, this.r * 2);
+  }
+
   }
 }
 
