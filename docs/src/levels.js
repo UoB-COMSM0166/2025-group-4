@@ -124,6 +124,7 @@ export function setupLevels() {
           slipperyPlayer: "src/assets/art/level_1_ice/dog_surprise.png",
           inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png",
           ice: "src/assets/art/level_4/ice.png",
+          slipperyWall: "src/assets/art/level_4/ice-tiles.png",
         }
       });
 
