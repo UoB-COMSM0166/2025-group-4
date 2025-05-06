@@ -571,7 +571,7 @@ export class Player {
 
     // 如果正在打滑 && 有打滑贴图
     if (this.isSlipping) {
-      const img = window.getAsset?.("src/assets/art/level_4/ice-tiles.png") || window.slipperyPlayerImage;
+      const img = window.getAsset?.("src/assets/art/images/level_1_ice/dog_surprise.png") || window.slipperyPlayerImage;
       if (img) {
         if (this.vx < 0) {
           window.push();
@@ -585,7 +585,7 @@ export class Player {
         return;
       }
     } else if (this.isFrozen) {
-      const img = window.getAsset?.("src/assets/art/level_4/ice.png") || window.inIcePlayerImage;
+      const img = window.getAsset?.("src/assets/art/images/level_1_ice/dog_in_ice.png") || window.inIcePlayerImage;
       if (img) {
         if (this.vx < 0) {
           window.push();
