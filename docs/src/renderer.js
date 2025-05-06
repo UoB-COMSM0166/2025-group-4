@@ -334,6 +334,17 @@ function drawGameScreen(interpolation = 0) {
   
   // End camera transform
   camera.end();
+
+
+  if (gameState.state.tutorialActive && gameState.state.tutorialText) {
+  fill(0, 0, 0, 180);
+  rect(width / 2 - 250, height / 2 - 60, 500, 120, 10);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(18);
+  text(gameState.state.tutorialText, width / 2, height / 2);
+  }
+
   
   // Draw HUD (fixed on screen, outside camera transform)
   fill(0, 0, 0, 100);

@@ -16,6 +16,89 @@
 export function setupLevels() {
   const levels = [];
 
+
+  // Original small levels1:
+  levels.push({
+    map: [
+      "11111111111111111111",
+      "1...............4..1", // exit is '4'
+      "1........222.......1",
+      "1........222.......1", // coins are '2'
+      "1........222.......1",
+      "1..3...............1", // player start is '3'
+      "1..................1",
+      "1..........11111...1",
+      "1..................1",
+      "1..................1",
+      "11111111111111111111",
+    ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
+  });
+// Original small levels2:
+  levels.push({
+    map: [
+      "1111111111111111",
+      "14............11",
+      "1.......2......1",
+      "1..............1",
+      "1..3...........1",
+      "1........2.....1",
+      "1..............1",
+      "1111111111111111",
+    ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
+  });
+
+// Original small levels3:
+  levels.push({
+    map: [
+      "111111111111111111111",
+      "1..........2......4.1",
+      "1...5.......e.......1",
+      "1..........222......1",
+      "1...................1",
+      "1..3.............5..1",
+      "1...................1",
+      "1.........E.........1",
+      "1...................1",
+      "111111111111111111111",
+    ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
+  });
+
+// Original small levels4:
+  levels.push({
+    map: [
+      "111111111111111111111",
+      "1..................41",
+      "1..5................1",
+      "1..........222......1",
+      "1...................1",
+      "1..3.......E.......51",
+      "1...................1",
+      "1...................1",
+      "1...................1",
+      "111111111111111111111",
+    ],
+    assets: {
+      wall: "src/assets/art/level_6-9/tiles.png", 
+      background: "src/assets/art/level_6-9/background.png", 
+      spike: "src/assets/art/level_6-9/thorn.png" 
+    }
+  }); 
+
   //level1-short map
   levels.push({
     map: [
@@ -153,87 +236,7 @@ export function setupLevels() {
    });
 
 
-  // Original small levels1:
-  levels.push({
-    map: [
-      "11111111111111111111",
-      "1...............4..1", // exit is '4'
-      "1........222.......1",
-      "1........222.......1", // coins are '2'
-      "1........222.......1",
-      "1..3...............1", // player start is '3'
-      "1..................1",
-      "1..........11111...1",
-      "1..................1",
-      "1..................1",
-      "11111111111111111111",
-    ],
-    assets: {
-      wall: "src/assets/art/level_6-9/tiles.png", 
-      background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
-    }
-  });
-// Original small levels2:
-  levels.push({
-    map: [
-      "1111111111111111",
-      "14............11",
-      "1.......2......1",
-      "1..............1",
-      "1..3...........1",
-      "1........2.....1",
-      "1..............1",
-      "1111111111111111",
-    ],
-    assets: {
-      wall: "src/assets/art/level_6-9/tiles.png", 
-      background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
-    }
-  });
-
-// Original small levels3:
-  levels.push({
-    map: [
-      "111111111111111111111",
-      "1..........2......4.1",
-      "1...5.......e.......1",
-      "1..........222......1",
-      "1...................1",
-      "1..3.............5..1",
-      "1...................1",
-      "1.........E.........1",
-      "1...................1",
-      "111111111111111111111",
-    ],
-    assets: {
-      wall: "src/assets/art/level_6-9/tiles.png", 
-      background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
-    }
-  });
-
-// Original small levels4:
-  levels.push({
-    map: [
-      "111111111111111111111",
-      "1..................41",
-      "1..5................1",
-      "1..........222......1",
-      "1...................1",
-      "1..3.......E.......51",
-      "1...................1",
-      "1...................1",
-      "1...................1",
-      "111111111111111111111",
-    ],
-    assets: {
-      wall: "src/assets/art/level_6-9/tiles.png", 
-      background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
-    }
-  }); 
+  
 //hidden level
   levels.push({
     map: [

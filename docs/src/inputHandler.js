@@ -21,6 +21,11 @@ export function handleKeyPressed() {
   }
   
   if (gameState.state.gameState === "play") {
+    if (gameState.state.tutorialActive) {
+      gameState.state.tutorialActive = false;
+      gameState.state.tutorialText = "";
+      return;
+    }
     // If game is in play state, handle player controls
     if (keyCode === 32) { // Space key
       if (gameState.state.player) {
@@ -55,6 +60,13 @@ export function handleKeyPressed() {
  * Handle mouse click events
  */
 export function handleMouseClicked() {
+
+  if (gameState.state.tutorialActive) {
+    gameState.state.tutorialActive = false;
+    gameState.state.tutorialText = "";
+    return;
+  }
+  
   if (gameState.state.gameState === "menu") {
     // Check if this is a click within the demo area
     if (gameState.state.menuDemoActive) {

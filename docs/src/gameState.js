@@ -72,7 +72,12 @@ export const state = {
   selectedLives: 5, // default number of lives for generated mode
   statsDisplayActive: false, // whether the stats display is active
   seedValue: "", // Empty string means random seed
-  seedInput: false // Flag to indicate if we're editing the seed
+  seedInput: false, // Flag to indicate if we're editing the seed
+
+
+  tutorialText: "",           // 教学提示内容
+  tutorialActive: false,
+
 };
 
 /**

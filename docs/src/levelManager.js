@@ -216,6 +216,12 @@ export function loadLevel(idx) {
   console.log("Loaded level:", idx);
   window.levelLoadTime = millis();
   window.floatingPlatforms = gameState.state.floatingPlatforms;
+
+  if (idx === 0) {
+    gameState.state.tutorialText = "点击鼠标或空格来反转重力！\n每个金币 = 15 分";
+    gameState.state.tutorialActive = true;
+  }
+  
 }
 
 /**
@@ -526,6 +532,13 @@ export function loadGeneratedLevel(idx) {
   
   // Update the global floatingPlatforms reference
   window.floatingPlatforms = gameState.state.floatingPlatforms;
+  
+
+  if (idx ===0) {  
+    gameState.state.tutorialActive = true;
+    gameState.state.tutorialText = "点击鼠标或空格来反转重力！\n每个金币=15分。";
+    gameState.state.pauseGameForTutorial = true;
+  }
   
   // Center the camera
   gameState.state.cameraOffsetX = 0;
