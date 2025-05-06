@@ -170,17 +170,31 @@ export function drawTiles(tileMap, cameraOffsetX) {
         }
         // --- End Spike Drawing Logic ---
       }
-        else if (tile === "I") {
-        // Use light blue for ice traps
-        fill(150, 220, 255);
-        noStroke();
-        rect(x, y, tileSize, tileSize);
-      }else if (tile === "S") {
-        // 使用淡蓝色绘制特殊滑行墙壁
-        fill(180, 220, 255);
-        noStroke();
-        rect(x, y, tileSize, tileSize);
-      }      
+      else if (tile === "I") {
+        // ✅ Level 4 冰块贴图
+        const img = window.getAsset?.("src/assets/art/level_4/ice.png");
+        if (img) {
+          imageMode(CORNER);
+          image(img, x, y, tileSize, tileSize);
+
+        } else {
+          fill(150, 220, 255); // fallback
+          noStroke();
+          rect(x, y, tileSize, tileSize);
+        }
+      }
+      else if (tile === "S") {
+        // ✅ Level 4 滑墙贴图
+        const img = window.getAsset?.("src/assets/art/level_4/ice-tiles.png");
+        if (img) {
+          imageMode(CORNER);
+          image(img, x, y, tileSize, tileSize);
+        } else {
+          fill(180, 220, 255); // fallback
+          noStroke();
+          rect(x, y, tileSize, tileSize);
+        }
+      }          
     }
   }
 }
