@@ -177,21 +177,19 @@ function handleLivesMenuClick() {
   if (mouseX > width / 2 - 120 && mouseX < width / 2 + 120 &&
       mouseY > height * 0.82 - 35 && mouseY < height * 0.82 + 35) {
     // Handle starting the game with the selected options
-    gameState.state.lives = gameState.state.selectedLives;
-    gameState.setGeneratedMode(true);
-    gameState.setGameState("play");
+    // gameState.state.lives = gameState.state.selectedLives; // Lives are set by startGeneratedMode or updateGameParametersForDifficulty
+    // gameState.setGeneratedMode(true); // This is handled by startGeneratedMode
+    // gameState.setGameState("play"); // This is handled by startGeneratedMode
     
-    // Initialize game time
-    gameState.state.gameStartTime = millis();
-    gameState.state.currentPlayTime = 0;
+    // Initialize game time - this is also handled by startGeneratedMode now
+    // gameState.state.gameStartTime = millis();
+    // gameState.state.currentPlayTime = 0;
     
     // Start the game with the first level or generated level
     import('./levelManager.js').then(levelManager => {
-      if (gameState.state.generatedMode) {
-        levelManager.generateAndLoadLevel(gameState.state.seedValue);
-      } else {
-        levelManager.loadLevel(0);
-      }
+      // When starting from the lives menu, it's always for generated mode,
+      // and not from the demo selector.
+      levelManager.startGeneratedMode(false); 
     });
   }
 }
@@ -223,12 +221,14 @@ function handleLivesMenuKeyPressed() {
       gameState.setSelectedLives(99);
     } else if (keyCode === 13) { // Enter to start
       // Same as clicking start button
-      gameState.state.lives = gameState.state.selectedLives;
-      gameState.setGeneratedMode(true);
-      gameState.setGameState("play");
+      // gameState.state.lives = gameState.state.selectedLives; // Handled by startGeneratedMode
+      // gameState.setGeneratedMode(true); // Handled by startGeneratedMode
+      // gameState.setGameState("play"); // Handled by startGeneratedMode
       
       import('./levelManager.js').then(levelManager => {
-        levelManager.generateAndLoadLevel(gameState.state.seedValue);
+        // When starting from the lives menu (via Enter), it's for generated mode,
+        // and not from the demo selector.
+        levelManager.startGeneratedMode(false);
       });
     }
   }
@@ -244,11 +244,16 @@ function handleStatsScreenClick() {
   if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
       mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30) {
     gameState.setStatsDisplayActive(false);
-    gameState.setGameState("play");
+    // gameState.setGameState("play"); // loadGeneratedLevel will set this if appropriate
     
-    // Generate the next level
+    // Generate the next level if in generated mode
     import('./levelManager.js').then(levelManager => {
-      levelManager.generateAndLoadLevel(gameState.state.seedValue);
+      if (gameState.state.generatedMode) {
+        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+      } else {
+        // If somehow got here not in generated mode, just resume play (should not happen)
+        gameState.setGameState("play"); 
+      }
     });
   }
   

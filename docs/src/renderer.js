@@ -357,7 +357,8 @@ function drawGameScreen(interpolation = 0) {
   let difficultyColor;
   if (gameState.state.difficulty === "easy") difficultyColor = color(100, 255, 100);
   else if (gameState.state.difficulty === "hard") difficultyColor = color(255, 100, 100);
-  else difficultyColor = color(100, 200, 255);
+  else if (gameState.state.difficulty === "random") difficultyColor = color(255, 180, 80); // Orange for random
+  else difficultyColor = color(100, 200, 255); // Normal
   
   fill(difficultyColor);
   textAlign(RIGHT, CENTER);

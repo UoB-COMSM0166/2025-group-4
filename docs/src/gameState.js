@@ -4,7 +4,7 @@
  */
 import { particleSystem } from './particles.js';
 import { setupLevels } from './levels.js';
-import { loadLevel } from './levelManager.js';
+import { loadLevel, startGeneratedMode } from './levelManager.js';
 import { tileSize, updatePhysicsForDifficulty } from './config.js';
 import { camera } from './camera.js';
 import { Player } from './entities/player.js';
@@ -376,13 +376,13 @@ export function selectDifficulty(difficulty) {
   // Close the menu demo
   state.menuDemoActive = false;
   
-  // Set difficulty
+  // Set difficulty string state
   state.difficulty = difficulty;
   
-  // For random mode
   if (difficulty === "random") {
     state.generatedMode = true;
-    state.lives = 99; // Infinite lives for now as requested
+    // Parameters like lives, enemySpeed, and physics are set in updateGameParametersForDifficulty
+    // and startGeneratedMode will handle level generation.
   } else {
     state.generatedMode = false;
   }
@@ -394,11 +394,15 @@ export function selectDifficulty(difficulty) {
   state.gameStartTime = millis();
   state.currentPlayTime = 0;
   
-  // Start the game with the first level
-  loadLevel(0);
-  
-  // Change game state to play
-  state.gameState = "play";
+  if (difficulty === "random") {
+    // Start generated mode, passing true to indicate it's from the demo selector
+    startGeneratedMode(true); 
+  } else {
+    // Start the game with the first level for non-random difficulties
+    loadLevel(0);
+    // Change game state to play
+    state.gameState = "play";
+  }
 }
 
 /**
@@ -408,13 +412,16 @@ export function selectDifficulty(difficulty) {
 function updateGameParametersForDifficulty(difficulty) {
   // Add a colorful burst based on difficulty
   let difficultyColor;
+  let physicsDifficulty = difficulty; // Determines which physics settings to apply
+
   if (difficulty === "easy") {
     difficultyColor = color(100, 255, 100);
   } else if (difficulty === "hard") {
     difficultyColor = color(255, 100, 100);
   } else if (difficulty === "random") {
-    difficultyColor = color(255, 180, 80);
-  } else {
+    difficultyColor = color(255, 180, 80); // Orange for random
+    physicsDifficulty = "easy"; // Random mode uses easy physics
+  } else { // Normal difficulty
     difficultyColor = color(100, 200, 255);
   }
   
@@ -445,9 +452,9 @@ function updateGameParametersForDifficulty(difficulty) {
     state.coinValue = 5; // Fewer points per coin
     state.enemySpeed = 2.0; // Faster enemies
   } else if (difficulty === "random") {
-    state.lives = 99; // Infinite lives for random mode
-    state.coinValue = 10;
-    state.enemySpeed = 1.5;
+    state.lives = 10; // Random mode has 10 lives
+    state.coinValue = 10; // Standard coin value
+    state.enemySpeed = 1.0; // Easy enemy speed
   } else {
     // Normal difficulty
     state.lives = 3;
@@ -456,7 +463,7 @@ function updateGameParametersForDifficulty(difficulty) {
   }
   
   // Update physics parameters for the new difficulty
-  updatePhysicsForDifficulty(difficulty);
+  updatePhysicsForDifficulty(physicsDifficulty);
 }
 
 /**

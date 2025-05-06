@@ -14,6 +14,7 @@ import * as gameState from './gameState.js';
 import { camera } from './camera.js';
 import { setupLevels } from './levels.js';
 import { createDifficultySelectors } from './gameState.js';
+import { updatePhysicsForDifficulty } from './config.js';
 
 /**
  * Load a level by index
@@ -329,22 +330,32 @@ export function reloadCurrentLevel(oldTileSize) {
 
 /**
  * Start the generated mode with procedurally created levels
+ * @param {boolean} isFromDemoSelector - True if called from the menu demo's RANDOM selector
  */
-export function startGeneratedMode() {
-  // Generate levels with seed if provided
-  gameState.state.generatedLevels = generateLevels(20, gameState.state.seedValue); // Generate 20 levels with optional seed
+export function startGeneratedMode(isFromDemoSelector = false) {
+  gameState.state.generatedMode = true; // Ensure this is set
+  gameState.state.generatedLevels = generateLevels(20, gameState.state.seedValue);
   gameState.state.generatedLevelCount = 0;
   gameState.state.totalCoinsCollected = 0;
   gameState.state.score = 0;
+
+  if (isFromDemoSelector) {
+    // When called from the demo selector, lives are 10 (already set by updateGameParametersForDifficulty)
+    // gameState.state.difficulty is already "random"
+    // Physics are set to "easy" by updateGameParametersForDifficulty
+  } else {
+    // When called from the main menu lives/seed selection flow
+    gameState.state.lives = gameState.state.selectedLives;
+    // Set difficulty to "random" for HUD and consistency if not already set
+    if (gameState.state.difficulty !== "random") {
+        gameState.state.difficulty = "random"; // Or perhaps "easy" if random is just a mode
+    }
+  }
   
-  // Set lives based on selection
-  gameState.state.lives = gameState.state.selectedLives;
-  
-  // Set difficulty to easy
-  gameState.state.difficulty = "easy";
-  import('./config.js').then(config => {
-    config.updatePhysicsForDifficulty("easy");
-  });
+  // Always apply easy physics for generated mode, regardless of how it was initiated.
+  // updateGameParametersForDifficulty in gameState.js also does this if difficulty is "random".
+  // Calling it here ensures it if startGeneratedMode is called from somewhere else in the future.
+  updatePhysicsForDifficulty("easy");
   
   // Initialize game time
   gameState.state.gameStartTime = millis();
