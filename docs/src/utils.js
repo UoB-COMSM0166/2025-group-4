@@ -187,8 +187,9 @@ export function drawTiles(tileMap, cameraOffsetX) {
         // ✅ Level 4 滑墙贴图
         const img = window.getAsset?.("src/assets/art/level_4/ice-tiles.png");
         if (img) {
+          const offset = sin(frameCount * 0.1 + x * 0.05) * 2;  
           imageMode(CORNER);
-          image(img, x, y, tileSize, tileSize);
+          image(img, x, y + offset, tileSize, tileSize);  
         } else {
           fill(180, 220, 255); // fallback
           noStroke();
