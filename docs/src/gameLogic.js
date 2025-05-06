@@ -165,8 +165,8 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     window.passSound.play();
     
     // Dramatic camera zoom effect on level completion
-    camera.setZoom(1.2);
-    camera.addTrauma(0.3);
+    // camera.setZoom(1.2);
+    // camera.addTrauma(0.3);
     
     // In generated mode, use the generated level completion logic
     if (gameState.state.generatedMode) {

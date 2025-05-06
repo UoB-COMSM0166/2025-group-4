@@ -83,7 +83,7 @@ export class DifficultySelector {
     noStroke();
     textAlign(CENTER, CENTER);
     textSize(this.height * 0.5);
-    textStyle(BOLD);
+    textStyle(NORMAL);
     text(this.difficulty.toUpperCase(), this.x, this.y);
     
     pop();
