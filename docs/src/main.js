@@ -248,6 +248,9 @@ function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.style('display', 'block'); // Remove any margin/padding
 
+  // Set the font for p5.js text
+  textFont('Chewy');
+
   // Update the tile size based on window dimensions
   let newTileSize = updateTileSize(windowWidth, windowHeight);
   console.log("Updated tile size to:", newTileSize);
