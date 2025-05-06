@@ -1,5 +1,5 @@
 /**
- * Particle System for Rusty Rover's Run
+ * Particle System for Puppy's Magical Adventure
  * Provides visual effects for various game events
  */
 

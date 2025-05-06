@@ -81,7 +81,7 @@ function drawMainMenu() {
   textAlign(CENTER, CENTER);
   textSize(Math.max(40, width / 15));
   textStyle(NORMAL);
-  text("Rusty Rover's Run", width / 2, height * 0.15);
+  text("Puppy's Magical Adventure", width / 2, height * 0.15);
   
   // Add a subtitle
   fill(200, 200, 255);
