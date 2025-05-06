@@ -115,7 +115,24 @@ export function initGame() {
  */
 export function initMenuDemo() {
   state.menuDemoActive = true;
-  
+  // Reset stats and ensure clean menu demo state
+  state.statsDisplayActive = false;
+  // Reset physics clock for demo animations
+  state.physicsClock = 0;
+  // Reset gameplay effects state
+  state.hitstopActive = false;
+  state.hitstopFramesLeft = 0;
+  state.invincibilityActive = false;
+  state.invincibilityFramesLeft = 0;
+  state.screenShakeTrauma = 0;
+  state.screenShakeX = 0;
+  state.screenShakeY = 0;
+  state.screenShakeRotation = 0;
+  state.screenShakeNoiseOffsetX = 0;
+  state.screenShakeNoiseOffsetY = 0;
+  state.screenShakeNoiseOffsetAngle = 0;
+  state.exitTriggered = false;
+
   // Create a smaller demo level map that fits better on screen
   state.menuDemoMap = [
     "1111111111111111111111111111",
@@ -128,43 +145,43 @@ export function initMenuDemo() {
     "1...e.....n.....h.....r....1",
     "1111111111111111111111111111"
   ];
-  
-  // Create the player starting on the ceiling with flipped gravity
-  if (state.player) {
-    // If player already exists, reset it
-    state.player.x = 14 * tileSize;
-    state.player.y = 4 * tileSize; // Position adjusted to be higher up
-    state.player.gravityDirection = -1; // Start with flipped gravity
-    state.player.vx = 0;
-    state.player.vy = 0;
-    state.player.isFrozen = true;
-  } else {
-    // Create a new player
-    state.player = new Player(14 * tileSize, 4 * tileSize);
-    state.player.gravityDirection = -1; // Start with flipped gravity
-  }
-  
+
+  // Create a new player for menu demo, resetting previous player state
+  state.player = new Player(14 * tileSize, 4 * tileSize);
+  state.player.gravityDirection = -1;
+  state.player.vx = 0;
+  state.player.vy = 0;
+
   window.player = state.player;
   console.log("Menu demo player initialized at:", state.player.x, state.player.y);
-  
+
   // Create difficulty selector entities
   createDifficultySelectors();
-  
+
   // Set up camera for the demo level
   const menuDemoWidth = state.menuDemoMap[0].length * tileSize;
   const menuDemoHeight = state.menuDemoMap.length * tileSize;
-  
+
   camera.init(menuDemoWidth, menuDemoHeight);
-  camera.setZoom(1.0); // Standard zoom for better visibility
-  
+  camera.setZoom(1.0);
+
   // Center camera on the demo level
   camera.x = menuDemoWidth / 2;
   camera.y = menuDemoHeight / 2;
   camera.targetX = camera.x;
   camera.targetY = camera.y;
-  
+
+  // Always use first level assets for menu demo ground tiles
+  if (state.levels && state.levels.length > 0 && state.levels[0].assets) {
+    const assets = state.levels[0].assets;
+    window.currentWallImage = window.getAsset(assets.wall);
+    window.currentSpikeImage = window.getAsset(assets.spike);
+  }
+
   // Set the current tile map to the menu demo map
   state.tileMap = state.menuDemoMap;
+  // Propagate state to window after demo initialization
+  updateWindowGameState();
 }
 
 /**
