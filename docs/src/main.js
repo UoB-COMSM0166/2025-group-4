@@ -209,6 +209,15 @@ function preload() {
   // Load images and make them available globally
   window.coinImage = loadAndCacheImage('src/assets/art/images/coin.png', 'miscImages', 'coin.png');
   window.enemyImage = loadAndCacheImage('src/assets/art/images/enemy.png', 'enemyImages', 'enemy.png');
+
+  window.enemyFrames = [
+    loadImage("src/assets/art/images/enemies/flyenemy-1/greenflyenemy1.png"),
+    loadImage("src/assets/art/images/enemies/flyenemy-1/greenflyenemy2.png"),
+    loadImage("src/assets/art/images/enemies/flyenemy-1/greenflyenemy3.png"),
+    loadImage("src/assets/art/images/enemies/flyenemy-1/greenflyenemy4.png"),
+  ];
+
+  
   window.exitGateImage = loadImage("src/assets/art/images/gates/gate-8.png");
 
   // Player images

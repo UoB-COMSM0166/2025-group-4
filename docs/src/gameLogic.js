@@ -38,6 +38,11 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     //return;  // 跳过所有游戏逻辑更新
   }
   
+  // Add wind particles periodically
+  if (gameState.state.gameState === "play" && window.frameCount % 8 === 0) { // Adjust frameCount % N for frequency
+    particleSystem.createWindParticles(camera);
+  }
+  
   // Skip update if required objects aren't initialized
   if (!gameState.state.player || !gameState.state.tileMap) {
     console.warn("Player or tile map not initialized, skipping update");

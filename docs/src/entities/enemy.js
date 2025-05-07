@@ -101,8 +101,10 @@ export class Enemy {
     window.imageMode(window.CENTER);
     
     // Use enemy image if available, otherwise fallback to rectangle
-    if (window.enemyImage) {
-      window.image(window.enemyImage, this.x, this.y, this.w, this.h);
+    if (window.enemyFrames && window.enemyFrames.length > 0) {
+      const frameIndex = Math.floor(frameCount / 6) % window.enemyFrames.length;
+      const frame = window.enemyFrames[frameIndex];
+      window.image(frame, this.x, this.y, this.w, this.h);
     } else {
       // Fallback to drawing a rectangle if image is not loaded
       window.rectMode(window.CENTER);
@@ -176,7 +178,7 @@ export class ShooterEnemy extends Enemy {
     const frames = window.shooterEnemyFrames;
 
     if (frames && frames.length > 0) {
-    const frameIndex = Math.floor(frameCount / 4) % frames.length;
+    const frameIndex = Math.floor(frameCount / 28 ) % frames.length;
     const frame = frames[frameIndex];
     const scale = 1.6;
     window.image(frame, this.x, this.y, this.w * scale, this.h * scale); 

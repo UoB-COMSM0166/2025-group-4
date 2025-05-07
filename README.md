@@ -9,22 +9,6 @@
 </p>
 
 ![Banner Image](images/banner.webp)
-
-# Weekly Work Summary
-
- [Week 1 Game Idea & Creativity](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
-
- [Week 2  P5.js Painting & Kanban Board](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
-
- [Week 3 Paper Prototype & User/Epic Story](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week03) 
-
- [Week 4 Stakeholders & Game Demonstration/Feedback](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
-
- [Week 5 Agile Planning & Object-Oriented Programming](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week05.md)
-
- [Week 7 Think Aloud & Heuristic Evaluation](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week07.md)
-
- [Week 8 User Evaluation & Quantitative Analysis](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week08.md)
  
 # Table of Contents
 
@@ -93,27 +77,93 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ## 3.1.4 Level Themes & Biomes
 
-###  1⃣️Glacial Rift
--Challenge: Slippery surfaces and freeze traps
+### 1.Enchanted Grove
+-Theme:Lush, glowing forest filled with bioluminescent plants and soft green light.
+-Biome Characteristics:
+Calm, magical atmosphere with shimmering flora.
+Coin clusters to encourage exploration and reward risk-taking.
+-Focus:Introduction to movement, jumping, and obstacle avoidance in a visually soothing environment.
+
+### 2.Thorny Thicket
+-Theme:A dense, enchanted forest surrounded by magical thorns; the mysterious atmosphere remains, but danger noticeably increases.
+-Biome Characteristics:
+Environment packed with thorn traps lining all sides.
+Introduction of spiked hazards, adding dynamic threats.
+Tight level design demanding precise movement.
+-Focus:Tests the player’s dodging, timing, and spatial awareness; introduces dynamic danger elements for the first time.
 
 
-### 2⃣️ Bio-Fusion Forest
--Challenge: Unpredictable mutated flora
+### 3.Shadow Outpost
+-Theme:
+A hidden outpost deep within the glowing forest, now guarded by patrolling enemies. The atmosphere shifts from mysterious to tense.
+-Biome Characteristics:
+Bioluminescent forest background continues, with added enemy guards.
+Enemies patrol and block paths, requiring smart dodging or precise timing.
+Coin placement tempts players to take risks near enemies, increasing the challenge.
+-Focus:Tests the player’s ability to avoid enemies, manage movement rhythm, and maintain precision — first introduction of active threats.
 
-### 3⃣️ Nightfall Ruins
--Challenge: Darkened stages with hidden traps and stealth enemies
 
-### 4⃣️ Magma Fortress
--Challenge: Periodic lava bursts and crumbling platforms
+### 4.Crimson Ambush
+-Theme:
+The enchanted forest now hosts red, bullet-firing enemies, introducing long-range threats and sharply increasing tension.
+-Biome Characteristics:
+Bioluminescent forest backdrop continues, with the addition of crimson ranged foes.
+Enemies shoot projectiles, requiring precise movement and quick reflexes.
+Moving thorn hazards from earlier levels remain, creating layered challenges.
+-Focus:Tests the player’s reaction speed, movement precision, and multitasking ability — marking a clear difficulty spike
 
-### 5⃣️ Phantom Mist
--Challenge: Heavy fog limits visibility and spatial orientation
 
-### 6⃣️ Magic Forest
--Challenge: Enchanted flora
+### 5.Frozen Labyrinth
+-Theme:A glacial labyrinth replaces the forest, introducing icy terrain and a fresh visual experience.
+-Biome Characteristics:
+Ice block platforms with slippery surfaces and hard walls.
+Sharp ice spikes act as deadly traps, increasing pathfinding complexity.
+Maze-like level design demanding careful observation and route selection.
+-Focus:Tests the player’s path planning, jump precision, and maneuvering in tight spaces.
 
-### 7⃣️ The Gate of Collapse (Final Stage)
--Challenge: Trap-dense gauntlet with gravity chaos
+### 6.Wild Jungle
+-Theme:A vivid tropical jungle bursting with life, introducing sharp mountain spikes and moving grass platforms to heighten the challenge.
+-Biome Characteristics:
+Lush jungle backdrop filled with vines, massive trees, and tropical flowers.
+Sharp spikes as new lethal obstacles, demanding precise jumps.
+Moving grass platforms add unpredictability, requiring players to observe and time their movements.
+-Focus:Tests the player’s adaptability to dynamic terrain, observational skills, and mastery of jump timing.
+
+
+### 7. Nightfall Ruins
+-Theme:A silent, moonlit ruin with an eerie atmosphere. Sharp stone spikes now pose deadly threats.
+-Biome Characteristics:
+Dark ruin backdrop with ancient brick structures.
+Sharp stone spikes placed on floors and ceilings as lethal traps.
+Players must navigate using limited visual cues in the dark.
+-Focus:Tests player’s spatial awareness, focus, and ability to avoid fatal traps while staying calm under low-visibility conditions.
+
+### 8.Magma Fortress
+-Theme:A blazing magma fortress filled with imminent danger. Newly introduced ice blocks provide freezing effects, alongside weapon-firing enemies and deadly red spikes.
+-Biome Characteristics:
+Lava background with red brick platforms, evoking intense heat.
+Ice blocks introduce a freezing mechanic, adding environmental variety.
+Weapon-firing enemies and red spikes create multidirectional threats.
+Players must navigate flexibly through layered hazards.
+-Focus:Tests the player’s strategic planning, quick reflexes, and survival skills in a highly complex environment.
+
+### 9.Sky Citadel
+-Theme:A soaring sky citadel built of ice blocks, where danger meets altitude, and bow-wielding demons enter the fray.
+-Biome Characteristics:
+Cloudy backdrop with an icy maze suspended in the sky.
+Bow-wielding demon enemies launch ranged attacks.
+Ice spikes remain as hazards, requiring careful coordination with enemy movement.
+-Focus:Tests aerial maneuvering, reactions to ranged threats, and precision in jumping and dodging.
+
+### 10.Mystic Cavern
+-Theme:The final level descends into an underground ravine maze, with a dark, oppressive atmosphere and collapsing world lore.
+-Biome Characteristics:
+Dark cave backdrop with maze-like passages.
+Demon enemies patrol narrow corridors, posing constant threats.
+Floor spikes demand precise footwork.
+Maze layout challenges player’s memory and pathfinding skills.
+-Focus:Tests patience, route memorization, enemy avoidance, and survival strategy — the ultimate test of mastery.
+
 
 ---
 
@@ -283,7 +333,9 @@ We designed a hierarchical FSM to control game progression.
 
 This diagram supports both functional transitions and UI switching.
 
-![State Diagram](./images/state-diagram.png)
+<p align="center">
+  <img src="./images/State%20diagram.png" alt="State Diagram" width="600"/>
+</p>
 
 ---
 
@@ -392,9 +444,6 @@ Once the map is generated, the corresponding entity objects (e.g. players, enemi
 The random map generation mechanism enriches the game's ability to provide content by enabling the system to continuously produce new levels without the need for manual updates. This not only increases the replay value of the game, but also lays the foundation for other features (e.g. card rating, daily challenges, endless mode) that can be used in the future.
 
 In the future, we plan to introduce seed-based generation, allowing players to reproduce certain maps, and expand the variety of map styles (e.g. thematic modules such as ice, volcano, forest, etc.) to improve the expressiveness and playability of randomly generated levels.
-
-
-
 
 ---
 
@@ -546,22 +595,84 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
   
 ### 6.3.3 Summary:
 
-While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.
+While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.Our testing also confirmed that the game runs smoothly on both desktop and mobile browsers, providing a consistent gameplay experience across different devices.
 
 ---
 
-# 7. Code Testing
-
-We ensured code quality with a **hybrid white-box + black-box** approach:
-
-| Test Type | Tools | Focus |
-|-----------|-------|-------|
-| White-Box | Custom Test class | Gravity flip, collision logic, object init |
-| Black-Box | Manual playthroughs | Game over conditions, win state, UI response |
-| Test Spec Doc | Excel | Scenario + expected outcomes |
-
-🖼️ _[Insert screenshot of test class code]_  
-🖼️ _[Insert sample rows from test specification table]_  
+# 7. Code Testing 
+ 
+To ensure code quality, we adopted a hybrid testing strategy that combines **White-box** and **Black-box** approaches. This allowed us to verify both the internal logic of the system and the external functionality as experienced by players. 
+ 
+--- 
+ 
+### 7.1 White-box Testing 
+ 
+White-box testing allowed us to analyze and test the internal logic of the game's source code by designing tests based on specific methods and control flows. 
+ 
+#### 7.1.1 Methods and Tools 
+ 
+* **Scope**: Core systems such as gravity flip (`attemptGravityFlip()`), collision detection (`checkCollision()`), score/life management (`GameState.update()`). 
+* **Coverage Goal**: Achieved both **Statement Coverage** and **Branch Coverage** using conditional path testing. 
+* **Implementation**: 
+ 
+  * Created a custom `TestRunner` class with assertion logic and log tracing. 
+  * Inserted logs/asserts inside `Player`, `LevelManager`, and `Enemy` classes. 
+  * Verified internal state transitions under simulated gameplay events. 
+ 
+#### 7.1.2 Sample Test Case 
+ 
+```javascript 
+test("Gravity should invert when spacebar is pressed", () => { 
+  const initialGravity = player.gravity; 
+  player.attemptGravityFlip(); 
+  assertNotEqual(player.gravity, initialGravity); 
+}); 
+``` 
+ 
+#### 7.1.3 Key Findings 
+ 
+| Issue                                      | Fix                                                         | 
+| ------------------------------------------ | ----------------------------------------------------------- | 
+| Character fails to land after gravity flip | Added dynamic grounding logic                               | 
+| Collision skipping during rapid flips      | Introduced deltaTime limiter & micro-step detection         | 
+| Inconsistent life decrement logic          | Rewrote `onHit()` vs `onDeath()` to handle cases separately | 
+ 
+These adjustments greatly improved cross-device stability and gameplay consistency. 
+ 
+--- 
+ 
+### 7.2 Black-box Testing 
+ 
+Black-box testing focused on user-centric interaction and functionality, without accessing the internal code. We simulated user inputs and validated output behaviors against functional specifications. 
+ 
+#### 7.2.1 Methodology 
+ 
+* Applied **Equivalence Partitioning** and **Boundary Value Analysis** to identify representative input classes. 
+* Focused on gameplay behaviors: jumping, enemy collisions, item collection, and level transitions. 
+* Used manual playthroughs and scripted scenario-based test tables. 
+ 
+#### 7.2.2 Sample Scenarios 
+ 
+| Test Scenario              | Input                    | Expected Output             | Class Type          | 
+| -------------------------- | ------------------------ | --------------------------- | ------------------- | 
+| Player collides with enemy | Overlapping positions    | Life -1                     | Valid input class   | 
+| Gravity flips mid-air      | Spacebar, Y-dir negative | Character floats to ceiling | Boundary input      | 
+| Attempted double jump      | Jump key + wall contact  | No second jump              | Invalid input class | 
+| No coin collection         | 0 coins, level complete  | Score = 0                   | No-gain scenario    | 
+ 
+#### 7.2.3 Key Findings 
+ 
+| Issue                          | Solution                                  | 
+| ------------------------------ | ----------------------------------------- | 
+| Inconsistent enemy hitboxes    | Standardized collision bounding boxes     | 
+| Missed jumps on edge platforms | Increased platform tolerance margin       | 
+| Mid-air jump exploit           | Restricted jump trigger to grounded state | 
+ 
+--- 
+ 
+### 7.3 Summary 
+ 
+Our combination of **white-box logic testing** and **black-box behavior simulation** enabled a well-rounded validation of the game system. Future plans include introducing **coverage tracking tools (e.g., Istanbul)** and **automated input simulations** to extend the depth and efficiency of our testing pipelin
 
 ---
 
@@ -575,9 +686,6 @@ We ensured code quality with a **hybrid white-box + black-box** approach:
 | Test Coverage | Good for core systems | Expand integration and edge case testing |
 
  _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
-
----
-
  This comprehensive evaluation structure allows us to iteratively refine **Rusty Rover's Run**, balancing player enjoyment with performance and usability goals.
  
 ---
@@ -613,6 +721,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 - **Adaptability**: Supports multiple OS (Windows, macOS, Linux). Versioning tools are used for upgrade cycles.
 - **Security**: Minimal attack surface; code is bundled and source-hidden. Encrypted local save data.
 - **Performance**: Optimized collision detection and rendering pipeline minimize CPU/GPU load.
+- **Cross-Device Compatibility**: Game runs smoothly on both desktop and mobile browsers via responsive design and performance optimization.
 
 ---
 
@@ -658,7 +767,6 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 ## 9.6 Sustainability Score Overview (Out of 10)
 
-
 <div align="center">
   <img src="images/Sustainability%20Score%20Overview.png" alt="Sustainability Score Overview" width="60%">
 </div>
@@ -667,20 +775,69 @@ Economic and Technical dimensions scored highest (9/10), reflecting strong imple
 
 ---
 
+## 9.7 Accessibility Focus 
+
+### Overview 
+
+This section focuses on **accessibility design** for players with disabilities within our gravity-based roguelike platformer. By aligning with the Sustainability Awareness Framework (SuSAF), we analyse the impacts and opportunities across five sustainability dimensions: **Social, Individual, Environmental, Economic, and Technical**.
+By embedding accessibility deeply into both **game mechanics and architecture**, we improve not only **player inclusiveness**, but also reinforce **sustainability goals** from technical and social perspectives.
+
+---
+
+### Dimension Analysis 
+
+####  Social 
+- **Inclusiveness**
+  Game supports **customizable controls**, allowing players with sensory or motor disabilities to participate equally.  
+
+- **Community Engagement**
+  Accessible design helps players feel represented and included, promoting a sense of belonging.  
+
+---
+
+####  Individual
+- **Health & Wellbeing** 
+  Accessibility features such as **reduced input complexity** and **visual clarity** support lower cognitive and physical stress.  
+
+- **Learning & Agency**  
+  Adjustable difficulty and **assistive hints** enhance learning pace and independent problem-solving.  
+
+---
+
+####  Environmental 
+- **Device Efficiency**  
+  Accessibility features are implemented with minimal GPU impact, ensuring **low energy consumption** even on assistive hardware.  
+
+---
+
+####  Economic 
+- **No Paywalls**  
+  Accessibility options are available by default at no extra cost, ensuring **financial fairness**.  
+
+- **Wider Reach**  
+  Inclusive design expands the game’s potential audience, supporting long-term sustainability and **market diversity**.  
+
+---
+
+####  Technical 
+- **Modular Accessibility**  
+  Accessibility features are developed as **independent, reusable modules** to ease maintenance and future extension.  
+
+- **WCAG Compliance**  
+  Interface elements and interactions follow WCAG guidelines to ensure **accessibility compliance**.
+  
+---
+
 # 10. Process
 
 ## 10.1 Collaboration
 
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
-
-
 <div align="center">
   <p style="font-size:14px; margin: 4px 0;">Team Meeting</p>
   <img src="images/Team-photo.jpg" alt="Team Photo" width="400">
 </div>
-
-
 
 We used a voting-based decision-making process:
 - For simple tasks, we held quick votes during in-person lab discussions.
@@ -736,7 +893,6 @@ We conducted regular **refactoring**:
   <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
 
-
 - **Voting Results**: Ranked-choice polls via WeChat.
 <div align="center">
   <img src="images/wechat.png" alt="投票结果" width="400">
@@ -746,20 +902,30 @@ We conducted regular **refactoring**:
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
   ![Kanban Board](images/Kanban.png)
 
-
 - **Sprint process**:
 <div align="center">
   <img src="images/process-sprint.png" alt="Sprint Process" width="400">
 </div>
 
-
 - **Burndown Chart**:  
   ![Burndown Chart](images/Burn%20chart.jpg.png)
-
 
 ---
 
 Our iterative, flexible process and thoughtful use of collaborative digital tools enabled the successful delivery of a highly interactive, multi-biome gravity reversal platformer.
+
+---
+
+## 10.5 Contribution to Development Process  
+
+| Name           | Contribution Weighting |
+|----------------|------------------------|
+| Xingchen Jin   | 1.0                    |
+| Yihan Liu      | 1.0                    |
+| Amuer          | 1.0                    |
+| Xiaoliang Su   | 1.0                    |
+| Suyi Dai       | 1.0                    |
+| Xirui Wang     | 1.0                    |
 
 ---
 
@@ -771,12 +937,10 @@ One of the most important lessons we learned was the value of clear team communi
 
 We also faced several challenges, particularly in terms of feature scoping and game balancing. Initially, our ambition led us to over-plan the number of levels and mechanics. Midway through development, we had to revise our scope to ensure a high-quality core experience rather than spreading ourselves too thin. Another technical challenge was designing the gravity-flipping mechanic without causing bugs or disorientation for the player. We solved this by creating modular physics functions and implementing smoother transitions.
 
-Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. These actions not only aligned with the SusAF framework but also improved our project’s maintainability.
+Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. Special effort was made to ensure mobile browser compatibility, making the game accessible on both phones and tablets without additional installation. These actions not only aligned with the SusAF framework but also improved our project’s maintainability.
 
 In the future, we envision expanding Puppy’s Magical Adventure with more levels, enhanced storytelling (e.g., cutscenes or dialogue), improved accessibility features, and a polished menu system. We are also interested in testing the game on different devices and possibly integrating multiplayer or online leaderboard features. Additionally, user feedback from playtests will continue to inform refinements in level design and UI.
 
 Ultimately, this project helped us grow as software engineers, designers, and collaborators. It pushed us to apply classroom knowledge in a real-world context, solve problems creatively, and think beyond code—into the realm of player experience, sustainability, and agile teamwork.
 
 ---
-
-- Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent. 
