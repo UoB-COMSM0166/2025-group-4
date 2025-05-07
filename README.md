@@ -1017,9 +1017,9 @@ We conducted regular **refactoring**:
 
 - **Burndown Chart**:  
   ![Burndown Chart](images/Burn%20chart.jpg.png)
-  <p align="center">
+<p align="center">
   <b>Figure 22</b><br>
- Burndown Chart
+  Burndown Chart
 </p>
 
 ---
