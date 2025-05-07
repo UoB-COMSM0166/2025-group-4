@@ -39,6 +39,10 @@ class Particle {
     this.rotation = options.rotation || 0;
     this.rotationSpeed = options.rotationSpeed || 0;
     
+    // For rectangular particles
+    this.particleWidth = options.particleWidth || (this.shape === 'rectangle' ? this.size : undefined);
+    this.particleHeight = options.particleHeight || (this.shape === 'rectangle' ? this.size / 2 : undefined);
+    
     // Special effects
     this.fadeMode = options.fadeMode || 'linear'; // 'linear', 'easeOut', 'easeIn', 'delay'
     this.delayFade = options.delayFade || 0.7; // At what point of life to start fading if using 'delay'
@@ -218,6 +222,9 @@ class Particle {
     } else if (this.shape === 'dust') {
       // Tiny dust specks with varied opacity
       ellipse(0, 0, this.size/2, this.size/2);
+    } else if (this.shape === 'rectangle') {
+      rectMode(CENTER);
+      rect(0, 0, this.particleWidth, this.particleHeight);
     }
     
     pop();
@@ -769,6 +776,39 @@ class ParticleSystem {
         rotationSpeed: random(-0.1, 0.1),
         fadeMode: 'linear'
       });
+    }
+  }
+  
+  createWindParticles(camera) {
+    const numParticles = 5; // Increased for better coverage
+    for (let i = 0; i < numParticles; i++) {
+      const viewWorldX = camera.x - (window.width / 2 / camera.zoom);
+      const viewWorldY = camera.y - (window.height / 2 / camera.zoom);
+      const viewWorldWidth = window.width / camera.zoom;
+      const viewWorldHeight = window.height / camera.zoom;
+
+      // Spawn particles across the entire view width, plus some buffer for continuous effect
+      const spawnX = viewWorldX + random(-viewWorldWidth * 0.1, viewWorldWidth * 1.1); 
+      const spawnY = viewWorldY + random(viewWorldHeight);
+      
+      const particleSize = random(4, 10); // Smaller square particles
+
+      const particleOptions = {
+        vx: random(5, 15), // Much faster horizontal speed
+        vy: random(-2, 2),   // More vertical disturbance
+        color: color(random(50, 150), random(180, 255), random(50, 150)), // Shades of green
+        alpha: random(80, 150),   // Slightly more opaque
+        life: random(100, 250),  // Adjusted lifetime based on speed and screen size
+        particleWidth: particleSize,
+        particleHeight: particleSize, // Square shape
+        shape: 'rectangle',
+        gravity: 0,             
+        drag: 0.995,             // Slightly less drag for faster movement
+        rotation: random(TWO_PI), 
+        rotationSpeed: random(-0.05, 0.05), // Slightly faster rotation
+        fadeMode: 'linear'
+      };
+      this.addParticle(spawnX, spawnY, particleOptions);
     }
   }
   
