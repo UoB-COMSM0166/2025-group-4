@@ -25,9 +25,11 @@
 - [11. Conclusion](#11-conclusion)
 
 # 1.Development Group
-![Group Photo](images/group4-photo.jpg)
-          Figure 1
-         Group Photo 
+![Group Photo](images/group4-photo.jpg)       
+<p align="center">
+  <b> Figure 1 </b><br>
+ Group Photo
+</p>
 
 **The names are listed from left to right in the group photo.**
 
@@ -152,6 +154,10 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 ### Surrogate Roles
  ####  Onion Model of game PUPPY'S MAGICAL ADVENTURE
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
+<p align="center">
+  <b> Figure 2</b><br>
+  Onion Model
+</p>
 
 Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
@@ -174,6 +180,11 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
   <img src="images/user poster 3.png" alt="User Poster 3" width="45%" />
   <img src="images/user poster 4.png" alt="User Poster 4" width="45%" />
 </p>
+<p align="center">
+  <b> Figure 3</b><br>
+ User Posters
+</p>
+
 
 To better understand what features we should prioritize, we created user stories.
 
@@ -191,10 +202,20 @@ Our team designed several posters featuring characters to represent these user s
 | As a hardcore player, I want the game to include high-difficulty hidden levels or rewards for no-damage clears to push my limits.       | Given the unlock conditions for high-difficulty levels, when a player completes extra challenges (such as a no-damage run or a timed challenge), then they should receive unique rewards or unlock new content to enhance the sense of achievement.      |
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
+<p align="center">
+  <b> Table 1</b><br>
+  User stories&Acceptance Criteria
+</p>
 
 # 4. Game Design – PUPPY'S MAGICAL ADVENTURE
 ## 4.1 User Case diagram
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
+<p align="center">
+  <b> Figure 4</b><br>
+  User Case diagram
+</p>
+
+---
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -210,10 +231,15 @@ Our team designed several posters featuring characters to represent these user s
 | **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
 | **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
 | **Step Three (Alt)** | Optional **Gold coin** can be collected (no gameplay effect). |
+<p align="center">
+  <b>Table 2</b><br>
+ Standard Mode VS Random Mode
+  (User Case)
+</p>
 
 ---
 
-## 4.2 Procedural Challenge Mode Use Case Specification
+## 4.2 Procedural Challenge Mode User Case Specification
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -230,6 +256,11 @@ Our team designed several posters featuring characters to represent these user s
 | **Step One** | Flip gravity using **Spacebar**, but obstacles may spawn in new positions, increasing unpredictability. |
 | **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
 | **Step Three** | Coin points awarded for completing unpredictable runs efficiently. |
+<p align="center">
+  <b>Table 3</b><br>
+ Santard Mode VS Random Mode
+  (Procedural Challenge Mode)
+</p>
 
 ---
 
@@ -270,6 +301,10 @@ The class diagram outlines object relationships in our game system and supports 
 - `Config`: centralizes constants for difficulty and level layout
 
 ![Class Diagram](./images/class-diagram.png)
+<p align="center">
+  <b>Figure 5 </b><br>
+ Class Diagram
+</p>
 
 ---
 
@@ -285,6 +320,10 @@ This diagram illustrates runtime logic and how game events propagate.
 - Renderer updates visual elements based on game state
 
 ![Sequence Diagram](./images/Sequence-diagram.png)
+<p align="center">
+  <b>Figure 6</b><br>
+  Sequence Diagram
+</p>
 
 ---
 
@@ -300,6 +339,10 @@ This diagram supports both functional transitions and UI switching.
 
 <p align="center">
   <img src="./images/State%20diagram.png" alt="State Diagram" width="600"/>
+</p>
+<p align="center">
+  <b>Figure 7</b><br>
+ State Diagram
 </p>
 
 ---
@@ -402,8 +445,6 @@ The map generator is designed as a standalone module that can be seamlessly inte
 
 Once the map is generated, the corresponding entity objects (e.g. players, enemies, floating platforms, gold coins and exit doors) are also initialised and particle animations are activated to ensure that the player receives full and smooth visual and interactive feedback when entering each level.
 
-
-
 ### 5.3.4 Continuity and expandability
 
 The random map generation mechanism enriches the game's ability to provide content by enabling the system to continuously produce new levels without the need for manual updates. This not only increases the replay value of the game, but also lays the foundation for other features (e.g. card rating, daily challenges, endless mode) that can be used in the future.
@@ -433,6 +474,10 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 | 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
 | 2 | Asked to play L1 and L2 while thinking aloud | Verbalizations documented by two observers |
 | 3 | Feedback grouped thematically | Data analyzed using thematic analysis (Braun & Clarke 2006) |
+<p align="center">
+  <b>Table 5</b><br>
+  Method
+</p>
 
 ### 6.1.4 Thematic Insights:
 
@@ -441,8 +486,16 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 | Controls & Movement | Responsive gravity switch | Jump timing unclear in some sections | Adjusted platform spacing |
 | Visual Design | Pixel art is immersive | Exit unclear, enemy sprites confusing | Updated assets and added arrow cues |
 | Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
+<p align="center">
+  <b>Table 6</b><br>
+  Thematic Insights
+</p>
 
 ![Thematic Mind Map](images/Thematic%20Mind%20Map.png)
+<p align="center">
+  <b>Figure 8</b><br>
+  Thematic Mind Map
+</p>
 
 ---
 
@@ -466,6 +519,10 @@ Findings were classified by severity to prioritize improvements. For example:
 | Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
 | Consistency and Standards | jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
 | Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
+<p align="center">
+  <b>Table 7</b><br>
+ Findings Table
+</p>
 
 The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
 
@@ -497,8 +554,19 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **8**  | 3 | 4 | 4 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 |
 | **9**  | 5 | 2 | 2 | 5 | 5 | 3 | 1 | 4 | 4 | 2 | 1 | 5 | 5 | 2 | 1 | 5 | 5 | 2 | 2 | 5 |
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
-
+<p align="center">
+  <b>Table 8</b><br>
+ System Usability Scale(SUS)Scores
+</p>
 ![SUS Scores Comparison](images/SUS%20Scores%20Comparison.png)
+<p align="center">
+  <img src="images/SUS%20Scores%20Comparison.png" alt="SUS Scores Comparison">
+</p>
+
+<p align="center">
+  <b>Figure 9</b><br>
+  SUS Scores Comparison(L1 vs L2)
+</p>
 
 ---
 
@@ -510,8 +578,16 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **3**  | 9  | 16 | 6  | 13 | 10 | 18 | 14 | 11 | 12 | 20 | 8  | 17 |
 | **4**  | 7  | 18 | 5  | 15 | 7  | 19 | 16 | 9  | 8  | 20 | 6  | 18 |
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
+<p align="center">
+  <b>Table 9</b><br>
+  NASA Task Load Index (NASA TLX Scores)
+</p>
 
 ![NASA TLX Scores Comparison](images/NASA%20TLX%20Scores%20Comparison.png)
+<p align="center">
+  <b>Figure 10</b><br>
+  NASA TLS Scores Comparison (L1 vs L2)
+</p>
 
 ---
 
@@ -523,6 +599,11 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Need for Support | 1.2 | 1.8 | ↑ |
 | System Integration | 4.1 | 3.9 | ↓ |
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
+<p align="center">
+  <b>Figure 11</b><br>
+  SUS Scores Summary
+</p>
+
 
 ![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
 
@@ -536,13 +617,27 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Effort | 22 | 48 | 70 |
 | Frustration | 17 | 45 | 65 |
 
+<p align="center">
+  <b>Table 10</b><br>
+  NASA TLX Summary
+</p>
+
  Wilcoxon Signed-Rank Test:
 - **L1 vs L2**: *p = 0.0035*  
 - **L2 vs L3**: *p = 0.0038*
 
 ![NASA TLX Workload Trend Across Levels](images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png)
 
+<p align="center">
+  <b>Figure 12</b><br>
+  NASA TLX Workload Trend Across Levels(Median)
+</p>
+
 ![NASA TLX Workload by Dimension](images/NASA%20TLX%20Workload%20by%20Dimension.png)
+<p align="center">
+  <b>Figure 13</b><br>
+  NASA TLX Workload by Dimension(Median)
+</p>
 
 ---
 
@@ -601,7 +696,11 @@ test("Gravity should invert when spacebar is pressed", () => {
 | Character fails to land after gravity flip | Added dynamic grounding logic                               | 
 | Collision skipping during rapid flips      | Introduced deltaTime limiter & micro-step detection         | 
 | Inconsistent life decrement logic          | Rewrote `onHit()` vs `onDeath()` to handle cases separately | 
- 
+ <p align="center">
+  <b>Table 12</b><br>
+  Key Findings(White-box Testing)
+</p>
+
 These adjustments greatly improved cross-device stability and gameplay consistency. 
  
 --- 
@@ -624,7 +723,10 @@ Black-box testing focused on user-centric interaction and functionality, without
 | Gravity flips mid-air      | Spacebar, Y-dir negative | Character floats to ceiling | Boundary input      | 
 | Attempted double jump      | Jump key + wall contact  | No second jump              | Invalid input class | 
 | No coin collection         | 0 coins, level complete  | Score = 0                   | No-gain scenario    | 
- 
+ <p align="center">
+  <b>Table 14</b><br>
+ Sample Scenarios(Black-box Testing)
+</p>
 #### 7.2.3 Key Findings 
  
 | Issue                          | Solution                                  | 
@@ -632,6 +734,10 @@ Black-box testing focused on user-centric interaction and functionality, without
 | Inconsistent enemy hitboxes    | Standardized collision bounding boxes     | 
 | Missed jumps on edge platforms | Increased platform tolerance margin       | 
 | Mid-air jump exploit           | Restricted jump trigger to grounded state | 
+ <p align="center">
+  <b>Table 15</b><br>
+  Key Findings(Black-box Testing)
+</p>
  
 --- 
  
@@ -649,6 +755,10 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 | Challenge | Players enjoy pressure but frustration grows | Add mid-level checkpoints or retry hints |
 | Visual Feedback | Inconsistent early on | Add consistent cues (flashes, effects, arrows) |
 | Test Coverage | Good for core systems | Expand integration and edge case testing |
+ <p align="center">
+  <b>Table 15</b><br>
+Summary&Future Improvements
+</p>
 
  _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
  This comprehensive evaluation structure allows us to iteratively refine **PUPPY'S MAGICAL ADVENTURE**, balancing player enjoyment with performance and usability goals.
@@ -698,6 +808,10 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 | Technical       | modular code → easy maintenance → long lifespan → less redevelopment waste      |
 | Environmental   | fewer assets → less GPU usage → reduced electricity consumption                 |
 | Economic        | free-to-play → increased access → larger base → sustainable ad |
+<p align="center">
+  <b>Table 16</b><br>
+Sustainability Effects – Chains of Impact
+</p>
 
 ---
 
@@ -727,6 +841,10 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 | Environmental | As a laptop user, I want low-power mode so I can save battery while playing.                     | Game provides toggle for reduced framerate and dark theme.                          |
 | Economic   | As a student, I want to enjoy the full game experience without paying money.                      | Game has no paywalls and all gameplay elements are accessible without purchase.     |
 | Individual | As a health-conscious player, I want to play without feeling pressured to grind.                  | Level system provides breaks and doesn't incentivize marathon sessions.             |
+<p align="center">
+  <b>Table 17</b><br>
+Sustainability User Stories
+</p>
 
 ---
 
@@ -737,6 +855,10 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 </div>
 
 Economic and Technical dimensions scored highest (9/10), reflecting strong implementation feasibility and future adaptability.
+<p align="center">
+  <b>Figure 15</b><br>
+  Sustainability Score Overview (Out of 10)
+</p>
 
 ---
 
@@ -803,6 +925,11 @@ In the early phase of development, our team held in-person meetings to build tru
   <p style="font-size:14px; margin: 4px 0;">Team Meeting</p>
   <img src="images/Team-photo.jpg" alt="Team Photo" width="400">
 </div>
+<p align="center">
+  <b>Figure 16</b><br>
+  Team Meeting
+</p>
+
 
 We used a voting-based decision-making process:
 - For simple tasks, we held quick votes during in-person lab discussions.
@@ -857,23 +984,43 @@ We conducted regular **refactoring**:
 <div align="center">
   <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
+<p align="center">
+  <b>Figure 17</b><br>
+  Paper Prototype
+</p>
 
 - **Voting Results**: Ranked-choice polls via WeChat.
 <div align="center">
   <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
-
+<p align="center">
+  <b>Figure 18</b><br>
+  WeChat Screenshot
+</p>
   
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
   ![Kanban Board](images/Kanban.png)
+  <p align="center">
+  <b>Figure 20</b><br>
+ Kanban Board
+</p>
 
 - **Sprint process**:
 <div align="center">
   <img src="images/process-sprint.png" alt="Sprint Process" width="400">
 </div>
+<p align="center">
+  <b>Figure 21</b><br>
+  Sprint process
+</p>
+
 
 - **Burndown Chart**:  
   ![Burndown Chart](images/Burn%20chart.jpg.png)
+  <p align="center">
+  <b>Figure 22</b><br>
+ Burndown Chart
+</p>
 
 ---
 
