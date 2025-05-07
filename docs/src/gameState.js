@@ -420,16 +420,16 @@ function updateGameParametersForDifficulty(difficulty) {
     state.enemySpeed = 1.0; // Slower enemies
   } else if (difficulty === "hard") {
     state.lives = 5; // Fewer lives on hard
-    state.coinValue = 5; // Fewer points per coin
-    state.enemySpeed = 2.0; // Faster enemies
+    state.coinValue = 15; // Fewer points per coin
+    state.enemySpeed = 1.5; // Faster enemies
   } else if (difficulty === "random") {
     state.lives = 10; // Random mode has 10 lives
-    state.coinValue = 10; // Standard coin value
+    state.coinValue = 15; // Standard coin value
     state.enemySpeed = 1.0; // Easy enemy speed
   } else {
     // Fallback - use easy settings
-    state.lives = 5;
-    state.coinValue = 10;
+    state.lives = 10;
+    state.coinValue = 15;
     state.enemySpeed = 1.0;
   }
   

@@ -28,8 +28,8 @@ export function updatePhysicsForDifficulty(difficulty) {
     gravity = 3; // Lower gravity makes the game easier to control
     maxSpeedX = 6; // Slower max speed makes the game more forgiving
   } else if (difficulty === "hard") {
-    gravity = 5; // Higher gravity makes timing more difficult
-    maxSpeedX = 18; // Faster max speed makes the game more challenging
+    gravity = 1; // Higher gravity makes timing more difficult
+    maxSpeedX = 9; // Faster max speed makes the game more challenging
   } else {
     // Fallback to easy settings
     gravity = 3;
