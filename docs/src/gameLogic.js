@@ -162,6 +162,13 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
   // When player reaches the exit, update level logic
   if (gameState.state.gameState === "play" && gameState.state.player && gameState.state.exitGate && 
       gameState.state.exitGate.checkPlayer(gameState.state.player) && !gameState.state.exitTriggered) {
+    // If in playtest mode, return to editor on exit gate
+    if (window.playtestMode) {
+      window.playtestMode = false;
+      window.playtestReturning = true;
+      window.toggleEditorMode();
+      return;
+    }
     gameState.setExitTriggered(true);
     // Add special particles when reaching the exit
     particleSystem.createExitGate(gameState.state.exitGate.x, gameState.state.exitGate.y);

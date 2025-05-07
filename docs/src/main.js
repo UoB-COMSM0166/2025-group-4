@@ -27,7 +27,7 @@ let freezeSound;
 let skidSound;
 // Global state
 let lastFrameTime = 0; // For fixed timestep
-let editorMode = false; // Track whether we're in editor mode
+window.editorMode = false; // Track whether we're in editor mode
 
 // Make sure DOM is ready before initializing loading screen
 document.addEventListener('DOMContentLoaded', () => {
@@ -307,7 +307,7 @@ function draw() {
   lastFrameTime = gameTime;
 
   // Update and render based on current mode
-  if (editorMode) {
+  if (window.editorMode) {
     updateLevelEditor();
     drawLevelEditor();
   } else {
@@ -323,14 +323,28 @@ function draw() {
  * p5.js keyPressed function - handle keyboard input
  */
 function keyPressed() {
-  // Handle global key commands first
-  if (keyCode === 27) { // ESC key to toggle editor mode
+  // Handle ESC: only enter editor from menu, always exit editor
+  if (keyCode === 27) { // ESC key?
+    if (window.editorMode) {
+      toggleEditorMode();
+    } else if (state.gameState === "menu") {
+      toggleEditorMode();
+    }
+    return;
+  }
+  
+  // Handle 'P' to exit playtest when in play
+  if ((key === 'p' || key === 'P') && !window.editorMode && window.playtestMode) {
+    // Remove the temporary playtest level
+    state.levels.pop();
+    window.playtestMode = false;
+    window.playtestReturning = true;
     toggleEditorMode();
     return;
   }
   
   // Then route to the appropriate handler
-  if (editorMode) {
+  if (window.editorMode) {
     handleEditorKeyPressed();
   } else {
     handleKeyPressed();
@@ -341,13 +355,14 @@ function keyPressed() {
  * Toggle between game mode and editor mode
  */
 function toggleEditorMode() {
-  editorMode = !editorMode;
-  
-  if (editorMode) {
-    // Entering editor mode
-    initLevelEditor();
+  window.editorMode = !window.editorMode;
+  if (window.editorMode) {
+    if (!window.playtestReturning) {
+      initLevelEditor();
+    } else {
+      window.playtestReturning = false;
+    }
   } else {
-    // Exiting editor mode - you can optionally do something here
     console.log("Exited editor mode");
   }
 }
@@ -365,7 +380,7 @@ function mousePressed() {
     console.log("BGM started on mouse interaction.");
   }
   
-  if (editorMode) {
+  if (window.editorMode) {
     handleEditorMousePressed();
   } else {
     // Check if we're in the menu demo state first
@@ -406,7 +421,7 @@ function mousePressed() {
  * p5.js mouseDragged function - handle mouse drag
  */
 function mouseDragged() {
-  if (editorMode) {
+  if (window.editorMode) {
     handleEditorMouseDragged();
   }
 }
@@ -415,7 +430,7 @@ function mouseDragged() {
  * p5.js mouseReleased function - handle mouse release
  */
 function mouseReleased() {
-  if (editorMode) {
+  if (window.editorMode) {
     handleEditorMouseReleased();
   }
 }
@@ -424,7 +439,7 @@ function mouseReleased() {
  * p5.js mouseWheel function - handle mouse wheel
  */
 function mouseWheel(event) {
-  if (editorMode) {
+  if (window.editorMode) {
     handleEditorMouseWheel(event);
     return false; // Prevent default behavior
   }
@@ -435,7 +450,7 @@ function mouseWheel(event) {
  * p5.js mouseClicked function - handle mouse clicks
  */
 function mouseClicked() {
-  if (!editorMode) {
+  if (!window.editorMode) {
     // Do not trigger general mouse click handling if in menu demo mode
     if (state.gameState === "menu" && state.menuDemoActive) {
       return; // Already handled by mousePressed
@@ -448,7 +463,7 @@ function mouseClicked() {
  * p5.js touchStarted function - handle touch input for mobile
  */
 function touchStarted() {
-  if (!editorMode) {
+  if (!window.editorMode) {
     console.log("Touch started, game state:", state.gameState);
     
     // Special handling for menu demo
@@ -536,3 +551,6 @@ window.mouseClicked = mouseClicked;
 window.touchStarted = touchStarted;
 window.windowResized = windowResized;
 window.exportEditorLevel = exportEditorLevel;
+
+// Expose toggleEditorMode for external modules
+window.toggleEditorMode = toggleEditorMode;

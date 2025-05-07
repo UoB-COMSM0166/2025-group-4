@@ -24,13 +24,14 @@ export function loadLevel(idx) {
   gameState.state.exitTriggered = false;
 
   if (idx < 0 || idx >= gameState.state.levels.length) return;
-  if (idx === gameState.state.levels.length - 1 && gameState.state.score < 100) {
+  const currentLevel = gameState.state.levels[idx];
+
+  // Only built-in last level is hidden; skip if custom level has no assets
+  if (currentLevel.assets && idx === gameState.state.levels.length - 1 && gameState.state.score < 100) {
     console.log("Hidden level unlock failed: score less than 100, current score:", gameState.state.score);
     gameState.state.gameState = "win";
     return;
   }
-
-  const currentLevel = gameState.state.levels[idx];
 
   // Use preloaded wall image from cache
   if (currentLevel.assets && currentLevel.assets.wall) {

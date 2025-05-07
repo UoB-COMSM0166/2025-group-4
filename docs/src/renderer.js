@@ -321,8 +321,10 @@ function drawGameScreen(interpolation = 0) {
     coin.draw(0);
   }
 
-  // Draw exit gate
-  gameState.state.exitGate.draw(0);
+  // Draw exit gate if present
+  if (gameState.state.exitGate) {
+    gameState.state.exitGate.draw(0);
+  }
 
   // Draw enemies with interpolation
   for (let enemy of gameState.state.enemies) {

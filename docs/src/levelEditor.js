@@ -3,6 +3,8 @@
  * Inspired by VVVVVV's level editor, allows creating and editing game levels
  */
 import { tileSize, numRows, numCols, hudHeight } from './config.js';
+import * as gameState from './gameState.js';
+import { loadLevel as loadGameLevel } from './levelManager.js';
 
 // Editor state variables
 let editorGrid = []; // 2D array representing the current level being edited
@@ -27,6 +29,9 @@ let messageTimeout = 0; // Timeout for message display
 
 // Tile definitions - we'll set colors in setup() after p5.js is initialized
 let TILES = {};
+
+// Ensure global playtestMode flag exists
+window.playtestMode = window.playtestMode || false;
 
 /**
  * Initialize the level editor
@@ -538,6 +543,30 @@ export function handleEditorKeyPressed() {
     promptResizeGrid();
   } else if (key === 'f' || key === 'F') {
     fillSelection();
+  } else if (key === 'p' || key === 'P') {
+    // Playtest current map
+    if (!window.playtestMode) {
+      const levelData = exportLevel();
+      if (!levelData) return;
+      // Add custom level and load it
+      gameState.addCustomLevel(levelData);
+      const idx = gameState.state.levels.length - 1;
+      // Infinite lives in playtest
+      gameState.state.lives = Infinity;
+      window.playtestMode = true;
+      window.toggleEditorMode();
+      loadGameLevel(idx);
+      // Enter play mode
+      gameState.state.menuDemoActive = false;
+      gameState.setGameState("play");
+      gameState.updateWindowGameState();
+    } else {
+      // Exit playtest and remove test level
+      gameState.state.levels.pop();
+      window.playtestMode = false;
+      window.playtestReturning = true;
+      window.toggleEditorMode();
+    }
   }
 }
 
