@@ -860,7 +860,7 @@ Sustainability User Stories
 
 Economic and Technical dimensions scored highest (9/10), reflecting strong implementation feasibility and future adaptability.
 <p align="center">
-  <b>Figure 15</b><br>
+  <b>Figure 14</b><br>
   Sustainability Score Overview (Out of 10)
 </p>
 
@@ -930,7 +930,7 @@ In the early phase of development, our team held in-person meetings to build tru
   <img src="images/Team-photo.jpg" alt="Team Photo" width="400">
 </div>
 <p align="center">
-  <b>Figure 16</b><br>
+  <b>Figure 15</b><br>
   Team Meeting
 </p>
 
@@ -989,7 +989,7 @@ We conducted regular **refactoring**:
   <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
 <p align="center">
-  <b>Figure 17</b><br>
+  <b>Figure 16</b><br>
   Paper Prototype
 </p>
 
@@ -998,14 +998,14 @@ We conducted regular **refactoring**:
   <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
 <p align="center">
-  <b>Figure 18</b><br>
+  <b>Figure 17</b><br>
   WeChat Screenshot
 </p>
   
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
   ![Kanban Board](images/Kanban.png)
   <p align="center">
-  <b>Figure 20</b><br>
+  <b>Figure 18</b><br>
  Kanban Board
 </p>
 
@@ -1014,7 +1014,7 @@ We conducted regular **refactoring**:
   <img src="images/process-sprint.png" alt="Sprint Process" width="400">
 </div>
 <p align="center">
-  <b>Figure 21</b><br>
+  <b>Figure 19</b><br>
   Sprint process
 </p>
 
@@ -1022,7 +1022,7 @@ We conducted regular **refactoring**:
 - **Burndown Chart**:  
   ![Burndown Chart](images/Burn%20chart.jpg.png)
 <p align="center">
-  <b>Figure 22</b><br>
+  <b>Figure 20</b><br>
   Burndown Chart
 </p>
 
