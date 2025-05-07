@@ -147,7 +147,7 @@ export function initMenuDemo() {
     "1.............3............1",
     "1..........................1",
     "1..........................1",
-    "1...e.....n.....h.....r....1",
+    "1......e......h.....r......1",
     "1111111111111111111111111111"
   ];
 
@@ -199,12 +199,16 @@ export function createDifficultySelectors() {
     // Direct implementation for simplicity
     const selectorWidth = tileSize * 2.5;
     const selectorHeight = tileSize * 1.5;
+    const mapWidth = state.menuDemoMap[0].length * tileSize;
+    
+    // Calculate positions for 3 evenly spaced selectors
+    const spacing = mapWidth / 4; // Divide into 4 parts to get 3 spaces
     
     console.log("Creating difficulty selectors at y position:", 7 * tileSize);
     
     // Create easy selector
     state.difficultySelectors.push({
-      x: 5 * tileSize, 
+      x: spacing, 
       y: 7 * tileSize,
       width: selectorWidth,
       height: selectorHeight,
@@ -247,49 +251,9 @@ export function createDifficultySelectors() {
       }
     });
     
-    // Normal selector
-    state.difficultySelectors.push({
-      x: 12 * tileSize, 
-      y: 7 * tileSize,
-      width: selectorWidth,
-      height: selectorHeight,
-      difficulty: "normal",
-      color: color(100, 200, 255),
-      hover: false,
-      draw: function(cameraOffsetX) {
-        push();
-        fill(100, 200, 255, 200);
-        stroke(255);
-        strokeWeight(2);
-        rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height, 8);
-        
-        fill(0);
-        noStroke();
-        textAlign(CENTER, CENTER);
-        textSize(tileSize * 0.7);
-        text("NORMAL", this.x, this.y);
-        pop();
-      },
-      checkCollision: function(player) {
-        if (!player) return false;
-        const collision = 
-          player.x + player.w/2 > this.x - this.width/2 &&
-          player.x - player.w/2 < this.x + this.width/2 &&
-          player.y + player.h/2 > this.y - this.height/2 &&
-          player.y - player.h/2 < this.y + this.height/2;
-        
-        if (collision) {
-          console.log("Collision with NORMAL detected");
-          selectDifficulty("normal");
-          return true;
-        }
-        return false;
-      }
-    });
-    
     // Hard selector
     state.difficultySelectors.push({
-      x: 19 * tileSize, 
+      x: spacing * 2, 
       y: 7 * tileSize,
       width: selectorWidth,
       height: selectorHeight,
@@ -329,7 +293,7 @@ export function createDifficultySelectors() {
     
     // Random selector
     state.difficultySelectors.push({
-      x: 24 * tileSize, 
+      x: spacing * 3, 
       y: 7 * tileSize,
       width: selectorWidth,
       height: selectorHeight,
@@ -426,8 +390,10 @@ function updateGameParametersForDifficulty(difficulty) {
   } else if (difficulty === "random") {
     difficultyColor = color(255, 180, 80); // Orange for random
     physicsDifficulty = "easy"; // Random mode uses easy physics
-  } else { // Normal difficulty
+  } else {
+    // Fallback for any unrecognized difficulty
     difficultyColor = color(100, 200, 255);
+    physicsDifficulty = "easy"; // Default to easy physics
   }
   
   // Create burst across the entire screen
@@ -449,11 +415,11 @@ function updateGameParametersForDifficulty(difficulty) {
   
   // Update game parameters based on difficulty
   if (difficulty === "easy") {
-    state.lives = 5; // More lives on easy
+    state.lives = 99; // More lives on easy
     state.coinValue = 15; // More points per coin
     state.enemySpeed = 1.0; // Slower enemies
   } else if (difficulty === "hard") {
-    state.lives = 2; // Fewer lives on hard
+    state.lives = 5; // Fewer lives on hard
     state.coinValue = 5; // Fewer points per coin
     state.enemySpeed = 2.0; // Faster enemies
   } else if (difficulty === "random") {
@@ -461,10 +427,10 @@ function updateGameParametersForDifficulty(difficulty) {
     state.coinValue = 10; // Standard coin value
     state.enemySpeed = 1.0; // Easy enemy speed
   } else {
-    // Normal difficulty
-    state.lives = 3;
+    // Fallback - use easy settings
+    state.lives = 5;
     state.coinValue = 10;
-    state.enemySpeed = 1.5;
+    state.enemySpeed = 1.0;
   }
   
   // Update physics parameters for the new difficulty
