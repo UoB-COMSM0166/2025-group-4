@@ -313,11 +313,11 @@ For collision detection, the game has developed an extremely robust, fine-graine
 By building in systematic physics and collision modules, the game gains an extremely consistent gameplay experience across different operating environments and also provides a solid foundation for future expansion of more complex game sequences (e.g. dynamic bodies, time manipulation and gravity shifting bodies). The stable and reliable physics system and collision mechanism not only improve the playability and polish of the current version, but also provide a solid technical foundation for the future development of the project.
 
 ## 2.a map editor with a player-defined map feature
-Objectives and motivations
+### Objectives and motivations
 
 We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric leveling ecosystem.
 
-Graphic map editor
+### Graphic map editor
 
 The map uses a matrix of characters as the underlying data structure, with each character corresponding to a game block. The editor intuitively displays these characters using coloured squares and icons, and allows players to freely customise the map content without any programming knowledge.
 
@@ -329,7 +329,7 @@ We have implemented the following interactive features:
 
 For added efficiency, the HUD displays real-time status information, such as cursor position, currently selected block, edit mode, etc., to ensure that a good user experience is maintained even with high degrees of freedom.
 
-WYSIWYG testing mechanism
+### WYSIWYG testing mechanism
 
 We have introduced a mechanism for exporting and opening maps in real time. Players can click ‘export’ to encode the current map into a standard format and load it into the main game engine for play immediately.
 
@@ -341,7 +341,8 @@ To ensure the availability of imported maps, the system has set the following ve
 
 This mechanism helps players quickly refine the level design during the design and testing process, lowers the creation threshold and improves feedback efficiency.
 
-Towards a sustainable content ecosystem
+### Towards a sustainable content ecosystem
+
 The map editor is not only a creation tool, but also reflects our vision of a player-driven content ecosystem. By collecting user cards, the game is no longer solely dependent on official level updates, but can use the power of the community to achieve sustainable content enrichment.
 
 Most importantly, map creation itself is a soft learning experience in system design. Players need to understand the principles of level design, such as spatial layout, risk management and path planning, and in the cycle of ‘playing’ and ‘making’ they learn both systematic thinking and creative expression.
