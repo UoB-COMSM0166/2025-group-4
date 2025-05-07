@@ -9,7 +9,7 @@ import { Coin } from './entities/coin.js';
 import { ExitGate } from './entities/exitGate.js';
 import { FloatingPlatform } from './entities/floatingPlatform.js';
 import { particleSystem } from './particles.js';
-import { generateLevels } from './mapGenerator.js';
+import { generateLevels, generateMap, setMapSeed } from './mapGenerator.js';
 import * as gameState from './gameState.js';
 import { camera } from './camera.js';
 import { setupLevels } from './levels.js';
@@ -358,8 +358,18 @@ export function reloadCurrentLevel(oldTileSize) {
  * @param {boolean} isFromDemoSelector - True if called from the menu demo's RANDOM selector
  */
 export function startGeneratedMode(isFromDemoSelector = false) {
-  gameState.state.generatedMode = true; // Ensure this is set
-  gameState.state.generatedLevels = generateLevels(20, gameState.state.seedValue);
+  gameState.state.generatedMode = true;
+  // Seed RNG: demo selector uses current time; legacy seed input otherwise
+  if (isFromDemoSelector) {
+    const newSeed = Date.now();
+    setMapSeed(newSeed);
+    // Use RNG seeded by time for levels
+    gameState.state.generatedLevels = generateLevels(20);
+  } else {
+    // Legacy seed-based generation
+    setMapSeed(gameState.state.seedValue);
+    gameState.state.generatedLevels = generateLevels(20, gameState.state.seedValue);
+  }
   gameState.state.generatedLevelCount = 0;
   gameState.state.totalCoinsCollected = 0;
   gameState.state.score = 0;
@@ -403,11 +413,14 @@ export function startGeneratedMode(isFromDemoSelector = false) {
 export function loadGeneratedLevel(idx) {
   // Reset exit trigger when loading a new generated level
   gameState.state.exitTriggered = false;
-  
-  if (idx < 0 || idx >= gameState.state.generatedLevels.length) {
-    // All levels completed - win the game
-    gameState.state.gameState = "win";
-    return;
+  if (idx < 0) return;
+  // Generate new level on demand for infinite mode
+  if (idx >= gameState.state.generatedLevels.length) {
+    const difficulty = 1 + idx * 0.5;
+    const width = Math.min(40, 25 + Math.floor(idx / 2) * 5);
+    const height = Math.min(20, 12 + Math.floor(idx / 3) * 2);
+    const newLevel = generateMap(width, height, difficulty);
+    gameState.state.generatedLevels.push(newLevel);
   }
   
   const currentLevel = gameState.state.generatedLevels[idx];
@@ -551,13 +564,6 @@ export function loadGeneratedLevel(idx) {
   
   // Update the global floatingPlatforms reference
   window.floatingPlatforms = gameState.state.floatingPlatforms;
-  
-
-  if (idx ===0) {  
-    gameState.state.tutorialActive = true;
-    gameState.state.tutorialText = "点击鼠标或空格来反转重力！\n每个金币=15分。";
-    gameState.state.pauseGameForTutorial = true;
-  }
   
   // Center the camera
   gameState.state.cameraOffsetX = 0;

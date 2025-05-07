@@ -62,9 +62,20 @@ export function handleKeyPressed() {
     // Handle lives selection in generated mode
     handleLivesMenuKeyPressed();
   } else if (gameState.state.gameState === "stats") {
-    // Press any key to continue from stats screen
-    gameState.setStatsDisplayActive(false);
-    gameState.setGameState("play");
+    if (keyCode === 32) {
+      if (gameState.state.generatedMode && gameState.state.lives > 0) {
+        // Continue to next generated level
+        gameState.setStatsDisplayActive(false);
+        gameState.setGameState("play");
+        import('./levelManager.js').then(levelManager => {
+          levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+        });
+      } else {
+        // Treat as QUIT for zero-lives milestone or non-generated
+        initGame();
+      }
+    }
+    return;
   }
 }
 
@@ -316,17 +327,22 @@ function handleStatsScreenClick() {
   if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
       mouseY > panelY + panelHeight - 80 && mouseY < panelY + panelHeight - 30) {
     gameState.setStatsDisplayActive(false);
-    // gameState.setGameState("play"); // loadGeneratedLevel will set this if appropriate
-    
-    // Generate the next level if in generated mode
-    import('./levelManager.js').then(levelManager => {
-      if (gameState.state.generatedMode) {
-        levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+    // If in random (generated) mode
+    if (gameState.state.generatedMode) {
+      if (gameState.state.lives > 0) {
+        // Continue to next generated level
+        import('./levelManager.js').then(levelManager => {
+          gameState.setGameState('play');
+          levelManager.loadGeneratedLevel(gameState.state.levelIndex + 1);
+        });
       } else {
-        // If somehow got here not in generated mode, just resume play (should not happen)
-        gameState.setGameState("play"); 
+        // Random mode ended (no lives), return to main menu
+        initGame();
       }
-    });
+    } else {
+      // Non-generated stats, just resume play
+      gameState.setGameState('play');
+    }
   }
   
   // Quit button

@@ -379,7 +379,11 @@ function drawGameScreen(interpolation = 0) {
   textSize(Math.max(16, hudHeight * 0.4)); // Scale text with HUD height
   text("Score: " + gameState.state.score, 20, hudHeight / 2);
   text("Lives: " + gameState.state.lives, 150, hudHeight / 2);
-  text("Level: " + (gameState.state.levelIndex + 1) + "/" + gameState.state.levels.length, 250, hudHeight / 2);
+  // Show infinite levels for generated mode
+  const levelText = gameState.state.generatedMode
+    ? `Level: ${gameState.state.levelIndex + 1}/∞`
+    : `Level: ${gameState.state.levelIndex + 1}/${gameState.state.levels.length}`;
+  text(levelText, 250, hudHeight / 2);
   
   // Add time display
   let minutes = Math.floor(gameState.state.currentPlayTime / 60);
@@ -582,21 +586,29 @@ function drawStatsScreen() {
   text(gameState.state.totalCoinsCollected, panelX + panelWidth - 50, panelY + 200);
   text(gameState.state.lives, panelX + panelWidth - 50, panelY + 240);
   
-  // Continue button
-  fill(100, 200, 255);
-  noStroke();
-  rect(width / 2 - 100, panelY + panelHeight - 80, 200, 50, 10);
+  // Determine if this is end-of-random-mode (no lives)
+  const isRandomEnd = gameState.state.generatedMode && gameState.state.lives <= 0;
   
-  fill(0);
-  textAlign(CENTER);
-  textSize(Math.max(20, width / 40));
-  text("CONTINUE", width / 2, panelY + panelHeight - 55);
+  // Continue button (only if not end of random mode)
+  if (!isRandomEnd) {
+    fill(100, 200, 255);
+    noStroke();
+    rect(width / 2 - 100, panelY + panelHeight - 80, 200, 50, 10);
+    fill(0);
+    textAlign(CENTER);
+    textSize(Math.max(20, width / 40));
+    text("CONTINUE", width / 2, panelY + panelHeight - 55);
+  }
   
   // Quit button
   fill(255, 100, 100);
-  rect(width / 2 - 100, panelY + panelHeight - 20, 200, 50, 10);
+  // Position quit button centered if only one, else below continue
+  const quitY = isRandomEnd
+    ? panelY + panelHeight - 65
+    : panelY + panelHeight - 20;
+  rect(width / 2 - 100, quitY, 200, 50, 10);
   
   fill(0);
   textSize(Math.max(20, width / 40));
-  text("QUIT", width / 2, panelY + panelHeight + 5);
+  text("QUIT", width / 2, quitY + 25);
 } 

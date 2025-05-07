@@ -460,8 +460,14 @@ export function loseLife() {
   particleSystem.createDeath(state.player.x, state.player.y);
   
   if (state.lives <= 0) {
-    // Game over
-    state.gameState = "over";
+    if (state.generatedMode) {
+      // End random mode and show milestone stats
+      state.statsDisplayActive = true;
+      state.gameState = "stats";
+    } else {
+      // Regular game over
+      state.gameState = "over";
+    }
   } else {
     // Trigger hitstop effect
     state.hitstopActive = true;
