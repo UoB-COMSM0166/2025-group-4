@@ -8,6 +8,8 @@ import { particleSystem } from './particles.js';
 import * as gameState from './gameState.js';
 import { camera } from './camera.js';
 
+let irisMask; // Graphics buffer for iris wipe overlay
+
 /**
  * Draw background with parallax effect
  * @param {p5.Image} backgroundImage - The background image to draw
@@ -70,6 +72,63 @@ export function drawGame(interpolation = 0) {
     drawStatsScreen();
   } else if (gameState.state.gameState === "play" || gameState.state.gameState === "over" || gameState.state.gameState === "win") {
     drawGameScreen(interpolation);
+  }
+  
+  // Inverse iris reveal overlay at level start
+  if (gameState.state.startIrisTimer > 0) {
+    if (!irisMask || irisMask.width !== width || irisMask.height !== height) {
+      irisMask = createGraphics(width, height);
+    }
+    irisMask.clear();
+    irisMask.noStroke();
+    irisMask.background(0);
+    irisMask.erase();
+    const sDur = gameState.state.startIrisDuration;
+    const sT = gameState.state.startIrisTimer;
+    const maxRadius = Math.sqrt(width * width + height * height) / 2;
+    const minRadius = tileSize * 2;
+    const progress = (sDur - sT) / sDur;
+    const holeRadius = minRadius + (maxRadius - minRadius) * progress;
+    const spawnX = gameState.state.playerSpawnX;
+    const spawnY = gameState.state.playerSpawnY;
+    const screenPos = camera.worldToScreen(spawnX, spawnY);
+    irisMask.ellipse(screenPos.x, screenPos.y, holeRadius * 2, holeRadius * 2);
+    irisMask.noErase();
+    image(irisMask, 0, 0, width, height);
+  }
+
+  // Iris wipe overlay when ending level
+  if (gameState.state.irisTimer > 0) {
+    // Lazy initialize or resize the iris mask buffer
+    if (!irisMask || irisMask.width !== width || irisMask.height !== height) {
+      irisMask = createGraphics(width, height);
+    }
+    irisMask.clear();
+    irisMask.noStroke();
+    irisMask.background(0);
+    irisMask.erase();
+    const dur = gameState.state.irisDuration;
+    const hold = 30;
+    const initial = Math.max(1, Math.floor((dur - hold) / 2));
+    const final = dur - hold - initial;
+    const t = gameState.state.irisTimer;
+    const maxRadius2 = Math.sqrt(width * width + height * height) / 2;
+    const minRadius2 = tileSize * 2;
+    let holeRadius;
+    if (t > hold + final) {
+      const prog = (dur - t) / initial;
+      holeRadius = maxRadius2 - (maxRadius2 - minRadius2) * prog;
+    } else if (t > final) {
+      holeRadius = minRadius2;
+    } else {
+      holeRadius = minRadius2 * (t / final);
+    }
+    const worldX = gameState.state.exitGate?.x ?? gameState.state.player?.x;
+    const worldY = gameState.state.exitGate?.y ?? gameState.state.player?.y;
+    const screenPos2 = camera.worldToScreen(worldX, worldY);
+    irisMask.ellipse(screenPos2.x, screenPos2.y, holeRadius * 2, holeRadius * 2);
+    irisMask.noErase();
+    image(irisMask, 0, 0, width, height);
   }
 }
 

@@ -73,7 +73,10 @@ export const state = {
   statsDisplayActive: false, // whether the stats display is active
   seedValue: "", // Empty string means random seed
   seedInput: false, // Flag to indicate if we're editing the seed
-
+  irisTimer: 0, // Timer for iris wipe effect
+  irisDuration: 60, // Duration of iris wipe in frames
+  startIrisTimer: 0, // Timer for inverse iris reveal at level start
+  startIrisDuration: 60, // Duration of inverse iris reveal in frames
 
   tutorialText: "",           // 教学提示内容
   tutorialActive: false,

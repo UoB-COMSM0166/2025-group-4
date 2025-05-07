@@ -14,6 +14,29 @@ import { camera } from './camera.js';
  * @param {number} deltaTime - Time since last update
  */
 export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
+  // Handle start iris reveal timer
+  if (gameState.state.startIrisTimer > 0) {
+    gameState.state.startIrisTimer--;
+  }
+  // Add iris wipe effect handling before other updates
+  if (gameState.state.irisTimer > 0) {
+    gameState.state.irisTimer--;
+    if (gameState.state.irisTimer === 0) {
+      // After wipe completes, proceed to next level or win
+      if (gameState.state.generatedMode) {
+        completeGeneratedLevel();
+      } else {
+        gameState.state.levelIndex++;
+        if (gameState.state.levelIndex >= gameState.state.levels.length) {
+          gameState.setGameState("win");
+        } else {
+          loadLevelManager(gameState.state.levelIndex);
+        }
+      }
+    }
+    return;
+  }
+  
   // Skip update if in stats display
   if (gameState.state.statsDisplayActive) {
     return;
@@ -176,29 +199,9 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
     // Play exit sound
     window.passSound.play();
     
-    // Dramatic camera zoom effect on level completion
-    camera.setZoom(5); // Zoom in for 0.5 seconds
-    camera.addTrauma(0.3);
-    
-    // In generated mode, use the generated level completion logic
-    if (gameState.state.generatedMode) {
-      // Award bonus points for completing a generated level
-      gameState.state.score += 20;
-      
-      // Complete the level
-      completeGeneratedLevel();
-    } else {
-      // Regular mode - load the next level or win if at the end
-      gameState.state.levelIndex++;
-      if (gameState.state.levelIndex >= gameState.state.levels.length) {
-        gameState.setGameState("win");
-      } else {
-        // Add a slight delay before loading the next level, matching generated levels
-        setTimeout(() => {
-          loadLevelManager(gameState.state.levelIndex);
-        }, 500);
-      }
-    }
+    // FIRST_EDIT: Trigger iris wipe effect instead of zoom
+    gameState.state.irisTimer = gameState.state.irisDuration;
+    return;
   }
 }
 
