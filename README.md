@@ -302,22 +302,34 @@ This diagram supports both functional transitions and UI switching.
 # 5. Implementation
 
 
-## 1.Implementation of a time-independent physics system and a stable collision mechanism
+## 5.1 Implementation of a time-independent physics system and a stable collision mechanism
 
-The main goal we want to achieve is to ensure that the game can maintain a consistent gameplay experience and stability of physics interactions on different devices and with different refresh rates. Regardless of the type of device, players should have a fluid, precise and predictable feel for character movements and collisions, which is the foundation of the game's fairness and playability.
+### 5.1.1 Objectives and motivations
 
-In terms of physics updates, the project introduces a mechanism of fixed time steps. By standardising the deltaTime parameter, all motion-related physics calculations (e.g. gravitational acceleration, maximum horizontal velocity, skill recovery times, etc.) will be decoupled from the time step, thus avoiding variations in the gameplay experience due to differences in refresh rate. Even on devices with a high refresh rate or in environments with a temporary delay, the character's jump height, the distance travelled and the movement speed of the floating platform will remain constant. At the same time, the system sets a reasonable upper limit for deltaTime to avoid abnormal character movements due to low refresh rates and to ensure that the physics simulation can run stably, even under extreme conditions.
+We want to provide the player with a game experience that is consistent and smooth on different devices and at different refresh rates. The character's jump height, movement speed and interaction with the environment should be stable and controllable, and the game experience should not be affected by performance differences or occasional lags. To achieve this, we need to develop a collision physics and processing system that combines accuracy, efficiency and robustness.
 
-For collision detection, the game has developed an extremely robust, fine-grained collision processing system. Interactions between the player and scene elements (ground, walls, spikes, floating platforms, etc.) are split into horizontal and vertical directions for detection, and a small-step strategy is used to avoid penetration problems during high-speed movements. As the game introduces a ‘gravity flip’ mechanism, the system automatically and dynamically adapts the contact piece to the current direction of gravity to ensure that the character can always land correctly on the ground and climb the wall in a ‘flip’ state. For dynamic interaction elements such as floating platforms and skating stones, special evaluation logic has been developed to ensure that the player can straddle, slide or push in a stable way. To increase the realism of the physical interaction and gameplay, detailed feedback, such as when the player hits the ground and bumps into walls, has also been incorporated into the collision response, making the overall action experience more vivid and natural.
+###  5.1.2 Fixed time step mechanism (FTM)
 
-By building in systematic physics and collision modules, the game gains an extremely consistent gameplay experience across different operating environments and also provides a solid foundation for future expansion of more complex game sequences (e.g. dynamic bodies, time manipulation and gravity shifting bodies). The stable and reliable physics system and collision mechanism not only improve the playability and polish of the current version, but also provide a solid technical foundation for the future development of the project.
+To eliminate the effects of frame rate variations on game behaviour, we introduce a fixed-time-step system. Through the uniform use of a standardised deltaTime parameter, all motion-related calculations (including gravity, acceleration, movement speed, recovery time, etc.) are updated based on a uniform frame rate. This design ensures that the logic of the game is executed in ‘fixed time-slices’ even in the case of variable device performance, unstable frame rates or even short frame breaks, avoiding problems such as jump heights or motion-time disruptions.
 
-## 2.a map editor with a player-defined map feature
-### Objectives and motivations
+We also defined an upper deltaTime threshold to avoid physical jumps caused by extreme frame delays. For example, the problem of a figure ‘crossing’ the entire platform in a given frame can be effectively avoided by this mechanism, ensuring predictability even under heavy system load.
+
+### 5.1.3 Collision detection and response logic
+
+To support physical interactions in complex scenes, we implemented a set of fine-grained, directional and dynamically adapted collision handling systems. Contact between the player and different elements of the environment (e.g. the ground, walls, spikes, floating platforms, etc.) is split into two paths: horizontal and vertical collisions are detected separately, and a small-step strategy is used to improve detection accuracy during fast movements and avoid the phenomenon of shape intrusion.
+
+The system also supports the gravity flip mechanism, and the collision logic can dynamically switch the logic for evaluating the landing surface and upper contact surface based on the current direction of gravity, allowing the player to continue climbing, jumping and landing correctly after the flip. For dynamic elements such as floating platforms and skates, we added special evaluation logic for stable binding, powerful gliding and other complex interactions. To improve the sense of action and feedback, we also added details such as landing pads, impact feedback and wall bouncing in the collision response to make the character's movements more vivid and natural.
+
+### 5.1.4 Importance of the system and potential for expansion
+
+The physics and collision systems provide an extremely stable, predictable and scalable foundation for the game as a whole. The consistency not only guarantees a direct improvement of the game experience of the current version, but also provides a solid technical basis for the future implementation of more complex mechanisms (e.g. dynamic bodies, time delay, gravity changes, etc.). Thanks to this module, we freed the game experience from ‘device dependency’ and based on uniform physical rules that provide players with a fair, stable and entertaining action space.
+
+## 5.2 a map editor with a player-defined map feature
+### 5.2.1 Objectives and motivations
 
 We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric leveling ecosystem.
 
-### Graphic map editor
+### 5.2.2 Graphic map editor
 
 The map uses a matrix of characters as the underlying data structure, with each character corresponding to a game block. The editor intuitively displays these characters using coloured squares and icons, and allows players to freely customise the map content without any programming knowledge.
 
@@ -329,7 +341,7 @@ We have implemented the following interactive features:
 
 For added efficiency, the HUD displays real-time status information, such as cursor position, currently selected block, edit mode, etc., to ensure that a good user experience is maintained even with high degrees of freedom.
 
-### WYSIWYG testing mechanism
+### 5.2.3 WYSIWYG testing mechanism
 
 We have introduced a mechanism for exporting and opening maps in real time. Players can click ‘export’ to encode the current map into a standard format and load it into the main game engine for play immediately.
 
@@ -341,7 +353,7 @@ To ensure the availability of imported maps, the system has set the following ve
 
 This mechanism helps players quickly refine the level design during the design and testing process, lowers the creation threshold and improves feedback efficiency.
 
-### Towards a sustainable content ecosystem
+### 5.2.4 Towards a sustainable content ecosystem
 
 The map editor is not only a creation tool, but also reflects our vision of a player-driven content ecosystem. By collecting user cards, the game is no longer solely dependent on official level updates, but can use the power of the community to achieve sustainable content enrichment.
 
