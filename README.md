@@ -301,7 +301,8 @@ This diagram supports both functional transitions and UI switching.
 
 # 5. Implementation
 
-1.Implementation of a time-independent physics system and a stable collision mechanism
+
+## 1.Implementation of a time-independent physics system and a stable collision mechanism
 
 The main goal we want to achieve is to ensure that the game can maintain a consistent gameplay experience and stability of physics interactions on different devices and with different refresh rates. Regardless of the type of device, players should have a fluid, precise and predictable feel for character movements and collisions, which is the foundation of the game's fairness and playability.
 
