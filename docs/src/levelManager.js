@@ -225,16 +225,16 @@ if (currentLevel.assets && currentLevel.assets.gate) {
   window.floatingPlatforms = gameState.state.floatingPlatforms;
 
   if (idx === 0) {
-    gameState.state.tutorialText = "点击鼠标或空格来反转重力！\n每个金币 = 15 分";
+    gameState.state.tutorialText = "Click mouse or press spacebar to reverse gravity! \n Each coin = 15 points";
     gameState.state.tutorialActive = true;
-  }else if (idx === 1) {
-    gameState.state.tutorialText = "小心前方的尖刺！碰到它会立即失去一条命。";
+  } else if (idx === 1) {
+    gameState.state.tutorialText = "Watch out for spikes ahead!\n Touching them will immediately cost you a life.";
     gameState.state.tutorialActive = true;
   } else if (idx === 2) {
-    gameState.state.tutorialText = "敌人会左右巡逻，接触它们也会受伤！试着避开它们。";
+    gameState.state.tutorialText = "Enemies patrol left and right, touching them will hurt you too!\n Try to avoid them.";
     gameState.state.tutorialActive = true;
   } else if (idx === 3) {
-    gameState.state.tutorialText = "注意！这类敌人会发射子弹，注意闪避或尽快离开攻击范围！";
+    gameState.state.tutorialText = "Warning!\n This type of enemy shoots bullets,\n dodge them or quickly leave their range!";
     gameState.state.tutorialActive = true;
   } else {
     gameState.state.tutorialText = "";
