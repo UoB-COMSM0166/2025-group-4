@@ -35,7 +35,7 @@ export function updateGame(deltaTime = gameState.state.DEFAULT_DELTA_TIME) {
 
   if (gameState.state.tutorialActive) {
     particleSystem.update(deltaTime);  // 可以只让粒子更新
-    return;  // 跳过所有游戏逻辑更新
+    //return;  // 跳过所有游戏逻辑更新
   }
   
   // Skip update if required objects aren't initialized
