@@ -2,7 +2,7 @@
 
 2025 COMSM0166 group 4
 
-# PUPPY'S MAGICAL ADVENTURE
+# Puppy's Magical Adventure
 
 <p align="center">
   <a href="https://uob-comsm0166.github.io/2025-group-4/">PLAY HERE</a>
