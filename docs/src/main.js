@@ -24,6 +24,7 @@ let passSound;
 let regravitySound;
 let bgm;
 let freezeSound;
+let skidSound;
 // Global state
 let lastFrameTime = 0; // For fixed timestep
 let editorMode = false; // Track whether we're in editor mode
@@ -202,6 +203,8 @@ function preload() {
     () => updateLoadingProgress('sounds', 'regravity.mp3'));
   bgm = loadSound('src/assets/music/background.mp3',
     () => updateLoadingProgress('sounds', 'background.mp3'));
+  skidSound = loadSound('src/assets/music/skid.mp3', 
+    () => updateLoadingProgress('sounds', 'skid.mp3'));
   
   // Load images and make them available globally
   window.coinImage = loadAndCacheImage('src/assets/art/images/coin.png', 'miscImages', 'coin.png');
@@ -262,6 +265,8 @@ function setup() {
   window.passSound = passSound;
   window.regravitySound = regravitySound;
   window.freezeSound = freezeSound;
+  window.skidSound = skidSound;
+
 
   window.bgm = bgm;
   bgm.setLoop(true);

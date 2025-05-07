@@ -282,6 +282,10 @@ export class Player {
         this.isSlipping = true;
         // Auto-acceleration effect: add extra horizontal velocity
         this.vx += 100.0 * deltaTime * 60 * this.autoDirection;
+        if (window.skidSound && window.skidSound.isLoaded()) {
+          window.skidSound.setVolume(0.4); // 可调整音量
+          window.skidSound.play();
+        }
       } else {
         this.isSlipping = false;
       }
