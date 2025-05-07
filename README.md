@@ -136,11 +136,11 @@ Maze-like level design demanding careful observation and route selection.
 ---
 
 ## 3.1.5 Endings
-### -Perfect Ending
+### Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 "Earth is restored. You are the last spark that re-lit the future."
 
-### -Tragic Ending
+### Tragic Ending
 You fall before the final gate. The floating world collapses, swallowed by the void.
 "The world collapses. Your legacy fades into dust."
 
@@ -152,8 +152,11 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
 
 Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
+
 For PUPPY'S MAGICAL ADVENTURE, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilizing surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
+
 Nonetheless, surrogate roles also present challenges.  Surrogate feedback that does not align with real player expectations can present risks.  For instance, if testers focused on accessibility deemed the gravity manipulation puzzles intuitive because of their knowledge of game mechanics, while casual players found them challenging, modifications were required.  In order to reduce these risks, we supplemented surrogate input with direct feedback from a variety of players, guaranteeing that the game was evaluated in a balanced and representative manner.
+
 It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mechanically sound for its core audience by strategically integrating surrogate roles and validating their insights with real players.
 
 ---
@@ -171,15 +174,25 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
 </p>
 
 To better understand what features we should prioritize, we created user stories.
--As a game designer, I aim to set the pacing and difficulty of levels in such a way that the game continues to be both challenging and captivating for players.
--As a game developer, I want the game’s physics engine to operate effectively, so that 007’s jumps and evasive maneuvers accurately reflect player input.
--As a casual player, I want the game to have an auto-save feature, allowing me to continue playing without losing my progress.
--As a hardcore player, I would like the game to feature high-difficulty hidden levels or rewards for completing it without taking damage to challenge myself.
--As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.
--As a completionist, my goal is to unlock all hidden items and puzzle pieces to reach 100% game completion.
--As a commuter, I desire a game with short, captivating levels that can be played offline for convenient on-the-go play.
--As a player seeking variety, I desire the inclusion of diverse biomes and environments in the game that would influence gameplay mechanics and introduce additional strategic elements and excitement. 
--As a technology enthusiast, I desire the game to include contemporary physics-based interactions like the dynamic gravity system for the development of novel and creative gameplay.
+
+- As a game designer, I aim to set the pacing and difficulty of levels in such a way that the game continues to be both challenging and captivating for players.
+
+- As a game developer, I want the game’s physics engine to operate effectively, so that 007’s jumps and evasive maneuvers accurately reflect player input.
+
+- As a casual player, I want the game to have an auto-save feature, allowing me to continue playing without losing my progress.
+
+- As a hardcore player, I would like the game to feature high-difficulty hidden levels or rewards for completing it without taking damage to challenge myself.
+
+- As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.
+
+- As a completionist, my goal is to unlock all hidden items and puzzle pieces to reach 100% game completion.
+
+- As a commuter, I desire a game with short, captivating levels that can be played offline for convenient on-the-go play.
+
+- As a player seeking variety, I desire the inclusion of diverse biomes and environments in the game that would influence gameplay mechanics and introduce additional strategic elements and excitement. 
+
+- As a technology enthusiast, I desire the game to include contemporary physics-based interactions like the dynamic gravity system for the development of novel and creative gameplay.
+
 Our team designed several posters featuring characters to represent these user stories, ensuring personalization and keeping them in mind.
 
 ---
