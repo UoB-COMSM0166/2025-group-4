@@ -600,12 +600,16 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | System Integration | 4.1 | 3.9 | ↓ |
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 <p align="center">
-  <b>Figure 11</b><br>
+  <b>Table 10</b><br>
   SUS Scores Summary
 </p>
 
 
 ![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
+<p align="center">
+  <b>Figure 11</b><br>
+  SUS Scores Comparision
+</p>
 
 ####  NASA TLX Summary:
 | Dimension | L1 Median | L2 Median | L3 Median |
@@ -618,7 +622,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Frustration | 17 | 45 | 65 |
 
 <p align="center">
-  <b>Table 10</b><br>
+  <b>Table 11</b><br>
   NASA TLX Summary
 </p>
 
