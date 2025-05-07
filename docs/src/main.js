@@ -259,6 +259,14 @@ function setup() {
   let newTileSize = updateTileSize(windowWidth, windowHeight);
   console.log("Updated tile size to:", newTileSize);
 
+  createCanvas(windowWidth, windowHeight);
+  getAudioContext().resume(); // 确保音频系统激活
+  if (window.bgm && window.bgm.isLoaded() && !window.bgm.isPlaying()) {
+    window.bgm.setVolume(1.0);
+    window.bgm.setLoop(true);
+    window.bgm.play(); // 若浏览器支持自动播放则直接开始
+  }
+
   // Ensure sounds are available globally
   window.deathSound = deathSound;
   window.getCoinSound = getCoinSound;
@@ -340,14 +348,13 @@ function toggleEditorMode() {
  */
 function mousePressed() {
 
-  if (window.bgm && !window.bgmStarted) {
+  if (window.bgm && !window.bgm.isPlaying()) {
+    getAudioContext().resume();
+    window.bgm.setVolume(1.0);
     window.bgm.setLoop(true);
-    window.bgm.setVolume(0.5); // 可选：设置音量
     window.bgm.play();
-    window.bgmStarted = true;
-    console.log("BGM started on first user interaction.");
+    console.log("BGM started on mouse interaction.");
   }
-
   
   if (editorMode) {
     handleEditorMousePressed();

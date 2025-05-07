@@ -37,7 +37,7 @@ export class Coin {
     
     // Use coinImage if available, otherwise fallback to circle
     if (window.coinImage) {
-      const bobOffset = Math.sin(window.frameCount * 0.1 + this.x) * 5; // 上下浮动
+      const bobOffset = Math.sin(window.frameCount * 0.05 + this.x) * 1; // 上下浮动
       window.push();
       window.translate(this.x, this.y + bobOffset);
       window.rotate(window.frameCount * 0.05); // 轻微旋转
