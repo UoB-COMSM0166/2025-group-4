@@ -9,13 +9,46 @@ import * as gameState from './gameState.js';
 import { camera } from './camera.js';
 
 /**
+ * Draw background with parallax effect
+ * @param {p5.Image} backgroundImage - The background image to draw
+ * @param {number} parallaxFactor - How much slower the background moves (0-1)
+ */
+function drawParallaxBackground(backgroundImage, parallaxFactor = 0.25) {
+  if (!backgroundImage) return;
+  // World and view dimensions
+  const worldWidth = camera.mapWidth;
+  const viewWidth = width;
+  // For small maps, fill screen without parallax to avoid blank edges
+  if (worldWidth <= viewWidth) {
+    image(backgroundImage, 0, 0, width, height);
+    return;
+  }
+  // How much horizontal scroll is possible
+  const scrollWidth = worldWidth > viewWidth ? worldWidth - viewWidth : 0;
+  // Compute extra width needed for parallax
+  const extraWidth = scrollWidth * parallaxFactor;
+  const drawWidth = viewWidth + extraWidth;
+  // Get camera scroll offset (pixels scrolled at left edge)
+  const scrollX = (camera.getOffsetX ? camera.getOffsetX() : camera.x - viewWidth / 2) * parallaxFactor;
+  // Draw so left edge moves with scroll, covering entire view
+  const drawX = -scrollX;
+  image(backgroundImage, drawX, 0, drawWidth, height);
+}
+
+/**
  * Draw the game
  * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
 export function drawGame(interpolation = 0) {
   // Draw background or clear screen
   if (gameState.state.backgroundImage) {
-    image(gameState.state.backgroundImage, 0, 0, width, height);
+    if (gameState.state.gameState === "play") {
+      // Use parallax for gameplay
+      drawParallaxBackground(gameState.state.backgroundImage);
+    } else {
+      // Static background for menus
+      image(gameState.state.backgroundImage, 0, 0, width, height);
+    }
   } else {
     background(220);
   }
@@ -278,9 +311,9 @@ function drawMenuDemo(interpolation) {
  * @param {number} interpolation - Interpolation factor between physics frames (0-1)
  */
 function drawGameScreen(interpolation = 0) {
-  // Draw background image or fallback
+  // Draw background image with parallax effect
   if (gameState.state.backgroundImage) {
-    image(gameState.state.backgroundImage, 0, 0, width, height);
+    drawParallaxBackground(gameState.state.backgroundImage);
   } else {
     background(220);
   }
