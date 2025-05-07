@@ -275,4 +275,22 @@ function handleStatsScreenClick() {
     // Go back to the main menu
     initGame();
   }
-} 
+}
+
+function touchStarted() {
+  // 手机触屏时的逻辑：与鼠标点击相同
+
+  if (gameState.state.tutorialActive) {
+    // 如果还在提示中，先取消提示框
+    gameState.state.tutorialActive = false;
+    gameState.state.tutorialText = "";
+    return false;  // 防止继续触发重力反转
+  }
+
+  // 正常状态下进行重力反转
+  if (window.player) {
+    window.player.performGravityFlip();
+  }
+
+  return false; // 阻止默认滚动等行为
+}
