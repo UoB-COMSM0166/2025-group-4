@@ -9,8 +9,8 @@ export class Enemy {
   constructor(px, py) {
     this.x = px;
     this.y = py;
-    this.w = tileSize * 0.8;
-    this.h = tileSize * 0.8;
+    this.w = tileSize * 0.9;
+    this.h = tileSize * 0.9;
     this.speed = 1.5;
     this.direction = 1; // 1 for right, -1 for left
     
@@ -180,7 +180,7 @@ export class ShooterEnemy extends Enemy {
     if (frames && frames.length > 0) {
     const frameIndex = Math.floor(frameCount / 28 ) % frames.length;
     const frame = frames[frameIndex];
-    const scale = 1.6;
+    const scale = 1.3;
     window.image(frame, this.x, this.y, this.w * scale, this.h * scale); 
     } else if (window.enemyImage) {
     window.image(window.enemyImage, this.x, this.y, this.w, this.h);
