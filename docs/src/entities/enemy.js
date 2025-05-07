@@ -101,8 +101,10 @@ export class Enemy {
     window.imageMode(window.CENTER);
     
     // Use enemy image if available, otherwise fallback to rectangle
-    if (window.enemyImage) {
-      window.image(window.enemyImage, this.x, this.y, this.w, this.h);
+    if (window.enemyFrames && window.enemyFrames.length > 0) {
+      const frameIndex = Math.floor(frameCount / 6) % window.enemyFrames.length;
+      const frame = window.enemyFrames[frameIndex];
+      window.image(frame, this.x, this.y, this.w, this.h);
     } else {
       // Fallback to drawing a rectangle if image is not loaded
       window.rectMode(window.CENTER);
