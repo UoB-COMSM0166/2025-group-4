@@ -9,22 +9,6 @@
 </p>
 
 ![Banner Image](images/banner.webp)
-
-# Weekly Work Summary
-
- [Week 1 Game Idea & Creativity](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week01)
-
- [Week 2  P5.js Painting & Kanban Board](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week02)
-
- [Week 3 Paper Prototype & User/Epic Story](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week03) 
-
- [Week 4 Stakeholders & Game Demonstration/Feedback](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week04) 
-
- [Week 5 Agile Planning & Object-Oriented Programming](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week05.md)
-
- [Week 7 Think Aloud & Heuristic Evaluation](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week07.md)
-
- [Week 8 User Evaluation & Quantitative Analysis](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/Meeting%20Records/Week08.md)
  
 # Table of Contents
 
@@ -702,9 +686,6 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 | Test Coverage | Good for core systems | Expand integration and edge case testing |
 
  _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
-
----
-
  This comprehensive evaluation structure allows us to iteratively refine **Rusty Rover's Run**, balancing player enjoyment with performance and usability goals.
  
 ---
@@ -799,6 +780,7 @@ Economic and Technical dimensions scored highest (9/10), reflecting strong imple
 ### Overview 
 
 This section focuses on **accessibility design** for players with disabilities within our gravity-based roguelike platformer. By aligning with the Sustainability Awareness Framework (SuSAF), we analyse the impacts and opportunities across five sustainability dimensions: **Social, Individual, Environmental, Economic, and Technical**.
+By embedding accessibility deeply into both **game mechanics and architecture**, we improve not only **player inclusiveness**, but also reinforce **sustainability goals** from technical and social perspectives.
 
 ---
 
@@ -842,14 +824,8 @@ This section focuses on **accessibility design** for players with disabilities w
   Accessibility features are developed as **independent, reusable modules** to ease maintenance and future extension.  
 
 - **WCAG Compliance**  
-  Interface elements and interactions follow WCAG guidelines to ensure **accessibility compliance**.  
-
----
-
-### Conclusion
-
-By embedding accessibility deeply into both **game mechanics and architecture**, we improve not only **player inclusiveness**, but also reinforce **sustainability goals** from technical and social perspectives.
-
+  Interface elements and interactions follow WCAG guidelines to ensure **accessibility compliance**.
+  
 ---
 
 # 10. Process
@@ -968,5 +944,3 @@ In the future, we envision expanding Puppy’s Magical Adventure with more level
 Ultimately, this project helped us grow as software engineers, designers, and collaborators. It pushed us to apply classroom knowledge in a real-world context, solve problems creatively, and think beyond code—into the realm of player experience, sustainability, and agile teamwork.
 
 ---
-
-- Provide a table of everyone's contribution, which may be used to weight individual grades. We expect that the contribution will be split evenly across team-members in most cases. Let us know as soon as possible if there are any issues with teamwork as soon as they are apparent.
