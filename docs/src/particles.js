@@ -5,6 +5,8 @@
 
 class Particle {
   constructor(x, y, options = {}) {
+    // Scene tag to filter drawing: 'game', 'menuAmbient', 'menuDemo'
+    this.scene = options.scene || 'game';
     // Position
     this.x = x;
     this.y = y;
@@ -140,7 +142,9 @@ class Particle {
     }
   }
   
-  draw(cameraOffsetX = 0) {
+  draw(cameraOffsetX = 0, sceneFilter = null) {
+    if (sceneFilter && this.scene !== sceneFilter) return;
+    
     // Draw trail first if enabled
     if (this.trail && this.trailPositions.length > 0) {
       noStroke();
@@ -168,12 +172,10 @@ class Particle {
     
     // Set color with alpha
     if (this.color instanceof p5.Color) {
-      // If color is a p5.Color object
       const c = color(this.color.levels[0], this.color.levels[1], 
                      this.color.levels[2], this.alpha);
       fill(c);
     } else {
-      // If color is a string or other format
       fill(this.color, this.alpha);
     }
     
@@ -333,6 +335,8 @@ class ParticleSystem {
     const accentColor = color(160, 220, 255); // Light blue
     const trailColor = color(220, 240, 255); // Very light blue
     
+    // Determine scene for demo vs game
+    const sceneTag = options.scene || 'game';
     // Create main direction indicator particles
     const directionAngle = direction > 0 ? -HALF_PI : HALF_PI;
     
@@ -345,6 +349,7 @@ class ParticleSystem {
         directionAngle,
         PI/6,
         {
+          scene: sceneTag,
           color: primaryColor,
           life: random(30, 50),
           size: random(3, 6),
@@ -365,6 +370,7 @@ class ParticleSystem {
       const speed = random(1, 3);
       
       this.addParticle(x + offsetX, y, {
+        scene: sceneTag,
         vx: cos(sparkAngle) * speed,
         vy: sin(sparkAngle) * speed,
         color: accentColor,
@@ -381,6 +387,7 @@ class ParticleSystem {
     // Create expanding ring effect
     for (let i = 0; i < 3; i++) {
       this.addParticle(x, y, {
+        scene: sceneTag,
         color: trailColor,
         life: 20 + i * 5,
         size: 10 + i * 5,
@@ -398,6 +405,7 @@ class ParticleSystem {
       const speed = random(0.5, 1.5);
       
       this.addParticle(x + offsetX, y, {
+        scene: sceneTag,
         vx: cos(trailAngle) * speed,
         vy: sin(trailAngle) * speed,
         color: trailColor,
@@ -659,9 +667,13 @@ class ParticleSystem {
     const impactColor = color(255, 255, 255);
     const angle = direction > 0 ? 0 : PI; // Right or left
     
+    // Tag wall hit particles for demo vs game scenes
+    const sceneTag = options.scene || 'game';
+    
     // Create impact marks
     for (let i = 0; i < 2; i++) {
       this.addParticle(x, y, {
+        scene: sceneTag,
         color: impactColor,
         life: 10 + i * 5,
         size: 5 + i * 3,
@@ -679,6 +691,7 @@ class ParticleSystem {
       angle, 
       PI/2, 
       {
+        scene: sceneTag,
         color: dustColor,
         life: random(20, 40),
         size: random(3, 7),
@@ -696,6 +709,7 @@ class ParticleSystem {
       const speed = random(2, 4);
       
       this.addParticle(x, y, {
+        scene: sceneTag,
         vx: cos(sparkAngle) * speed,
         vy: sin(sparkAngle) * speed - random(0.5, 1.5), // Add upward component
         color: color(255, 220, 180),
@@ -713,6 +727,7 @@ class ParticleSystem {
       const speed = random(1, 3);
       
       this.addParticle(x, y, {
+        scene: sceneTag,
         vx: cos(debrisAngle) * speed,
         vy: sin(debrisAngle) * speed - random(1, 3), // Add upward component
         color: color(150, 140, 130),
@@ -730,8 +745,11 @@ class ParticleSystem {
     const dustColor = color(200, 200, 200, 150); // Slightly transparent dust
     const impactColor = color(255, 255, 255, 200);
     
+    // Tag landing effect particles
+    const sceneTag = options.scene || 'game';
     // Create small impact ring
     this.addParticle(x, y, {
+      scene: sceneTag,
       color: impactColor,
       life: 15,
       size: 6,
@@ -749,6 +767,7 @@ class ParticleSystem {
       const offsetX = random(-width/2, width/2) * 0.7; // Stay within player width
       
       this.addParticle(x + offsetX, y + (gravityDirection * 5), {
+        scene: sceneTag,
         vx: cos(spreadAngle) * random(0.3, 1.5),
         vy: sin(spreadAngle) * random(0.3, 1.2) * gravityDirection,
         color: dustColor,
@@ -766,6 +785,7 @@ class ParticleSystem {
       const offsetX = random(-width/3, width/3);
       
       this.addParticle(x + offsetX, y + (gravityDirection * 5), {
+        scene: sceneTag,
         vx: random(-1, 1),
         vy: -random(0.5, 1.2) * gravityDirection, // Tiny bounce opposite to gravity
         color: color(180, 175, 160),
@@ -812,6 +832,41 @@ class ParticleSystem {
     }
   }
   
+  createMenuAmbience() {
+    const numParticles = 1; // Create one particle per call, relies on frequent calls
+    for (let i = 0; i < numParticles; i++) {
+      const x = random(window.width);
+      const y = random(window.height);
+
+      const particleShape = random(['circle', 'dust']);
+      let particleColor;
+      if (random() < 0.7) { // 70% chance for blues/lavenders
+        particleColor = color(random(150, 200), random(150, 200), 255, random(60, 120));
+      } else { // 30% chance for bright whites
+        particleColor = color(230, 230, 255, random(80, 150));
+      }
+
+      const particleOptions = {
+        scene: 'menuAmbient',
+        vx: random(-0.3, 0.3),          // Slow horizontal drift
+        vy: random(-0.5, -0.1),          // Gentle upward movement
+        color: particleColor,
+        alpha: particleShape === 'spark' ? random(100,180) : undefined, // Sparks can be brighter
+        life: random(500, 1200),          // Longer lifespan
+        size: random(9.0, 13.5),
+        shape: particleShape,
+        gravity: 0,
+        drag: 0.992,                     // High drag for floaty feel
+        pulsing: true,
+        pulseFrequency: random(0.03, 0.08),
+        pulseAmplitude: random(0.2, 0.4),
+        fadeMode: 'easeOut',
+        rotationSpeed: particleShape === 'spark' ? random(-0.02, 0.02) : 0,
+      };
+      this.addParticle(x, y, particleOptions);
+    }
+  }
+  
   update(dt = 1/60) {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       this.particles[i].update(dt);
@@ -821,9 +876,9 @@ class ParticleSystem {
     }
   }
   
-  draw(cameraOffsetX = 0) {
+  draw(cameraOffsetX = 0, sceneFilter = 'game') {
     for (let particle of this.particles) {
-      particle.draw();
+      particle.draw(cameraOffsetX, sceneFilter);
     }
   }
   

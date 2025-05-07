@@ -88,26 +88,16 @@ function drawMainMenu() {
   }
   
   // Add animated stars in the background
-  drawStars();
+  // drawStars(); // Removed: Will be replaced by new particle effect
   
   // Create ambient particles in the menu
-  if (random() < 0.1) {
-    const x = random(width);
-    const y = random(height);
-    particleSystem.addParticle(x, y, {
-      vx: random(-0.5, 0.5),
-      vy: random(-0.3, -0.1), // Slowly float upward
-      color: color(200, 220, 255, 150),
-      life: random(120, 240),
-      size: random(2, 5),
-      gravity: 0,
-      drag: 0.99,
-      shape: random() > 0.7 ? 'square' : 'circle'
-    });
+  if (random() < 0.2) { // Increased frequency for the new effect
+    particleSystem.createMenuAmbience();
   }
   
-  // Update and draw particles
+  // Update and draw menu ambient particles
   particleSystem.update(1/60);
+  particleSystem.draw(0, 'menuAmbient');
   
   // Draw a game logo or icon
   fill(255, 220, 0);
@@ -294,6 +284,8 @@ function drawMenuDemo(interpolation) {
 
   // Draw demo player
   if (gameState.state.player) gameState.state.player.draw(0, interpolation);
+  // Draw menu demo particles within demo transform
+  particleSystem.draw(0, 'menuDemo');
   pop();
 
   // Add instructions above the demo area
@@ -362,7 +354,7 @@ function drawGameScreen(interpolation = 0) {
   gameState.state.player.draw(0, interpolation);
   
   // Draw particles
-  particleSystem.draw(0);
+  particleSystem.draw(0, 'game');
   
   // End camera transform
   camera.end();

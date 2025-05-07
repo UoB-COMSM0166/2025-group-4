@@ -201,11 +201,14 @@ export class Player {
       // Create particle effect based on stored landing velocity
       if (this.landingVelocity > 2) { // Only create effect for significant landing velocity
         const impactScale = Math.min(this.landingVelocity / 10, 1); // Scale effect by velocity
+        // Tag landing effect based on demo/game context
+        const sceneTag = window.menuDemoActive ? 'menuDemo' : 'game';
         particleSystem.createLandingEffect(
           this.x, 
           this.y + (this.gravityDirection * this.h * 0.4), // Generate at player's feet
           this.w * impactScale, 
-          this.gravityDirection
+          this.gravityDirection,
+          { scene: sceneTag }
         );
       }
       // Reset landing velocity
@@ -464,7 +467,9 @@ export class Player {
     // Create wall hit particles at the appropriate position and direction
     // Position particles at the edge of the player in the direction of the wall
     const particleX = this.x + (this.w * 0.5 * this.autoDirection);
-    particleSystem.createWallHit(particleX, this.y, this.autoDirection);
+    // Tag wall hit particles for demo vs game scenes
+    const sceneTag = window.menuDemoActive ? 'menuDemo' : 'game';
+    particleSystem.createWallHit(particleX, this.y, this.autoDirection, { scene: sceneTag });
     
     // If we had a sound system, play wall hit sound here
     // window.wallHitSound.play();

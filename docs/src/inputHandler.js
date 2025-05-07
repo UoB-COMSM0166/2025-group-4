@@ -190,7 +190,8 @@ function flipGravityInMenuDemo() {
     gameState.state.player.x,
     gameState.state.player.y,
     gameState.state.player.w,
-    gameState.state.player.gravityDirection
+    gameState.state.player.gravityDirection,
+    { scene: 'menuDemo' }
   );
   
   // Apply a small upward impulse in the direction of the new gravity
