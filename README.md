@@ -78,91 +78,59 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ## 3.1.4 Level Themes & Biomes
 
 ### 1.Enchanted Grove
--Theme:Lush, glowing forest filled with bioluminescent plants and soft green light.
--Biome Characteristics:
-Calm, magical atmosphere with shimmering flora.
-Coin clusters to encourage exploration and reward risk-taking.
--Focus:Introduction to movement, jumping, and obstacle avoidance in a visually soothing environment.
+- Theme:Lush, glowing forest filled with bioluminescent plants and soft green light.
+- Biome Characteristics:Calm, magical atmosphere with shimmering flora.Coin clusters to encourage exploration and reward risk-taking.
+- Focus:Introduction to movement, jumping, and obstacle avoidance in a visually soothing environment.
 
 ### 2.Thorny Thicket
--Theme:A dense, enchanted forest surrounded by magical thorns; the mysterious atmosphere remains, but danger noticeably increases.
--Biome Characteristics:
-Environment packed with thorn traps lining all sides.
-Introduction of spiked hazards, adding dynamic threats.
-Tight level design demanding precise movement.
--Focus:Tests the player’s dodging, timing, and spatial awareness; introduces dynamic danger elements for the first time.
+- Theme:A dense, enchanted forest surrounded by magical thorns; the mysterious atmosphere remains, but danger noticeably increases.
+- Biome Characteristics:Environment packed with thorn traps lining all sides.Introduction of spiked hazards, adding dynamic threats.Tight level design demanding precise movement.
+- Focus:Tests the player’s dodging, timing, and spatial awareness; introduces dynamic danger elements for the first time.
 
 
 ### 3.Shadow Outpost
--Theme:
-A hidden outpost deep within the glowing forest, now guarded by patrolling enemies. The atmosphere shifts from mysterious to tense.
--Biome Characteristics:
-Bioluminescent forest background continues, with added enemy guards.
-Enemies patrol and block paths, requiring smart dodging or precise timing.
-Coin placement tempts players to take risks near enemies, increasing the challenge.
--Focus:Tests the player’s ability to avoid enemies, manage movement rhythm, and maintain precision — first introduction of active threats.
+- Theme:A hidden outpost deep within the glowing forest, now guarded by patrolling enemies. The atmosphere shifts from mysterious to tense.
+- Biome Characteristics:Bioluminescent forest background continues, with added enemy guards.Enemies patrol and block paths, requiring smart dodging or precise timing.Coin placement tempts players to take risks near enemies, increasing the challenge.
+- Focus:Tests the player’s ability to avoid enemies, manage movement rhythm, and maintain precision — first introduction of active threats.
 
 
 ### 4.Crimson Ambush
--Theme:
-The enchanted forest now hosts red, bullet-firing enemies, introducing long-range threats and sharply increasing tension.
--Biome Characteristics:
-Bioluminescent forest backdrop continues, with the addition of crimson ranged foes.
-Enemies shoot projectiles, requiring precise movement and quick reflexes.
-Moving thorn hazards from earlier levels remain, creating layered challenges.
--Focus:Tests the player’s reaction speed, movement precision, and multitasking ability — marking a clear difficulty spike
+- Theme:The enchanted forest now hosts red, bullet-firing enemies, introducing long-range threats and sharply increasing tension.
+- Biome Characteristics:Bioluminescent forest backdrop continues, with the addition of crimson ranged foes.Enemies shoot projectiles, requiring precise movement and quick reflexes.Moving thorn hazards from earlier levels remain, creating layered challenges.
+- Focus:Tests the player’s reaction speed, movement precision, and multitasking ability — marking a clear difficulty spike
 
 
 ### 5.Frozen Labyrinth
--Theme:A glacial labyrinth replaces the forest, introducing icy terrain and a fresh visual experience.
--Biome Characteristics:
-Ice block platforms with slippery surfaces and hard walls.
-Sharp ice spikes act as deadly traps, increasing pathfinding complexity.
+- Theme:A glacial labyrinth replaces the forest, introducing icy terrain and a fresh visual experience.
+- iome Characteristics:Ice block platforms with slippery surfaces and hard walls.Sharp ice spikes act as deadly traps,increasing pathfinding complexity.
 Maze-like level design demanding careful observation and route selection.
--Focus:Tests the player’s path planning, jump precision, and maneuvering in tight spaces.
+- Focus:Tests the player’s path planning, jump precision, and maneuvering in tight spaces.
 
 ### 6.Wild Jungle
--Theme:A vivid tropical jungle bursting with life, introducing sharp mountain spikes and moving grass platforms to heighten the challenge.
--Biome Characteristics:
-Lush jungle backdrop filled with vines, massive trees, and tropical flowers.
-Sharp spikes as new lethal obstacles, demanding precise jumps.
-Moving grass platforms add unpredictability, requiring players to observe and time their movements.
--Focus:Tests the player’s adaptability to dynamic terrain, observational skills, and mastery of jump timing.
+- Theme:A vivid tropical jungle bursting with life, introducing sharp mountain spikes and moving grass platforms to heighten the challenge.
+- Biome Characteristics:Lush jungle backdrop filled with vines, massive trees, and tropical flowers.Sharp spikes as new lethal obstacles, demanding precise jumps.Moving grass platforms add unpredictability, requiring players to observe and time their movements.
+- Focus:Tests the player’s adaptability to dynamic terrain, observational skills, and mastery of jump timing.
 
 
 ### 7. Nightfall Ruins
--Theme:A silent, moonlit ruin with an eerie atmosphere. Sharp stone spikes now pose deadly threats.
--Biome Characteristics:
-Dark ruin backdrop with ancient brick structures.
-Sharp stone spikes placed on floors and ceilings as lethal traps.
-Players must navigate using limited visual cues in the dark.
--Focus:Tests player’s spatial awareness, focus, and ability to avoid fatal traps while staying calm under low-visibility conditions.
+- Theme:A silent, moonlit ruin with an eerie atmosphere. Sharp stone spikes now pose deadly threats.
+- Biome Characteristics:Dark ruin backdrop with ancient brick structures.Sharp stone spikes placed on floors and ceilings as lethal traps.Players must navigate using limited visual cues in the dark.
+- Focus:Tests player’s spatial awareness, focus, and ability to avoid fatal traps while staying calm under low-visibility conditions.
 
 ### 8.Magma Fortress
--Theme:A blazing magma fortress filled with imminent danger. Newly introduced ice blocks provide freezing effects, alongside weapon-firing enemies and deadly red spikes.
--Biome Characteristics:
-Lava background with red brick platforms, evoking intense heat.
-Ice blocks introduce a freezing mechanic, adding environmental variety.
-Weapon-firing enemies and red spikes create multidirectional threats.
-Players must navigate flexibly through layered hazards.
--Focus:Tests the player’s strategic planning, quick reflexes, and survival skills in a highly complex environment.
+- Theme:A blazing magma fortress filled with imminent danger. Newly introduced ice blocks provide freezing effects, alongside weapon-firing enemies and deadly red spikes.
+- Biome Characteristics:Lava background with red brick platforms, evoking intense heat.Ice blocks introduce a freezing mechanic, adding environmental variety.Weapon-firing enemies and red spikes create multidirectional threats.Players must navigate flexibly through layered hazards.
+- Focus:Tests the player’s strategic planning, quick reflexes, and survival skills in a highly complex environment.
 
 ### 9.Sky Citadel
--Theme:A soaring sky citadel built of ice blocks, where danger meets altitude, and bow-wielding demons enter the fray.
--Biome Characteristics:
-Cloudy backdrop with an icy maze suspended in the sky.
-Bow-wielding demon enemies launch ranged attacks.
-Ice spikes remain as hazards, requiring careful coordination with enemy movement.
--Focus:Tests aerial maneuvering, reactions to ranged threats, and precision in jumping and dodging.
+- Theme:A soaring sky citadel built of ice blocks, where danger meets altitude, and bow-wielding demons enter the fray.
+- Biome Characteristics:Cloudy backdrop with an icy maze suspended in the sky.Bow-wielding demon enemies launch ranged attacks.Ice spikes remain as hazards, requiring careful coordination with enemy movement.
+- Focus:Tests aerial maneuvering, reactions to ranged threats, and precision in jumping and dodging.
 
 ### 10.Mystic Cavern
--Theme:The final level descends into an underground ravine maze, with a dark, oppressive atmosphere and collapsing world lore.
--Biome Characteristics:
-Dark cave backdrop with maze-like passages.
-Demon enemies patrol narrow corridors, posing constant threats.
-Floor spikes demand precise footwork.
-Maze layout challenges player’s memory and pathfinding skills.
--Focus:Tests patience, route memorization, enemy avoidance, and survival strategy — the ultimate test of mastery.
+- Theme:The final level descends into an underground ravine maze, with a dark, oppressive atmosphere and collapsing world lore.
+- Biome Characteristics:Dark cave backdrop with maze-like passages.Demon enemies patrol narrow corridors, posing constant threats.Floor spikes demand precise footwork.Maze layout challenges player’s memory and pathfinding skills.
+- Focus:Tests patience, route memorization, enemy avoidance, and survival strategy — the ultimate test of mastery.
 
 
 ---
