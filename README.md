@@ -67,7 +67,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ### **1.** Multi-biome progression: 
 - Players move through visually distinct zones (ice,cloud，jungle, night, fire, castle,ruins), each with unique trap logic and enemy behaviors.
 ### **2.** Dynamic difficulty modes: 
-- Easy (100 lives), Normal (3 lives), and Hard (2 lives) offer replay value for both casual and hardcore players.
+- Easy (99 lives), Hard (5 lives), and Random (∞ lives) offer replay value for both casual and hardcore players.
 ### **3.** Subtle narrative layering: 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
 ### **4.** Precision-based skill challenge: 
