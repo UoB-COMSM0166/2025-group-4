@@ -388,13 +388,8 @@ function mousePressed() {
       return;
     }
     
-    // In game mode, attempt to flip gravity on mouse press
-    if (state.gameState === "play" && window.player) {
-      window.player.attemptGravityFlip();
-    } else {
-      // Handle other mouse press events in different game states
-      handleMouseClicked();
-    }
+    // FIRST_EDIT: Prevent duplicate gravity flips by returning early from mousePressed
+    return;
   }
 }
 
