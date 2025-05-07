@@ -314,9 +314,11 @@ By building in systematic physics and collision modules, the game gains an extre
 
 ## 2.a map editor with a player-defined map feature
 Objectives and motivations
+
 We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric leveling ecosystem.
 
 Graphic map editor
+
 The map uses a matrix of characters as the underlying data structure, with each character corresponding to a game block. The editor intuitively displays these characters using coloured squares and icons, and allows players to freely customise the map content without any programming knowledge.
 
 We have implemented the following interactive features:
@@ -328,6 +330,7 @@ We have implemented the following interactive features:
 For added efficiency, the HUD displays real-time status information, such as cursor position, currently selected block, edit mode, etc., to ensure that a good user experience is maintained even with high degrees of freedom.
 
 WYSIWYG testing mechanism
+
 We have introduced a mechanism for exporting and opening maps in real time. Players can click ‘export’ to encode the current map into a standard format and load it into the main game engine for play immediately.
 
 To ensure the availability of imported maps, the system has set the following verification rules:
