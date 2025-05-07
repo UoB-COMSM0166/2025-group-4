@@ -176,7 +176,7 @@ export class ShooterEnemy extends Enemy {
     const frames = window.shooterEnemyFrames;
 
     if (frames && frames.length > 0) {
-    const frameIndex = Math.floor(frameCount / 10 ) % frames.length;
+    const frameIndex = Math.floor(frameCount / 28 ) % frames.length;
     const frame = frames[frameIndex];
     const scale = 2;
     window.image(frame, this.x, this.y, this.w * scale, this.h * scale); 
