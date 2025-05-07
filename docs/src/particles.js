@@ -811,21 +811,33 @@ class ParticleSystem {
       const spawnX = viewWorldX + random(-viewWorldWidth * 0.1, viewWorldWidth * 1.1); 
       const spawnY = viewWorldY + random(viewWorldHeight);
       
-      const particleSize = random(4, 10); // Smaller square particles
-
+      // Determine color distribution: majority green, small yellow, rare white
+      const randColorType = random();
+      const whiteThreshold = 0.05;
+      const yellowThreshold = 0.20;
+      let partColor;
+      let particleSize = random(4, 10);
+      if (randColorType < whiteThreshold) {
+        partColor = color(255, 255, 255);
+        particleSize = random(3, 8); // Slightly smaller for white particles
+      } else if (randColorType < yellowThreshold) {
+        partColor = color(random(150, 255), random(150, 255), random(0, 150)); // Dark to light yellow
+      } else {
+        partColor = color(random(50, 150), random(180, 255), random(50, 150)); // Dark to light green
+      }
       const particleOptions = {
-        vx: random(5, 15), // Much faster horizontal speed
-        vy: random(-2, 2),   // More vertical disturbance
-        color: color(random(50, 150), random(180, 255), random(50, 150)), // Shades of green
-        alpha: random(80, 150),   // Slightly more opaque
-        life: random(100, 250),  // Adjusted lifetime based on speed and screen size
+        vx: random(5, 15),
+        vy: random(-2, 2),
+        color: partColor,
+        alpha: random(80, 150),
+        life: random(100, 250),
         particleWidth: particleSize,
-        particleHeight: particleSize, // Square shape
+        particleHeight: particleSize,
         shape: 'rectangle',
-        gravity: 0,             
-        drag: 0.995,             // Slightly less drag for faster movement
-        rotation: random(TWO_PI), 
-        rotationSpeed: random(-0.05, 0.05), // Slightly faster rotation
+        gravity: 0,
+        drag: 0.995,
+        rotation: random(TWO_PI),
+        rotationSpeed: random(-0.05, 0.05),
         fadeMode: 'linear'
       };
       this.addParticle(spawnX, spawnY, particleOptions);
