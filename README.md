@@ -175,24 +175,6 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
 
 To better understand what features we should prioritize, we created user stories.
 
-- As a game designer, I aim to set the pacing and difficulty of levels in such a way that the game continues to be both challenging and captivating for players.
-
-- As a game developer, I want the game’s physics engine to operate effectively, so that 007’s jumps and evasive maneuvers accurately reflect player input.
-
-- As a casual player, I want the game to have an auto-save feature, allowing me to continue playing without losing my progress.
-
-- As a hardcore player, I would like the game to feature high-difficulty hidden levels or rewards for completing it without taking damage to challenge myself.
-
-- As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.
-
-- As a completionist, my goal is to unlock all hidden items and puzzle pieces to reach 100% game completion.
-
-- As a commuter, I desire a game with short, captivating levels that can be played offline for convenient on-the-go play.
-
-- As a player seeking variety, I desire the inclusion of diverse biomes and environments in the game that would influence gameplay mechanics and introduce additional strategic elements and excitement. 
-
-- As a technology enthusiast, I desire the game to include contemporary physics-based interactions like the dynamic gravity system for the development of novel and creative gameplay.
-
 Our team designed several posters featuring characters to represent these user stories, ensuring personalization and keeping them in mind.
 
 ---
