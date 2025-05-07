@@ -21,17 +21,29 @@ export function handleKeyPressed() {
   }
   
   if (gameState.state.gameState === "play") {
-    if (gameState.state.tutorialActive) {
-      gameState.state.tutorialActive = false;
-      gameState.state.tutorialText = "";
-      return;
-    }
-    // If game is in play state, handle player controls
+    // MODIFIED SECTION FOR "play" state input handling
     if (keyCode === 32) { // Space key
-      if (gameState.state.player) {
-        gameState.state.player.attemptGravityFlip();
-      }
+        // No need to separately track tutorialWasActiveAndDeactivated for return logic with space key
+        if (gameState.state.tutorialActive) {
+            gameState.state.tutorialActive = false;
+            gameState.state.tutorialText = "";
+        }
+        // Perform flip for Space key
+        if (gameState.state.player) {
+            gameState.state.player.attemptGravityFlip();
+        }
+        return; // Space key action (deactivate tutorial if needed + flip) is complete.
+    } else {
+        // For keys OTHER than Space, if tutorial is active
+        if (gameState.state.tutorialActive) {
+            gameState.state.tutorialActive = false;
+            gameState.state.tutorialText = "";
+            return; // Deactivate tutorial and consume the non-space key.
+        }
+        // If not Space key and tutorial not active, let other key handlers (if any) proceed.
+        // (Currently no other specific key handlers in this 'play' block to fall through to)
     }
+    // END OF MODIFIED SECTION
   } else if (gameState.state.gameState === "over" || gameState.state.gameState === "win") {
     // If game is over or won, restart on space
     if (keyCode === 32) {
@@ -60,21 +72,41 @@ export function handleKeyPressed() {
  * Handle mouse click events
  */
 export function handleMouseClicked() {
+  // REVISED LOGIC FOR handleMouseClicked
+  let isPlayState = (gameState.state.gameState === "play");
 
   if (gameState.state.tutorialActive) {
     gameState.state.tutorialActive = false;
     gameState.state.tutorialText = "";
-    return;
+
+    if (isPlayState) { // Tutorial was active, and it's a click in "play" state
+      if (gameState.state.player) {
+        gameState.state.player.attemptGravityFlip();
+      }
+      // Deactivated tutorial AND flipped. Done for this click.
+      // Also, prevent clicking "through" to other UI elements if tutorial was up.
+      return;
+    } else {
+      // Tutorial was active, but not in "play" state (e.g., "menu", "difficulty").
+      // Just deactivated tutorial. Prevent click-through.
+      return;
+    }
   }
-  
-  if (gameState.state.gameState === "menu") {
+
+  // Tutorial was NOT active.
+  if (isPlayState) {
+    // New behavior: mouse click in "play" state (no tutorial) now also flips.
+    if (gameState.state.player) {
+      gameState.state.player.attemptGravityFlip();
+    }
+    return; // Click in "play" state is consumed by flip.
+  } else if (gameState.state.gameState === "menu") {
     // Check if this is a click within the demo area
     if (gameState.state.menuDemoActive) {
       // Demo is already active, handle menu demo clicks (e.g. flip gravity)
       flipGravityInMenuDemo();
-      return;
+      return; // Ensure return after handling demo click
     }
-    
     // Regular menu buttons are no longer needed as we're using the demo
     // instead for difficulty selection
   } else if (gameState.state.gameState === "difficulty") {
@@ -86,27 +118,54 @@ export function handleMouseClicked() {
   } else if (gameState.state.gameState === "over" || gameState.state.gameState === "win") {
     initGame();
   }
+  // END OF REVISED LOGIC
 }
 
 /**
  * Handle touch events for mobile
  */
 export function handleTouchStarted() {
+  // REVISED LOGIC FOR handleTouchStarted
+  // Menu demo is special, handle it first.
   if (gameState.state.gameState === "menu" && gameState.state.menuDemoActive) {
-    // Handle menu demo touch
     flipGravityInMenuDemo();
+    // Assuming tutorialActive isn't relevant if menuDemoActive is true for a touch.
     return;
   }
-  
-  if (gameState.state.gameState === "play") {
-    // If game is in play state, attempt to flip gravity
+
+  let isPlayState = (gameState.state.gameState === "play");
+
+  if (gameState.state.tutorialActive) {
+    gameState.state.tutorialActive = false;
+    gameState.state.tutorialText = "";
+
+    if (isPlayState) { // Tutorial was active, and it's a touch in "play" state
+      if (gameState.state.player) {
+        gameState.state.player.attemptGravityFlip();
+      }
+      // Deactivated tutorial AND flipped. Done for this touch.
+      return;
+    } else {
+      // Tutorial was active, but not in "play" state.
+      // Just deactivated tutorial. Prevent touch-through by returning.
+      return;
+    }
+  }
+
+  // Tutorial was NOT active.
+  if (isPlayState) {
+    // Tutorial not active, touch in "play" state. Original behavior: flip.
     if (gameState.state.player) {
       gameState.state.player.attemptGravityFlip();
     }
+    return; // Touch in "play" state is consumed by flip.
   } else {
-    // For all other states, treat touches the same as clicks
+    // Tutorial was NOT active, and NOT in "play" state, and NOT menu demo.
+    // Original behavior: Call handleMouseClicked. This is still correct as
+    // handleMouseClicked now contains the unified logic.
     handleMouseClicked();
   }
+  // END OF REVISED LOGIC
 }
 
 /**
@@ -275,22 +334,4 @@ function handleStatsScreenClick() {
     // Go back to the main menu
     initGame();
   }
-}
-
-function touchStarted() {
-  // 手机触屏时的逻辑：与鼠标点击相同
-
-  if (gameState.state.tutorialActive) {
-    // 如果还在提示中，先取消提示框
-    gameState.state.tutorialActive = false;
-    gameState.state.tutorialText = "";
-    return false;  // 防止继续触发重力反转
-  }
-
-  // 正常状态下进行重力反转
-  if (window.player) {
-    window.player.performGravityFlip();
-  }
-
-  return false; // 阻止默认滚动等行为
 }
