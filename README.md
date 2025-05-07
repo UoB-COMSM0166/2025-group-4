@@ -26,6 +26,8 @@
 
 # 1.Development Group
 ![Group Photo](images/group4-photo.jpg)
+          Figure 1
+         Group Photo 
 
 **The names are listed from left to right in the group photo.**
 
