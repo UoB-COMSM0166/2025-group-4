@@ -35,25 +35,27 @@ export function setupLevels() {
     assets: {
       wall: "src/assets/art/level_6-9/tiles.png", 
       background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
+      spike: "src/assets/art/level_6-9/thorn.png", 
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
   });
 // Original small levels2:
   levels.push({
     map: [
       "1111111111111111",
-      "14............11",
-      "1.......2......1",
+      "1.............41",
+      "1.......5......1",
       "1..............1",
       "1..3...........1",
-      "1........2.....1",
+      "1........5.....1",
       "1..............1",
       "1111111111111111",
     ],
     assets: {
       wall: "src/assets/art/level_6-9/tiles.png", 
       background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
+      spike: "src/assets/art/level_6-9/thorn.png",
+      gate: "src/assets/art/images/gates/gate-8.png",  
     }
   });
 
@@ -62,19 +64,20 @@ export function setupLevels() {
     map: [
       "111111111111111111111",
       "1..........2......4.1",
-      "1...5.......e.......1",
+      "1...........e.......1",
       "1..........222......1",
       "1...................1",
-      "1..3.............5..1",
+      "1..3................1",
+      "1...............e...1",
       "1...................1",
-      "1.........E.........1",
       "1...................1",
       "111111111111111111111",
     ],
     assets: {
       wall: "src/assets/art/level_6-9/tiles.png", 
       background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
+      spike: "src/assets/art/level_6-9/thorn.png",
+      gate: "src/assets/art/images/gates/gate-8.png",  
     }
   });
 
@@ -95,11 +98,12 @@ export function setupLevels() {
     assets: {
       wall: "src/assets/art/level_6-9/tiles.png", 
       background: "src/assets/art/level_6-9/background.png", 
-      spike: "src/assets/art/level_6-9/thorn.png" 
+      spike: "src/assets/art/level_6-9/thorn.png",
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
   }); 
 
-  //level1-short map
+  //level5-short map
   levels.push({
     map: [
       "1111111111111111111111111",  
@@ -123,13 +127,14 @@ export function setupLevels() {
       wall: "src/assets/art/level_1_ice/tiles.png",
       background: "src/assets/art/level_1_ice/background.png",
       spike: "src/assets/art/level_1_ice/thorn.png",
-      platformUpDown: "src/assets/art/level_1_ice/platforms6.png"
+      platformUpDown: "src/assets/art/level_1_ice/platforms6.png",
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
   });
   
 
 
-//level2-short map
+//level6-short map
   levels.push({
     map: [
       "1111111111111111111111111",
@@ -152,7 +157,8 @@ export function setupLevels() {
       wall: "src/assets/art/level_2/tiles.png", 
       background: "src/assets/art/level_2/background.png", 
       spike: "src/assets/art/level_2/thorn.png",
-      platformleftright: "src/assets/art/level_6-9/platforms7.png" 
+      platformleftright: "src/assets/art/level_6-9/platforms7.png",
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
   });
 
@@ -162,10 +168,11 @@ export function setupLevels() {
 
 
 
-    //level3-long map
+    //level7-long map
     levels.push({
     
       map: [
+        "111111111111111111111111111111111111111111111111111111111111111111111111111111111",
         "1vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv111111111vvvvvvvvvvvvvvvvvvvv111111vvv111141",
         "1.........11111111...................................11111111111111.............1",
         "1..............222.....111111111................................................1",
@@ -173,17 +180,19 @@ export function setupLevels() {
         "1................11111.............e.........11111111...........................1",
         "11111111.........................................................111111111111...1",
         "1.3............................1111111111.................e.....................1",
-        "111111111111111111111111155555555555511111111111115555551111111115555555555555551"
+        "111111111111111111111111155555555555511111111111115555551111111115555555555555551",
+        "111111111111111111111111111111111111111111111111111111111111111111111111111111111",
       ],
       assets: {
         wall: "src/assets/art/level_3/tiles.png", 
         background: "src/assets/art/level_3/background.png", 
-        spike: "src/assets/art/level_3/thorn.png" 
+        spike: "src/assets/art/level_3/thorn.png",
+        gate: "src/assets/art/images/gates/gate-8.png", 
       }
     });
 
 
-      //level4-long map
+      //level8-long map
       levels.push({
         map: [
           "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
@@ -192,7 +201,7 @@ export function setupLevels() {
           "1......5511111111..............................111111111111111111111111111111........................1",
           "1....111111111111..............E...............111111111111111..........E.................I..........1",
           "1....1111111111111111111.....111111111......222...11..222......222......222......222......222........1",
-          "1................11111.......11111...1111111......55...11111111111.........1111111.........11111.....1",
+          "1................11111.......11111...1111111......vv...11111111111.........1111111.........11111.....1",
           "1......................5.................................11..........................................1",
           "1....2111111111......2111111111......2...111111......2111111111......21111111.........211111111......1",
           "1....11111111111.....11111111111111111111111.............................1111111111111111111111111...1",
@@ -208,6 +217,7 @@ export function setupLevels() {
           inIcePlayer: "src/assets/art/level_1_ice/dog_in_ice.png",
           ice: "src/assets/art/level_4/ice.png",
           slipperyWall: "src/assets/art/level_4/ice-tiles.png",
+          gate: "src/assets/art/images/gates/gate-8.png", 
         }
       });
 
@@ -217,7 +227,7 @@ export function setupLevels() {
 
 
 
-  //level5-long map
+  //level9-long map
   levels.push({
     map: [
       "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
@@ -231,13 +241,14 @@ export function setupLevels() {
     assets: {
       wall: "src/assets/art/level_5/tiles.png", 
       background: "src/assets/art/level_5/background.png", 
-      spike: "src/assets/art/level_5/thorn.png" 
+      spike: "src/assets/art/level_5/thorn.png",
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
    });
 
 
   
-//hidden level
+//hidden level10
   levels.push({
     map: [
       "111111111111111111111",
@@ -255,7 +266,8 @@ export function setupLevels() {
     assets: {
       wall: "src/assets/art/level_10/tiles.png", 
       background: "src/assets/art/level_10/background.png", 
-      spike: "src/assets/art/level_10/thorn.png" 
+      spike: "src/assets/art/level_10/thorn.png",
+      gate: "src/assets/art/images/gates/gate-8.png", 
     }
   });
   

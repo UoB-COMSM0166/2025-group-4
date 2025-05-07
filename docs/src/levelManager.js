@@ -39,6 +39,13 @@ export function loadLevel(idx) {
     window.currentWallImage = null;
   }
 
+  // Use preloaded exit gate image from cache
+if (currentLevel.assets && currentLevel.assets.gate) {
+  window.exitGateImage = window.getAsset(currentLevel.assets.gate);
+} else {
+  window.exitGateImage = null;
+}
+
   // Use preloaded background image from cache
   if (currentLevel.assets && currentLevel.assets.background) {
     gameState.state.backgroundImage = window.getAsset(currentLevel.assets.background);
@@ -220,6 +227,18 @@ export function loadLevel(idx) {
   if (idx === 0) {
     gameState.state.tutorialText = "点击鼠标或空格来反转重力！\n每个金币 = 15 分";
     gameState.state.tutorialActive = true;
+  }else if (idx === 1) {
+    gameState.state.tutorialText = "小心前方的尖刺！碰到它会立即失去一条命。";
+    gameState.state.tutorialActive = true;
+  } else if (idx === 2) {
+    gameState.state.tutorialText = "敌人会左右巡逻，接触它们也会受伤！试着避开它们。";
+    gameState.state.tutorialActive = true;
+  } else if (idx === 3) {
+    gameState.state.tutorialText = "注意！这类敌人会发射子弹，注意闪避或尽快离开攻击范围！";
+    gameState.state.tutorialActive = true;
+  } else {
+    gameState.state.tutorialText = "";
+    gameState.state.tutorialActive = false;
   }
   
 }

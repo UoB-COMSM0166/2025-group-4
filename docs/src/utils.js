@@ -171,20 +171,23 @@ export function drawTiles(tileMap, cameraOffsetX) {
         // --- End Spike Drawing Logic ---
       }
       else if (tile === "I") {
-        // ✅ Level 4 冰块贴图
         const img = window.getAsset?.("src/assets/art/level_4/ice.png");
+        const float = 2 * Math.sin(frameCount * 0.1 + row * 2 + col);  // 冰块上下浮动
+      
         if (img) {
+          push();
+          translate(0, float); // 上下平移
           imageMode(CORNER);
           image(img, x, y, tileSize, tileSize);
-
+          pop();
         } else {
-          fill(150, 220, 255); // fallback
+          fill(150, 220, 255);
           noStroke();
-          rect(x, y, tileSize, tileSize);
+          rect(x, y + float, tileSize, tileSize);  // fallback 同样浮动
         }
-      }
+      }          
       else if (tile === "S") {
-        // ✅ Level 4 滑墙贴图
+        // Level 4 滑墙贴图
         const img = window.getAsset?.("src/assets/art/level_4/ice-tiles.png");
         if (img) {
           const offset = sin(frameCount * 0.1 + x * 0.05) * 2;  

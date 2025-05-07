@@ -37,7 +37,12 @@ export class Coin {
     
     // Use coinImage if available, otherwise fallback to circle
     if (window.coinImage) {
-      window.image(window.coinImage, this.x, this.y, this.r * 2, this.r * 2);
+      const bobOffset = Math.sin(window.frameCount * 0.1 + this.x) * 5; // 上下浮动
+      window.push();
+      window.translate(this.x, this.y + bobOffset);
+      window.rotate(window.frameCount * 0.05); // 轻微旋转
+      window.image(window.coinImage, 0, 0, this.r * 2, this.r * 2);
+      window.pop();
     } else {
       // Fallback to drawing a circle if image is not loaded
       window.fill(255, 215, 0);

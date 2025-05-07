@@ -206,6 +206,7 @@ function preload() {
   // Load images and make them available globally
   window.coinImage = loadAndCacheImage('src/assets/art/images/coin.png', 'miscImages', 'coin.png');
   window.enemyImage = loadAndCacheImage('src/assets/art/images/enemy.png', 'enemyImages', 'enemy.png');
+  window.exitGateImage = loadImage("src/assets/art/images/gates/gate-8.png");
 
   // Player images
   window.playerImages = [];
