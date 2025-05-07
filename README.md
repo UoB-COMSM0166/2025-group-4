@@ -180,13 +180,13 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ## 3.1.6 Stakeholders
 ### Surrogate Roles
- ####  Onion Model of game Rusty Rover's Run
+ ####  Onion Model of game PUPPY'S MAGICAL ADVENTURE
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
 
-Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander (2004, p. 227). Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
-For Rusty Rover's Run, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilizing surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
+Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
+For PUPPY'S MAGICAL ADVENTURE, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilizing surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
 Nonetheless, surrogate roles also present challenges.  Surrogate feedback that does not align with real player expectations can present risks.  For instance, if testers focused on accessibility deemed the gravity manipulation puzzles intuitive because of their knowledge of game mechanics, while casual players found them challenging, modifications were required.  In order to reduce these risks, we supplemented surrogate input with direct feedback from a variety of players, guaranteeing that the game was evaluated in a balanced and representative manner.
-It is ensured that Rusty Rover's Run was engaging, accessible, and mechanically sound for its core audience by strategically integrating surrogate roles and validating their insights with real players.
+It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mechanically sound for its core audience by strategically integrating surrogate roles and validating their insights with real players.
 
 ---
 
@@ -227,7 +227,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-# 4. Game Design – Rusty Rover’s Run
+# 4. Game Design – PUPPY'S MAGICAL ADVENTURE
 ## 4.1 User Case diagram
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
 
@@ -686,7 +686,7 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 | Test Coverage | Good for core systems | Expand integration and edge case testing |
 
  _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
- This comprehensive evaluation structure allows us to iteratively refine **Rusty Rover's Run**, balancing player enjoyment with performance and usability goals.
+ This comprehensive evaluation structure allows us to iteratively refine **PUPPY'S MAGICAL ADVENTURE**, balancing player enjoyment with performance and usability goals.
  
 ---
 
