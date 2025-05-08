@@ -409,11 +409,31 @@ function mousePressed() {
           state.player.gravityDirection
         );
       }
-      return;
+      return; // Consume press for menu demo
     }
     
-    // FIRST_EDIT: Prevent duplicate gravity flips by returning early from mousePressed
-    return;
+    // Handle "play" state gravity flip on mousePressed
+    if (state.gameState === "play") {
+      if (state.tutorialActive) {
+        state.tutorialActive = false;
+        state.tutorialText = "";
+        // Tutorial was active, now deactivated. Perform the flip.
+        if (state.player) {
+          state.player.attemptGravityFlip();
+        }
+      } else {
+        // Tutorial not active, just perform the flip.
+        if (state.player) {
+          state.player.attemptGravityFlip();
+        }
+      }
+      return; // Consume the press for the play state.
+    }
+
+    // If not menu demo and not "play" state, the press is NOT consumed here.
+    // It will fall through, and p5.js will eventually call mouseClicked() if it's a full click.
+    // The original "FIRST_EDIT: Prevent duplicate gravity flips by returning early from mousePressed" return;
+    // is now removed/replaced by the specific returns above.
   }
 }
 

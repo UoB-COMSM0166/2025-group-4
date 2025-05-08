@@ -91,10 +91,10 @@ export function handleMouseClicked() {
     gameState.state.tutorialText = "";
 
     if (isPlayState) { // Tutorial was active, and it's a click in "play" state
-      if (gameState.state.player) {
-        gameState.state.player.attemptGravityFlip();
-      }
-      // Deactivated tutorial AND flipped. Done for this click.
+      // if (gameState.state.player) { // Flip is now handled by mousePressed
+      //   gameState.state.player.attemptGravityFlip();
+      // }
+      // Deactivated tutorial. Flip is handled by mousePressed.
       // Also, prevent clicking "through" to other UI elements if tutorial was up.
       return;
     } else {
@@ -106,17 +106,18 @@ export function handleMouseClicked() {
 
   // Tutorial was NOT active.
   if (isPlayState) {
-    // New behavior: mouse click in "play" state (no tutorial) now also flips.
-    if (gameState.state.player) {
-      gameState.state.player.attemptGravityFlip();
-    }
-    return; // Click in "play" state is consumed by flip.
+    // New behavior: mouse click in "play" state (no tutorial) - flip is now handled by mousePressed.
+    // if (gameState.state.player) { // Flip is now handled by mousePressed
+    //   gameState.state.player.attemptGravityFlip();
+    // }
+    return; // Click in "play" state is handled by mousePressed.
   } else if (gameState.state.gameState === "menu") {
     // Check if this is a click within the demo area
     if (gameState.state.menuDemoActive) {
-      // Demo is already active, handle menu demo clicks (e.g. flip gravity)
-      flipGravityInMenuDemo();
-      return; // Ensure return after handling demo click
+      // Demo is already active. mousePressed in main.js handles the flip and returns.
+      // So, this specific call here would be redundant.
+      // flipGravityInMenuDemo(); 
+      return; // Ensure return if menuDemoActive was true (though mousePressed should prevent this path)
     }
     // Regular menu buttons are no longer needed as we're using the demo
     // instead for difficulty selection
