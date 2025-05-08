@@ -72,6 +72,10 @@ Character mobility such as gravity reversal, jumping, wall-sliding.
 Players must adapt quickly, react precisely, and memorize patterns to reach the end before losing all lives.
 
 <p align="center">
+  <strong>Figure 2</strong><br>
+  <em>Game Mechanics</em>
+
+<p align="center">
   <img src="./images/future%20improvement.gif" width="50%">
 </p>
 
@@ -163,11 +167,12 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 ## 3.1.6 Stakeholders
 ### Surrogate Roles
  ####  Onion Model of game PUPPY'S MAGICAL ADVENTURE
+
+ <p align="center">
+  <strong>Figure 3</strong><br>
+  <em>Onion Model</em>
+
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
-<p align="center">
-  <b> Figure 2</b><br>
-  Onion Model
-</p>
 
 Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
@@ -183,6 +188,10 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
 ### User Posters of four different player types
 
 <p align="center">
+  <strong>Figure 4</strong><br>
+  <em>User Posters</em>
+
+<p align="center">
   <img src="images/user poster 1.png" alt="User Poster 1" width="45%" />
   <img src="images/user poster 2.png" alt="User Poster 2" width="45%" />
 </p>
@@ -190,11 +199,6 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
   <img src="images/user poster 3.png" alt="User Poster 3" width="45%" />
   <img src="images/user poster 4.png" alt="User Poster 4" width="45%" />
 </p>
-<p align="center">
-  <b> Figure 3</b><br>
- User Posters
-</p>
-
 
 To better understand what features we should prioritize, we created user stories.
 
