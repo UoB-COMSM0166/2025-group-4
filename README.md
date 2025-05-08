@@ -1034,22 +1034,21 @@ We conducted regular **refactoring**:
 </p>
 
 - **Sprint process**:
+  <p align="center">
+  <strong>Figure 20</strong><br>
+  <em>Sprint process</em>
+
 <div align="center">
   <img src="images/process-sprint.png" alt="Sprint Process" width="400">
 </div>
-<p align="center">
-  <b>Figure 19</b><br>
-  Sprint process
-</p>
 
+- **Burndown Chart**:
+  <p align="center">
+  <strong>Figure 21</strong><br>
+  <em>Burndowm Chart</em>
 
-- **Burndown Chart**:  
   ![Burndown Chart](images/Burn%20chart.jpg.png)
-<p align="center">
-  <b>Figure 20</b><br>
-  Burndown Chart
-</p>
-
+  
 ---
 
 Our iterative, flexible process and thoughtful use of collaborative digital tools enabled the successful delivery of a highly interactive, multi-biome gravity reversal platformer.
