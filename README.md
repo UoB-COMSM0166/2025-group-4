@@ -76,7 +76,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
   <em>Game Mechanics</em>
 
 <p align="center">
-  <img src="./images/future%20improvement.gif" width="50%">
+  <img src="./images/future%20improvement.gif" width="60%">
 </p>
 
 ---
@@ -90,6 +90,9 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
 ### **4.** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
+
+<p align="center">
+  <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/slides.gif?raw=true" alt="Slides and Fire Traps Demo" width="60%">
 
 ---
 
