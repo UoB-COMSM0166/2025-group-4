@@ -25,11 +25,12 @@
 - [11. Conclusion](#11-conclusion)
 
 # 1.Development Group
-![Group Photo](images/group4-photo.jpg)       
 <p align="center">
-  <b> Figure 1 </b><br>
- Group Photo
+  Figure 1<br>
+  <em>Group Photo</em>
 </p>
+
+![Group Photo](images/group4-photo.jpg)       
 
 **The names are listed from left to right in the group photo.**
 
