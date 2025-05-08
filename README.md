@@ -71,6 +71,10 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 Character mobility such as gravity reversal, jumping, wall-sliding.
 Players must adapt quickly, react precisely, and memorize patterns to reach the end before losing all lives.
 
+<p align="center">
+  <img src="./images/future%20improvement.gif" width="50%">
+</p>
+
 ---
 
 ## 3.1.3 Game Innovation
@@ -789,10 +793,6 @@ Summary&Future Improvements
 
 ## 9.1 Project Overview
 This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
-
-<p align="center">
-  <img src="./images/future%20improvement.gif" width="50%">
-</p>
 
 ---
 
