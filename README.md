@@ -15,7 +15,7 @@
 - [1.Development Group](#1development-group)
 - [2. Kanban link](#2-kanban-link)
 - [3. Project Report](#3-project-report)
-- [4. Game Design – Rusty Rover’s Run](#4-game-design---rusty-rover-s-run)
+- [4. Game Design – Puppy's Magical Adventure](#4-game-design---puppy-s-magical-adventure)
 - [5. Implementation](#5-implementation)
 - [6. Evaluation](#6-evaluation)
 - [7. Code Testing](#7-code-testing)
