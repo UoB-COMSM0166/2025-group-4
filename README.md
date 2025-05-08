@@ -50,6 +50,10 @@
 Before any code was written, we explored gameplay ideas using hand-drawn paper prototypes. This helped us define core mechanics such as gravity reversal and trap placement.
 
 <p align="center">
+  <strong>Figure 2</strong><br>
+  <em>Paper Prototypes</em>
+
+<p align="center">
   <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
 </p>
 
@@ -72,7 +76,7 @@ Character mobility such as gravity reversal, jumping, wall-sliding.
 Players must adapt quickly, react precisely, and memorize patterns to reach the end before losing all lives.
 
 <p align="center">
-  <strong>Figure 2</strong><br>
+  <strong>Figure 3</strong><br>
   <em>Game Mechanics</em>
 
 <p align="center">
@@ -90,6 +94,10 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 - While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
 ### **4.** Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
+
+<p align="center">
+  <strong>Figure 4</strong><br>
+  <em> </em>
 
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/slides.gif?raw=true" alt="Slides and Fire Traps Demo" width="60%">
@@ -172,7 +180,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
  ####  Onion Model of game PUPPY'S MAGICAL ADVENTURE
 
  <p align="center">
-  <strong>Figure 3</strong><br>
+  <strong>Figure 5</strong><br>
   <em>Onion Model</em>
 
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
@@ -191,7 +199,7 @@ It is ensured that PUPPY'S MAGICAL ADVENTURE was engaging, accessible, and mecha
 ### User Posters of four different player types
 
 <p align="center">
-  <strong>Figure 4</strong><br>
+  <strong>Figure 6</strong><br>
   <em>User Posters</em>
 
 <p align="center">
@@ -208,8 +216,9 @@ To better understand what features we should prioritize, we created user stories
 Our team designed several posters featuring characters to represent these user stories, ensuring personalization and keeping them in mind.
 
 ---
-
-### User Stories & Acceptance Criteria
+<p align="center">
+  <strong>Table 1</strong><br>
+  <em>User Stories & Acceptance Criteria</em>
 
 | User Story                  | Acceptance Criteria                      |
 |-----------------------|---------------------------|
@@ -219,20 +228,22 @@ Our team designed several posters featuring characters to represent these user s
 | As a hardcore player, I want the game to include high-difficulty hidden levels or rewards for no-damage clears to push my limits.       | Given the unlock conditions for high-difficulty levels, when a player completes extra challenges (such as a no-damage run or a timed challenge), then they should receive unique rewards or unlock new content to enhance the sense of achievement.      |
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
-<p align="center">
-  <b> Table 1</b><br>
-  User stories&Acceptance Criteria
-</p>
 
 # 4. Game Design – PUPPY'S MAGICAL ADVENTURE
 ## 4.1 User Case diagram
-![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
 <p align="center">
-  <b> Figure 4</b><br>
-  User Case diagram
-</p>
+  <strong>Figure 6</strong><br>
+  <em>User Case diagram</em>
+
+![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
+
+
 
 ---
+<p align="center">
+  <strong>Table 2</strong><br>
+  <em> Standard Mode VS Random Mode
+  (User Case)</em>
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -248,15 +259,15 @@ Our team designed several posters featuring characters to represent these user s
 | **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
 | **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
 | **Step Three (Alt)** | Optional **Gold coin** can be collected (no gameplay effect). |
-<p align="center">
-  <b>Table 2</b><br>
- Standard Mode VS Random Mode
-  (User Case)
-</p>
 
 ---
 
 ## 4.2 Procedural Challenge Mode User Case Specification
+
+<p align="center">
+  <strong>Table 3</strong><br>
+  <em>  Santard Mode VS Random Mode
+  (Procedural Challenge Mode)</em>
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -273,11 +284,6 @@ Our team designed several posters featuring characters to represent these user s
 | **Step One** | Flip gravity using **Spacebar**, but obstacles may spawn in new positions, increasing unpredictability. |
 | **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
 | **Step Three** | Coin points awarded for completing unpredictable runs efficiently. |
-<p align="center">
-  <b>Table 3</b><br>
- Santard Mode VS Random Mode
-  (Procedural Challenge Mode)
-</p>
 
 ---
 
@@ -317,11 +323,6 @@ The class diagram outlines object relationships in our game system and supports 
 - `Bullet`, `Coin`, `ExitGate`, `FloatingPlatform`: represent environmental elements  
 - `Config`: centralizes constants for difficulty and level layout
 
-![Class Diagram](./images/class-diagram.png)
-<p align="center">
-  <b>Figure 5 </b><br>
- Class Diagram
-</p>
 
 ---
 
@@ -336,11 +337,11 @@ This diagram illustrates runtime logic and how game events propagate.
 - Collisions with objects affect lives, score, or progression  
 - Renderer updates visual elements based on game state
 
+ <p align="center">
+  <strong>Figure 6</strong><br>
+  <em> Sequence Diagram</em>
+   
 ![Sequence Diagram](./images/Sequence-diagram.png)
-<p align="center">
-  <b>Figure 6</b><br>
-  Sequence Diagram
-</p>
 
 ---
 
@@ -354,12 +355,12 @@ We designed a hierarchical FSM to control game progression.
 
 This diagram supports both functional transitions and UI switching.
 
+ <p align="center">
+  <strong>Figure 7</strong><br>
+  <em>State Diagram</em>
+
 <p align="center">
   <img src="./images/State%20diagram.png" alt="State Diagram" width="600"/>
-</p>
-<p align="center">
-  <b>Figure 7</b><br>
- State Diagram
 </p>
 
 ---
@@ -395,12 +396,22 @@ We also defined an upper deltaTime threshold to avoid physical jumps caused by e
 
 To support physical interactions in complex scenes, we implemented a set of fine-grained, directional and dynamically adapted collision handling systems. Contact between the player and different elements of the environment (e.g. the ground, walls, spikes, floating platforms, etc.) is split into two paths: horizontal and vertical collisions are detected separately, and a small-step strategy is used to improve detection accuracy during fast movements and avoid the phenomenon of shape intrusion.
 
+
+ <p align="center">
+  <strong>Figure</strong><br>
+  <em> </em>
+   
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/gravity%20reversal.gif?raw=true" alt="Gravity Reversal Demo" width="60%">
 </p>
 
 The system also supports the gravity flip mechanism, and the collision logic can dynamically switch the logic for evaluating the landing surface and upper contact surface based on the current direction of gravity, allowing the player to continue climbing, jumping and landing correctly after the flip. For dynamic elements such as floating platforms and skates, we added special evaluation logic for stable binding, powerful gliding and other complex interactions. To improve the sense of action and feedback, we also added details such as landing pads, impact feedback and wall bouncing in the collision response to make the character's movements more vivid and natural.
 
+
+ <p align="center">
+  <strong>Figure 6</strong><br>
+  <em> </em>
+   
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/spikes.gif?raw=true" alt="Spikes & Enemies Demo" width="60%">
 </p>
@@ -496,33 +507,29 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 - Do visual cues and indicators support understanding of objectives?
 
 ### 6.1.3 Method:
+ <p align="center">
+  <strong>Table 5</strong><br>
+  <em> Method</em>
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
 | 2 | Asked to play L1 and L2 while thinking aloud | Verbalizations documented by two observers |
 | 3 | Feedback grouped thematically | Data analyzed using thematic analysis (Braun & Clarke 2006) |
-<p align="center">
-  <b>Table 5</b><br>
-  Method
-</p>
 
 ### 6.1.4 Thematic Insights:
-
+ <p align="center">
+  <strong>Table 6</strong><br>
+  <em> Thematic Insights</em>
 | Theme | Positive Feedback | Identified Issues | Action Taken |
 |-------|------------------|------------------|---------------|
 | Controls & Movement | Responsive gravity switch | Jump timing unclear in some sections | Adjusted platform spacing |
 | Visual Design | Pixel art is immersive | Exit unclear, enemy sprites confusing | Updated assets and added arrow cues |
 | Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
-<p align="center">
-  <b>Table 6</b><br>
-  Thematic Insights
-</p>
 
+ <p align="center">
+  <strong>Figure 8</strong><br>
+  <em>Thematic Mind Map</em>
 ![Thematic Mind Map](images/Thematic%20Mind%20Map.png)
-<p align="center">
-  <b>Figure 8</b><br>
-  Thematic Mind Map
-</p>
 
 ---
 
@@ -541,15 +548,14 @@ Findings were classified by severity to prioritize improvements. For example:
   **Severity**: Major – addressed by adding audio-visual feedback during interaction.
 
 ### Findings Table:
+ <p align="center">
+  <strong>Table 7</strong><br>
+  <em> Findings Table</em>
 | Heuristic | Issue Example | Severity | Fix Implemented |
 |-----------|---------------|----------|-----------------|
 | Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
 | Consistency and Standards | jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
 | Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
-<p align="center">
-  <b>Table 7</b><br>
- Findings Table
-</p>
 
 The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
 
@@ -569,6 +575,9 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 ### **User Evaluation Summary (SUS & NASA TLX Scores)**  
 
 #### **System Usability Scale (SUS) Scores**
+<p align="center">
+  <strong>Figure 16</strong><br>
+  <em> System Usability Scale(SUS)Scores</em>
 | User | I will frequently use this system (L1) | (L2) | The system is too complex (L1) | (L2) | The system is easy to use (L1) | (L2) | Need technical support (L1) | (L2) | Functions are well-integrated (L1) | (L2) | The system is inconsistent (L1) | (L2) | Most people can quickly learn (L1) | (L2) | The system is cumbersome (L1) | (L2) | I feel confident using it (L1) | (L2) | I need to learn a lot before using it (L1) | (L2) |
 |------|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|
 | **1**  | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 3 | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 4 | 5 | 3 | 2 | 4 |
@@ -581,23 +590,22 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **8**  | 3 | 4 | 4 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 | 3 | 3 | 3 | 5 |
 | **9**  | 5 | 2 | 2 | 5 | 5 | 3 | 1 | 4 | 4 | 2 | 1 | 5 | 5 | 2 | 1 | 5 | 5 | 2 | 2 | 5 |
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
+
 <p align="center">
-  <b>Table 8</b><br>
- System Usability Scale(SUS)Scores
-</p>
+  <strong>Figure 16</strong><br>
+  <em> SUS Scores Comparison(L1 vs L2)</em>
+
 ![SUS Scores Comparison](images/SUS%20Scores%20Comparison.png)
 <p align="center">
   <img src="images/SUS%20Scores%20Comparison.png" alt="SUS Scores Comparison">
 </p>
 
-<p align="center">
-  <b>Figure 9</b><br>
-  SUS Scores Comparison(L1 vs L2)
-</p>
-
 ---
 
 #### **NASA Task Load Index (NASA TLX Scores)**
+ <p align="center">
+  <strong>Table 9</strong><br>
+  <em> NASA Task Load Index (NASA TLX Scores)</em>
 | User | Mental Demand (L1) | (L2) | Physical Demand (L1) | (L2) | Temporal Demand (L1) | (L2) | Performance (L1) | (L2) | Effort (L1) | (L2) | Frustration (L1) | (L2) |
 |------|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|
 | **1**  | 8  | 14 | 5  | 12 | 9  | 16 | 15 | 13 | 10 | 18 | 8  | 15 |
@@ -605,20 +613,18 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **3**  | 9  | 16 | 6  | 13 | 10 | 18 | 14 | 11 | 12 | 20 | 8  | 17 |
 | **4**  | 7  | 18 | 5  | 15 | 7  | 19 | 16 | 9  | 8  | 20 | 6  | 18 |
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
-<p align="center">
-  <b>Table 9</b><br>
-  NASA Task Load Index (NASA TLX Scores)
-</p>
 
+ <p align="center">
+  <strong>Table 10</strong><br>
+  <em> NASA TLS Scores Comparison (L1 vs L2)</em>
 ![NASA TLX Scores Comparison](images/NASA%20TLX%20Scores%20Comparison.png)
-<p align="center">
-  <b>Figure 10</b><br>
-  NASA TLS Scores Comparison (L1 vs L2)
-</p>
 
 ---
 
 ####  SUS Scores Summary:
+<p align="center">
+  <strong>Table 10</strong><br>
+  <em>SUS Scores Summary</em>
 | Metric | L1 (Avg) | L2 (Avg) | Change |
 |--------|----------|----------|--------|
 | Ease of Use | 4.3 | 3.5 | ↓ |
@@ -626,19 +632,16 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Need for Support | 1.2 | 1.8 | ↑ |
 | System Integration | 4.1 | 3.9 | ↓ |
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
+
 <p align="center">
-  <b>Table 10</b><br>
-  SUS Scores Summary
-</p>
-
-
+  <strong>Figure 11</strong><br>
+  <em>SUS Scores Comparision</em>
 ![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
-<p align="center">
-  <b>Figure 11</b><br>
-  SUS Scores Comparision
-</p>
 
 ####  NASA TLX Summary:
+<p align="center">
+  <strong>Table 11</strong><br>
+  <em>NASA TLX Summary</em>
 | Dimension | L1 Median | L2 Median | L3 Median |
 |-----------|-----------|-----------|-----------|
 | Mental Demand | 25 | 50 | 85 |
@@ -648,27 +651,19 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Effort | 22 | 48 | 70 |
 | Frustration | 17 | 45 | 65 |
 
-<p align="center">
-  <b>Table 11</b><br>
-  NASA TLX Summary
-</p>
-
  Wilcoxon Signed-Rank Test:
 - **L1 vs L2**: *p = 0.0035*  
 - **L2 vs L3**: *p = 0.0038*
 
+<p align="center">
+  <strong>Figure 12</strong><br>
+  <em>NASA TLX Workload Trend Across Levels(Median)</em>
 ![NASA TLX Workload Trend Across Levels](images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png)
 
 <p align="center">
-  <b>Figure 12</b><br>
-  NASA TLX Workload Trend Across Levels(Median)
-</p>
-
+  <strong>Figure 13</strong><br>
+  <em>NASA TLX Workload by Dimension(Median)</em>
 ![NASA TLX Workload by Dimension](images/NASA%20TLX%20Workload%20by%20Dimension.png)
-<p align="center">
-  <b>Figure 13</b><br>
-  NASA TLX Workload by Dimension(Median)
-</p>
 
 ---
 
@@ -721,16 +716,16 @@ test("Gravity should invert when spacebar is pressed", () => {
 ``` 
  
 #### 7.1.3 Key Findings 
+
+ <p align="center">
+  <strong>Table 13</strong><br>
+  <em> Key Findings(White-box Testing)</em>
  
 | Issue                                      | Fix                                                         | 
 | ------------------------------------------ | ----------------------------------------------------------- | 
 | Character fails to land after gravity flip | Added dynamic grounding logic                               | 
 | Collision skipping during rapid flips      | Introduced deltaTime limiter & micro-step detection         | 
 | Inconsistent life decrement logic          | Rewrote `onHit()` vs `onDeath()` to handle cases separately | 
- <p align="center">
-  <b>Table 12</b><br>
-  Key Findings(White-box Testing)
-</p>
 
 These adjustments greatly improved cross-device stability and gameplay consistency. 
  
@@ -747,6 +742,10 @@ Black-box testing focused on user-centric interaction and functionality, without
 * Used manual playthroughs and scripted scenario-based test tables. 
  
 #### 7.2.2 Sample Scenarios 
+
+<p align="center">
+  <strong>Table 14</strong><br>
+  <em> Sample Scenarios(Black-box Testing)</em>
  
 | Test Scenario              | Input                    | Expected Output             | Class Type          | 
 | -------------------------- | ------------------------ | --------------------------- | ------------------- | 
@@ -754,22 +753,19 @@ Black-box testing focused on user-centric interaction and functionality, without
 | Gravity flips mid-air      | Spacebar, Y-dir negative | Character floats to ceiling | Boundary input      | 
 | Attempted double jump      | Jump key + wall contact  | No second jump              | Invalid input class | 
 | No coin collection         | 0 coins, level complete  | Score = 0                   | No-gain scenario    | 
- <p align="center">
-  <b>Table 14</b><br>
- Sample Scenarios(Black-box Testing)
-</p>
+
 #### 7.2.3 Key Findings 
- 
+
+<p align="center">
+  <strong>Table 15</strong><br>
+  <em>Key Findings(Black-box Testing)</em>
+
 | Issue                          | Solution                                  | 
 | ------------------------------ | ----------------------------------------- | 
 | Inconsistent enemy hitboxes    | Standardized collision bounding boxes     | 
 | Missed jumps on edge platforms | Increased platform tolerance margin       | 
 | Mid-air jump exploit           | Restricted jump trigger to grounded state | 
- <p align="center">
-  <b>Table 15</b><br>
-  Key Findings(Black-box Testing)
-</p>
- 
+
 --- 
  
 ### 7.3 Summary 
@@ -780,16 +776,16 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 
 # 8. Summary & Future Improvements
 
+<p align="center">
+  <strong>Table 15</strong><br>
+  <em>Summary&Future Improvements</em>
+
 | Category | Key Insight | Planned Improvement |
 |----------|-------------|----------------------|
 | Usability | Interface is intuitive but learning curve spikes too fast | Smooth out level transitions, better onboarding |
 | Challenge | Players enjoy pressure but frustration grows | Add mid-level checkpoints or retry hints |
 | Visual Feedback | Inconsistent early on | Add consistent cues (flashes, effects, arrows) |
 | Test Coverage | Good for core systems | Expand integration and edge case testing |
- <p align="center">
-  <b>Table 15</b><br>
-Summary&Future Improvements
-</p>
 
  _Next Iteration Focus: Hints, optional tutorial mode, dynamic difficulty assist_
  This comprehensive evaluation structure allows us to iteratively refine **PUPPY'S MAGICAL ADVENTURE**, balancing player enjoyment with performance and usability goals.
@@ -832,6 +828,10 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ---
 
 ## 9.3 Sustainability Effects – Chains of Impact
+
+<p align="center">
+  <strong>Table 16</strong><br>
+  <em>Sustainability Effects – Chains of Impact</em>
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
 | Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
@@ -839,10 +839,6 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 | Technical       | modular code → easy maintenance → long lifespan → less redevelopment waste      |
 | Environmental   | fewer assets → less GPU usage → reduced electricity consumption                 |
 | Economic        | free-to-play → increased access → larger base → sustainable ad |
-<p align="center">
-  <b>Table 16</b><br>
-Sustainability Effects – Chains of Impact
-</p>
 
 ---
 
@@ -865,6 +861,11 @@ Sustainability Effects – Chains of Impact
 ---
 
 ## 9.5 Sustainability User Stories
+
+<p align="center">
+  <strong>Table 17</strong><br>
+  <em>Sustainability User Stories</em>
+  
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
 |------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | Social     | As a casual player, I want co-op gameplay so I can share the experience. | Game supports share.                              |
@@ -872,24 +873,20 @@ Sustainability Effects – Chains of Impact
 | Environmental | As a laptop user, I want low-power mode so I can save battery while playing.                     | Game provides toggle for reduced framerate and dark theme.                          |
 | Economic   | As a student, I want to enjoy the full game experience without paying money.                      | Game has no paywalls and all gameplay elements are accessible without purchase.     |
 | Individual | As a health-conscious player, I want to play without feeling pressured to grind.                  | Level system provides breaks and doesn't incentivize marathon sessions.             |
-<p align="center">
-  <b>Table 17</b><br>
-Sustainability User Stories
-</p>
 
 ---
 
 ## 9.6 Sustainability Score Overview (Out of 10)
+
+<p align="center">
+  <strong>Figure 15</strong><br>
+  <em>Sustainability Score Overview(Out of 10)</em>
 
 <div align="center">
   <img src="images/Sustainability%20Score%20Overview.png" alt="Sustainability Score Overview" width="60%">
 </div>
 
 Economic and Technical dimensions scored highest (9/10), reflecting strong implementation feasibility and future adaptability.
-<p align="center">
-  <b>Figure 14</b><br>
-  Sustainability Score Overview (Out of 10)
-</p>
 
 ---
 
@@ -952,15 +949,14 @@ By embedding accessibility deeply into both **game mechanics and architecture**,
 
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
+<p align="center">
+  <strong>Figure 16</strong><br>
+  <em>Team Meeting</em>
+
 <div align="center">
   <p style="font-size:14px; margin: 4px 0;">Team Meeting</p>
   <img src="images/Team-photo.jpg" alt="Team Photo" width="400">
 </div>
-<p align="center">
-  <b>Figure 15</b><br>
-  Team Meeting
-</p>
-
 
 We used a voting-based decision-making process:
 - For simple tasks, we held quick votes during in-person lab discussions.
@@ -1012,6 +1008,7 @@ We conducted regular **refactoring**:
 ## 10.4 Visuals
 
 - **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
+NASA TLX Workload by Dimension(Median)
 <div align="center">
   <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
@@ -1037,6 +1034,7 @@ We conducted regular **refactoring**:
 </p>
 
 - **Sprint process**:
+
   <p align="center">
   <strong>Figure 20</strong><br>
   <em>Sprint process</em>
@@ -1046,6 +1044,7 @@ We conducted regular **refactoring**:
 </div>
 
 - **Burndown Chart**:
+
   <p align="center">
   <strong>Figure 21</strong><br>
   <em>Burndowm Chart</em>
