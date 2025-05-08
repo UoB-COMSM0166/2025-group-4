@@ -47,6 +47,12 @@
 
 # 3. Project Report
 
+Before any code was written, we explored gameplay ideas using hand-drawn paper prototypes. This helped us define core mechanics such as gravity reversal and trap placement.
+
+<p align="center">
+  <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
+</p>
+
 # 3.1 Introduction
 
 ## 3.1.1 Game Background
