@@ -26,9 +26,8 @@
 
 # 1.Development Group
 <p align="center">
-  Figure 1<br>
+  <strong>Figure 1</strong><br>
   <em>Group Photo</em>
-</p>
 
 ![Group Photo](images/group4-photo.jpg)       
 
