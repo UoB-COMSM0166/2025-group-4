@@ -510,6 +510,8 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
  <p align="center">
   <strong>Table 4</strong><br>
   <em> Method</em>
+</p>
+
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
@@ -520,6 +522,8 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
  <p align="center">
   <strong>Table 5</strong><br>
   <em> Thematic Insights</em>
+</p>
+
 | Theme | Positive Feedback | Identified Issues | Action Taken |
 |-------|------------------|------------------|---------------|
 | Controls & Movement | Responsive gravity switch | Jump timing unclear in some sections | Adjusted platform spacing |
@@ -529,7 +533,11 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
  <p align="center">
   <strong>Figure 12</strong><br>
   <em>Thematic Mind Map</em>
-![Thematic Mind Map](images/Thematic%20Mind%20Map.png)
+</p>
+
+<p align="center">
+  <img src="images/Thematic%20Mind%20Map.png" alt="Thematic Mind Map">
+</p>
 
 ---
 
@@ -551,6 +559,8 @@ Findings were classified by severity to prioritize improvements. For example:
  <p align="center">
   <strong>Table 6</strong><br>
   <em> Findings Table</em>
+</p>
+
 | Heuristic | Issue Example | Severity | Fix Implemented |
 |-----------|---------------|----------|-----------------|
 | Visibility of System Status | No feedback after coin collection | Major | Added sound + visual effect |
@@ -576,8 +586,10 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 #### **System Usability Scale (SUS) Scores**
 <p align="center">
-  <strong>Figure 13</strong><br>
+  <strong>Table 7</strong><br>
   <em> System Usability Scale(SUS)Scores</em>
+</p>
+
 | User | I will frequently use this system (L1) | (L2) | The system is too complex (L1) | (L2) | The system is easy to use (L1) | (L2) | Need technical support (L1) | (L2) | Functions are well-integrated (L1) | (L2) | The system is inconsistent (L1) | (L2) | Most people can quickly learn (L1) | (L2) | The system is cumbersome (L1) | (L2) | I feel confident using it (L1) | (L2) | I need to learn a lot before using it (L1) | (L2) |
 |------|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|
 | **1**  | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 3 | 4 | 3 | 2 | 4 | 5 | 3 | 1 | 4 | 5 | 3 | 2 | 4 |
@@ -592,8 +604,9 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
 
 <p align="center">
-  <strong>Figure 14</strong><br>
+  <strong>Figure 13</strong><br>
   <em> SUS Scores Comparison(L1 vs L2)</em>
+</p>
 
 <p align="center">
   <img src="images/SUS%20Scores%20Comparison.png" alt="SUS Scores Comparison">
@@ -603,8 +616,10 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 #### **NASA Task Load Index (NASA TLX Scores)**
  <p align="center">
-  <strong>Table 7</strong><br>
+  <strong>Table 8</strong><br>
   <em> NASA Task Load Index (NASA TLX Scores)</em>
+</p>
+
 | User | Mental Demand (L1) | (L2) | Physical Demand (L1) | (L2) | Temporal Demand (L1) | (L2) | Performance (L1) | (L2) | Effort (L1) | (L2) | Frustration (L1) | (L2) |
 |------|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|
 | **1**  | 8  | 14 | 5  | 12 | 9  | 16 | 15 | 13 | 10 | 18 | 8  | 15 |
@@ -614,8 +629,9 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
 
  <p align="center">
-  <strong>Figure 15</strong><br>
-  <em> NASA TLS Scores Comparison (L1 vs L2)</em>
+  <strong>Figure 14</strong><br>
+  <em> NASA TLX Scores Comparison (L1 vs L2)</em>
+</p>
 
 <p align="center">
   <img src="images/NASA%20TLX%20Scores%20Comparison.png" alt="NASA TLX Scores Comparison">
@@ -625,8 +641,10 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 ####  SUS Scores Summary:
 <p align="center">
-  <strong>Table 8</strong><br>
+  <strong>Table 9</strong><br>
   <em>SUS Scores Summary</em>
+</p>
+
 | Metric | L1 (Avg) | L2 (Avg) | Change |
 |--------|----------|----------|--------|
 | Ease of Use | 4.3 | 3.5 | ↓ |
@@ -636,14 +654,20 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 
 <p align="center">
-  <strong>Figure 16</strong><br>
-  <em>SUS Scores Comparision</em>
-![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
+  <strong>Figure 15</strong><br>
+  <em>SUS Scores Comparison</em>
+</p>
+
+<p align="center">
+  <img src="images/SUS%20Score%20Comparison.png" alt="SUS Score Comparison">
+</p>
 
 ####  NASA TLX Summary:
 <p align="center">
-  <strong>Table 9</strong><br>
+  <strong>Table 10</strong><br>
   <em>NASA TLX Summary</em>
+</p>
+
 | Dimension | L1 Median | L2 Median | L3 Median |
 |-----------|-----------|-----------|-----------|
 | Mental Demand | 25 | 50 | 85 |
@@ -658,14 +682,22 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 - **L2 vs L3**: *p = 0.0038*
 
 <p align="center">
-  <strong>Figure 17</strong><br>
+  <strong>Figure 16</strong><br>
   <em>NASA TLX Workload Trend Across Levels(Median)</em>
-![NASA TLX Workload Trend Across Levels](images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png)
+</p>
 
 <p align="center">
-  <strong>Figure 18</strong><br>
+  <img src="images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png" alt="NASA TLX Workload Trend Across Levels">
+</p>
+
+<p align="center">
+  <strong>Figure 17</strong><br>
   <em>NASA TLX Workload by Dimension(Median)</em>
-![NASA TLX Workload by Dimension](images/NASA%20TLX%20Workload%20by%20Dimension.png)
+</p>
+
+<p align="center">
+  <img src="images/NASA%20TLX%20Workload%20by%20Dimension.png" alt="NASA TLX Workload by Dimension">
+</p>
 
 ---
 
@@ -720,7 +752,7 @@ test("Gravity should invert when spacebar is pressed", () => {
 #### 7.1.3 Key Findings 
 
  <p align="center">
-  <strong>Table 10</strong><br>
+  <strong>Table 11</strong><br>
   <em> Key Findings(White-box Testing)</em>
  
 | Issue                                      | Fix                                                         | 
@@ -746,7 +778,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.2 Sample Scenarios 
 
 <p align="center">
-  <strong>Table 11</strong><br>
+  <strong>Table 12</strong><br>
   <em> Sample Scenarios(Black-box Testing)</em>
  
 | Test Scenario              | Input                    | Expected Output             | Class Type          | 
@@ -759,7 +791,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.3 Key Findings 
 
 <p align="center">
-  <strong>Table 12</strong><br>
+  <strong>Table 13</strong><br>
   <em>Key Findings(Black-box Testing)</em>
 
 | Issue                          | Solution                                  | 
@@ -779,7 +811,7 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 # 8. Summary & Future Improvements
 
 <p align="center">
-  <strong>Table 13</strong><br>
+  <strong>Table 14</strong><br>
   <em>Summary&Future Improvements</em>
 
 | Category | Key Insight | Planned Improvement |
@@ -832,8 +864,10 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.3 Sustainability Effects – Chains of Impact
 
 <p align="center">
-  <strong>Table 14</strong><br>
+  <strong>Table 15</strong><br>
   <em>Sustainability Effects – Chains of Impact</em>
+</p>
+
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
 | Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
@@ -865,8 +899,9 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.5 Sustainability User Stories
 
 <p align="center">
-  <strong>Table 15</strong><br>
+  <strong>Table 16</strong><br>
   <em>Sustainability User Stories</em>
+</p>
   
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
 |------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
@@ -881,8 +916,9 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.6 Sustainability Score Overview (Out of 10)
 
 <p align="center">
-  <strong>Figure 19</strong><br>
+  <strong>Figure 18</strong><br>
   <em>Sustainability Score Overview(Out of 10)</em>
+</p>
 
 <div align="center">
   <img src="images/Sustainability%20Score%20Overview.png" alt="Sustainability Score Overview" width="60%">
@@ -952,7 +988,7 @@ By embedding accessibility deeply into both **game mechanics and architecture**,
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
 <p align="center">
-  <strong>Figure 20</strong><br>
+  <strong>Figure 19</strong><br>
   <em>Team Meeting</em>
 
 <div align="center">
@@ -1012,10 +1048,10 @@ We conducted regular **refactoring**:
 - **Paper Prototype**: Early sketches (level flow, gravity blocks, spikes).
 NASA TLX Workload by Dimension(Median)
 <div align="center">
-  <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
+  <img src="images/Paper%20Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
 <p align="center">
-  <b>Figure 21</b><br>
+  <b>Figure 20</b><br>
   Paper Prototype
 </p>
 
@@ -1024,21 +1060,21 @@ NASA TLX Workload by Dimension(Median)
   <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
 <p align="center">
-  <b>Figure 22</b><br>
+  <b>Figure 21</b><br>
   WeChat Screenshot
 </p>
   
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
   ![Kanban Board](images/Kanban.png)
   <p align="center">
-  <b>Figure 23</b><br>
+  <b>Figure 22</b><br>
  Kanban Board
 </p>
 
 - **Sprint process**:
 
   <p align="center">
-  <strong>Figure 24</strong><br>
+  <strong>Figure 23</strong><br>
   <em>Sprint process</em>
 
 <div align="center">
@@ -1048,7 +1084,7 @@ NASA TLX Workload by Dimension(Median)
 - **Burndown Chart**:
 
   <p align="center">
-  <strong>Figure 25</strong><br>
+  <strong>Figure 24</strong><br>
   <em>Burndown Chart</em>
 
   ![Burndown Chart](images/Burn%20chart.jpg.png)
@@ -1062,7 +1098,7 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 ## 10.5 Contribution to Development Process  
 
 <p align="center">
-   <strong>Table 16</strong><br>
+   <strong>Table 17</strong><br>
    <em>Contribution to Development Process</em>
 </p>
 
