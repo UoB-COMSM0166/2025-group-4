@@ -97,7 +97,7 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 <p align="center">
   <strong>Figure 4</strong><br>
-  <em> </em>
+  <em>Slides and Fire Traps Demo</em>
 
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/slides.gif?raw=true" alt="Slides and Fire Traps Demo" width="60%">
@@ -185,7 +185,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
 
-Our Onion Model (Figure X) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
+Our Onion Model (Figure 5) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Alexander . Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
 For Puppy's Magical Adventure, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilizing surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
 
@@ -232,7 +232,7 @@ Our team designed several posters featuring characters to represent these user s
 # 4. Game Design – Puppy's Magical Adventure
 ## 4.1 User Case diagram
 <p align="center">
-  <strong>Figure 6</strong><br>
+  <strong>Figure 7</strong><br>
   <em>User Case diagram</em>
 
 ![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
@@ -338,7 +338,7 @@ This diagram illustrates runtime logic and how game events propagate.
 - Renderer updates visual elements based on game state
 
  <p align="center">
-  <strong>Figure 6</strong><br>
+  <strong>Figure 8</strong><br>
   <em> Sequence Diagram</em>
    
 ![Sequence Diagram](./images/Sequence-diagram.png)
@@ -356,7 +356,7 @@ We designed a hierarchical FSM to control game progression.
 This diagram supports both functional transitions and UI switching.
 
  <p align="center">
-  <strong>Figure 7</strong><br>
+  <strong>Figure 9</strong><br>
   <em>State Diagram</em>
 
 <p align="center">
@@ -398,9 +398,9 @@ To support physical interactions in complex scenes, we implemented a set of fine
 
 
  <p align="center">
-  <strong>Figure</strong><br>
-  <em> </em>
-   
+  <strong>Figure 10</strong><br>
+  <em>Gravity Reversal Demo</em>
+</p>
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/gravity%20reversal.gif?raw=true" alt="Gravity Reversal Demo" width="60%">
 </p>
@@ -409,9 +409,9 @@ The system also supports the gravity flip mechanism, and the collision logic can
 
 
  <p align="center">
-  <strong>Figure 6</strong><br>
-  <em> </em>
-   
+  <strong>Figure 11</strong><br>
+  <em>Spikes & Enemies Demo</em>
+</p>
 <p align="center">
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/spikes.gif?raw=true" alt="Spikes & Enemies Demo" width="60%">
 </p>
@@ -508,7 +508,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ### 6.1.3 Method:
  <p align="center">
-  <strong>Table 5</strong><br>
+  <strong>Table 4</strong><br>
   <em> Method</em>
 | Step | Action | Notes |
 |------|--------|-------|
@@ -518,7 +518,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ### 6.1.4 Thematic Insights:
  <p align="center">
-  <strong>Table 6</strong><br>
+  <strong>Table 5</strong><br>
   <em> Thematic Insights</em>
 | Theme | Positive Feedback | Identified Issues | Action Taken |
 |-------|------------------|------------------|---------------|
@@ -527,7 +527,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 | Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
 
  <p align="center">
-  <strong>Figure 8</strong><br>
+  <strong>Figure 12</strong><br>
   <em>Thematic Mind Map</em>
 ![Thematic Mind Map](images/Thematic%20Mind%20Map.png)
 
@@ -549,7 +549,7 @@ Findings were classified by severity to prioritize improvements. For example:
 
 ### Findings Table:
  <p align="center">
-  <strong>Table 7</strong><br>
+  <strong>Table 6</strong><br>
   <em> Findings Table</em>
 | Heuristic | Issue Example | Severity | Fix Implemented |
 |-----------|---------------|----------|-----------------|
@@ -576,7 +576,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 #### **System Usability Scale (SUS) Scores**
 <p align="center">
-  <strong>Figure 16</strong><br>
+  <strong>Figure 13</strong><br>
   <em> System Usability Scale(SUS)Scores</em>
 | User | I will frequently use this system (L1) | (L2) | The system is too complex (L1) | (L2) | The system is easy to use (L1) | (L2) | Need technical support (L1) | (L2) | Functions are well-integrated (L1) | (L2) | The system is inconsistent (L1) | (L2) | Most people can quickly learn (L1) | (L2) | The system is cumbersome (L1) | (L2) | I feel confident using it (L1) | (L2) | I need to learn a lot before using it (L1) | (L2) |
 |------|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|----------------|-----|
@@ -592,10 +592,9 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
 
 <p align="center">
-  <strong>Figure 16</strong><br>
+  <strong>Figure 14</strong><br>
   <em> SUS Scores Comparison(L1 vs L2)</em>
 
-![SUS Scores Comparison](images/SUS%20Scores%20Comparison.png)
 <p align="center">
   <img src="images/SUS%20Scores%20Comparison.png" alt="SUS Scores Comparison">
 </p>
@@ -604,7 +603,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 
 #### **NASA Task Load Index (NASA TLX Scores)**
  <p align="center">
-  <strong>Table 9</strong><br>
+  <strong>Table 7</strong><br>
   <em> NASA Task Load Index (NASA TLX Scores)</em>
 | User | Mental Demand (L1) | (L2) | Physical Demand (L1) | (L2) | Temporal Demand (L1) | (L2) | Performance (L1) | (L2) | Effort (L1) | (L2) | Frustration (L1) | (L2) |
 |------|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|--------|-----|
@@ -615,15 +614,18 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
 
  <p align="center">
-  <strong>Table 10</strong><br>
+  <strong>Figure 15</strong><br>
   <em> NASA TLS Scores Comparison (L1 vs L2)</em>
-![NASA TLX Scores Comparison](images/NASA%20TLX%20Scores%20Comparison.png)
+
+<p align="center">
+  <img src="images/NASA%20TLX%20Scores%20Comparison.png" alt="NASA TLX Scores Comparison">
+</p>
 
 ---
 
 ####  SUS Scores Summary:
 <p align="center">
-  <strong>Table 10</strong><br>
+  <strong>Table 8</strong><br>
   <em>SUS Scores Summary</em>
 | Metric | L1 (Avg) | L2 (Avg) | Change |
 |--------|----------|----------|--------|
@@ -634,13 +636,13 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 
 <p align="center">
-  <strong>Figure 11</strong><br>
+  <strong>Figure 16</strong><br>
   <em>SUS Scores Comparision</em>
 ![SUS Score Comparison](images/SUS%20Score%20Comparison.png)
 
 ####  NASA TLX Summary:
 <p align="center">
-  <strong>Table 11</strong><br>
+  <strong>Table 9</strong><br>
   <em>NASA TLX Summary</em>
 | Dimension | L1 Median | L2 Median | L3 Median |
 |-----------|-----------|-----------|-----------|
@@ -656,12 +658,12 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 - **L2 vs L3**: *p = 0.0038*
 
 <p align="center">
-  <strong>Figure 12</strong><br>
+  <strong>Figure 17</strong><br>
   <em>NASA TLX Workload Trend Across Levels(Median)</em>
 ![NASA TLX Workload Trend Across Levels](images/NASA%20TLX%20Workload%20Trend%20Across%20Levels.png)
 
 <p align="center">
-  <strong>Figure 13</strong><br>
+  <strong>Figure 18</strong><br>
   <em>NASA TLX Workload by Dimension(Median)</em>
 ![NASA TLX Workload by Dimension](images/NASA%20TLX%20Workload%20by%20Dimension.png)
 
@@ -718,7 +720,7 @@ test("Gravity should invert when spacebar is pressed", () => {
 #### 7.1.3 Key Findings 
 
  <p align="center">
-  <strong>Table 13</strong><br>
+  <strong>Table 10</strong><br>
   <em> Key Findings(White-box Testing)</em>
  
 | Issue                                      | Fix                                                         | 
@@ -744,7 +746,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.2 Sample Scenarios 
 
 <p align="center">
-  <strong>Table 14</strong><br>
+  <strong>Table 11</strong><br>
   <em> Sample Scenarios(Black-box Testing)</em>
  
 | Test Scenario              | Input                    | Expected Output             | Class Type          | 
@@ -757,7 +759,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.3 Key Findings 
 
 <p align="center">
-  <strong>Table 15</strong><br>
+  <strong>Table 12</strong><br>
   <em>Key Findings(Black-box Testing)</em>
 
 | Issue                          | Solution                                  | 
@@ -777,7 +779,7 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 # 8. Summary & Future Improvements
 
 <p align="center">
-  <strong>Table 15</strong><br>
+  <strong>Table 13</strong><br>
   <em>Summary&Future Improvements</em>
 
 | Category | Key Insight | Planned Improvement |
@@ -830,7 +832,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.3 Sustainability Effects – Chains of Impact
 
 <p align="center">
-  <strong>Table 16</strong><br>
+  <strong>Table 14</strong><br>
   <em>Sustainability Effects – Chains of Impact</em>
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
@@ -863,7 +865,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.5 Sustainability User Stories
 
 <p align="center">
-  <strong>Table 17</strong><br>
+  <strong>Table 15</strong><br>
   <em>Sustainability User Stories</em>
   
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
@@ -879,7 +881,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.6 Sustainability Score Overview (Out of 10)
 
 <p align="center">
-  <strong>Figure 15</strong><br>
+  <strong>Figure 19</strong><br>
   <em>Sustainability Score Overview(Out of 10)</em>
 
 <div align="center">
@@ -950,7 +952,7 @@ By embedding accessibility deeply into both **game mechanics and architecture**,
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
 <p align="center">
-  <strong>Figure 16</strong><br>
+  <strong>Figure 20</strong><br>
   <em>Team Meeting</em>
 
 <div align="center">
@@ -1013,7 +1015,7 @@ NASA TLX Workload by Dimension(Median)
   <img src="images/Paper Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
 <p align="center">
-  <b>Figure 16</b><br>
+  <b>Figure 21</b><br>
   Paper Prototype
 </p>
 
@@ -1022,21 +1024,21 @@ NASA TLX Workload by Dimension(Median)
   <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
 <p align="center">
-  <b>Figure 17</b><br>
+  <b>Figure 22</b><br>
   WeChat Screenshot
 </p>
   
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
   ![Kanban Board](images/Kanban.png)
   <p align="center">
-  <b>Figure 18</b><br>
+  <b>Figure 23</b><br>
  Kanban Board
 </p>
 
 - **Sprint process**:
 
   <p align="center">
-  <strong>Figure 20</strong><br>
+  <strong>Figure 24</strong><br>
   <em>Sprint process</em>
 
 <div align="center">
@@ -1046,8 +1048,8 @@ NASA TLX Workload by Dimension(Median)
 - **Burndown Chart**:
 
   <p align="center">
-  <strong>Figure 21</strong><br>
-  <em>Burndowm Chart</em>
+  <strong>Figure 25</strong><br>
+  <em>Burndown Chart</em>
 
   ![Burndown Chart](images/Burn%20chart.jpg.png)
   
@@ -1058,6 +1060,11 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 ---
 
 ## 10.5 Contribution to Development Process  
+
+<p align="center">
+   <strong>Table 16</strong><br>
+   <em>Contribution to Development Process</em>
+</p>
 
 | Name           | Contribution Weighting |
 |----------------|------------------------|
