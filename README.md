@@ -266,7 +266,7 @@ Our team designed several posters featuring characters to represent these user s
 
 <p align="center">
   <strong>Table 3</strong><br>
-  <em>  Santard Mode VS Random Mode
+  <em>  Standard Mode VS Random Mode
   (Procedural Challenge Mode)</em>
 
 | **Standard Mode** |   |
