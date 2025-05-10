@@ -576,12 +576,16 @@ The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%
 
 ### 6.3.1 Methodology
 
-We conducted structured user testing with **10 participants**, each playing **two difficulty levels (L1 and L2)**. After each session, they completed:
+We conducted structured user testing with **10 participants**, each playing **two difficulty levels (L1 and L2)**. To assess usability and perceived workload, we employed two instruments:
 
-- **System Usability Scale (SUS)** – 10 usability questions
-- **NASA TLX** – 6 workload categories (mental, physical, temporal, performance, effort, frustration)
+- The **System Usability Scale (SUS)** – all 10 participants completed the 10-item questionnaire after each level.
+- The **NASA Task Load Index (NASA TLX)** – due to time constraints, **5 participants** completed the full TLX assessment covering 6 workload dimensions (mental, physical, temporal, performance, effort, and frustration).
 
-We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1 and L2.
+Participants interacted with the game in a lab setting and were instructed to complete both levels without external assistance. After gameplay, responses were collected anonymously.
+
+We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1 and L2. While the SUS dataset includes all 10 users, the TLX analysis is based on a subset of 5 valid responses.
+
+> ⚠️ *This difference in sample size was taken into account during analysis. Despite the smaller TLX sample, the observed trends were consistent and helped guide our usability conclusions.*
 
 ### **User Evaluation Summary (SUS & NASA TLX Scores)**  
 
