@@ -184,7 +184,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
   <strong>Figure 5</strong><br>
   <em>Onion Model</em>
 
-![Onion Model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/Onion%20Model.png?raw=true)
+![onion model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/onion%20model.png?raw=true)
 
 Our Onion Model (Figure 5) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Ian Alexander. Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
