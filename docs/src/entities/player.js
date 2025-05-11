@@ -177,6 +177,9 @@ export class Player {
     // Store previous onGround state
     const wasOnGround = this.onGround;
     
+    // Begin continuous collision detection for vertical movement with platforms
+    const platforms = window.floatingPlatforms || [];
+
     // Vertical movement: check collisions in steps
     if (steps > 1) {
       const stepVy = scaledVy / steps;
@@ -187,11 +190,15 @@ export class Player {
         }
         const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
         if (hadVerticalCollision) break;
+        if (Array.isArray(platforms) && this.checkFloatingPlatformCollisions(platforms)) break;
       }
     } else {
       this.y += scaledVy;
       this.onGround = false;
       const hadVerticalCollision = this.checkTileCollisions(false, tileMap, prevX, prevY);
+      if (!hadVerticalCollision && Array.isArray(platforms)) {
+        this.checkFloatingPlatformCollisions(platforms);
+      }
     }
     
     // Apply squash/stretch effect on landing
@@ -263,13 +270,6 @@ export class Player {
     // Detect hazards (like spikes)
     this.checkHazards(tileMap);
     
-    // Check floating platform collisions
-    // Make sure window.floatingPlatforms exists and is an array
-    const platforms = window.floatingPlatforms || [];
-    if (Array.isArray(platforms)) {
-      this.checkFloatingPlatformCollisions(platforms);
-    }
-  
     // ----- Slipping detection: check if player's feet are on a "S" tile -----
     if (this.onGround) {
       // Get row where player's feet are, based on gravity direction
@@ -715,9 +715,8 @@ export class Player {
   checkFloatingPlatformCollisions(platforms) {
     // Skip if platforms is not an array or is undefined
     if (!platforms || !Array.isArray(platforms) || platforms.length === 0) {
-      return;
+      return false;
     }
-    
     const tolerance = 4;
     const halfPlayerW = this.w * 0.5;
     const halfPlayerH = this.h * 0.5;
@@ -743,6 +742,7 @@ export class Player {
           this.y = platform.y - halfPlatformH - halfPlayerH;
           this.vy = 0;
           this.onGround = true;
+          return true;
         }
       } else {
         // 重力翻转：检测玩家顶部是否接触到平台底部
@@ -756,9 +756,11 @@ export class Player {
           this.y = platform.y + halfPlatformH + halfPlayerH;
           this.vy = 0;
           this.onGround = true;
+          return true;
         }
       }
     }
+    return false;
   }
 
 
