@@ -62,7 +62,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 # 3.1 Introduction
 
 ## 3.1.1 Game Background
-- A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilizations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
+- A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilisations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
 - You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers,  cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
 - Watch your step. Triangular spikes jut from the ground and sky. Razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
 - Your journey leads to **Death Cliff**—the last known fragment of the World Core. Only by surviving the trials of magic and reclaiming your lost power can you unlock the secret to restoring the world.
@@ -90,11 +90,11 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 
 ## 3.1.3 Game Innovation
 ### 1. Multi-biome progression: 
-- Players move through visually distinct zones (ice, cloud，jungle, night, fire, castle, ruins), each with unique trap logic and enemy behaviors.
+- Players move through visually distinct zones (ice, cloud, jungle, night, fire, castle, ruins), each with unique trap logic and enemy behaviours.
 ### 2. Dynamic difficulty modes: 
 - Easy (99 lives), Hard (5 lives), and Random (10 lives) offer replay value for both casual and hardcore players.
 ### 3. Subtle narrative layering: 
-- While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilizations.
+- While the game remains gravity reversal, action-centric, visual hints (ruins, portals, character design) suggest a deeper backstory about a fractured world and lost civilisations.
 ### 4. Precision-based skill challenge: 
 - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
 
@@ -192,7 +192,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 Our Onion Model (Figure 5) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Ian Alexander. Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
-For Puppy's Magical Adventure, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilizing surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
+For Puppy's Magical Adventure, the surrogates involved were professional game designers, advocates for accessibility, and AI researchers. They provided particularly valuable insights for fine-tuning gameplay mechanics, making sure our gravity manipulation system felt intuitive, and addressing accessibility concerns. We tailored the pacing, difficulty balance, and user experience of our game to suit different play styles by utilising surrogate roles. This method proved especially beneficial during user testing and qualitative assessments. It was possible for us to carry out iterative testing sessions with surrogate users, like other developers and playtest groups, without having to initially reach the whole target audience. This process had a considerable effect on data gathering and game improvement.
 
 Nonetheless, surrogate roles also present challenges.  Surrogate feedback that does not align with real player expectations can present risks.  For instance, if testers focused on accessibility deemed the gravity manipulation puzzles intuitive because of their knowledge of game mechanics, while casual players found them challenging, modifications were required.  In order to reduce these risks, we supplemented surrogate input with direct feedback from a variety of players, guaranteeing that the game was evaluated in a balanced and representative manner.
 
@@ -216,7 +216,7 @@ It is ensured that Puppy's Magical Adventure was engaging, accessible, and mecha
   <img src="images/user poster 4.png" alt="User Poster 4" width="45%" />
 </p>
 
-To better understand what features we should prioritize, we created user stories.
+To better understand what features we should prioritise, we created user stories.
 
 Our team designed several posters featuring characters to represent these user stories, ensuring personalization and keeping them in mind.
 
@@ -328,7 +328,7 @@ The class diagram outlines object relationships in our game system and supports 
 - `Renderer`, `Camera`: control drawing and visual effects  
 - `InputHandler`: responds to user keyboard/mouse/touch input  
 - `Bullet`, `Coin`, `ExitGate`, `FloatingPlatform`: represent environmental elements  
-- `Config`: centralizes constants for difficulty and level layout
+- `Config`: centralises constants for difficulty and level layout
 
 <p align="center">
   <strong>Figure 8</strong><br>
@@ -441,7 +441,7 @@ The physics and collision systems provide an extremely stable, predictable and s
 ## 5.2 a map editor with a player-defined map feature
 ### 5.2.1 Objectives and motivations
 
-We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric leveling ecosystem.
+We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric levelling ecosystem.
 
 ### 5.2.2 Graphic map editor
 
@@ -515,7 +515,7 @@ Evaluating whether the game provides an engaging and appropriately challenging e
 
 ## 6.1 Qualitative Evaluation
 
-We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviors, and challenges were documented and categorized.
+We performed a **Think-Aloud Protocol** with 10 participants from varied backgrounds, both casual and frequent gamers. This allowed us to gather live feedback while players were actively engaged with two difficulty levels (L1 and L2). Participants verbalized their thoughts while playing, and their verbal reactions, behaviours, and challenges were documented and categorised.
 
 ### 6.1.2 Key Research Questions:
 - Can players intuitively understand and use the gravity flip mechanic?
@@ -532,7 +532,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 |------|--------|-------|
 | 1 | Participants introduced to game via short live demo | From Participant #8 onwards, demos greatly reduced confusion |
 | 2 | Asked to play L1 and L2 while thinking aloud | Verbalizations documented by two observers |
-| 3 | Feedback grouped thematically | Data analyzed using thematic analysis (Braun & Clarke 2006) |
+| 3 | Feedback grouped thematically | Data analysed using thematic analysis (Braun & Clarke 2006) |
 
 ### 6.1.4 Thematic Insights:
  <p align="center">
@@ -565,7 +565,7 @@ We conducted a heuristic evaluation using **Jakob Nielsen's usability heuristics
 - **Impact** (how seriously it affects gameplay)
 - **Persistence** (how long it lasts if unaddressed)
 
-Findings were classified by severity to prioritize improvements. For example:
+Findings were classified by severity to prioritise improvements. For example:
 
 - **Issue**: Inconsistent feedback when interacting with game objects  
   **Heuristic**: Visibility of system status  
@@ -598,7 +598,7 @@ We conducted structured user testing with **10 participants**, each playing **tw
 
 Participants interacted with the game in a lab setting and were instructed to complete both levels without external assistance. After gameplay, responses were collected anonymously.
 
-We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1 and L2. While the SUS dataset includes all 10 users, the TLX analysis is based on a subset of 5 valid responses.
+We used the **Wilcoxon Signed Rank Test** to analyse score variations between L1 and L2. While the SUS dataset includes all 10 users, the TLX analysis is based on a subset of 5 valid responses.
 
 > ⚠️ *This difference in sample size was taken into account during analysis. Despite the smaller TLX sample, the observed trends were consistent and helped guide our usability conclusions.*
 
@@ -747,7 +747,7 @@ To ensure code quality, we adopted a hybrid testing strategy that combines **Whi
  
 ### 7.1 White-box Testing 
  
-White-box testing allowed us to analyze and test the internal logic of the game's source code by designing tests based on specific methods and control flows. 
+White-box testing allowed us to analyse and test the internal logic of the game's source code by designing tests based on specific methods and control flows. 
  
 #### 7.1.1 Methods and Tools 
  
@@ -787,12 +787,12 @@ These adjustments greatly improved cross-device stability and gameplay consisten
  
 ### 7.2 Black-box Testing 
  
-Black-box testing focused on user-centric interaction and functionality, without accessing the internal code. We simulated user inputs and validated output behaviors against functional specifications. 
+Black-box testing focused on user-centric interaction and functionality, without accessing the internal code. We simulated user inputs and validated output behaviours against functional specifications. 
  
 #### 7.2.1 Methodology 
  
 * Applied **Equivalence Partitioning** and **Boundary Value Analysis** to identify representative input classes. 
-* Focused on gameplay behaviors: jumping, enemy collisions, item collection, and level transitions. 
+* Focused on gameplay behaviours: jumping, enemy collisions, item collection, and level transitions. 
 * Used manual playthroughs and scripted scenario-based test tables. 
  
 #### 7.2.2 Sample Scenarios 
@@ -824,7 +824,7 @@ Black-box testing focused on user-centric interaction and functionality, without
  
 ### 7.3 Summary 
  
-Our combination of **white-box logic testing** and **black-box behavior simulation** enabled a well-rounded validation of the game system. Future plans include introducing **coverage tracking tools (e.g., Istanbul)** and **automated input simulations** to extend the depth and efficiency of our testing pipeline.
+Our combination of **white-box logic testing** and **black-box behaviour simulation** enabled a well-rounded validation of the game system. Future plans include introducing **coverage tracking tools (e.g., Istanbul)** and **automated input simulations** to extend the depth and efficiency of our testing pipeline.
 
 ---
 
@@ -849,7 +849,7 @@ Our combination of **white-box logic testing** and **black-box behavior simulati
 # 9. Sustainability 
 
 ## 9.1 Project Overview
-This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyze and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
+This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyse and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
 
 ---
 
@@ -864,20 +864,20 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 - **Privacy & Safety**: No sensitive personal data required for gameplay.
 
 ###  Environmental
-- **Energy & Emissions**: Optimized for low-power hardware; includes dark-mode UI and frame limiter for lower GPU usage.
+- **Energy & Emissions**: Optimised for low-power hardware; includes dark-mode UI and frame limiter for lower GPU usage.
 - **Materials & Waste**: Fully digital, no physical packaging or distribution. Assets are reused and compressed.
 - **Ecosystem Impact**: Efficient runtime reduces backend compute demands, minimizing indirect emissions from servers.
 
 ###  Economic
 - **Accessibility & Fairness**: Game is free-to-play. No pay-to-win mechanics.
-- **Customer Relationship**: A feedback loop helps prioritize updates based on player needs. Rewards are based on gold coins collected.
+- **Customer Relationship**: A feedback loop helps prioritise updates based on player needs. Rewards are based on gold coins collected.
 
 ### Technical
 - **Maintainability**: Modular class architecture (e.g., Level, Hazard, Game, Player) ensures ease of feature expansion.
 - **Adaptability**: Supports multiple OS (Windows, macOS, Linux). Versioning tools are used for upgrade cycles.
 - **Security**: Minimal attack surface; code is bundled and source-hidden. Encrypted local save data.
-- **Performance**: Optimized collision detection and rendering pipeline minimize CPU/GPU load.
-- **Cross-Device Compatibility**: Game runs smoothly on both desktop and mobile browsers via responsive design and performance optimization.
+- **Performance**: Optimised collision detection and rendering pipeline minimize CPU/GPU load.
+- **Cross-Device Compatibility**: Game runs smoothly on both desktop and mobile browsers via responsive design and performance optimisation.
 
 ---
 
@@ -901,12 +901,12 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.4 Threats, Opportunities, Actions
 ###  Threats
 - Overcomplicated mechanics may alienate casual users.
-- No optimization for old hardware could cause energy waste.
+- No optimisation for old hardware could cause energy waste.
 - Lack of structured update process could lead to technical debt.
 
 ###  Opportunities
 - Use gravity mechanics as an educational metaphor (STEM-based levels).
-- Optimize with green software practices to target eco-conscious markets.
+- Optimise with green software practices to target eco-conscious markets.
 - Build loyalty with players through transparent update logs and version notes.
 
 ###  Actions
@@ -1033,7 +1033,7 @@ To coordinate collaboration and track progress, we used a combination of digital
 - **VS Code + Live Share**: Enabled real-time pair programming and p5.js collaboration.
 - **GitHub**: Used for version control, issue tracking, and PR-based code review.
 - **WeChat Group**: Real-time communication, shared documents for meeting notes and sketch sharing and PR review reminders.
-- **GitHub Kanban Board**: Used for weekly plans and task tracking (To Do → In Progress → Done). Helped visualize sprint workflow and reassign tasks if needed.
+- **GitHub Kanban Board**: Used for weekly plans and task tracking (To Do → In Progress → Done). Helped visualise sprint workflow and reassign tasks if needed.
 
 >  We initially used GitHub Projects, and we found it's was really flexible for visual/multi-step UI/gameplay tasks.
 
@@ -1144,7 +1144,7 @@ One of the most important lessons we learned was the value of clear team communi
 
 We also faced several challenges, particularly in terms of feature scoping and game balancing. Initially, our ambition led us to over-plan the number of levels and mechanics. Midway through development, we had to revise our scope to ensure a high-quality core experience rather than spreading ourselves too thin. Another technical challenge was designing the gravity-flipping mechanic without causing bugs or disorientation for the player. We solved this by creating modular physics functions and implementing smoother transitions.
 
-Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. Special effort was made to ensure mobile browser compatibility, making the game accessible on both phones and tablets without additional installation. These actions not only aligned with the SusAF framework but also improved our project's maintainability.
+Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimised scripts to reduce CPU load, and structured our code for future scalability. Special effort was made to ensure mobile browser compatibility, making the game accessible on both phones and tablets without additional installation. These actions not only aligned with the SusAF framework but also improved our project's maintainability.
 
 In the future, we envision expanding Puppy's Magical Adventure with more levels, enhanced storytelling (e.g., cutscenes or dialogue), improved accessibility features, and a polished menu system. We are also interested in testing the game on different devices and possibly integrating multiplayer or online leaderboard features. Additionally, user feedback from playtests will continue to inform refinements in level design and UI.
 
