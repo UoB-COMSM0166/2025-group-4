@@ -513,17 +513,22 @@ This diagram supports both functional transitions and UI switching.
 
 ### 5.1.1 Objectives and motivations
 
-We want to provide the player with a game experience that is consistent and smooth on different devices and at different refresh rates. The character's jump height, movement speed and interaction with the environment should be stable and controllable, and the game experience should not be affected by performance differences or occasional lags. To achieve this, we need to develop a collision physics and processing system that combines accuracy, efficiency and robustness.
+A primary objective was to deliver a consistent and smooth gameplay experience across diverse hardware and varying refresh rates. The player character's movement, particularly the gravity-flip mechanic, needed to be predictable and responsive. Interactions with the environment, such as landing on platforms or hitting obstacles, had to be stable and feel fair. This necessitated a physics and collision system that was accurate, efficient, and robust, forming the bedrock of the player's interaction with the game world.
 
-### 5.1.2 Fixed time step mechanism (FTM)
+### 5.1.2 Fixed time step mechanism (FTM) and Collision Handling
 
-To eliminate the effects of frame rate variations on game behaviour, we introduce a fixed-time-step system. Through the uniform use of a standardised deltaTime parameter, all motion-related calculations (including gravity, acceleration, movement speed, recovery time, etc.) are updated based on a uniform frame rate. This design ensures that the logic of the game is executed in 'fixed time-slices' even in the case of variable device performance, unstable frame rates or even short frame breaks, avoiding problems such as jump heights or motion-time disruptions.
+To counteract inconsistencies arising from fluctuating frame rates—a common issue that can lead to problems like variable jump heights or objects passing through each other (tunneling)—we implemented a fixed timestep update loop. The core game logic, including physics calculations, is driven by a `deltaTime` value, which represents the actual elapsed time between frames, rather than assuming a constant frame duration. This `deltaTime`, calculated in `main.js` using `millis()` and constrained to a maximum value to prevent extreme updates during significant lag spikes, ensures that game events progress consistently regardless of the rendering speed. For instance, gravity (`player.vy += timeScaledGravity * this.gravityDirection;`) and movement updates in `player.js` are scaled by this `deltaTime`, ensuring the puppy moves the same perceived distance over time, whether the game runs at 30 FPS or 60 FPS.
 
-We also defined an upper deltaTime threshold to avoid physical jumps caused by extreme frame delays. For example, the problem of a figure 'crossing' the entire platform in a given frame can be effectively avoided by this mechanism, ensuring predictability even under heavy system load.
+Collision detection was a critical area requiring careful design. Our approach involved:
 
-### 5.1.3 Collision detection and response logic
+1.  **Separation of Axes**: Horizontal and vertical collisions are processed independently within the `player.js` `checkTileCollisions` method. This simplifies the logic for determining collision points and resolving overlaps.
+2.  **Incremental Stepped Checks for Fast Movements**: To prevent the player from "tunneling" through thin platforms or walls when moving at high speeds (a common challenge in physics engines), vertical movement is broken down into smaller increments if the velocity is high for a single frame (`const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));`). Collisions are then checked at each of these smaller steps.
+3.  **Precise Collision Response**: Upon detecting a collision, the player's position is meticulously adjusted to sit just outside the collided tile (e.g., `this.x = rightCol * tileSize - halfW;`), preventing sticking or jittering.
+4.  **Dynamic Ground Detection for Gravity Flips**: The gravity-flip mechanic is central to gameplay. The collision system dynamically determines what constitutes "ground" based on the `player.gravityDirection`. When gravity is flipped, the ceiling effectively becomes the floor for collision purposes. The player character doesn't climb or perform traditional jumps; instead, after a flip, they "fall" in the new direction of gravity and can navigate by chaining further flips. This dynamic evaluation is evident in how vertical collisions differentiate between downward movement relative to normal gravity and downward movement relative to flipped gravity.
 
-To support physical interactions in complex scenes, we implemented a set of fine-grained, directional and dynamically adapted collision handling systems. Contact between the player and different elements of the environment (e.g. the ground, walls, spikes, floating platforms, etc.) is split into two paths: horizontal and vertical collisions are detected separately, and a small-step strategy is used to improve detection accuracy during fast movements and avoid the phenomenon of shape intrusion.
+A significant challenge was ensuring pixel-perfect collision without being overly punitive, especially around corners or with fast-moving objects like floating platforms. This was addressed through careful sizing of hitboxes (`this.w = tileSize * 0.9; this.h = tileSize * 0.9;` in `Player` constructor, and slightly smaller dimensions for checks in `checkTileCollisions`), and by implementing a grace period for gravity flip inputs (`GROUND_GRACE_PERIOD`, `allowBufferedFlipWhileAir`).
+
+The refined physics and collision system, including dedicated checks for `floatingPlatforms`, ultimately provided a stable and predictable environment for the player's acrobatic maneuvers.
 
 <p align="center">
   <strong>Figure 11</strong><br>
@@ -534,7 +539,7 @@ To support physical interactions in complex scenes, we implemented a set of fine
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/gravity%20reversal.gif?raw=true" alt="Gravity Reversal Demo" width="60%">
 </p>
 
-The system also supports the gravity flip mechanism, and the collision logic can dynamically switch the logic for evaluating the landing surface and upper contact surface based on the current direction of gravity, allowing the player to continue climbing, jumping and landing correctly after the flip. For dynamic elements such as floating platforms and skates, we added special evaluation logic for stable binding, powerful gliding and other complex interactions. To improve the sense of action and feedback, we also added details such as landing pads, impact feedback and wall bouncing in the collision response to make the character's movements more vivid and natural.
+The system's handling of the gravity flip is crucial. When the player initiates a flip, the `gravityDirection` attribute of the player object is inverted. Collision logic then interprets "down" relative to this new direction. For example, when checking for landing, the system looks for solid tiles in the direction of the current gravity. This allows the player to seamlessly transition between floor and ceiling traversal.
 
 <p align="center">
   <strong>Figure 12</strong><br>
@@ -545,9 +550,9 @@ The system also supports the gravity flip mechanism, and the collision logic can
   <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/spikes.gif?raw=true" alt="Spikes & Enemies Demo" width="60%">
 </p>
 
-### 5.1.4 Importance of the system and potential for expansion
+### 5.1.3 Importance of the system and potential for expansion
 
-The physics and collision systems provide an extremely stable, predictable and scalable foundation for the game as a whole. The consistency not only guarantees a direct improvement of the game experience of the current version, but also provides a solid technical basis for the future implementation of more complex mechanisms (e.g. dynamic bodies, time delay, gravity changes, etc.). Thanks to this module, we freed the game experience from 'device dependency' and based on uniform physical rules that provide players with a fair, stable and entertaining action space.
+This carefully architected physics and collision system forms a reliable foundation for "Puppy's Magical Adventure." Its time-independent nature ensures a fair experience across different devices. The robustness of collision detection and response allows for intricate level designs featuring tight passages and precisely timed hazards. This system not only elevates the current gameplay but also provides a solid technical base for future expansions, such as introducing new enemy types with unique movement patterns or more complex environmental interactions.
 
 ---
 
@@ -555,39 +560,28 @@ The physics and collision systems provide an extremely stable, predictable and s
 
 ### 5.2.1 Objectives and motivations
 
-We want players to not only experience the game, but also create content. To achieve this, we designed and implemented an online map editing system that allows players to create their own game maps through an intuitive graphical interface and import them directly into the main game to try them out. This system is designed to increase player engagement, improve replayability and create a user-centric levelling ecosystem.
+To extend replayability and foster player creativity, we aimed to develop an intuitive in-game map editor. The goal was to allow players to design their own levels using a simple graphical interface and then immediately test their creations within the main game. This feature was envisioned to empower users to become co-creators, potentially leading to a community-driven content ecosystem.
 
-### 5.2.2 Graphic map editor
+### 5.2.2 Graphic map editor and WYSIWYG Testing
 
-The map uses a matrix of characters as the underlying data structure, with each character corresponding to a game block. The editor intuitively displays these characters using coloured squares and icons, and allows players to freely customise the map content without any programming knowledge.
+The map editor, primarily implemented in `levelEditor.js`, represents levels as a 2D character grid (`editorGrid`). Each character corresponds to a specific game element (e.g., '1' for solid ground, '2' for a coin, '3' for player start), defined in the `TILES` object. The editor provides a visual abstraction over this grid:
 
-We have implemented the following interactive features:
+*   **Interactive Canvas**: Players can directly "paint" tiles onto the grid using the mouse. The selected `currentTile` determines what gets placed.
+*   **Navigation**: Panning (`editorOffsetX`, `editorOffsetY`) and zooming (`editorScale`) allow users to work on maps of various sizes.
+*   **Advanced Tools**: Features like area selection (`selectionArea`), copy (`copySelection`), and paste (`pasteSelection`) streamline the design process for more complex structures.
+*   **Immediate Feedback**: The HUD displays crucial information like cursor position and selected tile, and a message system (`showMessage`) provides contextual feedback.
 
-- Mouse click to draw blocks, drag to move viewing angle, scroll wheel to zoom in;
-- Hotkeys to change block type;
-- Support for area selection, stack fill, copy and paste and other operations.
+A key challenge was ensuring a seamless transition from designing a map to playing it. We implemented a "What You See Is What You Get" (WYSIWYG) testing mechanism:
 
-For added efficiency, the HUD displays real-time status information, such as cursor position, currently selected block, edit mode, etc., to ensure that a good user experience is maintained even with high degrees of freedom.
+1.  **Export and Validation**: The `exportLevel()` function converts the `editorGrid` into the game's level format. Crucially, it performs basic validation, checking for the presence of essential elements like a player start point ('3') and an exit gate ('4'). This prevents users from exporting broken or unplayable levels.
+2.  **Dynamic Level Loading**: If validation passes, the exported level data can be added to the game's active level list (via `addCustomLevel` in `game.js`, called from `main.js`'s `exportEditorLevel` function).
+3.  **Playtest Mode**: A dedicated playtest mode (`window.playtestMode`) allows designers to instantly switch from the editor to playing their current creation with infinite lives. Pressing 'P' in the editor triggers this, loading the custom map using `loadGameLevel`.
 
-### 5.2.3 WYSIWYG testing mechanism
+This tight integration between creation and testing tools was vital. The main technical hurdle was managing the editor's state (selected tools, view offsets, clipboard) independently while still allowing it to interface correctly with the game's level loading and rendering systems.
 
-We have introduced a mechanism for exporting and opening maps in real time. Players can click 'export' to encode the current map into a standard format and load it into the main game engine for play immediately.
+### 5.2.3 Towards a sustainable content ecosystem
 
-To ensure the availability of imported maps, the system has set the following verification rules:
-
-- Checking that there is a starting point (sign '3') and an output (sign '4') in the map;
-- Redundant overlapping blocks are automatically removed;
-- limiting the size of the map to a reasonable range to avoid loading delays or logical anomalies.
-
-This mechanism helps players quickly refine the level design during the design and testing process, lowers the creation threshold and improves feedback efficiency.
-
-### 5.2.4 Towards a sustainable content ecosystem
-
-The map editor is not only a creation tool, but also reflects our vision of a player-driven content ecosystem. By collecting user cards, the game is no longer solely dependent on official level updates, but can use the power of the community to achieve sustainable content enrichment.
-
-Most importantly, map creation itself is a soft learning experience in system design. Players need to understand the principles of level design, such as spatial layout, risk management and path planning, and in the cycle of 'playing' and 'making' they learn both systematic thinking and creative expression.
-
-In the future, we plan to expand the editor's functionality to include support for uploading and sharing maps and rating mechanisms, to further encourage collaborative content creation and a positive cycle.
+The map editor transcends a simple creation tool; it embodies our vision for a player-driven content ecosystem. By enabling users to design and share their own challenges, the game's lifespan is potentially extended far beyond officially curated levels. This also introduces players to rudimentary level design principles—spatial reasoning, hazard placement, and flow—in an engaging, hands-on manner. Future plans could involve integrating a system for sharing and rating user-created maps, further solidifying this community aspect.
 
 ---
 
@@ -595,31 +589,25 @@ In the future, we plan to expand the editor's functionality to include support f
 
 ### 5.3.1 Goals and motivations
 
-We want to develop a level system that is variable, continuously explorable and unique to each game to increase the replay value and challenge depth of the game. Compared to fixed, manually designed maps, randomly generated maps allow players to use different spatial layouts, enemy combinations and object distributions every time they start the game, breaking memory trails, encouraging strategic adaptations and extending the overall life cycle of the game.
+To enhance replayability and provide a consistently fresh challenge, particularly for the "Random Mode", we developed a procedural map generation system. Unlike fixed, manually designed maps, randomly generated levels ensure that each playthrough offers unique spatial layouts, enemy placements, and collectible distributions. This encourages adaptability and strategic thinking, significantly extending the game's longevity.
 
 ### 5.3.2 Design of the programmed generation mechanism
 
-In this project, the map generation logic is based on the structure of the character grid and the entire level is generated by the dynamic combination of preset building blocks (e.g. terrain modules, obstacle combinations, enemy generation rules, etc.) We achieve dynamic map generation and structural manageability through the following key strategies:
+The procedural map generation, found in `mapGenerator.js`, constructs levels based on a character grid, similar to the editor, but through algorithmic processes. Key strategies include:
 
-- **Modular level splicing**: the map consists of several small 'template segments', each containing a meaningful terrain structure, jump points, gold distribution, trap design, etc., forming a functional microstructural unit. The overall coherence of the templates is ensured by the constraints of the rules (e.g. landing height of platforms, difficulty rhythm, etc.).
+*   **Seeded Randomness**: A `SeededRandom` class is employed, allowing for reproducible map generation if a specific seed is provided (via `setMapSeed`). This is invaluable for debugging and for potentially allowing players to share and replay specific generated maps.
+*   **Path-First Generation**: A crucial aspect of ensuring playability is generating a guaranteed path from the player's start point ('3') to the exit ('4'). The `generatePath` function creates this backbone, potentially using several waypoints to make the path less direct and more interesting. The area along this path is then cleared of obstructions using `clearPath` to ensure it's traversable. This approach contrasts with simple "template splicing" by prioritizing connectivity from the outset.
+*   **Controlled Random Embellishment**: Once a valid path is established, the generator populates the level.
+    *   **Platforms**: Platforms are added along and around the critical path, and additional random platforms are placed, ensuring they don't obstruct the main route.
+    *   **Collectibles, Enemies, Hazards**: Coins (`addCoins`), enemies (`addEnemies`), and hazards like spikes (`addHazards`) are then distributed. The number of these elements is often tied to a `difficulty` parameter, allowing for progressively harder levels. For instance, `enemyCount` is typically `Math.floor(difficulty * 0.7)`.
+*   **Guaranteed Playability Check**: After generation, a critical validation step, `isMapReachable()`, uses a breadth-first search (BFS) algorithm to confirm that a traversable path still exists from the start to the exit. If this check fails (e.g., a randomly placed element inadvertently blocks the path), the map is discarded, and the generation process for that specific level is re-run. This was a significant challenge: balancing randomness with the absolute requirement of a solvable level.
+*   **Asset Variation**: To provide visual diversity, generated levels can pick from different `assetSets`, changing the appearance of walls, backgrounds, and spikes.
 
-- **Variation and unpredictability**: introduce randomness in the template selection process while ensuring that templates in the same level are repeated or staggered as little as possible. The number and type of enemies and floating platforms are also randomly generated based on a certain weighting to ensure that each game has a sense of freshness.
+The main challenge in this area was designing an algorithm that produced varied and interesting levels while always guaranteeing they were solvable. Early iterations sometimes created impossible layouts. The introduction of the `isMapReachable` check and the path-first generation strategy were key to overcoming this, ensuring that every procedurally generated map met a baseline quality and playability standard.
 
-- **Difficulty control**: The game supports different difficulty levels and in the map generation phase, the complexity of the map is controlled by adjusting the template pool filter rules and generator density. In 'Easy' mode, for example, the terrain is smoother, there are many gold coins and little choice of enemy actions, while in 'Difficult' mode there are steeper slopes, denser traps and more intelligent enemy combinations.
+### 5.3.3 Continuity and expandability
 
-- **Ensure walkability and structural integrity**: Upon completion of each generated map, the system automatically checks the structure of the map to verify that the player's start and end points have been established and that paths are logically connected. In case of an invalid structure or generation error, the system will automatically go back and re-generate to ensure that the player can always enter the playable level.
-
-### 5.3.3 Technical implementation and system interfaces
-
-The map generator is designed as a standalone module that can be seamlessly integrated into the game's main system. After starting the procedural mode in startGeneratedMode(), the generator generates several maps simultaneously, based on a fixed number (e.g. 20), and stores them as a standard character matrix for the main game to load sequentially according to the level index. The result of the map generation includes not only block information, but also corresponding source references (backgrounds, walls, trap maps, etc.) to ensure consistency of visual style.
-
-Once the map is generated, the corresponding entity objects (e.g. players, enemies, floating platforms, gold coins and exit doors) are also initialised and particle animations are activated to ensure that the player receives full and smooth visual and interactive feedback when entering each level.
-
-### 5.3.4 Continuity and expandability
-
-The random map generation mechanism enriches the game's ability to provide content by enabling the system to continuously produce new levels without the need for manual updates. This not only increases the replay value of the game, but also lays the foundation for other features (e.g. card rating, daily challenges, endless mode) that can be used in the future.
-
-In the future, we plan to introduce seed-based generation, allowing players to reproduce certain maps, and expand the variety of map styles (e.g. thematic modules such as ice, volcano, forest, etc.) to improve the expressiveness and playability of randomly generated levels.
+The random map generation system significantly boosts the game's content offering without requiring manual design for every level. This is especially valuable for modes like "Random Mode" or potential future "Endless Mode" challenges. The system is designed to be extensible; new types of hazards, platforms, or enemy placement rules could be added to the generator's logic, further increasing the variety of generated maps. Future improvements could include more sophisticated thematic generation (e.g., ensuring all elements in an "ice cave" map fit the theme) or more complex enemy encounter designs.
 
 ---
 
