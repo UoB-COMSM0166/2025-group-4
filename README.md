@@ -235,12 +235,14 @@ Our team designed several posters featuring characters to represent these user s
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
 # 4. Game Design – Puppy's Magical Adventure
-## 4.1 User Case diagram
+## 4.1 Use Case diagram
 <p align="center">
   <strong>Figure 7</strong><br>
-  <em>User Case diagram</em>
+  <em>Use Case diagram</em>
 
-![User Case](https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png)
+<p align="center">
+  <img src="https://github.com/UoB-COMSM0166/2025-group-4/raw/main/images/user%20case.png" alt="Use Case" width="600">
+</p>
 
 
 
@@ -248,7 +250,7 @@ Our team designed several posters featuring characters to represent these user s
 <p align="center">
   <strong>Table 2</strong><br>
   <em> Standard Mode VS Random Mode
-  (User Case)</em>
+  (Use Case)</em>
 
 | **Standard Mode** |   |
 |-------------------|---|
@@ -267,7 +269,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.2 Procedural Challenge Mode User Case Specification
+## 4.2 Procedural Challenge Mode Use Case Specification
 
 <p align="center">
   <strong>Table 3</strong><br>
@@ -346,7 +348,9 @@ This diagram illustrates runtime logic and how game events propagate.
   <strong>Figure 8</strong><br>
   <em> Sequence Diagram</em>
    
-![Sequence Diagram](./images/Sequence-diagram.png)
+<p align="center">
+  <img src="./images/Sequence-diagram.png" alt="Sequence Diagram" width="600"/>
+</p>
 
 ---
 
