@@ -8,7 +8,9 @@
   <a href="https://uob-comsm0166.github.io/2025-group-4/">PLAY HERE</a>
 </p>
 
-![Banner Image](images/banner.webp)
+<p align="center">
+  <img src="images/banner.webp" alt="Banner Image" width="80%">
+</p>
  
 # Table of Contents
 
@@ -29,7 +31,7 @@
   <strong>Figure 1</strong><br>
   <em>Group Photo</em>
 
-![Group Photo](images/group4-photo.jpg)       
+<img src="images/group4-photo.jpg" alt="Group Photo" width="80%">
 
 **The names are listed from left to right in the group photo.**
 
@@ -184,7 +186,9 @@ You fall before the final gate. The floating world collapses, swallowed by the v
   <strong>Figure 5</strong><br>
   <em>Onion Model</em>
 
-![onion model](https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/onion%20model.png?raw=true)
+<p align="center">
+  <img src="https://github.com/UoB-COMSM0166/2025-group-4/blob/main/images/onion%20model.png?raw=true" alt="Onion Model" width="70%">
+</p>
 
 Our Onion Model (Figure 5) revealed a significant finding: the identification of "surrogate roles" in the game development process, as outlined by Ian Alexander. Surrogates serve as representatives for larger user groups. While game testers and reviewers were not our direct target audience, their feedback provided insights from players of various demographics.
 
@@ -1070,10 +1074,11 @@ NASA TLX Workload by Dimension(Median)
 </p>
   
 - **Kanban Board**: GitHub task board (To Do / In Progress / Done).  
-  ![Kanban Board](images/Kanban.png)
   <p align="center">
+  <img src="images/Kanban.png" alt="Kanban Board" width="80%">
+  <br>
   <b>Figure 22</b><br>
- Kanban Board
+  Kanban Board
 </p>
 
 - **Sprint process**:
@@ -1092,7 +1097,9 @@ NASA TLX Workload by Dimension(Median)
   <strong>Figure 24</strong><br>
   <em>Burndown Chart</em>
 
-  ![Burndown Chart](images/Burn%20chart.jpg.png)
+  <p align="center">
+    <img src="images/Burn%20chart.jpg.png" alt="Burndown Chart" width="80%">
+  </p>
   
 ---
 
