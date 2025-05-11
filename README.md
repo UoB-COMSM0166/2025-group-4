@@ -5,7 +5,14 @@
 # Puppy's Magical Adventure
 
 <div align="center">
-  <img src="images/banner.webp" alt="Banner Image" width="90%">
+  <!-- <img src="images/banner.webp" alt="Banner Image" width="90%"> -->
+
+<a href="https://youtu.be/bFDjtvlrYy0">
+  <img src="https://img.youtube.com/vi/bFDjtvlrYy0/0.jpg" alt="Video preview" width="60%">
+</a>
+
+  <p><em>📺 Click the image above to watch our demo video on YouTube</em></p>
+
 </div>
 
 <div align="center">
