@@ -117,42 +117,42 @@ Players must adapt quickly, react precisely, and memorize patterns to reach the 
 ### 2. Thorny Thicket
 - Theme: A dense, enchanted forest surrounded by magical thorns; the mysterious atmosphere remains, but danger noticeably increases.
 - Biome Characteristics: Environment packed with thorn traps lining all sides.Introduction of spiked hazards, adding dynamic threats.Tight level design demanding precise movement.
-- Focus: Tests the player’s dodging, timing, and spatial awareness; introduces dynamic danger elements for the first time.
+- Focus: Tests the player's dodging, timing, and spatial awareness; introduces dynamic danger elements for the first time.
 
 
 ### 3. Shadow Outpost
 - Theme: A hidden outpost deep within the glowing forest, now guarded by patrolling enemies. The atmosphere shifts from mysterious to tense.
 - Biome Characteristics: Bioluminescent forest background continues, with added enemy guards.Enemies patrol and block paths, requiring smart dodging or precise timing.Coin placement tempts players to take risks near enemies, increasing the challenge.
-- Focus: Tests the player’s ability to avoid enemies, manage movement rhythm, and maintain precision — first introduction of active threats.
+- Focus: Tests the player's ability to avoid enemies, manage movement rhythm, and maintain precision — first introduction of active threats.
 
 
 ### 4. Crimson Ambush
 - Theme: The enchanted forest now hosts red, bullet-firing enemies, introducing long-range threats and sharply increasing tension.
 - Biome Characteristics: Bioluminescent forest backdrop continues, with the addition of crimson ranged foes.Enemies shoot projectiles, requiring precise movement and quick reflexes.Moving thorn hazards from earlier levels remain, creating layered challenges.
-- Focus: Tests the player’s reaction speed, movement precision, and multitasking ability — marking a clear difficulty spike
+- Focus: Tests the player's reaction speed, movement precision, and multitasking ability — marking a clear difficulty spike
 
 
 ### 5. Frozen Labyrinth
 - Theme: A glacial labyrinth replaces the forest, introducing icy terrain and a fresh visual experience.
 - Biome Characteristics: Ice block platforms with slippery surfaces and hard walls.Sharp ice spikes act as deadly traps, increasing pathfinding complexity.
 Maze-like level design demanding careful observation and route selection.
-- Focus: Tests the player’s path planning, jump precision, and maneuvering in tight spaces.
+- Focus: Tests the player's path planning, jump precision, and maneuvering in tight spaces.
 
 ### 6. Wild Jungle
 - Theme: A vivid tropical jungle bursting with life, introducing sharp mountain spikes and moving grass platforms to heighten the challenge.
 - Biome Characteristics: Lush jungle backdrop filled with vines, massive trees, and tropical flowers.Sharp spikes as new lethal obstacles, demanding precise jumps.Moving grass platforms add unpredictability, requiring players to observe and time their movements.
-- Focus: Tests the player’s adaptability to dynamic terrain, observational skills, and mastery of jump timing.
+- Focus: Tests the player's adaptability to dynamic terrain, observational skills, and mastery of jump timing.
 
 
 ### 7. Nightfall Ruins
 - Theme: A silent, moonlit ruin with an eerie atmosphere. Sharp stone spikes now pose deadly threats.
 - Biome Characteristics: Dark ruin backdrop with ancient brick structures.Sharp stone spikes placed on floors and ceilings as lethal traps.Players must navigate using limited visual cues in the dark.
-- Focus: Tests player’s spatial awareness, focus, and ability to avoid fatal traps while staying calm under low-visibility conditions.
+- Focus: Tests player's spatial awareness, focus, and ability to avoid fatal traps while staying calm under low-visibility conditions.
 
 ### 8. Magma Fortress
 - Theme: A blazing magma fortress filled with imminent danger. Newly introduced ice blocks provide freezing effects, alongside weapon-firing enemies and deadly red spikes.
 - Biome Characteristics: Lava background with red brick platforms, evoking intense heat.Ice blocks introduce a freezing mechanic, adding environmental variety.Weapon-firing enemies and red spikes create multidirectional threats.Players must navigate flexibly through layered hazards.
-- Focus: Tests the player’s strategic planning, quick reflexes, and survival skills in a highly complex environment.
+- Focus: Tests the player's strategic planning, quick reflexes, and survival skills in a highly complex environment.
 
 ### 9. Sky Citadel
 - Theme: A soaring sky citadel built of ice blocks, where danger meets altitude, and bow-wielding demons enter the fray.
@@ -161,7 +161,7 @@ Maze-like level design demanding careful observation and route selection.
 
 ### 10. Mystic Cavern
 - Theme: The final level descends into an underground ravine maze, with a dark, oppressive atmosphere and collapsing world lore.
-- Biome Characteristics: Dark cave backdrop with maze-like passages.Demon enemies patrol narrow corridors, posing constant threats.Floor spikes demand precise footwork.Maze layout challenges player’s memory and pathfinding skills.
+- Biome Characteristics: Dark cave backdrop with maze-like passages.Demon enemies patrol narrow corridors, posing constant threats.Floor spikes demand precise footwork.Maze layout challenges player's memory and pathfinding skills.
 - Focus: Tests patience, route memorization, enemy avoidance, and survival strategy — the ultimate test of mastery.
 
 
@@ -227,11 +227,11 @@ Our team designed several posters featuring characters to represent these user s
 
 | User Story                  | Acceptance Criteria                      |
 |-----------------------|---------------------------|
-| As a game designer, I want to define the pacing and difficulty of levels so that the game remains both challenging and engaging for players.           | Given a complete level design plan, when a player attempts to complete a level, then the difficulty should align with the game’s progression curve, maintaining a balance between challenge and accessibility.      |
-| As a game developer, I want the game’s physics engine to run efficiently, ensuring that 007’s jumps and evasive maneuvers respond accurately to player input.            | Given a game physics system, when a player controls 007 to jump or evade obstacles, then the character’s movement should be precise, smooth, and adhere to realistic physics, avoiding lag or unresponsiveness.      |
+| As a game designer, I want to define the pacing and difficulty of levels so that the game remains both challenging and engaging for players.           | Given a complete level design plan, when a player attempts to complete a level, then the difficulty should align with the game's progression curve, maintaining a balance between challenge and accessibility.      |
+| As a game developer, I want the game's physics engine to run efficiently, ensuring that 007's jumps and evasive maneuvers respond accurately to player input.            | Given a game physics system, when a player controls 007 to jump or evade obstacles, then the character's movement should be precise, smooth, and adhere to realistic physics, avoiding lag or unresponsiveness.      |
 | As a casual player, I want the game to support auto-save functionality so that I can continue playing without losing progress.          | Given that a player has made progress in the game, when they exit, then the game should automatically save their current state so they can resume seamlessly next time.     |
 | As a hardcore player, I want the game to include high-difficulty hidden levels or rewards for no-damage clears to push my limits.       | Given the unlock conditions for high-difficulty levels, when a player completes extra challenges (such as a no-damage run or a timed challenge), then they should receive unique rewards or unlock new content to enhance the sense of achievement.      |
-| As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007’s journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
+| As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007's journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
 # 4. Game Design – Puppy's Magical Adventure
@@ -330,6 +330,13 @@ The class diagram outlines object relationships in our game system and supports 
 - `Bullet`, `Coin`, `ExitGate`, `FloatingPlatform`: represent environmental elements  
 - `Config`: centralizes constants for difficulty and level layout
 
+<p align="center">
+  <strong>Figure 8</strong><br>
+  <em>Class Diagram</em>
+
+<p align="center">
+  <img src="./images/class-diagram.png" alt="Class Diagram" width="600"/>
+</p>
 
 ---
 
@@ -345,7 +352,7 @@ This diagram illustrates runtime logic and how game events propagate.
 - Renderer updates visual elements based on game state
 
  <p align="center">
-  <strong>Figure 8</strong><br>
+  <strong>Figure 9</strong><br>
   <em> Sequence Diagram</em>
    
 <p align="center">
@@ -365,7 +372,7 @@ We designed a hierarchical FSM to control game progression.
 This diagram supports both functional transitions and UI switching.
 
  <p align="center">
-  <strong>Figure 9</strong><br>
+  <strong>Figure 10</strong><br>
   <em>State Diagram</em>
 
 <p align="center">
@@ -397,9 +404,9 @@ We want to provide the player with a game experience that is consistent and smoo
 
 ###  5.1.2 Fixed time step mechanism (FTM)
 
-To eliminate the effects of frame rate variations on game behaviour, we introduce a fixed-time-step system. Through the uniform use of a standardised deltaTime parameter, all motion-related calculations (including gravity, acceleration, movement speed, recovery time, etc.) are updated based on a uniform frame rate. This design ensures that the logic of the game is executed in ‘fixed time-slices’ even in the case of variable device performance, unstable frame rates or even short frame breaks, avoiding problems such as jump heights or motion-time disruptions.
+To eliminate the effects of frame rate variations on game behaviour, we introduce a fixed-time-step system. Through the uniform use of a standardised deltaTime parameter, all motion-related calculations (including gravity, acceleration, movement speed, recovery time, etc.) are updated based on a uniform frame rate. This design ensures that the logic of the game is executed in 'fixed time-slices' even in the case of variable device performance, unstable frame rates or even short frame breaks, avoiding problems such as jump heights or motion-time disruptions.
 
-We also defined an upper deltaTime threshold to avoid physical jumps caused by extreme frame delays. For example, the problem of a figure ‘crossing’ the entire platform in a given frame can be effectively avoided by this mechanism, ensuring predictability even under heavy system load.
+We also defined an upper deltaTime threshold to avoid physical jumps caused by extreme frame delays. For example, the problem of a figure 'crossing' the entire platform in a given frame can be effectively avoided by this mechanism, ensuring predictability even under heavy system load.
 
 ### 5.1.3 Collision detection and response logic
 
@@ -407,7 +414,7 @@ To support physical interactions in complex scenes, we implemented a set of fine
 
 
  <p align="center">
-  <strong>Figure 10</strong><br>
+  <strong>Figure 11</strong><br>
   <em>Gravity Reversal Demo</em>
 </p>
 <p align="center">
@@ -418,7 +425,7 @@ The system also supports the gravity flip mechanism, and the collision logic can
 
 
  <p align="center">
-  <strong>Figure 11</strong><br>
+  <strong>Figure 12</strong><br>
   <em>Spikes & Enemies Demo</em>
 </p>
 <p align="center">
@@ -427,7 +434,7 @@ The system also supports the gravity flip mechanism, and the collision logic can
 
 ### 5.1.4 Importance of the system and potential for expansion
 
-The physics and collision systems provide an extremely stable, predictable and scalable foundation for the game as a whole. The consistency not only guarantees a direct improvement of the game experience of the current version, but also provides a solid technical basis for the future implementation of more complex mechanisms (e.g. dynamic bodies, time delay, gravity changes, etc.). Thanks to this module, we freed the game experience from ‘device dependency’ and based on uniform physical rules that provide players with a fair, stable and entertaining action space.
+The physics and collision systems provide an extremely stable, predictable and scalable foundation for the game as a whole. The consistency not only guarantees a direct improvement of the game experience of the current version, but also provides a solid technical basis for the future implementation of more complex mechanisms (e.g. dynamic bodies, time delay, gravity changes, etc.). Thanks to this module, we freed the game experience from 'device dependency' and based on uniform physical rules that provide players with a fair, stable and entertaining action space.
 
 
 
@@ -450,11 +457,11 @@ For added efficiency, the HUD displays real-time status information, such as cur
 
 ### 5.2.3 WYSIWYG testing mechanism
 
-We have introduced a mechanism for exporting and opening maps in real time. Players can click ‘export’ to encode the current map into a standard format and load it into the main game engine for play immediately.
+We have introduced a mechanism for exporting and opening maps in real time. Players can click 'export' to encode the current map into a standard format and load it into the main game engine for play immediately.
 
 To ensure the availability of imported maps, the system has set the following verification rules:
 
-- Checking that there is a starting point (sign ‘3’) and an output (sign ‘4’) in the map;
+- Checking that there is a starting point (sign '3') and an output (sign '4') in the map;
 - Redundant overlapping blocks are automatically removed;
 - limiting the size of the map to a reasonable range to avoid loading delays or logical anomalies.
 
@@ -464,7 +471,7 @@ This mechanism helps players quickly refine the level design during the design a
 
 The map editor is not only a creation tool, but also reflects our vision of a player-driven content ecosystem. By collecting user cards, the game is no longer solely dependent on official level updates, but can use the power of the community to achieve sustainable content enrichment.
 
-Most importantly, map creation itself is a soft learning experience in system design. Players need to understand the principles of level design, such as spatial layout, risk management and path planning, and in the cycle of ‘playing’ and ‘making’ they learn both systematic thinking and creative expression.
+Most importantly, map creation itself is a soft learning experience in system design. Players need to understand the principles of level design, such as spatial layout, risk management and path planning, and in the cycle of 'playing' and 'making' they learn both systematic thinking and creative expression.
 
 In the future, we plan to expand the editor's functionality to include support for uploading and sharing maps and rating mechanisms, to further encourage collaborative content creation and a positive cycle.
 
@@ -478,11 +485,11 @@ We want to develop a level system that is variable, continuously explorable and 
 
 In this project, the map generation logic is based on the structure of the character grid and the entire level is generated by the dynamic combination of preset building blocks (e.g. terrain modules, obstacle combinations, enemy generation rules, etc.) We achieve dynamic map generation and structural manageability through the following key strategies:
 
-- Modular level splicing: the map consists of several small ‘template segments’, each containing a meaningful terrain structure, jump points, gold distribution, trap design, etc., forming a functional microstructural unit. The overall coherence of the templates is ensured by the constraints of the rules (e.g. landing height of platforms, difficulty rhythm, etc.).
+- Modular level splicing: the map consists of several small 'template segments', each containing a meaningful terrain structure, jump points, gold distribution, trap design, etc., forming a functional microstructural unit. The overall coherence of the templates is ensured by the constraints of the rules (e.g. landing height of platforms, difficulty rhythm, etc.).
 
 - Variation and unpredictability: introduce randomness in the template selection process while ensuring that templates in the same level are repeated or staggered as little as possible. The number and type of enemies and floating platforms are also randomly generated based on a certain weighting to ensure that each game has a sense of freshness.
 
-- Difficulty control: The game supports different difficulty levels and in the map generation phase, the complexity of the map is controlled by adjusting the template pool filter rules and generator density. In ‘Easy’ mode, for example, the terrain is smoother, there are many gold coins and little choice of enemy actions, while in ‘Difficult’ mode there are steeper slopes, denser traps and more intelligent enemy combinations.
+- Difficulty control: The game supports different difficulty levels and in the map generation phase, the complexity of the map is controlled by adjusting the template pool filter rules and generator density. In 'Easy' mode, for example, the terrain is smoother, there are many gold coins and little choice of enemy actions, while in 'Difficult' mode there are steeper slopes, denser traps and more intelligent enemy combinations.
 
 - Ensure walkability and structural integrity: Upon completion of each generated map, the system automatically checks the structure of the map to verify that the player's start and end points have been established and that paths are logically connected. In case of an invalid structure or generation error, the system will automatically go back and re-generate to ensure that the player can always enter the playable level.
 
@@ -540,7 +547,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 | Learning Curve | Gradual increase appreciated | L2 perceived as sudden jump in difficulty | Added visual prompts |
 
  <p align="center">
-  <strong>Figure 12</strong><br>
+  <strong>Figure 13</strong><br>
   <em>Thematic Mind Map</em>
 </p>
 
@@ -552,7 +559,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ## 6.2 Heuristic Evaluation
 
-We conducted a heuristic evaluation using **Jakob Nielsen’s usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
+We conducted a heuristic evaluation using **Jakob Nielsen's usability heuristics**, assessing the user interface for potential issues. Issues were scored based on:
 
 - **Frequency** (how often it occurs)
 - **Impact** (how seriously it affects gameplay)
@@ -576,7 +583,7 @@ Findings were classified by severity to prioritize improvements. For example:
 | Consistency and Standards | jumping mapped to different keys inconsistently | Moderate | Unified key mapping across levels |
 | Help and Documentation | Players confused about checkpoints | Minor | Tooltip and tutorial added |
 
-The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic Evaluation.txt](./Heuristic%20Evaluation.txt).
+The complete analysis is documented in [Heuristic Evaluation1.xlsx](./Heuristic%20Evaluation1.xlsx) and [Heuristic Evaluation2.xlsx](./Heuristic%20Evaluation2.xlsx), with summaries in [Heuristic%20Evaluation.txt](./Heuristic%20Evaluation.txt).
 
 ---
 
@@ -617,7 +624,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **10** | 4 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 3 | 3 | 3 | 4 | 4 | 2 | 2 | 5 | 4 | 3 | 3 | 5 |
 
 <p align="center">
-  <strong>Figure 13</strong><br>
+  <strong>Figure 14</strong><br>
   <em> SUS Scores Comparison(L1 vs L2)</em>
 </p>
 
@@ -642,7 +649,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | **5**  | 8  | 17 | 5  | 14 | 9  | 18 | 15 | 12 | 11 | 19 | 7  | 16 |
 
  <p align="center">
-  <strong>Figure 14</strong><br>
+  <strong>Figure 15</strong><br>
   <em> NASA TLX Scores Comparison (L1 vs L2)</em>
 </p>
 
@@ -667,7 +674,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 | Total SUS Score | **77.4** | **70.0** | ↓ 7.4 points |
 
 <p align="center">
-  <strong>Figure 15</strong><br>
+  <strong>Figure 16</strong><br>
   <em>SUS Scores Comparison</em>
 </p>
 
@@ -695,7 +702,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 - **L2 vs L3**: *p = 0.0038*
 
 <p align="center">
-  <strong>Figure 16</strong><br>
+  <strong>Figure 17</strong><br>
   <em>NASA TLX Workload Trend Across Levels(Median)</em>
 </p>
 
@@ -704,7 +711,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
 </p>
 
 <p align="center">
-  <strong>Figure 17</strong><br>
+  <strong>Figure 18</strong><br>
   <em>NASA TLX Workload by Dimension(Median)</em>
 </p>
 
@@ -728,7 +735,7 @@ We used the **Wilcoxon Signed Rank Test** to analyze score variations between L1
   
 ### 6.3.3 Summary:
 
-While SUS scores were slightly lower in Level 2, this trend was consistent with the game’s increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.Our testing also confirmed that the game runs smoothly on both desktop and mobile browsers, providing a consistent gameplay experience across different devices.
+While SUS scores were slightly lower in Level 2, this trend was consistent with the game's increasing challenge and was anticipated in the design. Overall, the high confidence levels and low dependency on technical support indicate a well-balanced interface that accommodates new players while scaling difficulty meaningfully.Our testing also confirmed that the game runs smoothly on both desktop and mobile browsers, providing a consistent gameplay experience across different devices.
 
 ---
 
@@ -929,7 +936,7 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 ## 9.6 Sustainability Score Overview (Out of 10)
 
 <p align="center">
-  <strong>Figure 18</strong><br>
+  <strong>Figure 19</strong><br>
   <em>Sustainability Score Overview(Out of 10)</em>
 </p>
 
@@ -981,7 +988,7 @@ By embedding accessibility deeply into both **game mechanics and architecture**,
   Accessibility options are available by default at no extra cost, ensuring **financial fairness**.  
 
 - **Wider Reach**  
-  Inclusive design expands the game’s potential audience, supporting long-term sustainability and **market diversity**.  
+  Inclusive design expands the game's potential audience, supporting long-term sustainability and **market diversity**.  
 
 ---
 
@@ -1001,7 +1008,7 @@ By embedding accessibility deeply into both **game mechanics and architecture**,
 In the early phase of development, our team held in-person meetings to build trust and align on creative direction. These included informal discussions and brainstorming sessions using classroom whiteboards to sketch core mechanics such as gravity reversal, environmental hazards, and level designs. This relaxed setting helped foster early camaraderie and contributed to our final creative vision.
 
 <p align="center">
-  <strong>Figure 19</strong><br>
+  <strong>Figure 20</strong><br>
   <em>Team Meeting</em>
 
 <div align="center">
@@ -1011,11 +1018,11 @@ In the early phase of development, our team held in-person meetings to build tru
 
 We used a voting-based decision-making process:
 - For simple tasks, we held quick votes during in-person lab discussions.
-- For complex choices (e.g., game theme or major mechanic decisions), we used anonymous online voting via **WeChat** or face-to face discussion to ensure everyone’s voice was heard without pressure.
+- For complex choices (e.g., game theme or major mechanic decisions), we used anonymous online voting via **WeChat** or face-to face discussion to ensure everyone's voice was heard without pressure.
 
 After lab sessions each week, we frequently merged code during offline co-working blocks, ensuring that each team member could test the latest build and contribute to debugging together.
 
-As the project progressed into the remote phase, we transitioned to **scrum-style stand-up meetings** via **Microsoft Teams** or **WeChat** (3x per week). During holiday sprints, we followed a weekly sprint cycle with decomposed story points to evenly distribute work and avoid last-minute pressure. We observed “heroic efforts” during early deadlines and addressed this through better task granularity.
+As the project progressed into the remote phase, we transitioned to **scrum-style stand-up meetings** via **Microsoft Teams** or **WeChat** (3x per week). During holiday sprints, we followed a weekly sprint cycle with decomposed story points to evenly distribute work and avoid last-minute pressure. We observed "heroic efforts" during early deadlines and addressed this through better task granularity.
 
 ---
 
@@ -1064,7 +1071,7 @@ NASA TLX Workload by Dimension(Median)
   <img src="images/Paper%20Prototype.jpg" alt="Paper Prototype" width="400">
 </div>
 <p align="center">
-  <b>Figure 20</b><br>
+  <b>Figure 21</b><br>
   Paper Prototype
 </p>
 
@@ -1073,7 +1080,7 @@ NASA TLX Workload by Dimension(Median)
   <img src="images/wechat.png" alt="投票结果" width="400">
 </div>
 <p align="center">
-  <b>Figure 21</b><br>
+  <b>Figure 22</b><br>
   WeChat Screenshot
 </p>
   
@@ -1081,14 +1088,14 @@ NASA TLX Workload by Dimension(Median)
   <p align="center">
   <img src="images/Kanban.png" alt="Kanban Board" width="80%">
   <br>
-  <b>Figure 22</b><br>
+  <b>Figure 23</b><br>
   Kanban Board
 </p>
 
 - **Sprint process**:
 
   <p align="center">
-  <strong>Figure 23</strong><br>
+  <strong>Figure 24</strong><br>
   <em>Sprint process</em>
 
 <div align="center">
@@ -1098,7 +1105,7 @@ NASA TLX Workload by Dimension(Median)
 - **Burndown Chart**:
 
   <p align="center">
-  <strong>Figure 24</strong><br>
+  <strong>Figure 25</strong><br>
   <em>Burndown Chart</em>
 
   <p align="center">
@@ -1131,15 +1138,15 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 
 # 11. Conclusion
 
-The development of Puppy’s Magical Adventure was a transformative learning experience for our team, combining creativity, technical skill, and agile collaboration. From ideation to implementation, we followed an iterative process that allowed us to continuously refine our design, balance gameplay mechanics, and deliver a playable game within the limited time frame.
+The development of Puppy's Magical Adventure was a transformative learning experience for our team, combining creativity, technical skill, and agile collaboration. From ideation to implementation, we followed an iterative process that allowed us to continuously refine our design, balance gameplay mechanics, and deliver a playable game within the limited time frame.
 
 One of the most important lessons we learned was the value of clear team communication and regular feedback loops. Using tools like GitHub Projects, WeChat, and in-person meetings, we managed to stay aligned and adapt quickly to changes. We discovered that dividing tasks not just by discipline (e.g., design vs. development) but by game features (e.g., UI implementation, gravity control, enemy logic) helped streamline our progress and prevent overlaps or delays.
 
 We also faced several challenges, particularly in terms of feature scoping and game balancing. Initially, our ambition led us to over-plan the number of levels and mechanics. Midway through development, we had to revise our scope to ensure a high-quality core experience rather than spreading ourselves too thin. Another technical challenge was designing the gravity-flipping mechanic without causing bugs or disorientation for the player. We solved this by creating modular physics functions and implementing smoother transitions.
 
-Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. Special effort was made to ensure mobile browser compatibility, making the game accessible on both phones and tablets without additional installation. These actions not only aligned with the SusAF framework but also improved our project’s maintainability.
+Moreover, integrating sustainability into our development process was eye-opening. We reused and repurposed existing assets, optimized scripts to reduce CPU load, and structured our code for future scalability. Special effort was made to ensure mobile browser compatibility, making the game accessible on both phones and tablets without additional installation. These actions not only aligned with the SusAF framework but also improved our project's maintainability.
 
-In the future, we envision expanding Puppy’s Magical Adventure with more levels, enhanced storytelling (e.g., cutscenes or dialogue), improved accessibility features, and a polished menu system. We are also interested in testing the game on different devices and possibly integrating multiplayer or online leaderboard features. Additionally, user feedback from playtests will continue to inform refinements in level design and UI.
+In the future, we envision expanding Puppy's Magical Adventure with more levels, enhanced storytelling (e.g., cutscenes or dialogue), improved accessibility features, and a polished menu system. We are also interested in testing the game on different devices and possibly integrating multiplayer or online leaderboard features. Additionally, user feedback from playtests will continue to inform refinements in level design and UI.
 
 Ultimately, this project helped us grow as software engineers, designers, and collaborators. It pushed us to apply classroom knowledge in a real-world context, solve problems creatively, and think beyond code—into the realm of player experience, sustainability, and agile teamwork.
 
