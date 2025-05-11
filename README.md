@@ -849,35 +849,35 @@ Our combination of **white-box logic testing** and **black-box behaviour simulat
 # 9. Sustainability 
 
 ## 9.1 Project Overview
-This sustainability module applies a hybrid of the **SuSAF** and **Sustainability Awareness Framework** to analyse and improve the gravity-based roguelike platformer game. The analysis covers five key dimensions: **Social, Environmental, Economic, Technical, and Individual**, aiming to enhance the long-term sustainability of the game experience, system architecture, and user impact.
+In this sustainability module, we apply the **Sustainability Awareness Framework** (**SusAF**) to analyse and improve `Puppy's Magical Adventure`. Our goal is to move beyond just creating an engaging gravity-based roguelike platformer, and instead, thoughtfully consider its broader impacts. By examining the game through SusAF's five key dimensions – **Social, Individual, Environmental, Economic, and Technical** – we aim to understand the long-term effects of our design choices and technical implementations. This evaluation helps us identify concrete opportunities to enhance the game's longevity, enrich the user experience, and ensure our system architecture remains robust, maintainable, and considerate of its wider context.
 
 ---
 
 ## 9.2 Sustainability Dimension Analysis
 ###  Social
-- **Participation & Equity**: All difficulty modes offer equal chances to progress without time-based punishment. Player profiles are anonymous and inclusive.
-- **Communication**: Players may provide feedback. Easy levels help experienced users support new players.
+*   **Participation & Equity**: `Puppy's Magical Adventure` is designed to be welcoming to a wide range of players. The different game modes – 'Easy' (99 lives), 'Hard' (5 lives), and 'Random' (10 lives with procedurally generated levels, as detailed in Section 3.1.3 and 4.2) – cater to varying skill levels and preferences, ensuring everyone gets a fair chance to progress and enjoy the core gravity-flipping mechanic. Player interactions are anonymous, focusing on gameplay rather than personal profiles.
+*   **Communication & Community**: While direct in-game communication isn't a current feature, the game's design encourages shared experiences. The straightforward mechanics of 'Easy' mode allow experienced players to easily guide newcomers. We envision players sharing tips for navigating tricky biomes like the 'Thorny Thicket' (Section 3.1.4) or discussing strategies for the map editor (Section 5.2). Future iterations could include a dedicated feedback channel or community forum.
 
 ###  Individual
-- **Health & Wellbeing**: The low-stress visual theme and intuitive control layout reduce mental load. Clear level boundaries discourage excessive playtime.
-- **Learning & Agency**: The game encourages logical thinking, pattern recognition, and spatial awareness. Optional modes allow players to opt out of competitive elements.
-- **Privacy & Safety**: No sensitive personal data required for gameplay.
+*   **Health & Wellbeing**: The game promotes positive engagement. The "Enchanted Grove" (Section 3.1.4) offers a visually soothing start, and the core control scheme—primarily the spacebar for gravity reversal (Section 4.5)—is designed to be intuitive, minimizing cognitive load. The roguelike nature of runs provides natural stopping points, discouraging excessively long play sessions.
+*   **Learning & Agency**: Playing `Puppy's Magical Adventure` inherently develops skills like pattern recognition (dodging enemy fire, Section 3.1.4's "Crimson Ambush"), spatial awareness (navigating the 'Frozen Labyrinth'), and quick decision-making. The different game modes empower players to choose their desired level of challenge, allowing them to opt out of highly competitive elements if they prefer a more exploratory experience.
+*   **Privacy & Safety**: As a browser-based game, `Puppy's Magical Adventure` requires no sensitive personal data collection or user accounts for gameplay, ensuring a high degree of privacy.
 
 ###  Environmental
-- **Energy & Emissions**: Optimised for low-power hardware; includes dark-mode UI and frame limiter for lower GPU usage.
-- **Materials & Waste**: Fully digital, no physical packaging or distribution. Assets are reused and compressed.
-- **Ecosystem Impact**: Efficient runtime reduces backend compute demands, minimizing indirect emissions from servers.
+*   **Energy & Emissions**: We've prioritized efficiency. The pixel art style (mentioned in Section 4.3) is inherently less demanding on hardware. Our time-independent physics system (Section 5.1.2) ensures stable performance without excessive computational overhead, contributing to lower energy use, especially on laptops and mobile devices. While a specific "dark mode UI" for energy saving isn't implemented system-wide, many levels like "Nightfall Ruins" naturally use darker palettes.
+*   **Materials & Waste**: Being a fully digital game, `Puppy's Magical Adventure` eliminates physical production, packaging, and distribution waste. Assets are designed to be versatile and are often reused across different biomes with thematic adjustments, reducing the overall digital footprint. For instance, basic platform designs may be re-skinned for the 'Ice' or 'Jungle' levels.
+*   **Ecosystem Impact**: The game runs entirely client-side after initial loading, meaning its operational backend demand is minimal (primarily serving static files via GitHub Pages as indicated by the play link). This significantly reduces the indirect emissions typically associated with server-dependent games. Our focus on optimized client-side code (Section 5) is key to this.
 
 ###  Economic
-- **Accessibility & Fairness**: Game is free-to-play. No pay-to-win mechanics.
-- **Customer Relationship**: A feedback loop helps prioritise updates based on player needs. Rewards are based on gold coins collected.
+*   **Accessibility & Fairness**: `Puppy's Magical Adventure` is free-to-play, ensuring no financial barriers to entry. Critically, there are no pay-to-win mechanics; all players have access to the same abilities and challenges, with success determined by skill and strategy in collecting coins and navigating levels (Section 3.1.2).
+*   **Customer Relationship**: We value player experience. While formal feedback mechanisms are currently external (e.g., via the GitHub repository), the game's design (like score tracking through coin collection) provides intrinsic rewards. Future development will consider more direct feedback channels to prioritize updates based on player needs.
 
 ### Technical
-- **Maintainability**: Modular class architecture (e.g., Level, Hazard, Game, Player) ensures ease of feature expansion.
-- **Adaptability**: Supports multiple OS (Windows, macOS, Linux). Versioning tools are used for upgrade cycles.
-- **Security**: Minimal attack surface; code is bundled and source-hidden. Encrypted local save data.
-- **Performance**: Optimised collision detection and rendering pipeline minimize CPU/GPU load.
-- **Cross-Device Compatibility**: Game runs smoothly on both desktop and mobile browsers via responsive design and performance optimisation.
+*   **Maintainability**: Our class diagram (Figure 8, Section 4.4.1) showcases a modular architecture. Distinct classes like `Player` (handling gravity flips and movement), `Enemy` (defining behaviors for entities like `ShooterEnemy`), and `LevelManager` (managing transitions and game flow) allow for isolated updates and debugging. This means adding a new hazard type to the "Magma Fortress" (Section 3.1.4) can be done with minimal risk to other game components.
+*   **Adaptability**: As a web-based game built with technologies like p5.js (Section 10.2), it is inherently cross-platform, running on Windows, macOS, Linux, and mobile operating systems through modern browsers. Version control via GitHub ensures that updates and potential rollbacks are managed systematically.
+*   **Security**: The game's client-side nature means a minimal attack surface regarding user data. While "source-hidden" isn't fully achievable for JavaScript, code is bundled. The mention of "encrypted local save data" (auto-save in Section 3.1.7) implies that if local storage is used for progress, it should be protected, though explicit encryption details would be a deeper implementation choice. For now, progress is largely session-based or tied to level completion.
+*   **Performance**: The time-independent physics system and stable collision mechanism (Section 5.1) are crucial for consistent performance across devices. Optimized rendering and collision detection ensure the game remains responsive, even in complex levels with multiple enemies and hazards, as demonstrated in the "Spikes & Enemies Demo" (Figure 12).
+*   **Cross-Device Compatibility**: User testing confirmed smooth gameplay on both desktop and mobile browsers (Section 6.3.3), a key achievement ensuring wider accessibility.
 
 ---
 
@@ -890,29 +890,29 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
 
 | Dimension       | Chain of Effects                                                                 |
 |----------------|----------------------------------------------------------------------------------|
-| Individual      | intuitive controls → less frustration → longer healthy sessions → better focus |
-| Social          | competition → sharing → belonging & community         |
-| Technical       | modular code → easy maintenance → long lifespan → less redevelopment waste      |
-| Environmental   | fewer assets → less GPU usage → reduced electricity consumption                 |
-| Economic        | free-to-play → increased access → larger base → sustainable ad |
+| Individual      | Intuitive controls (like the single spacebar for gravity flip) → less frustration during tricky platforming sections (e.g., 'Thorny Thicket') → enables longer, more focused, and healthy play sessions as players master levels like the 'Frozen Labyrinth' → thereby enhancing concentration and spatial reasoning skills. |
+| Social          | Friendly competition encouraged by in-game score tracking (based on coin collection, as described in Section 3.1.2) → can motivate players to share high scores or strategies for challenging, randomly generated levels (Random Mode, Section 5.3) → fostering a sense of community and shared achievement, potentially through external forums or social media.         |
+| Technical       | The modular code structure, evident in our class design (e.g., `Player`, `Enemy` classes detailed in Section 4.4.1) → simplifies bug fixing (as seen in our testing phase, Section 7) and makes feature updates (like adding a new biome) more manageable and less risky → contributing to a longer game lifespan with continuous, stable improvements → ultimately reducing the need for complete redevelopment and minimizing digital waste.      |
+| Environmental   | Efficient use of a pixel art style and strategic asset reuse across multiple biomes (e.g., variations of spike traps or platform designs adapted for different themes like 'Ice' or 'Jungle') → results in smaller game file sizes and less demanding graphics processing → leading to reduced electricity consumption on player devices, particularly beneficial for battery-powered laptops or mobile phones.                 |
+| Economic        | The free-to-play model, with absolutely no pay-to-win mechanics (Section 9.2), → dramatically increases accessibility to a wider audience, including students or individuals with limited disposable income → this can foster a larger, more engaged player base → creating a sustainable ecosystem where future support might come from purely optional cosmetic items or community contributions, rather than exploitative monetization strategies. |
 
 ---
 
 ## 9.4 Threats, Opportunities, Actions
 ###  Threats
-- Overcomplicated mechanics may alienate casual users.
-- No optimisation for old hardware could cause energy waste.
-- Lack of structured update process could lead to technical debt.
+*   The core gravity-flip mechanic, while innovative, could initially overwhelm casual players if later levels, such as the 'Magma Fortress' (Section 3.1.4), introduce too many new hazards simultaneously without adequate acclimatization. This might lead to player frustration and early drop-off before they fully experience the game's depth.
+*   While we aimed for client-side efficiency (Section 5.1), older or less powerful devices might still experience performance issues or higher-than-ideal energy consumption per play session. This could limit our reach among users with such hardware and slightly undermine our environmental goals.
+*   Without strict adherence to our modular design principles (visualized in Figure 8, Section 4.4.1) during future updates or rapid bug fixes, there's a risk of introducing tightly coupled code. This could lead to accumulating technical debt, making future expansions (like new enemy types or enhancements to the map editor from Section 5.2) more complex and time-consuming.
 
 ###  Opportunities
-- Use gravity mechanics as an educational metaphor (STEM-based levels).
-- Optimise with green software practices to target eco-conscious markets.
-- Build loyalty with players through transparent update logs and version notes.
+*   The game's unique gravity-manipulation mechanic offers a compelling opportunity to subtly introduce physics concepts. We could develop specific STEM-themed challenge levels or even a 'Physics Lab Mode' where players can experiment with gravity in controlled environments, making learning interactive and fun, potentially appealing to educational platforms or initiatives.
+*   By more explicitly implementing and communicating green software practices – such as an optional 'eco-mode' that further reduces animation complexity or frame rates, and detailing our asset optimization strategies – we could specifically target and appeal to an increasingly eco-conscious segment of the player market, differentiating `Puppy's Magical Adventure`.
+*   Building stronger community ties by regularly sharing detailed update logs (explaining bug fixes like those identified in Section 7), transparently outlining future development plans (e.g., new biomes or features from Section 3.1.4 and 8), and actively soliciting feedback can significantly build player trust and loyalty, encouraging long-term engagement and a sense of co-ownership.
 
 ###  Actions
-- Introduce accessibility settings (e.g., slower mode, motion-reduced mode).
-- Enable low-power rendering mode and limit background processing.
-- Establish modular design conventions and continuous refactoring schedule.
+*   To enhance accessibility and ease the learning curve, we will prioritize implementing adjustable game speed (a slower mode for players needing more reaction time, particularly in hazard-dense areas like 'Crimson Ambush'), an option to reduce or disable screen shake effects (a motion-reduced mode), and investigate fully remappable controls, building directly upon the insights from Section 9.7.
+*   We will actively investigate and implement a 'low-power' rendering mode. This could involve simplifying particle effects, offering static backgrounds as an option, or reducing animation frame rates for non-critical elements, and ensuring background processing is minimized when the game tab is not active to conserve energy, especially on mobile devices.
+*   Reinforce our commitment to the modular architecture (Section 4.4.1) by establishing stricter coding conventions for new modules and scheduling regular, dedicated code review sessions focused on identifying and executing refactoring opportunities. This proactive approach will ensure the codebase remains maintainable and scalable for future enhancements, such as those planned for the map editor (Section 5.2.4) or new level themes (Section 3.1.4).
 
 ---
 
@@ -925,11 +925,11 @@ This sustainability module applies a hybrid of the **SuSAF** and **Sustainabilit
   
 | Dimension  | User Story                                                                                         | Acceptance Criteria                                                                 |
 |------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| Social     | As a casual player, I want co-op gameplay so I can share the experience. | Game supports share.                              |
-| Technical  | As a developer, I want modular code so I can easily update and improve the game.                  | Core modules (Game, Level, Enemy, etc.) are isolated and unit tested.               |
-| Environmental | As a laptop user, I want low-power mode so I can save battery while playing.                     | Game provides toggle for reduced framerate and dark theme.                          |
-| Economic   | As a student, I want to enjoy the full game experience without paying money.                      | Game has no paywalls and all gameplay elements are accessible without purchase.     |
-| Individual | As a health-conscious player, I want to play without feeling pressured to grind.                  | Level system provides breaks and doesn't incentivize marathon sessions.             |
+| Social     | As a player, I want to easily share my cool gameplay moments, high scores from the randomly generated levels (Section 5.3), or custom maps I've designed (Section 5.2) with my friends, so I can challenge them and we can share the fun. | The game will provide a simple 'Share' button (e.g., after completing a level or saving a map from the editor). This button will generate a unique link or pre-fill a social media post, allowing friends to directly play the shared level or view the map creation. This directly supports the community aspect mentioned in the Social dimension analysis (9.2).                              |
+| Technical  | As a developer on the team, I want a clearly documented and strictly enforced modular code structure, so I can confidently add new features like a 'Boss Enemy' for the 'Sky Citadel' level (Section 3.1.4) or a new game mechanic without fearing unforeseen side-effects on existing systems like collision detection (Section 5.1).                  | Core game modules (e.g., `Player`, `EnemyFactory`, `LevelManager`, `PhysicsEngine` as conceptually outlined in Figure 8) must be well-isolated with clearly defined APIs and responsibilities documented in the codebase. Comprehensive unit tests (extending from our initial testing in Section 7) must cover the core logic of these modules, ensuring that modifications in one area do not break others, thereby facilitating easier updates and upholding our maintainability goals (9.2).               |
+| Environmental | As a player frequently using a laptop on battery power or an older mobile device, I want an optional 'Eco Mode' so I can enjoy longer play sessions of `Puppy's Magical Adventure` without rapidly draining my battery or causing my device to overheat.                     | The game settings will include a clearly labeled toggle for 'Eco Mode'. When enabled, this mode will visibly reduce demanding visual effects (e.g., fewer particle animations during coin collection, simpler background details in levels like 'Wild Jungle'), and potentially cap the frame rate. This should lead to a measurable decrease in CPU/GPU usage, aligning with our environmental goals (9.2) and user testing on various devices (6.3.3).                          |
+| Economic   | As a student or player with a limited entertainment budget, I want to enjoy the full, engaging experience of `Puppy's Magical Adventure`, including all levels, difficulty modes (Easy, Hard, Random as per Section 3.1.3), and creative tools like the map editor (Section 5.2), without encountering any paywalls or feeling pressured to make in-app purchases.                      | The game will be fully playable from start to finish without requiring any payment. All core gameplay elements, character abilities (like gravity flip), levels, and features described in the README will be accessible to all players by default. Any potential future monetization (e.g., purely optional cosmetic skins for the player character) will be explicitly non-impactful on gameplay, upholding the fairness and accessibility principles (9.2).     |
+| Individual | As a player who values my wellbeing, I want `Puppy's Magical Adventure` to encourage mindful and enjoyable play sessions, rather than pressuring me into excessively long 'grinding' or creating a fear of missing out if I don't play continuously.                  | The game's level-based structure (across all 10 biomes in Section 3.1.4) and clear end-of-level screens naturally provide opportunities for breaks. The self-contained nature of runs in 'Random Mode' (Section 5.3) means progress isn't lost if a session is short. We will consciously avoid implementing mechanics that disproportionately reward marathon sessions or penalize players for taking breaks, thus supporting individual health and wellbeing (9.2).             |
 
 ---
 
@@ -952,52 +952,51 @@ Economic and Technical dimensions scored highest (9/10), reflecting strong imple
 
 ### Overview 
 
-This section focuses on **accessibility design** for players with disabilities within our gravity-based roguelike platformer. By aligning with the Sustainability Awareness Framework (SuSAF), we analyse the impacts and opportunities across five sustainability dimensions: **Social, Individual, Environmental, Economic, and Technical**.
-By embedding accessibility deeply into both **game mechanics and architecture**, we improve not only **player inclusiveness**, but also reinforce **sustainability goals** from technical and social perspectives.
+This section focuses on **accessibility design** for players with diverse abilities within `Puppy's Magical Adventure`. By aligning with the Sustainability Awareness Framework (SuSAF), we analyze the impacts and opportunities across the five sustainability dimensions. Our philosophy is that accessibility is not an add-on but an integral part of sustainable game design. By embedding accessibility deeply into both **game mechanics (like the simple gravity flip) and architecture (planning for adaptable UI)**, we aim to improve not only **player inclusiveness** but also reinforce broader **sustainability goals** from technical, social, and individual perspectives.
 
 ---
 
 ### Dimension Analysis 
 
 ####  Social 
-- **Inclusiveness**
-  Game supports **customizable controls**, allowing players with sensory or motor disabilities to participate equally.  
+*   **Inclusiveness**:
+    We are committed to enabling as many players as possible to enjoy `Puppy's Magical Adventure`. Planned features include customizable controls (remappable keys beyond the default spacebar for gravity flip), which will allow players with certain motor disabilities to tailor the game to their needs and equally participate in navigating challenging biomes like the 'Mystic Cavern' (Section 3.1.4).  
 
-- **Community Engagement**
-  Accessible design helps players feel represented and included, promoting a sense of belonging.  
+*   **Community Engagement**:
+    When a game is accessible, it broadens its player base. This means more people can share their experiences, strategies for overcoming obstacles like the 'ShooterEnemy' (Section 4.4.1), and creations from the map editor (Section 5.2), fostering a more diverse and vibrant community around the game.  
 
 ---
 
 ####  Individual
-- **Health & Wellbeing** 
-  Accessibility features such as **reduced input complexity** and **visual clarity** support lower cognitive and physical stress.  
+*   **Health & Wellbeing**: 
+    Accessibility features directly contribute to player wellbeing. The simple core input (spacebar for gravity flip, Section 4.5) reduces physical strain. Clear visual differentiation between the player character, enemies (e.g., distinct enemy sprites in Figure 12), hazards (like spikes), and collectibles (coins) helps reduce cognitive load. Options to reduce screen shake or flashing effects (planned) will further support players sensitive to such stimuli.  
 
-- **Learning & Agency**  
-  Adjustable difficulty and **assistive hints** enhance learning pace and independent problem-solving.  
+*   **Learning & Agency**:  
+    Adjustable difficulty modes ('Easy' mode with 99 lives, Section 3.1.3) already provide a baseline of accessibility. The planned assistive hints (extending the concept from Section 4.2 for Random Mode) for particularly challenging sections can enhance the learning pace and empower players to overcome obstacles independently, fostering a sense of accomplishment.  
 
 ---
 
 ####  Environmental 
-- **Device Efficiency**  
-  Accessibility features are implemented with minimal GPU impact, ensuring **low energy consumption** even on assistive hardware.  
+*   **Device Efficiency**:  
+    Accessibility features are being designed with performance in mind. For example, options for high-contrast modes or simplified visual effects will be implemented to ensure they do not significantly increase GPU load. This maintains the game's low energy consumption profile (as discussed in Section 9.2 Environmental), making it sustainable to run even on less powerful hardware often used with assistive technologies.  
 
 ---
 
 ####  Economic 
-- **No Paywalls**  
-  Accessibility options are available by default at no extra cost, ensuring **financial fairness**.  
+*   **No Paywalls for Accessibility**:  
+    All planned and existing accessibility options (like adjustable difficulty or visual clarity improvements) are, and will always be, available by default at no extra cost. This ensures **financial fairness** and that accessibility is not treated as a premium feature.  
 
-- **Wider Reach**  
-  Inclusive design expands the game's potential audience, supporting long-term sustainability and **market diversity**.  
+*   **Wider Reach & Market Diversity**:  
+    An inclusive design inherently expands the game's potential audience. By catering to players with diverse needs, `Puppy's Magical Adventure` can reach a larger market, which contributes to its long-term economic sustainability and demonstrates social responsibility.  
 
 ---
 
 ####  Technical 
-- **Modular Accessibility**  
-  Accessibility features are developed as **independent, reusable modules** to ease maintenance and future extension.  
+*   **Modular Accessibility Features**:  
+    We plan to develop accessibility features (e.g., control remapping, text-to-speech for UI elements if complex menus are added) as **independent, reusable modules within our existing architecture (Figure 8)**. This approach will ease maintenance, allow for future extensions (e.g., adding new accessibility options), and ensure that these features integrate cleanly without compromising core game performance.  
 
-- **WCAG Compliance**  
-  Interface elements and interactions follow WCAG guidelines to ensure **accessibility compliance**.
+*   **Alignment with WCAG Principles**:  
+    While formal WCAG certification is a significant undertaking, our interface elements and interactions aim to align with its core principles. This includes ensuring sufficient color contrast for important game elements (player vs. background, text in tutorial prompts), clear visual distinction for interactive objects like `Coin` and `ExitGate` (Section 4.4.1), and keyboard navigability for menus.
   
 ---
 
