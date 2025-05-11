@@ -28,6 +28,7 @@ let skidSound;
 // Global state
 let lastFrameTime = 0; // For fixed timestep
 window.editorMode = false; // Track whether we're in editor mode
+window.bgmStarted = false; // Flag to track if BGM has been started
 
 // Make sure DOM is ready before initializing loading screen
 document.addEventListener('DOMContentLoaded', () => {
@@ -251,6 +252,36 @@ function preload() {
 }
 
 /**
+ * Centralized function to try playing BGM
+ * Returns true if successfully started
+ */
+function tryPlayBGM() {
+  if (window.bgmStarted) return true; // Already started
+  
+  if (window.bgm && window.bgm.isLoaded() && !window.bgm.isPlaying()) {
+    try {
+      // Resume audio context first
+      getAudioContext().resume();
+      
+      // Configure and play BGM
+      window.bgm.setVolume(1.0);
+      window.bgm.setLoop(true);
+      window.bgm.play();
+      
+      // Set flag to avoid duplicate attempts
+      window.bgmStarted = true;
+      
+      console.log("BGM successfully started");
+      return true;
+    } catch (error) {
+      console.warn("Failed to start BGM:", error);
+      return false;
+    }
+  }
+  return false;
+}
+
+/**
  * p5.js setup function - initialize the game
  */
 function setup() {
@@ -269,12 +300,9 @@ function setup() {
   console.log("Updated tile size to:", newTileSize);
 
   createCanvas(windowWidth, windowHeight);
-  getAudioContext().resume(); // 确保音频系统激活
-  if (window.bgm && window.bgm.isLoaded() && !window.bgm.isPlaying()) {
-    window.bgm.setVolume(1.0);
-    window.bgm.setLoop(true);
-    window.bgm.play(); // 若浏览器支持自动播放则直接开始
-  }
+  
+  // Try to play BGM (might be prevented by browser)
+  tryPlayBGM();
 
   // Ensure sounds are available globally
   window.deathSound = deathSound;
@@ -283,11 +311,7 @@ function setup() {
   window.regravitySound = regravitySound;
   window.freezeSound = freezeSound;
   window.skidSound = skidSound;
-
-
   window.bgm = bgm;
-  bgm.setLoop(true);
-
 
   // Initialize the game
   initGame();
@@ -323,6 +347,9 @@ function draw() {
  * p5.js keyPressed function - handle keyboard input
  */
 function keyPressed() {
+  // Try to play BGM on keyboard interaction
+  tryPlayBGM();
+  
   // Handle ESC: only enter editor from menu, always exit editor
   if (keyCode === 27) { // ESC key?
     if (window.editorMode) {
@@ -371,14 +398,8 @@ function toggleEditorMode() {
  * p5.js mousePressed function - handle mouse input
  */
 function mousePressed() {
-
-  if (window.bgm && !window.bgm.isPlaying()) {
-    getAudioContext().resume();
-    window.bgm.setVolume(1.0);
-    window.bgm.setLoop(true);
-    window.bgm.play();
-    console.log("BGM started on mouse interaction.");
-  }
+  // Try to play BGM on mouse interaction
+  tryPlayBGM();
   
   if (window.editorMode) {
     handleEditorMousePressed();
@@ -459,6 +480,9 @@ function mouseReleased() {
  * p5.js mouseWheel function - handle mouse wheel
  */
 function mouseWheel(event) {
+  // Try to play BGM on mouse wheel interaction
+  tryPlayBGM();
+  
   if (window.editorMode) {
     handleEditorMouseWheel(event);
     return false; // Prevent default behavior
@@ -483,6 +507,9 @@ function mouseClicked() {
  * p5.js touchStarted function - handle touch input for mobile
  */
 function touchStarted() {
+  // Try to play BGM on touch interaction
+  tryPlayBGM();
+  
   if (!window.editorMode) {
     console.log("Touch started, game state:", state.gameState);
     
