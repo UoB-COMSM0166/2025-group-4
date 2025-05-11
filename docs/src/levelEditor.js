@@ -786,24 +786,34 @@ function loadLevel() {
  */
 export function exportLevel() {
   // Check for required elements
-  let hasPlayerStart = false;
-  let hasExit = false;
+  let playerStartCount = 0;
+  let exitCount = 0;
   
   for (let row = 0; row < editorGrid.length; row++) {
     for (let col = 0; col < editorGrid[row].length; col++) {
       const tile = editorGrid[row][col];
-      if (tile === '3') hasPlayerStart = true;
-      if (tile === '4') hasExit = true;
+      if (tile === '3') playerStartCount++;
+      if (tile === '4') exitCount++;
     }
   }
   
-  if (!hasPlayerStart) {
+  if (playerStartCount === 0) {
     showMessage('Error: Level requires a player start point (3)');
     return null;
   }
   
-  if (!hasExit) {
+  if (playerStartCount > 1) {
+    showMessage('Error: Level must have exactly one player start point (3)');
+    return null;
+  }
+  
+  if (exitCount === 0) {
     showMessage('Error: Level requires an exit gate (4)');
+    return null;
+  }
+  
+  if (exitCount > 1) {
+    showMessage('Error: Level must have exactly one exit gate (4)');
     return null;
   }
   
