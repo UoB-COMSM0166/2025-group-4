@@ -15,10 +15,6 @@
   </h2>
 </div>
 
-<div align="center">
-  <a href="https://github.com/orgs/UoB-COMSM0166/projects/131"><img src="https://img.shields.io/badge/Kanban_Board-Active-blue?style=for-the-badge" alt="Project Board"></a>
-  <img src="https://img.shields.io/badge/Status-Complete-success?style=for-the-badge" alt="Status">
-</div>
 
 <div align="center">
   <a href="https://youtu.be/bFDjtvlrYy0">
@@ -26,6 +22,13 @@
   </a>
   <p><strong>🎥&nbsp;&nbsp;&nbsp;&nbsp;Demo Video&nbsp;&nbsp;&nbsp;&nbsp;🎥</strong></p>
 </div>
+
+
+<div align="center">
+  <a href="https://github.com/orgs/UoB-COMSM0166/projects/131"><img src="https://img.shields.io/badge/Kanban_Board-Active-blue?style=for-the-badge" alt="Project Board"></a>
+  <img src="https://img.shields.io/badge/Status-Complete-success?style=for-the-badge" alt="Status">
+</div>
+
 
 ---
 
