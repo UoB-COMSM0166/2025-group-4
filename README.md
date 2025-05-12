@@ -100,7 +100,6 @@
   <img src="images/group4-photo.jpg" alt="Group Photo" width="80%">
 </p>
 
-**The names are listed from left to right in the group photo.**
 
 | Name                  | Email                      |Primary Roles                   |
 |-----------------------|---------------------------|---------------------------------
