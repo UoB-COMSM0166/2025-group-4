@@ -59,9 +59,9 @@
     - [4.4.3 State Diagram](#443-state-diagram)
   - [4.5 Game Mechanics Summary](#45-game-mechanics-summary)
 - [5. Implementation](#5-implementation)
-  - [5.1 Implementation of a time-independent physics system and a stable collision mechanism](#51-implementation-of-a-time-independent-physics-system-and-a-stable-collision-mechanism)
-  - [5.2 A map editor with a player-defined map feature](#52-a-map-editor-with-a-player-defined-map-feature)
-  - [5.3 The random creation of maps](#53-the-random-creation-of-maps)
+  - [5.1 Delta-Time Physics for Dynamic Gravity and Robust Collision Detection](#51-delta-time-physics-for-dynamic-gravity-and-robust-collision-detection)
+  - [5.2 Integrated Level Editor: WYSIWYG Design and Real-Time Testing](#52-integrated-level-editor-wysiwyg-design-and-real-time-testing)
+  - [5.3 Procedural Generation with Path-First Algorithms for Verifiable Playability](#53-procedural-generation-with-path-first-algorithms-for-verifiable-playability)
 - [6. Evaluation](#6-evaluation)
   - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
   - [6.2 Heuristic Evaluation](#62-heuristic-evaluation)
@@ -527,7 +527,7 @@ This diagram supports both functional transitions and UI switching.
 
 # 5. Implementation
 
-## 5.1 Implementation of a time-independent physics system and a stable collision mechanism
+## 5.1 Delta-Time Physics for Dynamic Gravity and Robust Collision Detection
 
 ### 5.1.1 Objectives and motivations
 
@@ -535,12 +535,12 @@ A primary objective was to deliver a consistent and smooth gameplay experience a
 
 ### 5.1.2 Fixed time step mechanism (FTM) and Collision Handling
 
-To counteract inconsistencies arising from fluctuating frame rates—a common issue that can lead to problems like variable jump heights or objects passing through each other (tunneling)—we implemented a fixed timestep update loop. The core game logic, including physics calculations, is driven by a `deltaTime` value, which represents the actual elapsed time between frames, rather than assuming a constant frame duration. This `deltaTime`, calculated in `main.js` using `millis()` and constrained to a maximum value to prevent extreme updates during significant lag spikes, ensures that game events progress consistently regardless of the rendering speed. For instance, gravity (`player.vy += timeScaledGravity * this.gravityDirection;`) and movement updates in `player.js` are scaled by this `deltaTime`, ensuring the puppy moves the same perceived distance over time, whether the game runs at 30 FPS or 60 FPS.
+To counteract inconsistencies arising from fluctuating frame rates—a common issue that can lead to problems like variable jump heights or objects passing through each other (tunnelling)—we implemented a fixed timestep update loop. The core game logic, including physics calculations, is driven by a `deltaTime` value, which represents the actual elapsed time between frames, rather than assuming a constant frame duration. This `deltaTime`, calculated in `main.js` using `millis()` and constrained to a maximum value to prevent extreme updates during significant lag spikes, ensures that game events progress consistently regardless of the rendering speed. For instance, gravity (`player.vy += timeScaledGravity * this.gravityDirection;`) and movement updates in `player.js` are scaled by this `deltaTime`, ensuring the puppy moves the same perceived distance over time, whether the game runs at 30 FPS or 60 FPS.
 
 Collision detection was a critical area requiring careful design. Our approach involved:
 
 1.  **Separation of Axes**: Horizontal and vertical collisions are processed independently within the `player.js` `checkTileCollisions` method. This simplifies the logic for determining collision points and resolving overlaps.
-2.  **Incremental Stepped Checks for Fast Movements**: To prevent the player from "tunneling" through thin platforms or walls when moving at high speeds (a common challenge in physics engines), vertical movement is broken down into smaller increments if the velocity is high for a single frame (`const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));`). Collisions are then checked at each of these smaller steps.
+2.  **Incremental Stepped Checks for Fast Movements**: To prevent the player from "tunnelling" through thin platforms or walls when moving at high speeds (a common challenge in physics engines), vertical movement is broken down into smaller increments if the velocity is high for a single frame (`const steps = Math.max(1, Math.ceil(Math.abs(scaledVy) / 5));`). Collisions are then checked at each of these smaller steps.
 3.  **Precise Collision Response**: Upon detecting a collision, the player's position is meticulously adjusted to sit just outside the collided tile (e.g., `this.x = rightCol * tileSize - halfW;`), preventing sticking or jittering.
 4.  **Dynamic Ground Detection for Gravity Flips**: The gravity-flip mechanic is central to gameplay. The collision system dynamically determines what constitutes "ground" based on the `player.gravityDirection`. When gravity is flipped, the ceiling effectively becomes the floor for collision purposes. The player character doesn't climb or perform traditional jumps; instead, after a flip, they "fall" in the new direction of gravity and can navigate by chaining further flips. This dynamic evaluation is evident in how vertical collisions differentiate between downward movement relative to normal gravity and downward movement relative to flipped gravity.
 
@@ -574,7 +574,7 @@ This carefully architected physics and collision system forms a reliable foundat
 
 ---
 
-## 5.2 A map editor with a player-defined map feature
+## 5.2 Integrated Level Editor: WYSIWYG Design and Real-Time Testing
 
 ### 5.2.1 Objectives and motivations
 
@@ -603,7 +603,7 @@ The map editor transcends a simple creation tool; it embodies our vision for a p
 
 ---
 
-## 5.3 The random creation of maps
+## 5.3 Procedural Generation with Path-First Algorithms for Verifiable Playability
 
 ### 5.3.1 Goals and motivations
 
