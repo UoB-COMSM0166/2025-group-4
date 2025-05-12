@@ -5,15 +5,9 @@
 # Puppy's Magical Adventure
 
 <div align="center">
-  <!-- <img src="images/banner.webp" alt="Banner Image" width="90%"> -->
-
-<a href="https://youtu.be/bFDjtvlrYy0">
-  <img src="https://img.youtube.com/vi/bFDjtvlrYy0/0.jpg" alt="Video preview" width="60%">
-</a>
-
-  <p><em>📺 Click the image above to watch our demo video on YouTube</em></p>
-
+   <img src="images/banner.webp" alt="Banner Image" width="90%"> 
 </div>
+
 
 <div align="center">
   <h2>
@@ -24,6 +18,13 @@
 <div align="center">
   <a href="https://github.com/orgs/UoB-COMSM0166/projects/131"><img src="https://img.shields.io/badge/Kanban_Board-Active-blue?style=for-the-badge" alt="Project Board"></a>
   <img src="https://img.shields.io/badge/Status-Complete-success?style=for-the-badge" alt="Status">
+</div>
+
+<div align="center">
+  <a href="https://youtu.be/bFDjtvlrYy0">
+    <img src="https://raw.githubusercontent.com/UoB-COMSM0166/2025-group-4/main/docs/src/assets/art/images/dogvideo.png" width="30%" alt="Watch the video">
+  </a>
+  <p><strong>🎥&nbsp;&nbsp;&nbsp;&nbsp;Demo Video&nbsp;&nbsp;&nbsp;&nbsp;🎥</strong></p>
 </div>
 
 ---
