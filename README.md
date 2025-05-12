@@ -38,12 +38,13 @@
 - [3. Project Report](#3-project-report)
   - [3.1 Introduction](#31-introduction)
     - [3.1.1 Game Background](#311-game-background)
-    - [3.1.2 Game Mechanics](#312-game-mechanics)
-    - [3.1.3 Game Innovation](#313-game-innovation)
-    - [3.1.4 Level Themes & Biomes](#314-level-themes--biomes)
-    - [3.1.5 Endings](#315-endings)
-    - [3.1.6 Stakeholders](#316-stakeholders)
-    - [3.1.7 Identifying Top-Level Needs with User Stories](#317-identifying-top-level-needs-with-user-stories)
+    - [3.1.2 Game Inspiration and References](#312-game-inspiration-and-references)
+    - [3.1.3 Game Mechanics](#313-game-mechanics)
+    - [3.1.4 Game Innovation](#314-game-innovation)
+    - [3.1.5 Level Themes & Biomes](#315-level-themes--biomes)
+    - [3.1.6 Endings](#316-endings)
+    - [3.1.7 Stakeholders](#317-stakeholders)
+    - [3.1.8 Identifying Top-Level Needs with User Stories](#318-identifying-top-level-needs-with-user-stories)
 - [4. Game Design – Puppy's Magical Adventure](#4-game-design--puppys-magical-adventure)
   - [4.1 Use Case diagram](#41-use-case-diagram)
   - [4.2 Procedural Challenge Mode Use Case Specification](#42-procedural-challenge-mode-use-case-specification)
@@ -135,10 +136,22 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 - Your journey leads to **Death Cliff**—the last known fragment of the World Core. Only by surviving the trials of magic and reclaiming your lost power can you unlock the secret to restoring the world.
 -- **"Survive the skies. Master the magic. Reconnect the realms."**
 
+---
+
+### 3.1.2 Game Inspiration and References
+Our game draws inspiration from several notable titles in the platformer genre:
+
+- **The Way of the Dodo** (js13kgames): This one-button platformer was a primary inspiration for our initial concept. In this game, a bird runs automatically back and forth between walls, with a single button controlling jumps, wall-bounces, and mid-air maneuvers. This sparked our interest in creating a game with simple controls but deep gameplay possibilities.
+
+- **VVVVVV** by Terry Cavanagh: To differentiate our game and add a novel mechanic, we incorporated the gravity-flipping concept from VVVVVV. This provided a unique one-button interaction where a simple key press performs a powerful move, completely changing the player's relationship with the environment.
+
+- **Celeste**: We implemented several player experience refinements inspired by this precision platformer, including coyote time (brief window to jump after leaving a platform), landing particles, background particles, and polished level transition animations. These elements enhance the tactile feeling of the game without complicating controls.
+
+During development, we carefully balanced the gravity flip mechanic with the automated movement to ensure the game remained approachable while offering a satisfying challenge. This combination of influences helped us create something familiar yet distinctive in the platformer genre.
 
 ---
 
-## 3.1.2 Game Mechanics
+### 3.1.3 Game Mechanics
 - The game features a fast-paced, roguelike platforming system with procedurally generated levels.
 - Each run includes:
   - **Limited lives & checkpoints (difficulty varies by mode)**
@@ -159,7 +172,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 
 ---
 
-## 3.1.3 Game Innovation
+### 3.1.4 Game Innovation
 1. **Multi-biome progression**: 
    - Players move through visually distinct zones (ice, cloud, jungle, night, fire, castle, ruins), each with unique trap logic and enemy behaviours.
 2. **Dynamic difficulty modes**: 
@@ -180,7 +193,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 
 ---
 
-## 3.1.4 Level Themes & Biomes
+### 3.1.5 Level Themes & Biomes
 
 <div class="biome-container">
 
@@ -269,7 +282,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 
 ---
 
-### 3.1.5 Endings
+### 3.1.6 Endings
 #### Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 
@@ -282,7 +295,7 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 ---
 
-### 3.1.6 Stakeholders
+### 3.1.7 Stakeholders
 #### Surrogate Roles
 ##### Onion Model of game Puppy's Magical Adventure
 
@@ -305,7 +318,7 @@ It is ensured that Puppy's Magical Adventure was engaging, accessible, and mecha
 
 ---
 
-### 3.1.7 Identifying Top-Level Needs with User Stories
+### 3.1.8 Identifying Top-Level Needs with User Stories
 #### User Posters of four different player types
 
 <p align="center">
