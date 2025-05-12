@@ -149,7 +149,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
 - Players must adapt quickly, react precisely, and memorize patterns to reach the end before losing all lives.
 
 <p align="center">
-  <strong>Figure 3</strong><br>
+  <strong>Figure 2</strong><br>
   <em>Game Mechanics</em>
 </p>
 
@@ -170,7 +170,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
    - Inspired by classic arcade platformers, each level demands reflexes, timing, and risk-reward mastery.
 
 <p align="center">
-  <strong>Figure 4</strong><br>
+  <strong>Figure 3</strong><br>
   <em>Slides and Fire Traps Demo</em>
 </p>
 
@@ -290,7 +290,7 @@ Before any code was written, our team engaged in an extensive ideation process t
 The iterative nature of paper prototyping allowed us to quickly identify and resolve potential issues before progressing to digital development. Continuous testing and adjustments at this stage were crucial in solidifying our game concept, aligning the team's vision, and laying a robust foundation for subsequent development stages.
 
 <p align="center">
-  <strong>Figure 2</strong><br>
+  <strong>Figure 4</strong><br>
   <em>Paper Prototypes</em>
 </p>
 
@@ -384,43 +384,18 @@ Our team designed several posters featuring characters to represent these user s
 
 | **Standard Mode** |   |
 |-------------------|---|
-| **Description** | A level focused on gravity-switch platforming using only the spacebar. Enemy positions and hazards are fixed. |
-| **Basic Flow** | **Goal:** Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies. |
-| **Step One** | Player presses **Spacebar** to flip gravity, switching between floor and ceiling traversal. |
-| **Step Two** | Player collects **Gold Coin** . |
+| **Description** | Player uses the spacebar to flip gravity. Enemy and trap positions are fixed. |
+| **Basic Flow** | **Goal:**  Reach the end by flipping gravity at the right time, collecting items, and avoiding enemies. |
+| **Step One** | Player presses **the spacebar** to flip gravity, switching between floor and ceiling. |
+| **Step Two** | Player collects gold coins (no gameplay effect). |
 | **Step Three** | Certain platforms or obstacles are triggered by proximity or player movement. |
 
 | **Random Mode** |   |
 |------------------|---|
-| **Alternative Flow** | **Challenges:** Running out of time, falling off-screen, or colliding with invulnerable enemies ends the run. |
-| **Step One (Alt)** | Collision with enemies = lose 1 life. Player starts with 3 lives. |
-| **Step Two (Alt)** | After 3 failed attempts at the same section, a hint is displayed to suggest a timing or path change. |
-| **Step Three (Alt)** | Optional **Gold coin** can be collected (no gameplay effect). |
-
----
-
-## 3.6 Procedural Challenge Mode Use Case Specification
-
-<div align="center">
-  <strong>Table 3</strong><br>
-  <em>Standard Mode VS Random Mode (Procedural Challenge Mode)</em>
-</div>
-
-| **Standard Mode** |   |
-|-------------------|---|
-| **Description** | A level with pre-designed traps and enemies. Gravity flipping via spacebar is essential. |
-| **Advanced Flow** | Players can learn the layout and improve timing with repeated attempts. |
-| **Step One** | Flip gravity using **Spacebar** to dodge hazards and navigate fixed obstacles. |
-| **Step Two** | Difficulty increases slightly with level progression but remains consistent across sessions. |
-| **Step Three** | Completion rewards include **time ranks** and **collectible counts**. |
-
-| **Random Mode** |   |
-|------------------|---|
-| **Description** | The same level design, but traps and enemy placements are randomized each run. |
-| **Advanced Flow** | Players must react and adapt to changes in the environment with each attempt. |
-| **Step One** | Flip gravity using **Spacebar**, but obstacles may spawn in new positions, increasing unpredictability. |
-| **Step Two** | Difficulty is scaled dynamically based on player performance (adaptive speed and obstacle density). |
-| **Step Three** | Coin points awarded for completing unpredictable runs efficiently. |
+| **Alternative Flow** | **Challenges:** Enemy and trap positions are randomized each run, requiring real-time adaptation. |
+| **Step One (Alt)** | Collision with enemies results in losing 1 life. Players start with 10 lives. |
+| **Step Two (Alt)** | A milestone screen appears every five levels, allowing players to choose whether to continue or exit. |
+| **Step Three (Alt)** | Optional coins can be collected for score rewards. |
 
 ---
 
@@ -658,7 +633,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 ### 6.1.3 Method:
 
 <div align="center">
-  <strong>Table 4</strong><br>
+  <strong>Table 3</strong><br>
   <em>Method</em>
 </div>
 
@@ -670,7 +645,7 @@ We performed a **Think-Aloud Protocol** with 10 participants from varied backgro
 
 ### 6.1.4 Thematic Insights:
  <p align="center">
-  <strong>Table 5</strong><br>
+  <strong>Table 4</strong><br>
   <em> Thematic Insights</em>
 </p>
 
@@ -707,7 +682,7 @@ Findings were classified by severity to prioritise improvements. For example:
 
 ### Findings Table:
  <p align="center">
-  <strong>Table 6</strong><br>
+  <strong>Table 5</strong><br>
   <em> Findings Table</em>
 </p>
 
@@ -740,7 +715,7 @@ We used the **Wilcoxon Signed Rank Test** to analyse score variations between L1
 
 #### **System Usability Scale (SUS) Scores**
 <p align="center">
-  <strong>Table 7</strong><br>
+  <strong>Table 6</strong><br>
   <em> System Usability Scale(SUS)Scores</em>
 </p>
 
@@ -770,7 +745,7 @@ We used the **Wilcoxon Signed Rank Test** to analyse score variations between L1
 
 #### **NASA Task Load Index (NASA TLX Scores)**
  <p align="center">
-  <strong>Table 8</strong><br>
+  <strong>Table 7</strong><br>
   <em> NASA Task Load Index (NASA TLX Scores)</em>
 </p>
 
@@ -795,7 +770,7 @@ We used the **Wilcoxon Signed Rank Test** to analyse score variations between L1
 
 ####  SUS Scores Summary:
 <p align="center">
-  <strong>Table 9</strong><br>
+  <strong>Table 8</strong><br>
   <em>SUS Scores Summary</em>
 </p>
 
@@ -818,7 +793,7 @@ We used the **Wilcoxon Signed Rank Test** to analyse score variations between L1
 
 ####  NASA TLX Summary:
 <p align="center">
-  <strong>Table 10</strong><br>
+  <strong>Table 9</strong><br>
   <em>NASA TLX Summary</em>
 </p>
 
@@ -906,7 +881,7 @@ test("Gravity should invert when spacebar is pressed", () => {
 #### 7.1.3 Key Findings 
 
  <p align="center">
-  <strong>Table 11</strong><br>
+  <strong>Table 10</strong><br>
   <em> Key Findings(White-box Testing)</em>
  
 | Issue                                      | Fix                                                         | 
@@ -932,7 +907,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.2 Sample Scenarios 
 
 <p align="center">
-  <strong>Table 12</strong><br>
+  <strong>Table 11</strong><br>
   <em> Sample Scenarios(Black-box Testing)</em>
  
 | Test Scenario              | Input                    | Expected Output             | Class Type          | 
@@ -945,7 +920,7 @@ Black-box testing focused on user-centric interaction and functionality, without
 #### 7.2.3 Key Findings 
 
 <p align="center">
-  <strong>Table 13</strong><br>
+  <strong>Table 12</strong><br>
   <em>Key Findings(Black-box Testing)</em>
 
 | Issue                          | Solution                                  | 
@@ -965,7 +940,7 @@ Our combination of **white-box logic testing** and **black-box behaviour simulat
 # 8. Summary & Future Improvements
 
 <div align="center">
-  <strong>Table 14</strong><br>
+  <strong>Table 13</strong><br>
   <em>Summary&Future Improvements</em>
 
 | Category | Key Insight | Planned Improvement |
@@ -1019,7 +994,7 @@ In this sustainability module, we apply the **Sustainability Awareness Framework
 ## 9.3 Sustainability Effects – Chains of Impact
 
 <p align="center">
-  <strong>Table 15</strong><br>
+  <strong>Table 14</strong><br>
   <em>Sustainability Effects – Chains of Impact</em>
 </p>
 
@@ -1054,7 +1029,7 @@ In this sustainability module, we apply the **Sustainability Awareness Framework
 ## 9.5 Sustainability User Stories
 
 <p align="center">
-  <strong>Table 16</strong><br>
+  <strong>Table 15</strong><br>
   <em>Sustainability User Stories</em>
 </p>
   
@@ -1267,7 +1242,7 @@ Our iterative, flexible process and thoughtful use of collaborative digital tool
 ## 10.5 Contribution to Development Process  
 
 <div align="center">
-  <strong>Table 17</strong><br>
+  <strong>Table 16</strong><br>
   <em>Contribution to Development Process</em>
 </div>
 
