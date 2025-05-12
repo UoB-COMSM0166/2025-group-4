@@ -114,11 +114,14 @@
 # 2. Introduction
 
 ### 2.1 Game Background
-- A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilisations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
-- You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers,  cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
-- Watch your step. Triangular spikes jut from the ground and sky. Razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
-- Your journey leads to **Death Cliff**—the last known fragment of the World Core. Only by surviving the trials of magic and reclaiming your lost power can you unlock the secret to restoring the world.
--- **"Survive the skies. Master the magic. Reconnect the realms."**
+Puppy's Magical Adventure is a creative browser-based single-player game crafted with the primary goal of delivering accessible fun and engaging experiences to a wide range of players. We utilized JavaScript alongside the versatile p5.js library to implement smooth gameplay mechanics, vibrant visuals, and responsive controls. The project's inception was rooted in a shared passion for classic platformers, combined with the ambition to introduce novel gameplay elements, offering both nostalgic charm and fresh challenges.
+
+In the game, players control an adorable puppy endowed with a magical ability to flip gravity. Using this unique skill, players must carefully navigate through diverse magical realms, each with distinct challenges. For example, in the "Enchanted Grove," players learn the basics of movement and obstacle avoidance in a tranquil, glowing forest filled with shimmering plants. As the adventure progresses, challenges intensify significantly—from dodging dangerous thorn traps in the "Thorny Thicket" and avoiding patrolling enemies in the tense "Shadow Outpost," to surviving against projectile-shooting foes in the "Crimson Ambush" and navigating slippery ice paths in the "Frozen Labyrinth." Players must strategically dodge enemies, sharp spikes, and other hazards while collecting coins, which are key to unlocking hidden levels and additional secrets.
+
+Inspired by iconic gravity-based platformers such as VVVVVV, Puppy's Magical Adventure builds upon these foundations by incorporating unique features like an intuitive level editor, allowing players to design and share their own stages. This extends the game's replayability significantly, enabling endless user-generated content. Additionally, different difficulty mechanism ensures that both newcomers and seasoned gamers find suitable challenges, enhancing the overall accessibility and appeal of the game.
+
+
+**"Survive the skies. Master the magic. Reconnect the realms."**
 
 ---
 
