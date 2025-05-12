@@ -226,7 +226,7 @@ if (currentLevel.assets && currentLevel.assets.gate) {
   window.floatingPlatforms = gameState.state.floatingPlatforms;
 
   if (idx === 0) {
-    gameState.state.tutorialText = "Click mouse or press spacebar to reverse gravity! \n Each coin = 15 points";
+    gameState.state.tutorialText =  "Click mouse or press spacebar to reverse gravity!\nEach coin = 15 points (optional, not required to win)";
     gameState.state.tutorialActive = true;
   } else if (idx === 1) {
     gameState.state.tutorialText = "Watch out for spikes ahead!\n Touching them will immediately cost you a life.";
