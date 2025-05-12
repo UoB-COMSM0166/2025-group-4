@@ -38,26 +38,27 @@
 <summary><b>Click to expand/collapse</b></summary>
 
 - [1. Development Group](#1-development-group)
-- [2. Introduction](#2-introduction-link)
+- [2. Introduction](#2-introduction)
   - [2.1 Game Background](#21-game-background)
   - [2.2 Game Inspiration and References](#22-game-inspiration-and-references)
   - [2.3 Game Mechanics](#23-game-mechanics)
   - [2.4 Game Innovation](#24-game-innovation)
-  - [2.5 Level Themes & Biomes](#25-level-themes&biomes)
+  - [2.5 Level Themes & Biomes](#25-level-themes--biomes)
   - [2.6 Endings](#26-endings)
 - [3. Requirements](#3-requirements)
   - [3.1 Ideation Process](#31-ideation-process)
-  - [3.2 Stakeholders](#32-stakeholders)
-  - [3.3 Identifying Top-Level Needs with User Stories](#33-identifying-top-Level-needs-with-user-stories)
-  - [3.4 Use Case diagram](#34-use-case-diagram)
-  - [3.5 Procedural Challenge Mode Use Case Specification](#35-procedural-challenge-mode-use-case-specification)
+  - [3.2 Vision](#32-vision)
+  - [3.3 Stakeholders](#33-stakeholders)
+  - [3.4 Identifying Top-Level Needs with User Stories](#34-identifying-top-Level-needs-with-user-stories)
+  - [3.5 Use Case diagram](#35-use-case-diagram)
+  - [3.6 Procedural Challenge Mode Use Case Specification](#36-procedural-challenge-mode-use-case-specification)
 - [4. Game Design – Puppy's Magical Adventure](#4-game-design--puppys-magical-adventure)
-  - [4.1 Summary of Development & Ideation Process](#43-summary-of-development--ideation-process)
-  - [4.2 Game Architecture & Visual Modeling](#44-game-architecture--visual-modeling)
-    - [4.2.1 Class Diagram](#441-class-diagram)
-    - [4.2.2 Sequence Diagram](#442-sequence-diagram) 
-    - [4.2.3 State Diagram](#443-state-diagram)
-  - [4.3 Game Mechanics Summary](#45-game-mechanics-summary)
+  - [4.1 Summary of Development & Ideation Process](#41-summary-of-development--ideation-process)
+  - [4.2 Game Architecture & Visual Modeling](#42-game-architecture--visual-modeling)
+    - [4.2.1 Class Diagram](#421-class-diagram)
+    - [4.2.2 Sequence Diagram](#422-sequence-diagram)
+    - [4.2.3 State Diagram](#423-state-diagram)
+  - [4.3 Game Mechanics Summary](#43-game-mechanics-summary)
 - [5. Implementation](#5-implementation)
   - [5.1 Delta-Time Physics for Dynamic Gravity and Robust Collision Detection](#51-delta-time-physics-for-dynamic-gravity-and-robust-collision-detection)
   - [5.2 Integrated Level Editor: WYSIWYG Design and Real-Time Testing](#52-integrated-level-editor-wysiwyg-design-and-real-time-testing)
@@ -103,15 +104,14 @@
 
 | Name                  | Email                      |Primary Roles                   |
 |-----------------------|---------------------------|---------------------------------
-| Xingchen Jin        | if24329@bristol.ac.uk      |Leader Programmer                 |
-| Yihan Liu           | rv24637@bristol.ac.uk      |Gameplay Designer                 |
-| Xirui Wang           | hd24605@bristol.ac.uk     |UI Designer                       |
-| Suyi Dai            | zq24591@bristol.ac.uk      |QA & Balancing Tester             |
-| Amuer               | zd24425@bristol.ac.uk      |Visual Designer                   |
-| Xiaoliang Su        | gp24306@bristol.ac.uk      |Performance & Porting Engineer    |
+| Xingchen Jin        | if24329@bristol.ac.uk      |Lead Programmer                         |
+| Yihan Liu           | rv24637@bristol.ac.uk      |Gameplay Programmer & Designer          |
+| Xirui Wang           | hd24605@bristol.ac.uk     |UI/UX Designer                          |
+| Suyi Dai            | zq24591@bristol.ac.uk      |QA Engineer & Game Balance Designer     |
+| Amuer               | zd24425@bristol.ac.uk      |Art & Visual Designer                   |
+| Xiaoliang Su        | gp24306@bristol.ac.uk      |Performance & Porting Engineer          |
 
 # 2. Introduction
-
 
 ### 2.1 Game Background
 - A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilisations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
@@ -295,7 +295,14 @@ The iterative nature of paper prototyping allowed us to quickly identify and res
   <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
 </p>
 
-### 3.2 Stakeholders
+### 3.2 Vision
+Following our initial ideation process and the development of paper prototypes, the team embarked on defining a clear, shared vision for our game. Through a series of in-depth discussions, peer feedback sessions, and democratic decision-making, we crystallized our core gameplay mechanics and overarching design objectives.
+
+Our vision revolved around creating an engaging, intuitive, and replayable gaming experience that appealed broadly across different player demographics. Key elements identified included intuitive controls, dynamic game mechanics such as gravity manipulation and trap navigation, as well as visually appealing, responsive game environments to keep players consistently entertained.
+
+Moreover, we set out to design gameplay that emphasizes replayability through clear objectives such as high-score challenges and customizable player experiences. This vision laid a solid foundation for the next step in our development process—identifying stakeholders and crafting user stories that would guide our development priorities and ensure alignment across the entire project team.
+
+### 3.3 Stakeholders
 #### Surrogate Roles
 ##### Onion Model of game Puppy's Magical Adventure
 
@@ -318,7 +325,7 @@ It is ensured that Puppy's Magical Adventure was engaging, accessible, and mecha
 
 ---
 
-### 3.3 Identifying Top-Level Needs with User Stories
+### 3.4 Identifying Top-Level Needs with User Stories
 #### User Posters of four different player types
 
 <p align="center">
@@ -355,7 +362,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007's journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-## 3.4 Use Case diagram
+## 3.5 Use Case diagram
 <p align="center">
   <strong>Figure 7</strong><br>
   <em>Use Case diagram</em>
@@ -389,7 +396,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 3.5 Procedural Challenge Mode Use Case Specification
+## 3.6 Procedural Challenge Mode Use Case Specification
 
 <div align="center">
   <strong>Table 3</strong><br>
@@ -419,7 +426,6 @@ Our team designed several posters featuring characters to represent these user s
 
 
 ## 4.1 Summary of Development & Ideation Process
-
 <div class="development-process">
 
 **1. Initial Concept**  
@@ -445,7 +451,6 @@ Our team designed several posters featuring characters to represent these user s
 ---
 
 ## 4.2 Game Architecture & Visual Modeling
-
 ### 4.2.1 Class Diagram  
 **File**: `./images/class-diagram.png`  
 The class diagram outlines object relationships in our game system and supports modular, object-oriented structure.
