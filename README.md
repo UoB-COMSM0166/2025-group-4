@@ -59,9 +59,9 @@
     - [4.4.3 State Diagram](#443-state-diagram)
   - [4.5 Game Mechanics Summary](#45-game-mechanics-summary)
 - [5. Implementation](#5-implementation)
-  - [5.1 Implementation of a time-independent physics system and a stable collision mechanism](#51-implementation-of-a-time-independent-physics-system-and-a-stable-collision-mechanism)
-  - [5.2 A map editor with a player-defined map feature](#52-a-map-editor-with-a-player-defined-map-feature)
-  - [5.3 The random creation of maps](#53-the-random-creation-of-maps)
+  - [5.1 Delta-Time Physics for Dynamic Gravity and Robust Collision Detection](#51-delta-time-physics-for-dynamic-gravity-and-robust-collision-detection)
+  - [5.2 Integrated Level Editor: WYSIWYG Design and Real-Time Testing](#52-integrated-level-editor-wysiwyg-design-and-real-time-testing)
+  - [5.3 Procedural Generation with Path-First Algorithms for Verifiable Playability](#53-procedural-generation-with-path-first-algorithms-for-verifiable-playability)
 - [6. Evaluation](#6-evaluation)
   - [6.1 Qualitative Evaluation](#61-qualitative-evaluation)
   - [6.2 Heuristic Evaluation](#62-heuristic-evaluation)
@@ -533,7 +533,7 @@ This diagram supports both functional transitions and UI switching.
 
 # 5. Implementation
 
-## 5.1 Implementation of a time-independent physics system and a stable collision mechanism
+## 5.1 Delta-Time Physics for Dynamic Gravity and Robust Collision Detection
 
 ### 5.1.1 Objectives and motivations
 
@@ -580,7 +580,7 @@ This carefully architected physics and collision system forms a reliable foundat
 
 ---
 
-## 5.2 A map editor with a player-defined map feature
+## 5.2 Integrated Level Editor: WYSIWYG Design and Real-Time Testing
 
 ### 5.2.1 Objectives and motivations
 
@@ -609,7 +609,7 @@ The map editor transcends a simple creation tool; it embodies our vision for a p
 
 ---
 
-## 5.3 The random creation of maps
+## 5.3 Procedural Generation with Path-First Algorithms for Verifiable Playability
 
 ### 5.3.1 Goals and motivations
 
