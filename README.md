@@ -112,16 +112,6 @@
 
 # 2. Introduction
 
-Before any code was written, we explored gameplay ideas using hand-drawn paper prototypes. This helped us define core mechanics such as gravity reversal and trap placement.
-
-<p align="center">
-  <strong>Figure 2</strong><br>
-  <em>Paper Prototypes</em>
-</p>
-
-<p align="center">
-  <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
-</p>
 
 ### 2.1 Game Background
 - A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilisations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
@@ -291,7 +281,21 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 ---
 ## 3. Requirements
 
-### 3.1 Stakeholders
+### 3.1 Ideation Process
+Before any code was written, our team engaged in an extensive ideation process to explore and validate gameplay concepts. Initially, each team member individually brainstormed game mechanics and scenarios. We then collaboratively reviewed these concepts, discussing feasibility, creativity, and player engagement potential. This step ensured all team members' ideas were considered and critically evaluated.
+
+The iterative nature of paper prototyping allowed us to quickly identify and resolve potential issues before progressing to digital development. Continuous testing and adjustments at this stage were crucial in solidifying our game concept, aligning the team's vision, and laying a robust foundation for subsequent development stages.
+
+<p align="center">
+  <strong>Figure 2</strong><br>
+  <em>Paper Prototypes</em>
+</p>
+
+<p align="center">
+  <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
+</p>
+
+### 3.2 Stakeholders
 #### Surrogate Roles
 ##### Onion Model of game Puppy's Magical Adventure
 
@@ -314,7 +318,7 @@ It is ensured that Puppy's Magical Adventure was engaging, accessible, and mecha
 
 ---
 
-### 3.2 Identifying Top-Level Needs with User Stories
+### 3.3 Identifying Top-Level Needs with User Stories
 #### User Posters of four different player types
 
 <p align="center">
@@ -351,7 +355,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007's journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
-## 3.3 Use Case diagram
+## 3.4 Use Case diagram
 <p align="center">
   <strong>Figure 7</strong><br>
   <em>Use Case diagram</em>
@@ -385,7 +389,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 3.4 Procedural Challenge Mode Use Case Specification
+## 3.5 Procedural Challenge Mode Use Case Specification
 
 <div align="center">
   <strong>Table 3</strong><br>
