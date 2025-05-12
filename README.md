@@ -102,23 +102,16 @@
 
 **The names are listed from left to right in the group photo.**
 
-| Name                  | Email                      |
-|-----------------------|---------------------------|
-| Xirui Wang           | hd24605@bristol.ac.uk      |
-| Suyi Dai            | zq24591@bristol.ac.uk      |
-| Yihan Liu           | rv24637@bristol.ac.uk      |
-| Xingchen Jin        | if24329@bristol.ac.uk      |
-| Amuer               | zd24425@bristol.ac.uk      |
-| Xiaoliang Su        | gp24306@bristol.ac.uk      |
+| Name                  | Email                      |Primary Roles                   |
+|-----------------------|---------------------------|---------------------------------
+| Xingchen Jin        | if24329@bristol.ac.uk      |Leader Programmer                 |
+| Yihan Liu           | rv24637@bristol.ac.uk      |Gameplay Designer                 |
+| Xirui Wang           | hd24605@bristol.ac.uk     |UI Designer                       |
+| Suyi Dai            | zq24591@bristol.ac.uk      |QA & Balancing Tester             |
+| Amuer               | zd24425@bristol.ac.uk      |Visual Designer                   |
+| Xiaoliang Su        | gp24306@bristol.ac.uk      |Performance & Porting Engineer    |
 
-# 2. Kanban link
-<div align="center">
-  <a href="https://github.com/orgs/UoB-COMSM0166/projects/131">
-    <img src="https://img.shields.io/badge/View_Kanban_Board-2025_Group_4-blue?style=for-the-badge&logo=github" alt="Board-Group4-2025">
-  </a>
-</div>
-
-# 3. Project Report
+# 2. Introduction
 
 Before any code was written, we explored gameplay ideas using hand-drawn paper prototypes. This helped us define core mechanics such as gravity reversal and trap placement.
 
@@ -131,9 +124,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
   <img src="./images/paper%20prototype.gif" alt="Paper Prototype Demo" width="60%">
 </p>
 
-## 3.1 Introduction
-
-### 3.1.1 Game Background
+### 2.1 Game Background
 - A magical catastrophe shattered the world, leaving only floating islands adrift in the sky. Ancient civilisations collapsed, and wild arcane energy now flows through broken landscapes filled with danger, mystery, and forgotten magic.
 - You are a magical creature—an exiled, sentient dog cast out by its own kind. Armed with instinct and arcane power, you must navigate through frozen glaciers,  cursed jungles, and twisted forests suspended in the sky. Each realm pulses with unstable magic, hiding secrets—and death—at every turn.
 - Watch your step. Triangular spikes jut from the ground and sky. Razor-sharp thorn clusters in the forest are fatal to the touch. There are no second chances.
@@ -142,7 +133,7 @@ Before any code was written, we explored gameplay ideas using hand-drawn paper p
 
 ---
 
-### 3.1.2 Game Inspiration and References
+### 2.2 Game Inspiration and References
 Our game draws inspiration from several notable titles in the platformer genre:
 
 - **The Way of the Dodo** (js13kgames): This one-button platformer was a primary inspiration for our initial concept. In this game, a bird runs automatically back and forth between walls, with a single button controlling jumps, wall-bounces, and mid-air maneuvers. This sparked our interest in creating a game with simple controls but deep gameplay possibilities.
@@ -155,7 +146,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
 
 ---
 
-### 3.1.3 Game Mechanics
+### 2.3 Game Mechanics
 - The game features a fast-paced, roguelike platforming system with procedurally generated levels.
 - Each run includes:
   - **Limited lives & checkpoints (difficulty varies by mode)**
@@ -176,7 +167,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
 
 ---
 
-### 3.1.4 Game Innovation
+### 2.4 Game Innovation
 1. **Multi-biome progression**: 
    - Players move through visually distinct zones (ice, cloud, jungle, night, fire, castle, ruins), each with unique trap logic and enemy behaviours.
 2. **Dynamic difficulty modes**: 
@@ -197,7 +188,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
 
 ---
 
-### 3.1.5 Level Themes & Biomes
+### 2.5 Level Themes & Biomes
 
 <div class="biome-container">
 
@@ -286,7 +277,7 @@ During development, we carefully balanced the gravity flip mechanic with the aut
 
 ---
 
-### 3.1.6 Endings
+### 2.6 Endings
 #### Perfect Ending
 You collect all energy shards, stabilize the gravity core, and unlock the final gate. Earth is restored, humanity returns, and you become the savior of the new world.
 
@@ -297,9 +288,11 @@ You fall before the final gate. The floating world collapses, swallowed by the v
 
 > "The world collapses. Your legacy fades into dust."
 
----
 
-### 3.1.7 Stakeholders
+---
+## 3. Requirements
+
+### 3.1 Stakeholders
 #### Surrogate Roles
 ##### Onion Model of game Puppy's Magical Adventure
 
@@ -322,7 +315,7 @@ It is ensured that Puppy's Magical Adventure was engaging, accessible, and mecha
 
 ---
 
-### 3.1.8 Identifying Top-Level Needs with User Stories
+### 3.2 Identifying Top-Level Needs with User Stories
 #### User Posters of four different player types
 
 <p align="center">
@@ -359,10 +352,7 @@ Our team designed several posters featuring characters to represent these user s
 | As a story-driven player, I want the game to offer rich storytelling through text or visuals so that I can fully immerse myself in 007's journey.             | Given key narrative moments, when a player reaches certain conditions, then the game should present detailed cutscenes or text to enhance the storytelling experience.      |
 | As a completionist, I want to unlock all puzzle pieces and hidden items so that I can achieve 100% game completion.        | Given a collection system, when a player acquires all hidden items or reaches full completion goals, then the game should provide a progress tracker and additional rewards to encourage exploration.      |
 
----
-
-## 4. Game Design – Puppy's Magical Adventure
-## 4.1 Use Case diagram
+## 3.3 Use Case diagram
 <p align="center">
   <strong>Figure 7</strong><br>
   <em>Use Case diagram</em>
@@ -396,7 +386,7 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.2 Procedural Challenge Mode Use Case Specification
+## 3.4 Procedural Challenge Mode Use Case Specification
 
 <div align="center">
   <strong>Table 3</strong><br>
@@ -421,7 +411,11 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.3 Summary of Development & Ideation Process
+
+## 4. Game Design – Puppy's Magical Adventure
+
+
+## 4.1 Summary of Development & Ideation Process
 
 <div class="development-process">
 
@@ -447,9 +441,9 @@ Our team designed several posters featuring characters to represent these user s
 
 ---
 
-## 4.4 Game Architecture & Visual Modeling
+## 4.2 Game Architecture & Visual Modeling
 
-### 4.4.1 Class Diagram  
+### 4.2.1 Class Diagram  
 **File**: `./images/class-diagram.png`  
 The class diagram outlines object relationships in our game system and supports modular, object-oriented structure.
 
@@ -472,7 +466,7 @@ The class diagram outlines object relationships in our game system and supports 
 
 ---
 
-### 4.4.2 Sequence Diagram  
+### 4.2.2 Sequence Diagram  
 **File**: `./images/sequence-diagram.png`  
 This diagram illustrates runtime logic and how game events propagate.
 
@@ -494,7 +488,7 @@ This diagram illustrates runtime logic and how game events propagate.
 
 ---
 
-### 4.4.3 State Diagram  
+### 4.2.3 State Diagram  
 **File**: `./images/state-diagram.png`  
 We designed a hierarchical FSM to control game progression.
 
@@ -515,7 +509,7 @@ This diagram supports both functional transitions and UI switching.
 
 ---
 
-## 4.5 Game Mechanics Summary
+## 4.3 Game Mechanics Summary
 
 <div class="mechanics-summary">
 
